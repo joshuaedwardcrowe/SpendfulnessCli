@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabProgressConsole", "YnabProgressConsole\YnabProgressConsole.csproj", "{C8250AC3-D064-444B-8306-2E8C811FFAAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ynab", "Ynab\Ynab.csproj", "{4D763B49-7DD5-488A-BE5A-083BFE9108FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabProgress", "YnabProgress\YnabProgress.csproj", "{2817F4ED-68F7-4DEE-A8B8-AB7D85F40D7D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8250AC3-D064-444B-8306-2E8C811FFAAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8250AC3-D064-444B-8306-2E8C811FFAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8250AC3-D064-444B-8306-2E8C811FFAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8250AC3-D064-444B-8306-2E8C811FFAAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2817F4ED-68F7-4DEE-A8B8-AB7D85F40D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2817F4ED-68F7-4DEE-A8B8-AB7D85F40D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2817F4ED-68F7-4DEE-A8B8-AB7D85F40D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2817F4ED-68F7-4DEE-A8B8-AB7D85F40D7D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
