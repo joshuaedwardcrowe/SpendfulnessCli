@@ -1,2 +1,2 @@
-# YNABCLI
+# YnabProgress
 A CLI tool for YNAB.
