@@ -1,3 +1,3 @@
 ﻿using YnabProgressConsole.Examples;
 
-await SpareMoneyInCheckingExample.Run();
+await ScheduledExpenditureImpactOnCheckingExample.Run();
