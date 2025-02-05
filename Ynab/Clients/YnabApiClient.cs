@@ -17,7 +17,7 @@ public class YnabApiClient
         DefaultRequestHeaders =
         {
             // TODO: Take this out of here.
-            Authorization = new AuthenticationHeaderValue("Bearer", "Insert bearer token here")
+            Authorization = new AuthenticationHeaderValue("Bearer", "_yS6MFPwm5FAEpVRv-hrhp-KrluIm_q-hqTXmw6UFWU")
         }
     };
 

@@ -20,4 +20,8 @@
         <Using Include="NUnit.Framework"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\YnabProgressConsole\YnabProgressConsole.csproj" />
+    </ItemGroup>
+
 </Project>

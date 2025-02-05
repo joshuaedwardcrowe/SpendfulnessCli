@@ -1,12 +1,11 @@
 using ConsoleTables;
 using YnabProgress.ViewModels;
 
-namespace YnabProgressConsole.Compilers;
+namespace YnabProgressConsole.Commands;
 
-public static class ConsoleTableCompiler
+public abstract class BaseCommandHandler
 {
-    [Obsolete("Please use the Command Handler route")]
-    public static ConsoleTable Compile(ViewModel viewModel)
+    protected ConsoleTable Compile(ViewModel viewModel)
     {
         var table = new ConsoleTable(viewModel.Columns.ToArray());
        
