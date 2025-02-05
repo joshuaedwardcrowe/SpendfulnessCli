@@ -5,15 +5,21 @@ namespace Ynab.Clients;
 public class AccountsClient : YnabApiClient
 {
     private const string AccountsApiPath = "accounts";
-    
-    public AccountsClient(string parentApiPath, List<ApiRequestLog> requestLog) : base(requestLog)
-    {
-        HttpClient.BaseAddress = new Uri(parentApiPath);
-    }
+    private readonly YnabHttpClientFactory _ynabHttpClientFactory;
+    private readonly string _parentApiPath;
 
+    public AccountsClient(YnabHttpClientFactory ynabHttpClientFactory, string parentApiPath)
+    {
+        _ynabHttpClientFactory = ynabHttpClientFactory;
+        _parentApiPath = parentApiPath;
+    }
+    
     public async Task<IEnumerable<Account>> GetAccounts()
     {
         var response = await Get<GetAccountsResponseData>(AccountsApiPath);
         return response.Data.Accounts.Select(a => new Account(this, a));
     }
+    
+    protected override HttpClient GetHttpClient() => 
+        _ynabHttpClientFactory.Create($"{_parentApiPath}/{AccountsApiPath}");
 }

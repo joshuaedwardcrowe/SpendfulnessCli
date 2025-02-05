@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using Ynab.Extensions;
 using YnabProgressConsole;
 using YnabProgressConsole.Commands;
 using YnabProgressConsole.Commands.CommandList;
 
 var serviceProvider = new ServiceCollection()
+    .AddYnab()
     .AddMediatR(cfg => 
         cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
     .AddKeyedSingleton<ICommandGenerator, CommandListCommandGenerator>(CommandListCommandGenerator.CommandName)
@@ -13,5 +15,5 @@ var serviceProvider = new ServiceCollection()
 
 var app = serviceProvider.GetService<ConsoleApplication>();
 
- app.Run();
+ await app.Run();
 
