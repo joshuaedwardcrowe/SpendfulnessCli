@@ -1,6 +1,6 @@
-using YnabProgress.ViewModels;
+using YnabProgressConsole.ViewModels;
 
-namespace YnabProgress.Compilers;
+namespace YnabProgressConsole.Compilers;
 
 public interface IViewModelCompiler<in TDataSet> 
 {

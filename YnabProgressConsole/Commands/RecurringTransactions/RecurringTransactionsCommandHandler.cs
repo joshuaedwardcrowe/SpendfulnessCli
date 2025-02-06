@@ -2,12 +2,11 @@ using ConsoleTables;
 using Ynab.Clients;
 using Ynab.Collections;
 using Ynab.Extensions;
-using YnabProgress.ViewModels;
 using YnabProgressConsole.ViewModels;
 
 namespace YnabProgressConsole.Commands.RecurringTransactions;
 
-public class RecurringTransactionsCommandHandler : BaseCommandHandler, ICommandHandler<RecurringTransactionsCommand>
+public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandler<RecurringTransactionsCommand>
 {
     private readonly BudgetsClient _budgetsClient;
     private readonly IViewModelConstructor<IEnumerable<TransactionsByMemoOccurrenceByPayeeName>> _viewModelConstructor;

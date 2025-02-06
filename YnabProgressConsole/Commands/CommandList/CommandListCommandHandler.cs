@@ -1,9 +1,9 @@
 using ConsoleTables;
-using YnabProgress.ViewModels;
+using YnabProgressConsole.ViewModels;
 
 namespace YnabProgressConsole.Commands.CommandList;
 
-public class CommandListCommandHandler : BaseCommandHandler, ICommandHandler<CommandListCommand>
+public class CommandListCommandHandler : CommandHandler, ICommandHandler<CommandListCommand>
 {
     public Task<ConsoleTable> Handle(CommandListCommand request, CancellationToken cancellationToken)
     {

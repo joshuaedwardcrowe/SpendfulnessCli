@@ -1,9 +1,9 @@
 using ConsoleTables;
-using YnabProgress.ViewModels;
+using YnabProgressConsole.ViewModels;
 
 namespace YnabProgressConsole.Commands;
 
-public abstract class BaseCommandHandler
+public abstract class CommandHandler
 {
     protected ConsoleTable Compile(ViewModel viewModel)
     {

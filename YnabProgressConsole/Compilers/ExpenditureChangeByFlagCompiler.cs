@@ -1,9 +1,9 @@
 using System.Diagnostics;
 using Ynab.Collections;
-using YnabProgress.Calculators;
-using YnabProgress.ViewModels;
+using YnabProgressConsole.Calculators;
+using YnabProgressConsole.ViewModels;
 
-namespace YnabProgress.Compilers;
+namespace YnabProgressConsole.Compilers;
 
 public class ExpenditureChangeByFlagCompiler : IViewModelCompiler<IEnumerable<FlaggedTransactionsForMonth>>
 {

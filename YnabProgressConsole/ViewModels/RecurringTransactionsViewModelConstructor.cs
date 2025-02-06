@@ -1,6 +1,5 @@
 using Ynab.Collections;
 using Ynab.Sanitisers;
-using YnabProgress.ViewModels;
 
 namespace YnabProgressConsole.ViewModels;
 

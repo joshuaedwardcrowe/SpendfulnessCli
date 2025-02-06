@@ -4,15 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabProgressConsole", "Ynab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ynab", "Ynab\Ynab.csproj", "{4D763B49-7DD5-488A-BE5A-083BFE9108FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabProgress", "YnabProgress\YnabProgress.csproj", "{2817F4ED-68F7-4DEE-A8B8-AB7D85F40D7D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{528597EC-71D9-431E-A46E-B1F060A82A2A}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 		LICENSE = LICENSE
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabProgress.Tests", "YnabProgress.Tests\YnabProgress.Tests.csproj", "{90EF1276-0998-41D3-9D54-C9A3ABCA7BA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabProgressConsole.Tests", "YnabProgressConsole.Tests\YnabProgressConsole.Tests.csproj", "{E5E15AE9-6AE1-4E3A-A43B-FB73A2074CB3}"
 EndProject
@@ -30,14 +26,6 @@ Global
 		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2817F4ED-68F7-4DEE-A8B8-AB7D85F40D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2817F4ED-68F7-4DEE-A8B8-AB7D85F40D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2817F4ED-68F7-4DEE-A8B8-AB7D85F40D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2817F4ED-68F7-4DEE-A8B8-AB7D85F40D7D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90EF1276-0998-41D3-9D54-C9A3ABCA7BA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90EF1276-0998-41D3-9D54-C9A3ABCA7BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90EF1276-0998-41D3-9D54-C9A3ABCA7BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90EF1276-0998-41D3-9D54-C9A3ABCA7BA8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E5E15AE9-6AE1-4E3A-A43B-FB73A2074CB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E5E15AE9-6AE1-4E3A-A43B-FB73A2074CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5E15AE9-6AE1-4E3A-A43B-FB73A2074CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU

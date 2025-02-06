@@ -1,13 +1,13 @@
 using ConsoleTables;
-using YnabProgress.ViewModels;
 using YnabProgressConsole.Commands;
+using YnabProgressConsole.ViewModels;
 
 namespace YnabProgressConsole.Tests.Commands;
 
 [TestFixture]
-public class BaseCommandHandlerTests
+public class CommandHandlerTests
 {
-    private class TestCommandHandler : BaseCommandHandler
+    private class TestCommandHandler : CommandHandler
     {
         public ConsoleTable TestCompile(ViewModel vm) => Compile(vm);
     }

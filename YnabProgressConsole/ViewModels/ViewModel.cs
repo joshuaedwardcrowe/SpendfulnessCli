@@ -1,4 +1,4 @@
-namespace YnabProgress.ViewModels;
+namespace YnabProgressConsole.ViewModels;
 
 public class ViewModel
 {

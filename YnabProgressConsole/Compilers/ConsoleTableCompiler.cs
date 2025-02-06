@@ -1,5 +1,5 @@
 using ConsoleTables;
-using YnabProgress.ViewModels;
+using YnabProgressConsole.ViewModels;
 
 namespace YnabProgressConsole.Compilers;
 

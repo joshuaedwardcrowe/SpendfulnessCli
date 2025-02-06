@@ -1,8 +1,8 @@
 using Ynab.Collections;
-using YnabProgress.Calculators;
-using YnabProgress.ViewModels;
+using YnabProgressConsole.Calculators;
+using YnabProgressConsole.ViewModels;
 
-namespace YnabProgress.Compilers;
+namespace YnabProgressConsole.Compilers;
 
 public class AmountsByYearCompiler : IViewModelCompiler<IEnumerable<AmountByYear>>
 {
