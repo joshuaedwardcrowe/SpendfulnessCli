@@ -6,15 +6,15 @@ using YnabProgressConsole;
 using YnabProgressConsole.Commands;
 using YnabProgressConsole.Commands.CommandList;
 using YnabProgressConsole.Commands.RecurringTransactions;
+using YnabProgressConsole.Extensions;
 using YnabProgressConsole.ViewModels;
 
 var serviceProvider = new ServiceCollection()
     .AddYnab()
     .AddMediatR(cfg => 
         cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
-    .AddKeyedSingleton<ICommandGenerator, CommandListCommandGenerator>(CommandListCommandGenerator.CommandName)
-    .AddKeyedSingleton<ICommandGenerator, RecurringTransactionsCommandGenerator>(RecurringTransactionsCommand.CommandName)
-    .AddSingleton<RecurringTransactionsViewModelConstructor>()
+    .AddCommandGenerators()
+    .AddViewModelConstructors()
     .AddSingleton<ConsoleApplication>()
     .BuildServiceProvider();
 
