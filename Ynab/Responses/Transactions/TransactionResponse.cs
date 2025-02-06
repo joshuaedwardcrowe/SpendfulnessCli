@@ -7,6 +7,9 @@ public class TransactionResponse
     [JsonPropertyName("date")]
     public DateTime Occured { get; set; }
     
+    [JsonPropertyName("memo")]
+    public string Memo { get; set; }
+    
     public int Amount { get; set; }
     
     [JsonPropertyName("flag_color")]

@@ -34,6 +34,22 @@ public static class TransactionExtensions
             };
         }
     }
+    
+    public static IEnumerable<TransactionsByPayeeName> GroupByPayeeName(
+        this IEnumerable<Transaction> transactions, int? minimumGroupSize = 0)
+    {
+        var groups = transactions
+            .GroupBy(transaction => transaction.PayeeName);
+
+        foreach (var group in groups)
+        {
+            yield return new TransactionsByPayeeName
+            {
+                PayeeName = group.Key,
+                Transactions = group.ToList()
+            };
+        }
+    }
 
     public static IEnumerable<AmountByYear> AverageByYear(
         this IEnumerable<Transaction> transactions)
