@@ -2,8 +2,9 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using YnabProgressConsole.Commands.CommandList;
 using YnabProgressConsole.Commands.RecurringTransactions;
+using YnabProgressConsole.Commands.SalaryIncreases;
 
-namespace YnabProgressConsole.Commands.Extensions;
+namespace YnabProgressConsole.Commands;
 
 public static class ServiceCollectionExtensions
 {
@@ -19,5 +20,7 @@ public static class ServiceCollectionExtensions
             .AddKeyedSingleton<ICommandGenerator, CommandListCommandGenerator>(
                 CommandListCommandGenerator.CommandName)
             .AddKeyedSingleton<ICommandGenerator, RecurringTransactionsCommandGenerator>(
-                RecurringTransactionsCommand.CommandName);
+                RecurringTransactionsCommand.CommandName)
+            .AddKeyedSingleton<ICommandGenerator, SalaryIncreasesCommandGenerator>(
+                SalaryIncreasesCommand.CommandName);
 }
