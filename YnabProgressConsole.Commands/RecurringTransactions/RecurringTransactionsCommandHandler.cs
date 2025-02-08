@@ -12,15 +12,15 @@ public class RecurringTransactionsCommandHandler
     : CommandHandler, ICommandHandler<RecurringTransactionsCommand>
 {
     private readonly BudgetsClient _budgetsClient;
-    private readonly IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> _viewModelBuilder;
+    private readonly IGroupViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> _groupViewModelBuilder;
 
     public RecurringTransactionsCommandHandler(
         BudgetsClient budgetsClient,
         [FromKeyedServices(typeof(TransactionsByMemoOccurrenceByPayeeName))]
-        IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> viewModelBuilder)
+        IGroupViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> groupViewModelBuilder)
     {
         _budgetsClient = budgetsClient;
-        _viewModelBuilder = viewModelBuilder;
+        _groupViewModelBuilder = groupViewModelBuilder;
     }
 
     public async Task<ConsoleTable> Handle(RecurringTransactionsCommand command, CancellationToken cancellationToken)
@@ -39,7 +39,7 @@ public class RecurringTransactionsCommandHandler
 
         var viewModelColumnNames = TransactionsByMemoOccurrenceByPayeeNameViewModel.GetColumnNames();
 
-        var viewModel = _viewModelBuilder
+        var viewModel = _groupViewModelBuilder
             .AddGroups(groups)
             .AddColumnNames(viewModelColumnNames.ToArray())
             .AddSortColumnName(TransactionsByMemoOccurrenceByPayeeNameViewModel.MemoOccurenceColumnName)

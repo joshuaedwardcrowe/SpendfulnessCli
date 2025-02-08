@@ -1,30 +1,16 @@
 namespace YnabProgressConsole.Compilation.AmountByYear;
 
-public class AmountByYearViewModelBuilder : IViewModelBuilder<Ynab.Collections.AmountByYear>
+public class AmountByYearGroupViewModelBuilder 
+    : ViewModelBuilder, IGroupViewModelBuilder<Ynab.Collections.AmountByYear>
 {
     private List<Ynab.Collections.AmountByYear> _salaryIncreases = [];
     private List<string> _columNames = [];
-    
-    public IViewModelBuilder<Ynab.Collections.AmountByYear> AddGroups(IEnumerable<Ynab.Collections.AmountByYear> groups)
+
+    public IGroupViewModelBuilder<Ynab.Collections.AmountByYear> AddGroups(
+        IEnumerable<Ynab.Collections.AmountByYear> groups)
     {
         _salaryIncreases = groups.ToList();
         return this;
-    }
-
-    public IViewModelBuilder<Ynab.Collections.AmountByYear> AddColumnNames(params string[] columnNames)
-    {
-        _columNames = columnNames.ToList();
-        return this;
-    }
-
-    public IViewModelBuilder<Ynab.Collections.AmountByYear> AddSortColumnName(string columnName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IViewModelBuilder<Ynab.Collections.AmountByYear> AddSortOrder(SortOrder sortOrder)
-    {
-        throw new NotImplementedException();
     }
 
     public ViewModel Build()

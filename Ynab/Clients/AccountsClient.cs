@@ -17,10 +17,10 @@ public class AccountsClient : YnabApiClient
     
     public async Task<IEnumerable<Account>> GetAccounts()
     {
-        var response = await Get<GetAccountsResponseData>(AccountsApiPath);
+        var response = await Get<GetAccountsResponseData>(string.Empty);
         return response.Data.Accounts.Select(a => new Account(this, a));
     }
     
     protected override HttpClient GetHttpClient() => 
-        _ynabHttpClientFactory.Create($"{_parentApiPath}/{AccountsApiPath}");
+        _ynabHttpClientFactory.Create(_parentApiPath, AccountsApiPath);
 }

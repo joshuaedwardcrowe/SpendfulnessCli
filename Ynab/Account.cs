@@ -9,6 +9,7 @@ public class Account
     private readonly AccountsClient _accountsClient;
     private readonly AccountResponse _accountResponse;
     
+    public string Name => _accountResponse.Name;
     public decimal Balance => MilliunitSanitiser.Calculate(_accountResponse.Balance);
     public bool OnBudget => _accountResponse.OnBudget;
     public bool Closed => _accountResponse.Closed;

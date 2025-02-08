@@ -11,15 +11,15 @@ namespace YnabProgressConsole.Commands.SalaryIncreases;
 public class SalaryIncreasesCommandHandler : CommandHandler, ICommandHandler<SalaryIncreasesCommand>
 {
     private readonly BudgetsClient _budgetsClient;
-    private readonly IViewModelBuilder<AmountByYear> _viewModelBuilder;
+    private readonly IGroupViewModelBuilder<AmountByYear> _groupViewModelBuilder;
 
     public SalaryIncreasesCommandHandler(
         BudgetsClient budgetsClient, 
         [FromKeyedServices(typeof(AmountByYear))]
-        IViewModelBuilder<AmountByYear> viewModelBuilder)
+        IGroupViewModelBuilder<AmountByYear> groupViewModelBuilder)
     {
         _budgetsClient = budgetsClient;
-        _viewModelBuilder = viewModelBuilder;
+        _groupViewModelBuilder = groupViewModelBuilder;
     }
 
     public async Task<ConsoleTable> Handle(SalaryIncreasesCommand request, CancellationToken cancellationToken)
@@ -40,7 +40,7 @@ public class SalaryIncreasesCommandHandler : CommandHandler, ICommandHandler<Sal
 
         var columnNames = AmountByYearViewModel.GetColumnNames();
         
-        var viewModel = _viewModelBuilder
+        var viewModel = _groupViewModelBuilder
             .AddGroups(monthlyPayByYear)
             .AddColumnNames(columnNames.ToArray())
             .Build();

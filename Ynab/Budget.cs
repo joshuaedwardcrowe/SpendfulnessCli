@@ -30,18 +30,6 @@ public class Budget
     public Task<IEnumerable<Account>> GetAccounts()
         => _accountsClient.GetAccounts();
 
-    public async Task<IEnumerable<Account>> GetCheckingAccounts()
-    {
-        var allAccounts = await _accountsClient.GetAccounts();
-        return allAccounts.FilterToChecking();
-    }
-
-    public async Task<decimal> GetCheckingBalance()
-    {
-        var checkingAccounts = await GetCheckingAccounts();
-        return checkingAccounts.Sum(checkingAccount => checkingAccount.Balance);
-    }
-
     public Task<IEnumerable<CategoryGroup>> GetCategoryGroups()
         => _categoriesClient.GetCategoryGroups();
     

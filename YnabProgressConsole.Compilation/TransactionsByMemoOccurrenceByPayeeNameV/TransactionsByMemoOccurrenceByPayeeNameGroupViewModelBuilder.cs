@@ -4,60 +4,21 @@ using Ynab.Sanitisers;
 
 namespace YnabProgressConsole.Compilation.TransactionsByMemoOccurrenceByPayeeNameV;
 
-public class TransactionsByMemoOccurrenceByPayeeNameViewModelBuilder
-    : IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName>
+public class TransactionsByMemoOccurrenceByPayeeNameGroupViewModelBuilder
+    : ViewModelBuilder, IGroupViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName>
 {
     private List<TransactionsByMemoOccurrenceByPayeeName> _groups = [];
-    private List<string> _columnNames = [];
-    private string? _sortOnColumnName;
-    private SortOrder _sortOrder;
 
-    public IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> AddGroups(
+    public IGroupViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> AddGroups(
         IEnumerable<TransactionsByMemoOccurrenceByPayeeName> groups)
     {
         _groups = groups.ToList();
         return this;
     }
-
-    private void ValidateColumnNames(params string[] columnNames)
-    {
-        var validColumnNames = TransactionsByMemoOccurrenceByPayeeNameViewModel.GetColumnNames();
-        
-        var invalidColumnNames = columnNames
-            .Where(columnName => !validColumnNames.Contains(columnName));
-
-        if (invalidColumnNames.Any())
-        {
-            var invalidColumnNamesString = string.Join(", ", invalidColumnNames);
-            throw new ArgumentException($"Invalid column names: {invalidColumnNamesString}");
-        }
-    }
     
-    public IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> AddColumnNames(params string[] columnNames)
-    {
-        ValidateColumnNames(columnNames);
-        
-        _columnNames = columnNames.ToList();
-        return this;
-    }
-
-    public IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> AddSortColumnName(string columnName)
-    {
-        ValidateColumnNames(columnName);
-        
-        _sortOnColumnName = columnName;
-        return this;
-    }
-
-    public IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> AddSortOrder(SortOrder sortOrder)
-    {
-        _sortOrder = sortOrder;
-        return this;
-    }
-
     public ViewModel Build()
     {
-        var sortColumnIndex = _columnNames.IndexOf(_sortOnColumnName);
+        var sortColumnIndex = _columnNames.IndexOf(_sortColumnName);
         
         var rows = BuildRows(_groups);
         var orderedRows = OrderRows(rows, sortColumnIndex, _sortOrder);
