@@ -4,7 +4,7 @@ using Ynab.Clients;
 using Ynab.Collections;
 using Ynab.Extensions;
 using YnabProgressConsole.Compilation;
-using YnabProgressConsole.Compilation.RecurringTransactions;
+using YnabProgressConsole.Compilation.TransactionsByMemoOccurrenceByPayeeNameV;
 
 namespace YnabProgressConsole.Commands.RecurringTransactions;
 

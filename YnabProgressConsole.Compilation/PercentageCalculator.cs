@@ -1,4 +1,4 @@
-namespace YnabProgressConsole.Compilation.Calculators;
+namespace YnabProgressConsole.Compilation;
 
 public static class PercentageCalculator
 {

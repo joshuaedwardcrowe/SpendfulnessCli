@@ -2,7 +2,7 @@ using Ynab;
 using Ynab.Collections;
 using Ynab.Sanitisers;
 
-namespace YnabProgressConsole.Compilation.RecurringTransactions;
+namespace YnabProgressConsole.Compilation.TransactionsByMemoOccurrenceByPayeeNameV;
 
 public class TransactionsByMemoOccurrenceByPayeeNameViewModelBuilder
     : IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName>

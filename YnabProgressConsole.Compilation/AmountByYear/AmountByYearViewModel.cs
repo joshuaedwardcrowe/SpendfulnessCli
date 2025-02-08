@@ -1,4 +1,4 @@
-namespace YnabProgressConsole.Compilation.SalaryIncreases;
+namespace YnabProgressConsole.Compilation.AmountByYear;
 
 public class AmountByYearViewModel : ViewModel
 {

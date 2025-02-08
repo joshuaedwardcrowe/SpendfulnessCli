@@ -1,4 +1,4 @@
-namespace YnabProgressConsole.Compilation.RecurringTransactions;
+namespace YnabProgressConsole.Compilation.TransactionsByMemoOccurrenceByPayeeNameV;
 
 public class TransactionsByMemoOccurrenceByPayeeNameViewModel : ViewModel
 {

@@ -4,7 +4,7 @@ using Ynab.Clients;
 using Ynab.Collections;
 using Ynab.Extensions;
 using YnabProgressConsole.Compilation;
-using YnabProgressConsole.Compilation.SalaryIncreases;
+using YnabProgressConsole.Compilation.AmountByYear;
 
 namespace YnabProgressConsole.Commands.SalaryIncreases;
 

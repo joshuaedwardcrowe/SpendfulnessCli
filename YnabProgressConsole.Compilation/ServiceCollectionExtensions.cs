@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Ynab.Collections;
-using YnabProgressConsole.Compilation.RecurringTransactions;
-using YnabProgressConsole.Compilation.SalaryIncreases;
+using YnabProgressConsole.Compilation.AmountByYear;
+using YnabProgressConsole.Compilation.TransactionsByMemoOccurrenceByPayeeNameV;
 
 namespace YnabProgressConsole.Compilation;
 
@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
             .AddKeyedSingleton<IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName>,
                 TransactionsByMemoOccurrenceByPayeeNameViewModelBuilder>(
                 typeof(TransactionsByMemoOccurrenceByPayeeName))
-            .AddKeyedSingleton<IViewModelBuilder<AmountByYear>,
-                AmountByYearViewModelBuilder>(typeof(AmountByYear));
+            .AddKeyedSingleton<IViewModelBuilder<Ynab.Collections.AmountByYear>,
+                AmountByYearViewModelBuilder>(typeof(Ynab.Collections.AmountByYear));
 
 }

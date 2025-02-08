@@ -1,31 +1,28 @@
-using Ynab.Collections;
-using YnabProgressConsole.Compilation.Calculators;
+namespace YnabProgressConsole.Compilation.AmountByYear;
 
-namespace YnabProgressConsole.Compilation.SalaryIncreases;
-
-public class AmountByYearViewModelBuilder : IViewModelBuilder<AmountByYear>
+public class AmountByYearViewModelBuilder : IViewModelBuilder<Ynab.Collections.AmountByYear>
 {
-    private List<AmountByYear> _salaryIncreases;
+    private List<Ynab.Collections.AmountByYear> _salaryIncreases;
     private List<string> _columNames = [];
     
-    public IViewModelBuilder<AmountByYear> AddGroups(IEnumerable<AmountByYear> groups)
+    public IViewModelBuilder<Ynab.Collections.AmountByYear> AddGroups(IEnumerable<Ynab.Collections.AmountByYear> groups)
     {
         _salaryIncreases = groups.ToList();
         return this;
     }
 
-    public IViewModelBuilder<AmountByYear> AddColumnNames(params string[] columnNames)
+    public IViewModelBuilder<Ynab.Collections.AmountByYear> AddColumnNames(params string[] columnNames)
     {
         _columNames = columnNames.ToList();
         return this;
     }
 
-    public IViewModelBuilder<AmountByYear> AddSortColumnName(string columnName)
+    public IViewModelBuilder<Ynab.Collections.AmountByYear> AddSortColumnName(string columnName)
     {
         throw new NotImplementedException();
     }
 
-    public IViewModelBuilder<AmountByYear> AddSortOrder(SortOrder sortOrder)
+    public IViewModelBuilder<Ynab.Collections.AmountByYear> AddSortOrder(SortOrder sortOrder)
     {
         throw new NotImplementedException();
     }
@@ -41,7 +38,7 @@ public class AmountByYearViewModelBuilder : IViewModelBuilder<AmountByYear>
         };
     }
 
-    private List<List<object>> BuildRows(List<AmountByYear> salaryIncreases)
+    private List<List<object>> BuildRows(List<Ynab.Collections.AmountByYear> salaryIncreases)
     {
         // Can't increase from no basis, so first row is just a default.
         var firstSalaryIncrease  = salaryIncreases.First();
@@ -53,10 +50,10 @@ public class AmountByYearViewModelBuilder : IViewModelBuilder<AmountByYear>
         return indexedRows;
     }
     
-    private List<object> BuildFirstRow(AmountByYear salaryIncrease) 
+    private List<object> BuildFirstRow(Ynab.Collections.AmountByYear salaryIncrease) 
         => [salaryIncrease.Year, salaryIncrease.AverageAmount, "0%"];
 
-    private IEnumerable<List<object>> BuildRemainingRows(List<AmountByYear> salaryIncreases)
+    private IEnumerable<List<object>> BuildRemainingRows(List<Ynab.Collections.AmountByYear> salaryIncreases)
     {
         // Offset from second salary increase so can be compared against first
         for (var i = 1; i < salaryIncreases.Count; i++)
