@@ -13,7 +13,7 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<ConsoleApplication>() // Front-end
     .BuildServiceProvider();
 
-var app = serviceProvider.GetService<ConsoleApplication>();
+var app = serviceProvider.GetRequiredService<ConsoleApplication>();
 
  await app.Run();
 

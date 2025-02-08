@@ -2,7 +2,7 @@ namespace YnabProgressConsole.Compilation.AmountByYear;
 
 public class AmountByYearViewModelBuilder : IViewModelBuilder<Ynab.Collections.AmountByYear>
 {
-    private List<Ynab.Collections.AmountByYear> _salaryIncreases;
+    private List<Ynab.Collections.AmountByYear> _salaryIncreases = [];
     private List<string> _columNames = [];
     
     public IViewModelBuilder<Ynab.Collections.AmountByYear> AddGroups(IEnumerable<Ynab.Collections.AmountByYear> groups)
