@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Ynab.Extensions;
 using YnabProgressConsole;
-using YnabProgressConsole.Commands.Extensions;
-using YnabProgressConsole.Compilation.Extensions;
+using YnabProgressConsole.Commands;
+using YnabProgressConsole.Compilation;
 using YnabProgressConsole.Instructions.Extensions;
 
 var serviceProvider = new ServiceCollection()

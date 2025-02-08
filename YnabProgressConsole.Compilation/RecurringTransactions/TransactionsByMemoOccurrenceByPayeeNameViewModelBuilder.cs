@@ -4,10 +4,10 @@ using Ynab.Sanitisers;
 
 namespace YnabProgressConsole.Compilation.RecurringTransactions;
 
-public class RecurringTransactionsViewModelBuilder
+public class TransactionsByMemoOccurrenceByPayeeNameViewModelBuilder
     : IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName>
 {
-    private IEnumerable<TransactionsByMemoOccurrenceByPayeeName> _groups = [];
+    private List<TransactionsByMemoOccurrenceByPayeeName> _groups = [];
     private List<string> _columnNames = [];
     private string? _sortOnColumnName;
     private SortOrder _sortOrder;
@@ -15,13 +15,13 @@ public class RecurringTransactionsViewModelBuilder
     public IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> AddGroups(
         IEnumerable<TransactionsByMemoOccurrenceByPayeeName> groups)
     {
-        _groups = groups;
+        _groups = groups.ToList();
         return this;
     }
 
     private void ValidateColumnNames(params string[] columnNames)
     {
-        var validColumnNames = RecurringTransactionsViewModel.GetColumnNames();
+        var validColumnNames = TransactionsByMemoOccurrenceByPayeeNameViewModel.GetColumnNames();
         
         var invalidColumnNames = columnNames
             .Where(columnName => !validColumnNames.Contains(columnName));
@@ -62,7 +62,7 @@ public class RecurringTransactionsViewModelBuilder
         var rows = BuildRows(_groups);
         var orderedRows = OrderRows(rows, sortColumnIndex, _sortOrder);
         
-        return new RecurringTransactionsViewModel
+        return new TransactionsByMemoOccurrenceByPayeeNameViewModel
         {
             Columns = _columnNames,
             Rows = orderedRows.ToList()
@@ -70,7 +70,7 @@ public class RecurringTransactionsViewModelBuilder
     }
 
     private IEnumerable<List<object>> BuildRows(
-        IEnumerable<TransactionsByMemoOccurrenceByPayeeName> groupCollection)
+        List<TransactionsByMemoOccurrenceByPayeeName> groupCollection)
             => groupCollection
                 .SelectMany(group => BuildMemoOccurrenceRows(
                     group.PayeeName, group.TransactionsByMemoOccurences));

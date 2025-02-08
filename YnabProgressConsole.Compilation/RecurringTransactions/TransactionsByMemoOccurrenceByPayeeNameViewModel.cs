@@ -1,6 +1,6 @@
 namespace YnabProgressConsole.Compilation.RecurringTransactions;
 
-public class RecurringTransactionsViewModel : ViewModel
+public class TransactionsByMemoOccurrenceByPayeeNameViewModel : ViewModel
 {
     public const string PayeeColumnName = "Payee";
     public const string MemoColumnName = "Memo";
