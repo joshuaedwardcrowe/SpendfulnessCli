@@ -23,6 +23,16 @@ public class InstructionParserTests
     }
     
     [Test]
+    public void GivenInputStringWithoutArguments_WhenaParse_ReturnsInstructionWithoutArguments()
+    {
+        var input = $"/command";
+        
+        var result = _parser.Parse(input);
+        
+        Assert.That(result.InstructionName, Is.EqualTo("command"));
+    }
+    
+    [Test]
     public void GivenInputString_WhenParse_ReturnsInstructionWithOneStringArguments()
     {
         var argumentName = "argumentOne";

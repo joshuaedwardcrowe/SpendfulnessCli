@@ -28,11 +28,13 @@ public class InstructionParser
     
     private InstructionTokens PerformTokenParse(string input)
     {
-        var firstSpaceIndex = input.IndexOf(' ');
+        var includesSpace = input.Contains(' ');
+        
+        var firstSpaceIndex = includesSpace ? input.IndexOf(' ') : input.Length;
         
         var nameToken = input.Substring(0, firstSpaceIndex);
         
-        var remainingInput = input.Substring(firstSpaceIndex + 1);
+        var remainingInput = includesSpace ? input.Substring(firstSpaceIndex + 1) : string.Empty;
         
         var argumentTokens = remainingInput
             .Split(InstructionArgumentPrefix)
