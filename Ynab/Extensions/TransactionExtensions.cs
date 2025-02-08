@@ -28,7 +28,7 @@ public static class TransactionExtensions
         this IEnumerable<Transaction> transactions)
     {
         var groups = transactions.GroupBy(transaction =>
-            Identifier.ForMonth(transaction.Occured));
+            IdentifierSanitiser.SanitiseForMonth(transaction.Occured));
 
         foreach (var group in groups)
         {
@@ -68,7 +68,7 @@ public static class TransactionExtensions
     {
         var groups = transactions
             .OrderBy(transaction => transaction.Occured.Year)
-            .GroupBy(transaction => Identifier.ForYear(transaction.Occured));
+            .GroupBy(transaction => IdentifierSanitiser.SanitiseForYear(transaction.Occured));
 
         foreach (var group in groups)
         {

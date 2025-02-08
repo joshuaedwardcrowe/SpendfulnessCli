@@ -1,7 +1,8 @@
 using Ynab.Clients;
 using Ynab.Extensions;
+using Ynab.Responses.Budgets;
 
-namespace Ynab.Responses.Budgets;
+namespace Ynab;
 
 public class Budget
 {

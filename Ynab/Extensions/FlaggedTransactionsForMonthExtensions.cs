@@ -13,7 +13,7 @@ public static class FlaggedTransactionsForMonthExtensions
             var transactionsForFlags = transactionsForMonth
                 .Transactions
                 .Where(t => t.FlagName != null)
-                .GroupBy(t => Identifier.ForFlag(t.FlagName, t.FlagColour))
+                .GroupBy(t => IdentifierSanitiser.SanitiseForFlag(t.FlagName, t.FlagColour))
                 .Select(transactionGroup => new TransactionsForFlag
                 {
                     Flag = transactionGroup.Key,
