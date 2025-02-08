@@ -4,5 +4,5 @@ namespace YnabProgressConsole.Compilation.SpareMoney;
 
 public class SpareMoneyAggregation : YnabAggregation<AccountBalanceAggregate>
 {
-    public decimal AmountToIgnore { get; set; }
+    public decimal AmountToDeduct { get; set; }
 }

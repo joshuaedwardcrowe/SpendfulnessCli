@@ -15,21 +15,19 @@ public class SpareMoneyViewModelBuilder
 
     public ViewModel Build()
     {
-        var all = _spareMoneyAggregation.Aggregation.Sum(o => o.Balance);
-        var result = all - _spareMoneyAggregation.AmountToIgnore;
-
-        var rows = new List<List<object>>
-        {
-            new()
-            {
-                $"£{result}"
-            }
-        };
+        var availableBalance = _spareMoneyAggregation.Aggregation.Sum(o => o.Balance);
+        var balanceAfterDeduction = availableBalance - _spareMoneyAggregation.AmountToDeduct;
         
         return new SpareMoneyViewModel
         {
             Columns = _columnNames,
-            Rows = rows,
+            Rows =
+            [
+                new List<object>
+                {
+                    $"£{balanceAfterDeduction}"
+                }
+            ]
         };
     }
 }

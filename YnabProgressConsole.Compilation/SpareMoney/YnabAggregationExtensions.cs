@@ -9,6 +9,6 @@ public static class YnabAggregationExtensions
             => new()
                 {
                     Aggregation = aggregation.Aggregation,
-                    AmountToIgnore = amountToIgnore,
+                    AmountToDeduct = amountToIgnore,
                 };
 }
