@@ -1,6 +1,5 @@
 using ConsoleTables;
 using Ynab.Clients;
-using Ynab.Collections;
 using Ynab.Extensions;
 using YnabProgressConsole.ViewModels;
 
@@ -28,16 +27,14 @@ public class RecurringTransactionsCommandHandler
         var budget =  budgets.First();
         
         var allTransactions = await budget.GetTransactions();
-
-        // TODO: Could filter by account? payee?  greater/lower than values?
+        
         var transactions = allTransactions
             .FilterToSpending()
-            .GroupByPayeeName()
+            .GroupByPayeeName(command.PayeeName)
             .GroupByMemoOccurence(command.MinimumOccurrences);
 
         var viewModel = _viewModelConstructor.Construct(transactions);
-
-        // TODO: This needs to render a proper view model.
+        
         return Compile(viewModel);
     }
 }

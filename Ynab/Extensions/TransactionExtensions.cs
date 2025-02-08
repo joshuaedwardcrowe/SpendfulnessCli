@@ -41,11 +41,17 @@ public static class TransactionExtensions
     }
     
     public static IEnumerable<TransactionsByPayeeName> GroupByPayeeName(
-        this IEnumerable<Transaction> transactions)
+        this IEnumerable<Transaction> transactions, string? payeeName = null)
     {
         var groups = transactions
-            .GroupBy(transaction => transaction.PayeeName)
-            .OrderByDescending(group => group.Count());
+            .GroupBy(transaction => transaction.PayeeName);
+
+        if (payeeName != null)
+        {
+            groups = groups.Where(group => group.Key == payeeName);
+        }
+        
+        groups = groups.OrderByDescending(group => group.Count());
 
         foreach (var group in groups)
         {
