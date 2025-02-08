@@ -3,9 +3,10 @@ using Ynab.Sanitisers;
 
 namespace YnabProgressConsole.Compilation;
 
+[Obsolete("Please use builder pattern")]
 public class RecurringTransactionsViewModelCompiler
 {
-    public ConsoleTableViewModel Compile(IEnumerable<TransactionsByMemoOccurrenceByPayeeName> groupCollection)
+    public ViewModel Compile(IEnumerable<TransactionsByMemoOccurrenceByPayeeName> groupCollection)
     {
         var allRows = ConstructAllRows(groupCollection);
         
@@ -13,7 +14,7 @@ public class RecurringTransactionsViewModelCompiler
             .OrderByDescending(rowColumn => rowColumn[2])
             .ToList();
 
-        return new ConsoleTableViewModel
+        return new ViewModel
         {
             Columns = ["Payee", "Memo", "Occurrence", "Average Spend"],
             Rows = orderedRows

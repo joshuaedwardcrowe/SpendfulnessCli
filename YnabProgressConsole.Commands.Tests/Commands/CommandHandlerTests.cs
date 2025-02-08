@@ -8,13 +8,13 @@ public class CommandHandlerTests
 {
     private class TestCommandHandler : CommandHandler
     {
-        public ConsoleTable TestCompile(ConsoleTableViewModel vm) => Compile(vm);
+        public ConsoleTable TestCompile(ViewModel vm) => Compile(vm);
     }
 
     [Test]
     public void GivenViewModel_WhenCompile_ShouldReturnConsoleTable()
     {
-        var vm = new ConsoleTableViewModel()
+        var vm = new ViewModel()
         {
             Columns = ["Column1", "Column2", "Column3"],
             Rows = [new List<object>() { "Row1", "Row2", "Row3" }]

@@ -7,7 +7,7 @@ public class CommandListCommandHandler : CommandHandler, ICommandHandler<Command
 {
     public Task<ConsoleTable> Handle(CommandListCommand request, CancellationToken cancellationToken)
     {
-        var viewModel = new ConsoleTableViewModel();
+        var viewModel = new ViewModel();
         
         // TODO: This command list needs storing somewhere else in the future, or achieving through reflection.
         viewModel.Columns.AddRange(["Command", "Description"]);
