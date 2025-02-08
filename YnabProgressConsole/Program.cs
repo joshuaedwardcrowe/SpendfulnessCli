@@ -1,17 +1,16 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Ynab.Extensions;
 using YnabProgressConsole;
-using YnabProgressConsole.Extensions;
+using YnabProgressConsole.Commands.Extensions;
+using YnabProgressConsole.Compilation.Extensions;
+using YnabProgressConsole.Instructions.Extensions;
 
 var serviceProvider = new ServiceCollection()
-    .AddYnab()
-    .AddMediatR(cfg => 
-        cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
-    .AddCommandGenerators()
-    .AddViewModelConstructors()
-    .AddInstructionParsing()
-    .AddSingleton<ConsoleApplication>()
+    .AddConsoleCompilation() // Compile into ConsoleTables.
+    .AddYnab() // Speak to the YNAB API
+    .AddConsoleCommands() // Convert them into MediatR requests
+    .AddConsoleInstructions() // Understand terminal commands
+    .AddSingleton<ConsoleApplication>() // Front-end
     .BuildServiceProvider();
 
 var app = serviceProvider.GetService<ConsoleApplication>();

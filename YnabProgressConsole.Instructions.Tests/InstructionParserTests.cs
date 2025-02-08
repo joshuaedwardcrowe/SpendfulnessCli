@@ -1,8 +1,8 @@
-using YnabProgressConsole.Instructions;
+using NUnit.Framework;
 using YnabProgressConsole.Instructions.InstructionArgumentBuilders;
 using YnabProgressConsole.Instructions.InstructionArguments;
 
-namespace YnabProgressConsole.Tests.Instructions;
+namespace YnabProgressConsole.Instructions.Tests;
 
 [TestFixture]
 public class InstructionParserTests

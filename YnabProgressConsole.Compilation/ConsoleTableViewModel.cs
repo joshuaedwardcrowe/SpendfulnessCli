@@ -1,8 +1,7 @@
-namespace YnabProgressConsole.ViewModels;
+namespace YnabProgressConsole.Compilation;
 
-public class ViewModel
+public class ConsoleTableViewModel
 {
     public List<string> Columns { get; set; } = [];
     public List<List<object>> Rows { get; set; } = [];
-    public long? CompiledIn { get; set; }
 }

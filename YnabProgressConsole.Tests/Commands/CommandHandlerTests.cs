@@ -1,6 +1,6 @@
 using ConsoleTables;
 using YnabProgressConsole.Commands;
-using YnabProgressConsole.ViewModels;
+using YnabProgressConsole.Compilation;
 
 namespace YnabProgressConsole.Tests.Commands;
 
@@ -9,13 +9,13 @@ public class CommandHandlerTests
 {
     private class TestCommandHandler : CommandHandler
     {
-        public ConsoleTable TestCompile(ViewModel vm) => Compile(vm);
+        public ConsoleTable TestCompile(ConsoleTableViewModel vm) => Compile(vm);
     }
 
     [Test]
     public void GivenViewModel_WhenCompile_ShouldReturnConsoleTable()
     {
-        var vm = new ViewModel
+        var vm = new ConsoleTableViewModel()
         {
             Columns = ["Column1", "Column2", "Column3"],
             Rows = [new List<object>() { "Row1", "Row2", "Row3" }]

@@ -1,5 +1,5 @@
 using ConsoleTables;
-using YnabProgressConsole.ViewModels;
+using YnabProgressConsole.Compilation;
 
 namespace YnabProgressConsole.Commands.CommandList;
 
@@ -7,7 +7,7 @@ public class CommandListCommandHandler : CommandHandler, ICommandHandler<Command
 {
     public Task<ConsoleTable> Handle(CommandListCommand request, CancellationToken cancellationToken)
     {
-        var viewModel = new ViewModel();
+        var viewModel = new ConsoleTableViewModel();
         
         // TODO: This command list needs storing somewhere else in the future, or achieving through reflection.
         viewModel.Columns.AddRange(["Command", "Description"]);

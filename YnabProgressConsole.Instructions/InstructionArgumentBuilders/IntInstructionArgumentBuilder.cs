@@ -1,4 +1,3 @@
-
 using YnabProgressConsole.Instructions.InstructionArguments;
 
 namespace YnabProgressConsole.Instructions.InstructionArgumentBuilders;

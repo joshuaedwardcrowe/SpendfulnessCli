@@ -1,7 +1,9 @@
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 using YnabProgressConsole.Instructions.InstructionArgumentBuilders;
 using YnabProgressConsole.Instructions.InstructionArguments;
 
-namespace YnabProgressConsole.Tests.Instructions.InstructionArgumentBuilders;
+namespace YnabProgressConsole.Instructions.Tests.InstructionArgumentBuilders;
 
 [TestFixture]
 public class StringInstructionArgumentBuilderTests

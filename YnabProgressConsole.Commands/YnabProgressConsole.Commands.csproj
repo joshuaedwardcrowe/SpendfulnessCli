@@ -1,17 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\YnabProgressConsole.Commands\YnabProgressConsole.Commands.csproj" />
+      <PackageReference Include="ConsoleTables" Version="2.6.2" />
+      <PackageReference Include="MediatR" Version="12.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\YnabProgressConsole.Compilation\YnabProgressConsole.Compilation.csproj" />
       <ProjectReference Include="..\YnabProgressConsole.Instructions\YnabProgressConsole.Instructions.csproj" />
-      <ProjectReference Include="..\Ynab\Ynab.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Commands\" />
     </ItemGroup>
 
 </Project>
