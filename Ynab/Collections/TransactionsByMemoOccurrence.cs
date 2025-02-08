@@ -1,6 +1,6 @@
 namespace Ynab.Collections;
 
-public class TransactionsByMemoOccurence
+public class TransactionsByMemoOccurrence
 {
     public required string? Memo { get; set; }
     public required int MemoOccurence { get; set; }

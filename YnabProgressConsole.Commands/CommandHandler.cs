@@ -5,7 +5,7 @@ namespace YnabProgressConsole.Commands;
 
 public abstract class CommandHandler
 {
-    protected ConsoleTable Compile(ConsoleTableViewModel tableViewModel)
+    protected ConsoleTable Compile(ViewModel tableViewModel)
     {
         var table = new ConsoleTable(tableViewModel.Columns.ToArray());
        

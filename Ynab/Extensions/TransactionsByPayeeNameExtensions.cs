@@ -12,7 +12,7 @@ public static class TransactionsByPayeeNameExtensions
             var memoOccurences = transactionsByPayeeName
                 .Transactions
                 .GroupBy(t => t.Memo)
-                .Select(grouping => new TransactionsByMemoOccurence
+                .Select(grouping => new TransactionsByMemoOccurrence
                 {
                     Memo = grouping.Key,
                     MemoOccurence = grouping.Count(),
