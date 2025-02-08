@@ -6,7 +6,8 @@ using YnabProgressConsole.ViewModels;
 
 namespace YnabProgressConsole.Commands.RecurringTransactions;
 
-public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandler<RecurringTransactionsCommand>
+public class RecurringTransactionsCommandHandler
+    : CommandHandler, ICommandHandler<RecurringTransactionsCommand>
 {
     private readonly BudgetsClient _budgetsClient;
     private readonly RecurringTransactionsViewModelConstructor _viewModelConstructor;
@@ -19,7 +20,7 @@ public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandl
         _viewModelConstructor = viewModelConstructor;
     }
 
-    public async Task<ConsoleTable> Handle(RecurringTransactionsCommand request, CancellationToken cancellationToken)
+    public async Task<ConsoleTable> Handle(RecurringTransactionsCommand command, CancellationToken cancellationToken)
     {
         var budgets = await _budgetsClient.GetBudgets();
         
@@ -32,7 +33,7 @@ public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandl
         var transactions = allTransactions
             .FilterToSpending()
             .GroupByPayeeName()
-            .GroupByMemoOccurence();
+            .GroupByMemoOccurence(command.MinimumOccurrences);
 
         var viewModel = _viewModelConstructor.Construct(transactions);
 

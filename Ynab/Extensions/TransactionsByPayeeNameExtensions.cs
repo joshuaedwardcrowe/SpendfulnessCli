@@ -1,4 +1,3 @@
-using System.Transactions;
 using Ynab.Collections;
 
 namespace Ynab.Extensions;
@@ -6,7 +5,7 @@ namespace Ynab.Extensions;
 public static class TransactionsByPayeeNameExtensions
 {
     public static IEnumerable<TransactionsByMemoOccurrenceByPayeeName> GroupByMemoOccurence(
-        this IEnumerable<TransactionsByPayeeName> transactionsByPayeeNames)
+        this IEnumerable<TransactionsByPayeeName> transactionsByPayeeNames, int? minimumOccurences = 0)
     {
         foreach (var transactionsByPayeeName in transactionsByPayeeNames)
         {
@@ -17,13 +16,17 @@ public static class TransactionsByPayeeNameExtensions
                 {
                     Memo = grouping.Key,
                     MemoOccurence = grouping.Count(),
-                    // All transactions with that memo
                     Transactions = grouping.ToList()
-                })
-                // Highest memo occurence first is logical.
-                .OrderByDescending(t => t.MemoOccurence)
-                // TODO: Can this be passed in?
-                .Take(10);
+                });
+
+            if (minimumOccurences is not null)
+            {
+                memoOccurences = memoOccurences
+                    .Where(x => x.MemoOccurence >= minimumOccurences);
+            }
+            
+            memoOccurences = memoOccurences
+                .OrderByDescending(t => t.MemoOccurence);
 
             yield return new TransactionsByMemoOccurrenceByPayeeName
             {

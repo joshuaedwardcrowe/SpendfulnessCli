@@ -45,10 +45,7 @@ public static class TransactionExtensions
     {
         var groups = transactions
             .GroupBy(transaction => transaction.PayeeName)
-            // Biggest group first is logical
-            .OrderByDescending(group => group.Count())
-            // TODO: Can this be passed in?
-            .Take(10);
+            .OrderByDescending(group => group.Count());
 
         foreach (var group in groups)
         {
