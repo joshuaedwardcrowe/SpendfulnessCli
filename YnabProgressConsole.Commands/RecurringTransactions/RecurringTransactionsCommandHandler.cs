@@ -1,7 +1,10 @@
 using ConsoleTables;
+using Microsoft.Extensions.DependencyInjection;
 using Ynab.Clients;
+using Ynab.Collections;
 using Ynab.Extensions;
 using YnabProgressConsole.Compilation;
+using YnabProgressConsole.Compilation.RecurringTransactions;
 
 namespace YnabProgressConsole.Commands.RecurringTransactions;
 
@@ -9,14 +12,15 @@ public class RecurringTransactionsCommandHandler
     : CommandHandler, ICommandHandler<RecurringTransactionsCommand>
 {
     private readonly BudgetsClient _budgetsClient;
-    private readonly RecurringTransactionsViewModelCompiler _viewModelCompiler;
+    private readonly IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> _viewModelBuilder;
 
     public RecurringTransactionsCommandHandler(
         BudgetsClient budgetsClient,
-        RecurringTransactionsViewModelCompiler viewModelCompiler)
+        [FromKeyedServices(typeof(TransactionsByMemoOccurrenceByPayeeName))]
+        IViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> viewModelBuilder)
     {
         _budgetsClient = budgetsClient;
-        _viewModelCompiler = viewModelCompiler;
+        _viewModelBuilder = viewModelBuilder;
     }
 
     public async Task<ConsoleTable> Handle(RecurringTransactionsCommand command, CancellationToken cancellationToken)
@@ -26,14 +30,21 @@ public class RecurringTransactionsCommandHandler
         // TODO: Add support for selecting a budget if you ever do a settings feture.
         var budget =  budgets.First();
         
-        var allTransactions = await budget.GetTransactions();
+        var transactions = await budget.GetTransactions();
         
-        var transactions = allTransactions
+        var groups = transactions
             .FilterToSpending()
             .GroupByPayeeName(command.PayeeName)
             .GroupByMemoOccurence(command.MinimumOccurrences);
 
-        var viewModel = _viewModelCompiler.Compile(transactions);
+        var viewModelColumnNames = RecurringTransactionsViewModel.GetColumnNames();
+
+        var viewModel = _viewModelBuilder
+            .AddGroups(groups)
+            .AddColumnNames(viewModelColumnNames.ToArray())
+            .AddSortColumnName(RecurringTransactionsViewModel.MemoOccurenceColumnName)
+            .AddSortOrder(SortOrder.Descending)
+            .Build();
         
         return Compile(viewModel);
     }
