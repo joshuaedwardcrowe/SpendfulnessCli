@@ -1,4 +1,5 @@
 using YnabProgressConsole.Commands.CommandList;
+using YnabProgressConsole.Instructions.InstructionArguments;
 
 namespace YnabProgressConsole.Tests.Commands.CommandList;
 
@@ -10,7 +11,9 @@ public class CommandListCommandGeneratorTests
     {
         var generator = new CommandListCommandGenerator();
 
-        var result = generator.Generate(["crash", "bang", "whollop"]);
+        var arguments = new List<InstructionArgument>();
+        
+        var result = generator.Generate(arguments);
         
         Assert.That(result, Is.TypeOf<CommandListCommand>());
     }

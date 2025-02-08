@@ -1,13 +1,8 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Ynab.Collections;
 using Ynab.Extensions;
 using YnabProgressConsole;
-using YnabProgressConsole.Commands;
-using YnabProgressConsole.Commands.CommandList;
-using YnabProgressConsole.Commands.RecurringTransactions;
 using YnabProgressConsole.Extensions;
-using YnabProgressConsole.ViewModels;
 
 var serviceProvider = new ServiceCollection()
     .AddYnab()
@@ -15,6 +10,7 @@ var serviceProvider = new ServiceCollection()
         cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
     .AddCommandGenerators()
     .AddViewModelConstructors()
+    .AddInstructionParsing()
     .AddSingleton<ConsoleApplication>()
     .BuildServiceProvider();
 

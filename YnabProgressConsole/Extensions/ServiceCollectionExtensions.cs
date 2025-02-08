@@ -2,6 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using YnabProgressConsole.Commands;
 using YnabProgressConsole.Commands.CommandList;
 using YnabProgressConsole.Commands.RecurringTransactions;
+using YnabProgressConsole.Instructions;
+using YnabProgressConsole.Instructions.InstructionArgumentBuilders;
 using YnabProgressConsole.ViewModels;
 
 namespace YnabProgressConsole.Extensions;
@@ -19,4 +21,11 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddViewModelConstructors(this IServiceCollection serviceCollection)
         => serviceCollection
             .AddSingleton<RecurringTransactionsViewModelConstructor>();
+
+    public static IServiceCollection AddInstructionParsing(this IServiceCollection serviceCollection)
+        => serviceCollection
+            .AddSingleton<IInstructionArgumentBuilder, StringInstructionArgumentBuilder>()
+            .AddSingleton<IInstructionArgumentBuilder, IntInstructionArgumentBuilder>()
+            .AddSingleton<InstructionParser>();
+
 }
