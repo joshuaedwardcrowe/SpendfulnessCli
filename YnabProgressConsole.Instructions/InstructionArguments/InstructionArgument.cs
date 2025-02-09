@@ -1,6 +1,6 @@
 namespace YnabProgressConsole.Instructions.InstructionArguments;
 
-public class InstructionArgument
+public class InstructionArgument(string argumentName)
 {
-    public required string ArgumentName { get; set; }
+    public string ArgumentName { get; set; } = argumentName;
 }
