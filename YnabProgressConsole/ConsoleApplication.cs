@@ -26,6 +26,11 @@ public class ConsoleApplication(IServiceProvider serviceProvider)
             }
 
             var instruction = instructionParser.Parse(input);
+            if (instruction.Prefix is null)
+            {
+                PrintToConsole("Commands must have a '/' prefix.");
+                continue;
+            }
 
             var generator = serviceProvider.GetKeyedService<ICommandGenerator>(instruction.Name);
             if (generator == null)

@@ -28,8 +28,12 @@ public class InstructionParser
         var indexAfterCommandName = includesInputBeyondCommandName 
             ? terminalInput.IndexOf(' ') // At the end of the command name
             : terminalInput.Length - 1; // The end of the input will be the end of the command name/
-        
-        var commandPrefixToken = terminalInput.Substring(0, 1);
+
+        var indexOfCommandToken = terminalInput.IndexOf('/');
+
+        var commandPrefixToken = indexOfCommandToken > 0
+            ? terminalInput.Substring(0, 1)
+            : null;
         
         var commandNameToken = terminalInput.Substring(1, indexAfterCommandName);
         
