@@ -16,38 +16,33 @@ public class InstructionParser
     public Instruction Parse(string input)
     {
         var tokens = PerformTokenParse(input);
-        var name = ParseInstructionName(tokens.NameToken);
         var arguments = ParseInstructionArguments(tokens.ArgumentTokens);
 
-        return new Instruction
-        {
-            InstructionName = name,
-            Arguments = arguments,
-        };
+        return new Instruction(tokens.PrefixToken, tokens.NameToken, arguments);
     }
     
-    private InstructionTokens PerformTokenParse(string input)
+    private InstructionTokens PerformTokenParse(string terminalInput)
     {
-        var includesSpace = input.Contains(' ');
+        var includesInputBeyondCommandName = terminalInput.Contains(' ');
         
-        var firstSpaceIndex = includesSpace ? input.IndexOf(' ') : input.Length;
+        var indexAfterCommandName = includesInputBeyondCommandName 
+            ? terminalInput.IndexOf(' ') // At the end of the command name
+            : terminalInput.Length - 1; // The end of the input will be the end of the command name/
         
-        var nameToken = input.Substring(0, firstSpaceIndex);
+        var commandPrefixToken = terminalInput.Substring(0, 1);
         
-        var remainingInput = includesSpace ? input.Substring(firstSpaceIndex + 1) : string.Empty;
+        var commandNameToken = terminalInput.Substring(1, indexAfterCommandName);
         
-        var argumentTokens = remainingInput
+        var remainingTerminalInput = includesInputBeyondCommandName
+            ? terminalInput.Substring(indexAfterCommandName + 1) 
+            : string.Empty;
+        
+        var argumentTokens = remainingTerminalInput
             .Split(InstructionArgumentPrefix)
             .Where(token => token != string.Empty);
 
-        return new InstructionTokens
-        {
-            NameToken = nameToken,
-            ArgumentTokens = argumentTokens
-        };
+        return new InstructionTokens(commandPrefixToken, commandNameToken, argumentTokens);
     }
-    
-    private string ParseInstructionName(string instructionNameToken) => instructionNameToken.Substring(1);
     
     private IEnumerable<InstructionArgument> ParseInstructionArguments(IEnumerable<string> argumentTokens)
     {
