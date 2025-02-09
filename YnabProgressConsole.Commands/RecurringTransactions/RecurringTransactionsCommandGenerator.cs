@@ -2,7 +2,7 @@ using YnabProgressConsole.Instructions.InstructionArguments;
 
 namespace YnabProgressConsole.Commands.RecurringTransactions;
 
-public class RecurringTransactionsCommandGenerator : ICommandGenerator
+public class RecurringTransactionsCommandGenerator : ICommandGenerator, ITypedCommandGenerator<RecurringTransactionsCommand>
 {
     public ICommand Generate(List<InstructionArgument> arguments)
     {

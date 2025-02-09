@@ -1,28 +1,56 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using YnabProgressConsole.Commands.CommandList;
-using YnabProgressConsole.Commands.RecurringTransactions;
-using YnabProgressConsole.Commands.SalaryIncreases;
-using YnabProgressConsole.Commands.SpareMoney;
 
 namespace YnabProgressConsole.Commands;
 
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddConsoleCommands(this IServiceCollection serviceCollection)
-        => serviceCollection
-            .AddMediatR(cfg => 
-                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
-            .AddCommandGenerators();
-    
-    private static IServiceCollection AddCommandGenerators(this IServiceCollection serviceCollection)
-        => serviceCollection
-            .AddKeyedSingleton<ICommandGenerator, CommandListCommandGenerator>(
-                CommandListCommand.CommandName)
-            .AddKeyedSingleton<ICommandGenerator, RecurringTransactionsCommandGenerator>(
-                RecurringTransactionsCommand.CommandName)
-            .AddKeyedSingleton<ICommandGenerator, SalaryIncreasesCommandGenerator>(
-                SalaryIncreasesCommand.CommandName)
-            .AddKeyedSingleton<ICommandGenerator, SpareMoneyCommandGenerator>(
-                SpareMoneyCommand.CommandName);
+    {
+        var commandsAssembly = Assembly.GetAssembly(typeof(ICommand));
+        
+        return serviceCollection
+            .AddMediatRCommandsAndHandlers(commandsAssembly)
+            .AddCommandGenerators(commandsAssembly);
+    }
+
+    private static IServiceCollection AddMediatRCommandsAndHandlers(this IServiceCollection serviceCollection, Assembly assembly)
+        => serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
+
+    private static IServiceCollection AddCommandGenerators(this IServiceCollection serviceCollection, Assembly assembly)
+    {
+        var implementationTypes = assembly.GetTypes()
+            .Where(anyType => anyType.IsClass && typeof(ICommandGenerator).IsAssignableFrom(anyType))
+            .ToList();
+        
+        foreach (var implementationType in implementationTypes)
+        {
+            var genericInterfaceType = implementationType
+                .GetInterfaces()
+                .FirstOrDefault(interfaceType => interfaceType.GenericTypeArguments.Length != 0);
+
+            if (genericInterfaceType is null)
+            {
+                var implementationTypeName = implementationType.Name;
+                var typeName = typeof(ITypedCommandGenerator<>).Name;
+                
+                throw new ArgumentException($"Type '{implementationTypeName}' does not implement {typeName} interface");
+            }
+            
+            var typeForAssignedCommand = genericInterfaceType.GenericTypeArguments.First();
+
+            var commandNameField = typeForAssignedCommand
+                .GetFields()
+                .FirstOrDefault(lol => lol.Name == "CommandName");
+            
+            var commandNameValue = commandNameField.GetValue(typeForAssignedCommand);
+            
+            serviceCollection.AddKeyedSingleton(
+                typeof(ICommandGenerator),
+                commandNameValue,
+                implementationType);
+        }
+        
+        return serviceCollection;
+    }
 }
