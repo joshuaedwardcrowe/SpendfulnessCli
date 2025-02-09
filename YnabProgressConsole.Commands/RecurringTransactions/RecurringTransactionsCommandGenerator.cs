@@ -6,18 +6,8 @@ public class RecurringTransactionsCommandGenerator : ICommandGenerator, ITypedCo
 {
     public ICommand Generate(List<InstructionArgument> arguments)
     {
-        var payeeName = RecurringTransactionsCommand.ArgumentNames.PayeeName;
-        
-        var payeeNameArgument = arguments
-            .Where(arg => arg.ArgumentName == payeeName)
-            .OfType<TypedInstructionArgument<string>>()
-            .FirstOrDefault();
-        
-        var minimumOccurrences = RecurringTransactionsCommand.ArgumentNames.MinimumOccurrences;
-        var minimumOccurrencesArgument = arguments.
-            Where(argument => argument.ArgumentName ==  minimumOccurrences)
-            .OfType<TypedInstructionArgument<int>>()
-            .FirstOrDefault();
+        var payeeNameArgument = arguments.OfType<string>(RecurringTransactionsCommand.ArgumentNames.PayeeName);
+        var minimumOccurrencesArgument = arguments.OfType<int>(RecurringTransactionsCommand.ArgumentNames.MinimumOccurrences);
 
         return new RecurringTransactionsCommand
         {

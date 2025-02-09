@@ -12,11 +12,5 @@ public class StringInstructionArgumentBuilder : IInstructionArgumentBuilder
             .All(char.IsLetter);
 
     public InstructionArgument Create(string argumentName, string argumentValue)
-    {
-        return new TypedInstructionArgument<string>
-        {
-            ArgumentName = argumentName,
-            ArgumentValue = argumentValue
-        };
-    }
+        => new TypedInstructionArgument<string>(argumentName, argumentValue);
 }

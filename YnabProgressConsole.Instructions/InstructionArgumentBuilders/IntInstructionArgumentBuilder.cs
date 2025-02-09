@@ -9,12 +9,11 @@ public class IntInstructionArgumentBuilder : IInstructionArgumentBuilder
 
     public InstructionArgument Create(string argumentName, string argumentValue)
     {
-        var convertedArgumentValue = int.Parse(argumentValue);
-        
-        return new TypedInstructionArgument<int>
+        if (!int.TryParse(argumentValue, out var convertedArgumentValue))
         {
-            ArgumentName = argumentName,
-            ArgumentValue = convertedArgumentValue
-        };
+            throw new ArgumentException($"Invalid Integer Value for Argument: {argumentName}");
+        }
+        
+        return new TypedInstructionArgument<int>(argumentName, convertedArgumentValue);
     }
 }
