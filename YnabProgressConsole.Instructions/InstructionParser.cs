@@ -31,7 +31,7 @@ public class InstructionParser
 
         var indexOfCommandToken = terminalInput.IndexOf('/');
 
-        var commandPrefixToken = indexOfCommandToken > 0
+        var commandPrefixToken = indexOfCommandToken == 0
             ? terminalInput.Substring(0, 1)
             : null;
         
