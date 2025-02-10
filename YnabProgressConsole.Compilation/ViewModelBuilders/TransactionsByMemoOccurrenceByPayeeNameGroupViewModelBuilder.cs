@@ -1,6 +1,7 @@
 using Ynab;
 using Ynab.Collections;
 using Ynab.Sanitisers;
+using YnabProgressConsole.Compilation.Formatters;
 using YnabProgressConsole.Compilation.ViewModels;
 
 namespace YnabProgressConsole.Compilation.ViewModelBuilders;
@@ -66,6 +67,6 @@ public class TransactionsByMemoOccurrenceByPayeeNameGroupViewModelBuilder
         var decimalSanitisedAmount = DecimalPlaceSanitiser.Sanitise(averageAmount);
         var flowSanitisedAmount = TransactionFlowSanitiser.Sanitise(decimalSanitisedAmount);
 
-        return $"£{flowSanitisedAmount}";
+        return CurrencyDisplayFormatter.Format(flowSanitisedAmount);
     }
 }
