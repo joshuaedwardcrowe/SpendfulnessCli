@@ -41,6 +41,7 @@ public class SalaryIncreasesCommandHandler : CommandHandler, ICommandHandler<Sal
         var viewModel = _groupViewModelBuilder
             .AddGroups(monthlyPayByYear)
             .AddColumnNames(AmountByYearViewModel.GetColumnNames())
+            .AddRowCount(false)
             .Build();
 
         return Compile(viewModel);

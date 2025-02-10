@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using YnabProgressConsole.Commands.CommandList;
+using YnabProgressConsole.Commands.RecurringTransactions;
 
 namespace YnabProgressConsole.Commands;
 
@@ -33,13 +34,20 @@ public static class ServiceCollectionExtensions
             var typeForReferencedCommand = genericInterfaceType.GenericTypeArguments.First();
 
             var commandNameField = typeForReferencedCommand.GetRequiredField(nameof(CommandListCommand.CommandName));
+            var alternateCommandNamesField = typeForReferencedCommand.GetRequiredField(nameof(CommandListCommand.ShorthandCommandName));
             
             var commandNameValue = commandNameField.GetValue(typeForReferencedCommand);
-            
-            serviceCollection.AddKeyedSingleton(
-                typeof(ICommandGenerator),
-                commandNameValue,
-                implementationType);
+            var shorthandCommandName = alternateCommandNamesField.GetValue(typeForReferencedCommand);
+
+            serviceCollection
+                .AddKeyedSingleton(
+                    typeof(ICommandGenerator),
+                    commandNameValue,
+                    implementationType)
+                .AddKeyedSingleton(
+                    typeof(ICommandGenerator),
+                    shorthandCommandName,
+                    implementationType);
         }
         
         return serviceCollection;
