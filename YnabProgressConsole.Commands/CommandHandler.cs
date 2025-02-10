@@ -5,11 +5,19 @@ namespace YnabProgressConsole.Commands;
 
 public abstract class CommandHandler
 {
-    protected ConsoleTable Compile(ViewModel tableViewModel)
+    protected static ConsoleTable Compile(ViewModel viewModel)
     {
-        var table = new ConsoleTable(tableViewModel.Columns.ToArray());
+        var table = new ConsoleTable
+        {
+            Options =
+            {
+                EnableCount = viewModel.ShowRowCount
+            }
+        };
+
+        table.AddColumn(viewModel.Columns.ToArray());
        
-        foreach (var row in tableViewModel.Rows)
+        foreach (var row in viewModel.Rows)
             table.AddRow(row.ToArray());
         
         return table;
