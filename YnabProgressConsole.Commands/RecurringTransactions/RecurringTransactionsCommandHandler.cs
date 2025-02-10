@@ -40,11 +40,9 @@ public class RecurringTransactionsCommandHandler
             .GroupByPayeeName(command.PayeeName)
             .GroupByMemoOccurence(minimumOccurrences);
 
-        var viewModelColumnNames = TransactionsByMemoOccurrenceByPayeeNameViewModel.GetColumnNames();
-
         var viewModel = _groupViewModelBuilder
             .AddGroups(groups)
-            .AddColumnNames(viewModelColumnNames.ToArray())
+            .AddColumnNames(TransactionsByMemoOccurrenceByPayeeNameViewModel.GetColumnNames())
             .AddSortColumnName(TransactionsByMemoOccurrenceByPayeeNameViewModel.MemoOccurenceColumnName)
             .AddSortOrder(ViewModelSortOrder.Descending)
             .Build();

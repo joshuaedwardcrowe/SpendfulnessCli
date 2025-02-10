@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace YnabProgressConsole.Commands;
 
 public static class TypeExtensions
@@ -9,4 +11,32 @@ public static class TypeExtensions
         => types
             .GetInterfaces()
             .FirstOrDefault(interfaceType => interfaceType.GenericTypeArguments.Length != 0);
+    
+    public static Type GetRequiredFirstGenericInterface(this Type implementationType)
+    {
+        var genericInterfaceType = implementationType.FirstOrDefaultGenericInterface();
+
+        if (genericInterfaceType is null)
+        {
+            var implementationTypeName = implementationType.Name;
+            var typeName = typeof(ITypedCommandGenerator<>).Name;
+                
+            throw new ArgumentException($"Type '{implementationTypeName}' does not implement {typeName} interface");
+        }
+        
+        return genericInterfaceType;
+    }
+    
+    public static FieldInfo GetRequiredField(this Type typeForAssignedCommand, string fieldTypeName)
+    {
+        var commandNameField = typeForAssignedCommand.GetField(fieldTypeName);
+        if (commandNameField is null)
+        {
+            var typeName = typeForAssignedCommand.Name;
+            
+            throw new ArgumentException($"Type '{typeName}' does not contain a field named '{fieldTypeName}'");
+        }
+        
+        return commandNameField;
+    }
 }

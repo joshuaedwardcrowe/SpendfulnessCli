@@ -36,12 +36,10 @@ public class SalaryIncreasesCommandHandler : CommandHandler, ICommandHandler<Sal
             .FilterToInflow()
             .FilterByPayeeName(careerPayees.ToArray())
             .AverageByYear();
-
-        var columnNames = AmountByYearViewModel.GetColumnNames();
         
         var viewModel = _groupViewModelBuilder
             .AddGroups(monthlyPayByYear)
-            .AddColumnNames(columnNames.ToArray())
+            .AddColumnNames(AmountByYearViewModel.GetColumnNames())
             .Build();
 
         return Compile(viewModel);

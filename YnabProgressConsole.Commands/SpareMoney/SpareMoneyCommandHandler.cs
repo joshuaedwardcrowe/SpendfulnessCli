@@ -1,5 +1,6 @@
 using ConsoleTables;
 using Microsoft.Extensions.DependencyInjection;
+using Ynab;
 using Ynab.Aggregates;
 using Ynab.Clients;
 using Ynab.Extensions;
@@ -27,6 +28,20 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
 
         var budget = budgets.First();
         
+        var criticalSpendingAmount = await GetCriticalSpending(budget);
+        
+        var aggregation =await GetAggregation(budget, criticalSpendingAmount);
+
+        var viewModel = _aggregateViewModelBuilder
+            .AddAggregation(aggregation)
+            .AddColumnNames(SpareMoneyViewModel.GetColumnNames())
+            .Build();
+        
+        return Compile(viewModel);
+    }
+    
+    private async Task<decimal> GetCriticalSpending(Budget budget)
+    {
         var criticalCategoryGroupNames = new List<string>
         {
             "Phone",
@@ -37,23 +52,19 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
         };
         
         var categoryGroups = await budget.GetCategoryGroups();
-        var criticalCategoryGroups = categoryGroups
+        
+        return categoryGroups
             .FilterTo(criticalCategoryGroupNames.ToArray())
             .Sum(o => o.Balance);
+    }
 
+    private async Task<SpareMoneyAggregation> GetAggregation(Budget budget, decimal criticalSpending)
+    {
         var accounts = await budget.GetAccounts();
-        var checkingAccounts = accounts
+        
+        return accounts
             .FilterToChecking()
             .AggregateByBalance()
-            .IncludeAmountToIgnore(criticalCategoryGroups);
-
-        var columnNames = SpareMoneyViewModel.GetColumnNames();
-        
-        var viewModel = _aggregateViewModelBuilder
-            .AddAggregation(checkingAccounts)
-            .AddColumnNames(columnNames.ToArray())
-            .Build();
-        
-        return Compile(viewModel);
+            .IncludeAmountToIgnore(criticalSpending);
     }
 }

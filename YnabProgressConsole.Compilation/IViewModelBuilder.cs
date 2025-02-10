@@ -2,7 +2,7 @@ namespace YnabProgressConsole.Compilation;
 
 public interface IViewModelBuilder
 {
-    public IViewModelBuilder AddColumnNames(params string[] columnNames);
+    public IViewModelBuilder AddColumnNames(List<string> columnNames);
     
     public IViewModelBuilder AddSortColumnName(string columnName);
     

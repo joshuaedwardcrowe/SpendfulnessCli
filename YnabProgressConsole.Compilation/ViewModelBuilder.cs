@@ -6,9 +6,9 @@ public abstract class ViewModelBuilder
     protected string SortColumnName = string.Empty;
     protected ViewModelSortOrder ViewModelSortOrder = ViewModelSortOrder.Ascending;
     
-    public IViewModelBuilder AddColumnNames(params string[] columnNames)
+    public IViewModelBuilder AddColumnNames(List<string> columnNames)
     {
-        ColumnNames = columnNames.ToList();
+        ColumnNames = columnNames;
         return GetCurrentBuilder();
     }
 

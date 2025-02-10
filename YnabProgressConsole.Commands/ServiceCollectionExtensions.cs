@@ -9,6 +9,10 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddConsoleCommands(this IServiceCollection serviceCollection)
     {
         var commandsAssembly = Assembly.GetAssembly(typeof(ICommand));
+        if (commandsAssembly == null)
+        {
+            throw new NullReferenceException("No Assembly Containing ICommand Implementation");
+        }
         
         return serviceCollection
             .AddMediatRCommandsAndHandlers(commandsAssembly)
@@ -20,26 +24,17 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddCommandGenerators(this IServiceCollection serviceCollection, Assembly assembly)
     {
-        var implementationTypes = assembly.WhereClassTypesImplement(typeof(ICommandGenerator));
+        var implementationTypes = assembly.WhereClassTypesImplementType(typeof(ICommandGenerator));
         
         foreach (var implementationType in implementationTypes)
         {
-            var genericInterfaceType = implementationType.FirstOrDefaultGenericInterface();
-
-            if (genericInterfaceType is null)
-            {
-                var implementationTypeName = implementationType.Name;
-                var typeName = typeof(ITypedCommandGenerator<>).Name;
-                
-                throw new ArgumentException($"Type '{implementationTypeName}' does not implement {typeName} interface");
-            }
+            var genericInterfaceType = implementationType.GetRequiredFirstGenericInterface();
             
-            var typeForAssignedCommand = genericInterfaceType.GenericTypeArguments.First();
+            var typeForReferencedCommand = genericInterfaceType.GenericTypeArguments.First();
 
-            var commandNameField = typeForAssignedCommand.GetField(
-                nameof(CommandListCommand.CommandName));
+            var commandNameField = typeForReferencedCommand.GetRequiredField(nameof(CommandListCommand.CommandName));
             
-            var commandNameValue = commandNameField.GetValue(typeForAssignedCommand);
+            var commandNameValue = commandNameField.GetValue(typeForReferencedCommand);
             
             serviceCollection.AddKeyedSingleton(
                 typeof(ICommandGenerator),
