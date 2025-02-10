@@ -6,7 +6,8 @@ namespace YnabProgressConsole.Instructions;
 public class InstructionParser
 {
     private readonly IEnumerable<IInstructionArgumentBuilder> _instructionArgumentBuilders;
-    private const string InstructionArgumentPrefix = "--";
+    private const string DefaultNamePrefix = "-/";
+    private const string DefaultArgumentPrefix = "--";
 
     public InstructionParser(IEnumerable<IInstructionArgumentBuilder> instructionArgumentBuilders)
     {
@@ -23,29 +24,29 @@ public class InstructionParser
     
     private InstructionTokens PerformTokenParse(string terminalInput)
     {
-        var includesInputBeyondCommandName = terminalInput.Contains(' ');
+        var includesInputBeyondNameToken = terminalInput.Contains(' ');
         
-        var indexAfterCommandName = includesInputBeyondCommandName 
-            ? terminalInput.IndexOf(' ') // At the end of the command name
-            : terminalInput.Length - 1; // The end of the input will be the end of the command name/
+        var indexAfterNameToken = includesInputBeyondNameToken 
+            ? terminalInput.IndexOf(' ')  // At the end of the command name
+            : terminalInput.Length; // The end of the input will be the end of the command name/
 
-        var indexOfCommandToken = terminalInput.IndexOf('/');
+        var indexOfNamePrefixToken = terminalInput.IndexOf(DefaultNamePrefix, StringComparison.CurrentCulture);
 
-        var commandPrefixToken = indexOfCommandToken == 0
+        var namePrefixToken = indexOfNamePrefixToken == 0
             ? terminalInput.Substring(0, 1)
             : null;
         
-        var commandNameToken = terminalInput.Substring(1, indexAfterCommandName);
+        var nameToken = terminalInput.Substring(1, indexAfterNameToken - 1);
         
-        var remainingTerminalInput = includesInputBeyondCommandName
-            ? terminalInput.Substring(indexAfterCommandName + 1) 
+        var remainingTerminalInput = includesInputBeyondNameToken
+            ? terminalInput.Substring(indexAfterNameToken + 1)
             : string.Empty;
         
         var argumentTokens = remainingTerminalInput
-            .Split(InstructionArgumentPrefix)
+            .Split(DefaultArgumentPrefix)
             .Where(token => token != string.Empty);
 
-        return new InstructionTokens(commandPrefixToken, commandNameToken, argumentTokens);
+        return new InstructionTokens(namePrefixToken, nameToken, argumentTokens);
     }
     
     private IEnumerable<InstructionArgument> ParseInstructionArguments(IEnumerable<string> argumentTokens)

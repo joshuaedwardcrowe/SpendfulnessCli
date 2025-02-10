@@ -41,6 +41,16 @@ public class InstructionParserTests
         
         Assert.That(result.Name, Is.EqualTo("command"));
     }
+
+    [Test]
+    public void GivenInputWithArguments_WhenParse_ReturnsInstructionsWithCorrectName()
+    {
+        var input = $"/command {_argumentBuilders.First()}";
+        
+        var result = _parser.Parse(input);
+        
+        Assert.That(result.Name, Is.EqualTo("command"));
+    }
     
     [Test]
     public void GivenInputString_WhenParse_ReturnsInstructionWithOneStringArguments()
