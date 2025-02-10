@@ -6,7 +6,7 @@ namespace YnabProgressConsole.Instructions;
 public class InstructionParser
 {
     private readonly IEnumerable<IInstructionArgumentBuilder> _instructionArgumentBuilders;
-    private const string DefaultNamePrefix = "-/";
+    private const string DefaultNamePrefix = "/";
     private const string DefaultArgumentPrefix = "--";
 
     public InstructionParser(IEnumerable<IInstructionArgumentBuilder> instructionArgumentBuilders)
@@ -29,26 +29,43 @@ public class InstructionParser
         var indexAfterNameToken = includesInputBeyondNameToken 
             ? terminalInput.IndexOf(' ')  // At the end of the command name
             : terminalInput.Length; // The end of the input will be the end of the command name/
-
-        var indexOfNamePrefixToken = terminalInput.IndexOf(DefaultNamePrefix, StringComparison.CurrentCulture);
-
-        var namePrefixToken = indexOfNamePrefixToken == 0
-            ? terminalInput.Substring(0, 1)
-            : null;
         
-        var nameToken = terminalInput.Substring(1, indexAfterNameToken - 1);
+        var namePrefixToken = PerformNamePrefixTokeNParse(terminalInput);
         
-        var remainingTerminalInput = includesInputBeyondNameToken
-            ? terminalInput.Substring(indexAfterNameToken + 1)
-            : string.Empty;
+        var nameToken = PerformNameTokenParse(terminalInput, indexAfterNameToken);
         
-        var argumentTokens = remainingTerminalInput
-            .Split(DefaultArgumentPrefix)
-            .Where(token => token != string.Empty);
+        var argumentTokens = PerformArgumentTokenParse(
+            terminalInput, indexAfterNameToken, includesInputBeyondNameToken);
 
         return new InstructionTokens(namePrefixToken, nameToken, argumentTokens);
     }
-    
+
+    private string? PerformNamePrefixTokeNParse(string terminalInput)
+    {
+        var indexOfNamePrefixToken = terminalInput.IndexOf(DefaultNamePrefix, StringComparison.CurrentCulture);
+        return indexOfNamePrefixToken == 0 ? terminalInput[..1] : null;
+    }
+
+    private string PerformNameTokenParse(string terminalInput, int indexAfterNameToken)
+    {
+        var indexOfEndOfNameToken = indexAfterNameToken - 1;
+        return terminalInput.Substring(1, indexOfEndOfNameToken);
+    }
+
+    private IEnumerable<string> PerformArgumentTokenParse(
+        string terminalInput, int indexAfterNameToken, bool includesInputBeyondNameToken)
+    {
+        var indexOfStartOfRemainingInput = indexAfterNameToken + 1;
+        
+        var remainingTerminalInput = includesInputBeyondNameToken
+            ? terminalInput.Substring(indexOfStartOfRemainingInput)
+            : string.Empty;
+        
+        return remainingTerminalInput
+            .Split(DefaultArgumentPrefix)
+            .Where(token => token != string.Empty);
+    }
+
     private IEnumerable<InstructionArgument> ParseInstructionArguments(IEnumerable<string> argumentTokens)
     {
         foreach (var argumentToken in argumentTokens)
