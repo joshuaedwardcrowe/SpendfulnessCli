@@ -1,4 +1,3 @@
-using Ynab.Aggregates;
 using Ynab.Clients;
 using Ynab.Responses.Accounts;
 using Ynab.Sanitisers;
@@ -10,7 +9,7 @@ public class Account(AccountsClient accountsClient, AccountResponse accountRespo
     private readonly AccountsClient _accountsClient = accountsClient;
     public string Name => accountResponse.Name;
     public decimal Balance => MilliunitSanitiser.Calculate(accountResponse.Balance);
+    public decimal ClearedBalance => MilliunitSanitiser.Calculate(accountResponse.ClearedBalance);
     public bool OnBudget => accountResponse.OnBudget;
     public bool Closed => accountResponse.Closed;
-    public AccountBalanceAggregate ToAggregate() => new(Balance);
 }

@@ -10,6 +10,9 @@ public record AccountResponse
     [JsonPropertyName("balance")]
     public required int Balance { get; set; }
     
+    [JsonPropertyName("cleared_balance")]
+    public required int ClearedBalance { get; set; }
+    
     [JsonPropertyName("on_budget")]
     public required bool OnBudget { get; set; }
     

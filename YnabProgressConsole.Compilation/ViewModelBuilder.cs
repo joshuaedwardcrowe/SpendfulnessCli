@@ -5,6 +5,7 @@ public abstract class ViewModelBuilder
     protected List<string> ColumnNames = [];
     protected string SortColumnName = string.Empty;
     protected ViewModelSortOrder ViewModelSortOrder = ViewModelSortOrder.Ascending;
+    protected bool ShowRowCount = true;
     
     public IViewModelBuilder AddColumnNames(List<string> columnNames)
     {
@@ -21,6 +22,12 @@ public abstract class ViewModelBuilder
     public IViewModelBuilder AddSortOrder(ViewModelSortOrder viewModelSortOrder)
     {
         ViewModelSortOrder = viewModelSortOrder;
+        return GetCurrentBuilder();
+    }
+
+    public IViewModelBuilder AddRowCount(bool showRowCount)
+    {
+        ShowRowCount = showRowCount;
         return GetCurrentBuilder();
     }
 

@@ -20,8 +20,11 @@ public class CategoryGroup
     public IEnumerable<Category> Categories => _categoryGroupResponse.Categories
         .Select(category => new Category(_categoryClient, category));
     
-    public decimal Balance => _categoryGroupResponse.Categories.Sum(category =>
-        MilliunitSanitiser.Calculate(category.Balance));
+    /// <summary>
+    /// Money in these categories available to spend.
+    /// </summary>
+    public decimal Available => _categoryGroupResponse.Categories.Sum(category =>
+        MilliunitSanitiser.Calculate(category.Available));
     
     public IEnumerable<Guid> GetCategoryIds() => Categories.Select(category => category.Id);
 }

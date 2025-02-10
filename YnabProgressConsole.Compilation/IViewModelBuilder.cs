@@ -8,5 +8,7 @@ public interface IViewModelBuilder
     
     public IViewModelBuilder AddSortOrder(ViewModelSortOrder viewModelSortOrder);
 
+    public IViewModelBuilder AddRowCount(bool showRowCount);
+
     public ViewModel Build();
 }
