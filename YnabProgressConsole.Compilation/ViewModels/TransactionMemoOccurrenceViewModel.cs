@@ -1,6 +1,6 @@
 namespace YnabProgressConsole.Compilation.ViewModels;
 
-public class TransactionsByMemoOccurrenceByPayeeNameViewModel : ViewModel
+public class TransactionMemoOccurrenceViewModel : ViewModel
 {
     public const string PayeeColumnName = "Payee";
     public const string MemoColumnName = "Memo";

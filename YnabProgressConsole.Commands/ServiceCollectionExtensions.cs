@@ -1,7 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using YnabProgressConsole.Commands.CommandList;
-using YnabProgressConsole.Commands.RecurringTransactions;
 
 namespace YnabProgressConsole.Commands;
 
