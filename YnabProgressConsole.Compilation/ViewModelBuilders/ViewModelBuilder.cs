@@ -5,19 +5,12 @@ namespace YnabProgressConsole.Compilation.ViewModelBuilders;
 public abstract class ViewModelBuilder
 {
     protected List<string> ColumnNames = [];
-    protected string SortColumnName = string.Empty;
     protected ViewModelSortOrder ViewModelSortOrder = ViewModelSortOrder.Ascending;
     protected bool ShowRowCount = true;
     
     public IViewModelBuilder AddColumnNames(List<string> columnNames)
     {
         ColumnNames = columnNames;
-        return GetCurrentBuilder();
-    }
-
-    public IViewModelBuilder AddSortColumnName(string columnName)
-    {
-        SortColumnName = columnName;
         return GetCurrentBuilder();
     }
 

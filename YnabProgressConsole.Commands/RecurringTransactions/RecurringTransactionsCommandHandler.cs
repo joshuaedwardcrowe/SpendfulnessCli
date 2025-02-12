@@ -1,53 +1,55 @@
 using ConsoleTables;
-using Microsoft.Extensions.DependencyInjection;
 using Ynab.Clients;
-using Ynab.Collections;
-using Ynab.Extensions;
-using YnabProgressConsole.Compilation;
+using YnabProgressConsole.Compilation.Evaluators;
 using YnabProgressConsole.Compilation.ViewModelBuilders;
 using YnabProgressConsole.Compilation.ViewModels;
 
 namespace YnabProgressConsole.Commands.RecurringTransactions;
 
-public class RecurringTransactionsCommandHandler
-    : CommandHandler, ICommandHandler<RecurringTransactionsCommand>
+public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandler<RecurringTransactionsCommand>
 {
     private readonly BudgetsClient _budgetsClient;
-    private readonly IGroupViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> _groupViewModelBuilder;
+    private readonly ITransactionMemoOccurrenceViewModelBuilder _builder;
     private const int DefaultMinimumOccurrences = 2;
 
     public RecurringTransactionsCommandHandler(
         BudgetsClient budgetsClient,
-        [FromKeyedServices(typeof(TransactionsByMemoOccurrenceByPayeeName))]
-        IGroupViewModelBuilder<TransactionsByMemoOccurrenceByPayeeName> groupViewModelBuilder)
+        ITransactionMemoOccurrenceViewModelBuilder builder)
     {
         _budgetsClient = budgetsClient;
-        _groupViewModelBuilder = groupViewModelBuilder;
+        _builder = builder;
     }
 
     public async Task<ConsoleTable> Handle(RecurringTransactionsCommand command, CancellationToken cancellationToken)
     {
         var budgets = await _budgetsClient.GetBudgets();
-        
-        // TODO: Add support for selecting a budget if you ever do a settings feture.
         var budget =  budgets.First();
         
         var transactions = await budget.GetTransactions();
 
+        var evaluator = new TransactionMemoOccurrenceEvaluator(
+            null,
+            null,
+            null,
+            null,
+            transactions);
+
+        _builder
+            .AddEvaluator(evaluator)
+            .AddColumnNames(TransactionMemoOccurrenceViewModel.GetColumnNames());
+
+        if (command.PayeeName != null)
+        {
+            _builder.AddPayeeNameFilter(command.PayeeName);
+        }
+        
         var minimumOccurrences = command.MinimumOccurrences ?? DefaultMinimumOccurrences;
 
-        var groups = transactions
-            .FilterToSpending()
-            .GroupByPayeeName(command.PayeeName)
-            .GroupByMemoOccurence(minimumOccurrences);
-
-        var viewModel = _groupViewModelBuilder
-            .AddGroups(groups)
-            .AddColumnNames(TransactionsByMemoOccurrenceByPayeeNameViewModel.GetColumnNames())
-            .AddSortColumnName(TransactionsByMemoOccurrenceByPayeeNameViewModel.MemoOccurenceColumnName)
+        var viewModel = _builder
+            .AddMinimumOccurrencesFilter(minimumOccurrences)
             .AddSortOrder(ViewModelSortOrder.Descending)
             .Build();
-        
+
         return Compile(viewModel);
     }
 }
