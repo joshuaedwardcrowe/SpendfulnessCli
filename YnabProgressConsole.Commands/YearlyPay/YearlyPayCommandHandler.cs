@@ -4,20 +4,22 @@ using YnabProgressConsole.Compilation.Evaluators;
 using YnabProgressConsole.Compilation.ViewModelBuilders;
 using YnabProgressConsole.Compilation.ViewModels;
 
-namespace YnabProgressConsole.Commands.SalaryIncreases;
+namespace YnabProgressConsole.Commands.YearlyPay;
 
-public class SalaryIncreasesCommandHandler : CommandHandler, ICommandHandler<SalaryIncreasesCommand>
+public class YearlyPayCommandHandler : CommandHandler, ICommandHandler<YearlyPayCommand>
 {
     private readonly BudgetsClient _budgetsClient;
     private readonly TransactionYearAverageViewModelBuilder _averageViewModelBuilder;
 
-    public SalaryIncreasesCommandHandler(BudgetsClient budgetsClient, TransactionYearAverageViewModelBuilder averageViewModelBuilder)
+    public YearlyPayCommandHandler(
+        BudgetsClient budgetsClient,
+        TransactionYearAverageViewModelBuilder averageViewModelBuilder)
     {
         _budgetsClient = budgetsClient;
         _averageViewModelBuilder = averageViewModelBuilder;
     }
 
-    public async Task<ConsoleTable> Handle(SalaryIncreasesCommand request, CancellationToken cancellationToken)
+    public async Task<ConsoleTable> Handle(YearlyPayCommand request, CancellationToken cancellationToken)
     {
         var budgets = await _budgetsClient.GetBudgets();
         
