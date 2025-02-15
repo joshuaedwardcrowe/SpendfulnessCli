@@ -48,13 +48,11 @@ public class TransactionYearAverageEvaluator(IEnumerable<Transaction> transactio
             var priorGroupAverage = priorGroup.Transactions.Average(x => x.Amount);
             var currentGroupAverage = currentGroup.Transactions.Average(x => x.Amount);
             
-            // Naturally, this assumes that this years salary is higher than last years.
-            // TODO: but should it matter? This calculator should just do -/+
             var percentageChange = PercentageCalculator.CalculateChange(
                 currentGroupAverage,
                 priorGroupAverage);
             
-            yield return new TransactionYearAverageAggregate(currentGroup.Year, priorGroupAverage, percentageChange);
+            yield return new TransactionYearAverageAggregate(currentGroup.Year, currentGroupAverage, percentageChange);
         }
     } 
 }
