@@ -1,6 +1,7 @@
 using Ynab;
 using Ynab.Collections;
 using Ynab.Extensions;
+using YnabProgressConsole.Compilation.Aggregates;
 using YnabProgressConsole.Compilation.Calculators;
 
 namespace YnabProgressConsole.Compilation.Evaluators;
@@ -56,5 +57,3 @@ public class TransactionYearAverageEvaluator(IEnumerable<Transaction> transactio
         }
     } 
 }
-
-public record TransactionYearAverageAggregate(string Year, decimal AverageAmount, int PercentageChange);

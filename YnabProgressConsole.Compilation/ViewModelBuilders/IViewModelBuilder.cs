@@ -1,4 +1,3 @@
-using Ynab;
 using YnabProgressConsole.Compilation.Evaluators;
 using YnabProgressConsole.Compilation.ViewModels;
 

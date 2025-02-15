@@ -4,18 +4,14 @@ namespace YnabProgressConsole.Compilation.Evaluators;
 
 public abstract class YnabEvaluator<TEvaluation>
 {
-    protected IEnumerable<Account> Accounts { get; set; } 
-    protected IEnumerable<CategoryGroup> CategoryGroups { get; set; }
-    protected IEnumerable<Category> Categories { get; set; } 
-    protected IEnumerable<ScheduledTransaction> ScheduledTransactions { get; set; }
-    protected IEnumerable<Transaction> Transactions { get; set; }
+    protected IEnumerable<Account> Accounts { get; } 
+    protected IEnumerable<CategoryGroup> CategoryGroups { get; }
+    protected IEnumerable<Transaction> Transactions { get; }
 
     protected YnabEvaluator(IEnumerable<Account> accounts, IEnumerable<CategoryGroup> categoryGroups)
     {
         Accounts = accounts;
         CategoryGroups = categoryGroups;
-        Categories = new List<Category>();
-        ScheduledTransactions = new List<ScheduledTransaction>();
         Transactions = new List<Transaction>();
     }
 
@@ -23,8 +19,6 @@ public abstract class YnabEvaluator<TEvaluation>
     {
         Accounts = new List<Account>();
         CategoryGroups = new List<CategoryGroup>();
-        Categories = new List<Category>();
-        ScheduledTransactions = new List<ScheduledTransaction>();
         Transactions = transactions;
     }
 

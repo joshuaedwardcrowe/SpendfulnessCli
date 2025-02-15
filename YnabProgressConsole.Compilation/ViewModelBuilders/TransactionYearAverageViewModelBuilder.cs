@@ -1,3 +1,4 @@
+using YnabProgressConsole.Compilation.Aggregates;
 using YnabProgressConsole.Compilation.Evaluators;
 using YnabProgressConsole.Compilation.Formatters;
 
