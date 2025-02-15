@@ -1,18 +1,30 @@
 namespace Ynab;
 
-public abstract class YnabEvaluator<TEValuation>(
-    IEnumerable<Account>? accounts = null,
-    IEnumerable<CategoryGroup>? categoryGroups = null,
-    IEnumerable<Category>? categories = null,
-    IEnumerable<ScheduledTransaction>? scheduledTransactions = null,
-    IEnumerable<Transaction>? transactions = null)
-    where TEValuation : notnull
+public abstract class YnabEvaluator<TEvaluation>
 {
-    protected List<Account> Accounts { get; set; } = accounts?.ToList() ?? [];
-    protected List<CategoryGroup> CategoryGroups { get; set; } = categoryGroups?.ToList() ?? [];
-    protected List<Category> Categories { get; set; } = categories?.ToList() ?? [];
-    protected List<ScheduledTransaction> ScheduledTransactions { get; set; } = scheduledTransactions?.ToList() ?? [];
-    protected List<Transaction> Transactions { get; set; } = transactions?.ToList() ?? [];
+    protected IEnumerable<Account> Accounts { get; set; } 
+    protected IEnumerable<CategoryGroup> CategoryGroups { get; set; }
+    protected IEnumerable<Category> Categories { get; set; } 
+    protected IEnumerable<ScheduledTransaction> ScheduledTransactions { get; set; }
+    protected IEnumerable<Transaction> Transactions { get; set; }
 
-    public abstract TEValuation Evaluate();
+    protected YnabEvaluator(IEnumerable<Account> accounts, IEnumerable<CategoryGroup> categoryGroups)
+    {
+        Accounts = accounts;
+        CategoryGroups = categoryGroups;
+        Categories = new List<Category>();
+        ScheduledTransactions = new List<ScheduledTransaction>();
+        Transactions = new List<Transaction>();
+    }
+
+    protected YnabEvaluator(IEnumerable<Transaction> transactions)
+    {
+        Accounts = new List<Account>();
+        CategoryGroups = new List<CategoryGroup>();
+        Categories = new List<Category>();
+        ScheduledTransactions = new List<ScheduledTransaction>();
+        Transactions = transactions;
+    }
+
+    public abstract TEvaluation Evaluate();
 }

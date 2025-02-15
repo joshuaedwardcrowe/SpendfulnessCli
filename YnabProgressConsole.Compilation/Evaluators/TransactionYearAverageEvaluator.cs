@@ -6,7 +6,7 @@ using YnabProgressConsole.Compilation.Calculators;
 namespace YnabProgressConsole.Compilation.Evaluators;
 
 public class TransactionYearAverageEvaluator(IEnumerable<Transaction> transactions)
-    : YnabEvaluator<IEnumerable<TransactionYearAverageAggregate>>(null, null, null, null, transactions)
+    : YnabEvaluator<IEnumerable<TransactionYearAverageAggregate>>(transactions)
 {
     public override IEnumerable<TransactionYearAverageAggregate> Evaluate()
     {
