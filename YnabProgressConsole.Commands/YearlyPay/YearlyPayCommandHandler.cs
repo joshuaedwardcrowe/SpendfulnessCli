@@ -27,10 +27,10 @@ public class YearlyPayCommandHandler : CommandHandler, ICommandHandler<YearlyPay
         
         var transactions = await budget.GetTransactions();
         
-        var evaluator = new TransactionYearAverageEvaluator(transactions);
+        var evaluator = new TransactionYearAverageAggregator(transactions);
 
         var viewModel = _averageViewModelBuilder
-            .AddEvaluator(evaluator)
+            .AddAggregator(evaluator)
             .AddColumnNames(TransactionYearAverageViewModel.GetColumnNames())
             .AddRowCount(false)
             .Build();

@@ -2,8 +2,8 @@ using Ynab;
 
 namespace YnabProgressConsole.Compilation.Evaluators;
 
-public class CategoryDeductedBalanceEvaluator(List<Account> accounts, List<CategoryGroup> categoryGroups)
-    : YnabEvaluator<decimal>(accounts, categoryGroups)
+public class CategoryDeductedBalanceAggregator(List<Account> accounts, List<CategoryGroup> categoryGroups)
+    : Aggregator<decimal>(accounts, categoryGroups)
 {
     public override decimal Evaluate()
     {

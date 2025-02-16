@@ -4,7 +4,7 @@ using YnabProgressConsole.Compilation.ViewModels;
 namespace YnabProgressConsole.Compilation.ViewModelBuilders;
 
 public abstract class ViewModelBuilder<TEvaluator, TEvaluation> : IViewModelBuilder<TEvaluator, TEvaluation>
-    where TEvaluator : YnabEvaluator<TEvaluation>
+    where TEvaluator : Aggregator<TEvaluation>
     where TEvaluation : notnull
 {
     protected List<string> ColumnNames = [];
@@ -12,7 +12,7 @@ public abstract class ViewModelBuilder<TEvaluator, TEvaluation> : IViewModelBuil
     private TEvaluator? _evaluator;
     private bool _showRowCount = true;
 
-    public IViewModelBuilder<TEvaluator, TEvaluation> AddEvaluator(TEvaluator evaluator)
+    public IViewModelBuilder<TEvaluator, TEvaluation> AddAggregator(TEvaluator evaluator)
     {
         _evaluator = evaluator;
         return GetCurrentBuilder();

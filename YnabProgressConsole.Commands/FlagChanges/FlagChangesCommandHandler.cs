@@ -27,10 +27,10 @@ public class FlagChangesCommandHandler : CommandHandler, ICommandHandler<FlagCha
         var categoryGroups = await budget.GetCategoryGroups();
         var transactions = await budget.GetTransactions();
         
-        var evaluator = new TransactionMonthFlaggedEvaluator(categoryGroups, transactions);
+        var evaluator = new TransactionMonthFlaggedAggregator(categoryGroups, transactions);
         
         var viewModel = _viewModelBuilder
-            .AddEvaluator(evaluator)
+            .AddAggregator(evaluator)
             .AddColumnNames(TransactionMonthFlaggedViewModel.GetColumnNames())
             .Build();
         

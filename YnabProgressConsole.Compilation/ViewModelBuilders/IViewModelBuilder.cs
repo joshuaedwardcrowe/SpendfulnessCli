@@ -3,17 +3,17 @@ using YnabProgressConsole.Compilation.ViewModels;
 
 namespace YnabProgressConsole.Compilation.ViewModelBuilders;
 
-public interface IViewModelBuilder<in TEvaluator, TEvaluation>
-    where TEvaluator : YnabEvaluator<TEvaluation>
-    where TEvaluation : notnull
+public interface IViewModelBuilder<in TAggregator, TAggregation>
+    where TAggregator : Aggregator<TAggregation>
+    where TAggregation : notnull
 {
-    IViewModelBuilder<TEvaluator, TEvaluation> AddEvaluator(TEvaluator evaluator);
+    IViewModelBuilder<TAggregator, TAggregation> AddAggregator(TAggregator evaluator);
     
-    IViewModelBuilder<TEvaluator, TEvaluation> AddColumnNames(List<string> columnNames);
+    IViewModelBuilder<TAggregator, TAggregation> AddColumnNames(List<string> columnNames);
     
-    IViewModelBuilder<TEvaluator, TEvaluation> AddSortOrder(ViewModelSortOrder viewModelSortOrder);
+    IViewModelBuilder<TAggregator, TAggregation> AddSortOrder(ViewModelSortOrder viewModelSortOrder);
 
-    IViewModelBuilder<TEvaluator, TEvaluation> AddRowCount(bool showRowCount);
+    IViewModelBuilder<TAggregator, TAggregation> AddRowCount(bool showRowCount);
 
     ViewModel Build();
 }

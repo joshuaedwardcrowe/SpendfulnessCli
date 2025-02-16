@@ -5,7 +5,7 @@ using YnabProgressConsole.Compilation.Formatters;
 namespace YnabProgressConsole.Compilation.ViewModelBuilders;
 
 public class TransactionYearAverageViewModelBuilder :
-    ViewModelBuilder<TransactionYearAverageEvaluator, IEnumerable<TransactionYearAverageAggregate>>
+    ViewModelBuilder<TransactionYearAverageAggregator, IEnumerable<TransactionYearAverageAggregate>>
 {
     protected override List<List<object>> BuildRows(IEnumerable<TransactionYearAverageAggregate> evaluation)
     {

@@ -6,8 +6,8 @@ using YnabProgressConsole.Compilation.Calculators;
 
 namespace YnabProgressConsole.Compilation.Evaluators;
 
-public class TransactionMonthFlaggedEvaluator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
-    : YnabEvaluator<IEnumerable<TransactionMonthFlaggedAggregate>>(categoryGroups, transactions)
+public class TransactionMonthFlaggedAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
+    : Aggregator<IEnumerable<TransactionMonthFlaggedAggregate>>(categoryGroups, transactions)
 {
     public override IEnumerable<TransactionMonthFlaggedAggregate> Evaluate()
     {

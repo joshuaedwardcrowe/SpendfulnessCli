@@ -5,8 +5,8 @@ using YnabProgressConsole.Compilation.Extensions;
 
 namespace YnabProgressConsole.Compilation.Evaluators;
 
-public class TransactionMemoOccurrenceEvaluator(IEnumerable<Transaction> transactions)
-    : YnabEvaluator<IEnumerable<TransactionMemoOccurrenceAggregate>>(transactions)
+public class TransactionMemoOccurrenceAggregator(IEnumerable<Transaction> transactions)
+    : Aggregator<IEnumerable<TransactionMemoOccurrenceAggregate>>(transactions)
 {
     public override IEnumerable<TransactionMemoOccurrenceAggregate> Evaluate() =>
         Transactions

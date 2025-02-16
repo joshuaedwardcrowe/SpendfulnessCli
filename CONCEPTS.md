@@ -28,8 +28,8 @@ Deciding how a data set is presented.
 ## Aggregates
 Aggregates simplify data into reusable, simplfiied, data sets.
 
-## Evaluator
-Converts filtering parameters and data sources into a reusable data set.
+## Aggregator
+Converts filtering parameters and data sources into a reusable data set of aggregates.
 
 ## ViewModelBuilder
 Converts a data set into a view model, organised as necessary.

@@ -5,7 +5,7 @@ using YnabProgressConsole.Compilation.Formatters;
 namespace YnabProgressConsole.Compilation.ViewModelBuilders;
 
 public class TransactionMonthFlaggedViewModelBuilder 
-    : ViewModelBuilder<TransactionMonthFlaggedEvaluator, IEnumerable<TransactionMonthFlaggedAggregate>>
+    : ViewModelBuilder<TransactionMonthFlaggedAggregator, IEnumerable<TransactionMonthFlaggedAggregate>>
 {
     private List<string> _flagNames = [];
     

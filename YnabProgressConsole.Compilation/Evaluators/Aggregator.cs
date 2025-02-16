@@ -2,27 +2,27 @@ using Ynab;
 
 namespace YnabProgressConsole.Compilation.Evaluators;
 
-public abstract class YnabEvaluator<TEvaluation>
+public abstract class Aggregator<TEvaluation>
 {
     protected IEnumerable<Account> Accounts { get; } 
     protected IEnumerable<CategoryGroup> CategoryGroups { get; }
     protected IEnumerable<Transaction> Transactions { get; }
 
-    protected YnabEvaluator(IEnumerable<Account> accounts, IEnumerable<CategoryGroup> categoryGroups)
+    protected Aggregator(IEnumerable<Account> accounts, IEnumerable<CategoryGroup> categoryGroups)
     {
         Accounts = accounts;
         CategoryGroups = categoryGroups;
         Transactions = new List<Transaction>();
     }
 
-    protected YnabEvaluator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
+    protected Aggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
     {
         Accounts = new List<Account>();
         CategoryGroups = categoryGroups;
         Transactions = transactions;
     }
 
-    protected YnabEvaluator(IEnumerable<Transaction> transactions)
+    protected Aggregator(IEnumerable<Transaction> transactions)
     {
         Accounts = new List<Account>();
         CategoryGroups = new List<CategoryGroup>();

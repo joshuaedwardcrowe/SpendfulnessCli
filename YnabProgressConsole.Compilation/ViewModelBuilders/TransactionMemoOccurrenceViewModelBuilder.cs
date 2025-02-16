@@ -7,7 +7,7 @@ using YnabProgressConsole.Compilation.Formatters;
 namespace YnabProgressConsole.Compilation.ViewModelBuilders;
 
 public class TransactionMemoOccurrenceViewModelBuilder : 
-    ViewModelBuilder<TransactionMemoOccurrenceEvaluator, IEnumerable<TransactionMemoOccurrenceAggregate>>
+    ViewModelBuilder<TransactionMemoOccurrenceAggregator, IEnumerable<TransactionMemoOccurrenceAggregate>>
 {
     private string? _payeeNameFilter;
     private int? _minimumOccurrencesFilter;

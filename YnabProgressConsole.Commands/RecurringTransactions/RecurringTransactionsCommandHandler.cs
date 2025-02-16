@@ -27,10 +27,10 @@ public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandl
         
         var transactions = await budget.GetTransactions();
 
-        var evaluator = new TransactionMemoOccurrenceEvaluator(transactions);
+        var evaluator = new TransactionMemoOccurrenceAggregator(transactions);
 
         _builder
-            .AddEvaluator(evaluator)
+            .AddAggregator(evaluator)
             .AddColumnNames(TransactionMemoOccurrenceViewModel.GetColumnNames());
 
         if (command.PayeeName != null)

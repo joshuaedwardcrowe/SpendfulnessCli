@@ -11,11 +11,11 @@ namespace YnabProgressConsole.Commands.SpareMoney;
 public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMoneyCommand>
 {
     private readonly BudgetsClient _budgetsClient;
-    private readonly IViewModelBuilder<CategoryDeductedBalanceEvaluator, decimal> _viewModelBuilder;
+    private readonly IViewModelBuilder<CategoryDeductedBalanceAggregator, decimal> _viewModelBuilder;
 
     public SpareMoneyCommandHandler(BudgetsClient budgetsClient, 
-        [FromKeyedServices(typeof(CategoryDeductedBalanceEvaluator))]
-        IViewModelBuilder<CategoryDeductedBalanceEvaluator, decimal> viewModelBuilder)
+        [FromKeyedServices(typeof(CategoryDeductedBalanceAggregator))]
+        IViewModelBuilder<CategoryDeductedBalanceAggregator, decimal> viewModelBuilder)
     {
         _budgetsClient = budgetsClient;
         _viewModelBuilder = viewModelBuilder;
@@ -32,12 +32,12 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
     
         var criticalCategoryGroups = await GetCriticalCategoryGroups(budget);
     
-        var evaluator = new CategoryDeductedBalanceEvaluator(
+        var evaluator = new CategoryDeductedBalanceAggregator(
             checkingAccounts.ToList(), 
             criticalCategoryGroups.ToList());
     
         var viewModel = _viewModelBuilder
-            .AddEvaluator(evaluator)
+            .AddAggregator(evaluator)
             .AddColumnNames(["Spare Money"])
             .AddRowCount(false)
             .Build();
