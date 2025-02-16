@@ -14,12 +14,16 @@ public class RecurringTransactionsCommandGenerator : ICommandGenerator, ITypedCo
         
         var payeeNameArgument = arguments
             .OfType<string>(RecurringTransactionsCommand.ArgumentNames.PayeeName);
+        
+        var minimumOccurrencesArgument = arguments
+            .OfType<int>(RecurringTransactionsCommand.ArgumentNames.MinimumOccurrences);
 
         return new RecurringTransactionsCommand
         {
             From = fromArgument?.ArgumentValue,
             To = toArgument?.ArgumentValue,
-            PayeeName = payeeNameArgument?.ArgumentValue
+            PayeeName = payeeNameArgument?.ArgumentValue,
+            MinimumOccurrences = minimumOccurrencesArgument?.ArgumentValue
         };
     }
 }

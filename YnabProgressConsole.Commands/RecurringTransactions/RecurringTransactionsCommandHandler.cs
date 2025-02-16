@@ -36,6 +36,7 @@ public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandl
             .AddColumnNames(TransactionMemoOccurrenceViewModel.GetColumnNames());
 
         var viewModel = _builder
+            .AddMinimumOccurrencesFilter(command.MinimumOccurrences ?? DefaultMinimumOccurrences)
             .AddSortOrder(ViewModelSortOrder.Descending)
             .Build();
 
