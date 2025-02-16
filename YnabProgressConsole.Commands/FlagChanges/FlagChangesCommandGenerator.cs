@@ -7,10 +7,12 @@ public class FlagChangesCommandGenerator : ICommandGenerator, ITypedCommandGener
     public ICommand Generate(List<InstructionArgument> arguments)
     {
         var from = arguments.OfType<DateOnly>(FlagChangesCommand.ArgumentNames.From);
+        var to = arguments.OfType<DateOnly>(FlagChangesCommand.ArgumentNames.To);
 
         return new FlagChangesCommand
         {
-            From = from?.ArgumentValue
+            From = from?.ArgumentValue,
+            To = to?.ArgumentValue
         };
     }
 }

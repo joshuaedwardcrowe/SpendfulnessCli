@@ -18,11 +18,18 @@ public static class TransactionExtensions
         this IEnumerable<Transaction> transactions, params string[] payeeNames)
             => transactions.Where(t => payeeNames.Contains(t.PayeeName));
 
-    public static IEnumerable<Transaction> FilterStartingAtMonth(
+    public static IEnumerable<Transaction> FilterFrom(
         this IEnumerable<Transaction> transactions, DateOnly startDate)
     {
         var dateFrom = startDate.ToDateTime(TimeOnly.MinValue);
         return transactions.Where(t => t.Occured >= dateFrom);
+    }
+
+    public static IEnumerable<Transaction> FilterTo(
+        this IEnumerable<Transaction> transactions, DateOnly stopDate)
+    {
+        var dateFrom = stopDate.ToDateTime(TimeOnly.MinValue);
+        return transactions.Where(t => t.Occured <= dateFrom);
     }
 
     public static IEnumerable<Transaction> FilterToSpending(this IEnumerable<Transaction> transactions)

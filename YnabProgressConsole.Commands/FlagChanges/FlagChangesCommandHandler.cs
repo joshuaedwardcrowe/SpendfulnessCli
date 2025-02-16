@@ -30,7 +30,12 @@ public class FlagChangesCommandHandler : CommandHandler, ICommandHandler<FlagCha
 
         if (command.From.HasValue)
         {
-            transactions = transactions.FilterStartingAtMonth(command.From.Value);
+            transactions = transactions.FilterFrom(command.From.Value);
+        }
+
+        if (command.To.HasValue)
+        {
+            transactions = transactions.FilterTo(command.To.Value);
         }
         
         var aggregator = new TransactionMonthFlaggedAggregator(categoryGroups, transactions);
