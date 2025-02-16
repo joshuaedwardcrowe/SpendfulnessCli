@@ -15,6 +15,13 @@ public abstract class YnabEvaluator<TEvaluation>
         Transactions = new List<Transaction>();
     }
 
+    protected YnabEvaluator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
+    {
+        Accounts = new List<Account>();
+        CategoryGroups = categoryGroups;
+        Transactions = transactions;
+    }
+
     protected YnabEvaluator(IEnumerable<Transaction> transactions)
     {
         Accounts = new List<Account>();
