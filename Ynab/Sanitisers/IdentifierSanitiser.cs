@@ -13,6 +13,6 @@ public static class IdentifierSanitiser
     public static string SanitiseForYear(DateTime date)
         => date.Year.ToString();
     
-    public static string SanitiseForFlag(string? flagName, string? flagColour)
+    public static string SanitiseForFlag(string? flagName, FlagColor? flagColour)
         => $"{flagName} ({flagColour})";
 }

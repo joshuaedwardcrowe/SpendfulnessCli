@@ -10,7 +10,7 @@ public class Transaction(TransactionResponse transactionResponse)
     public string? Memo => _transactionResponse.Memo;
     public decimal Amount => MilliunitSanitiser.Calculate(_transactionResponse.Amount);
     public string? FlagName => _transactionResponse.FlagName;
-    public string? FlagColour => _transactionResponse.FlagColor;
+    public FlagColor? FlagColour => _transactionResponse.FlagColor;
     public string PayeeName => _transactionResponse.PayeeName;
     public Guid? CategoryId => _transactionResponse.CategoryId;
     public bool IsTransfer => !string.IsNullOrEmpty(_transactionResponse.TransferTransactionId);

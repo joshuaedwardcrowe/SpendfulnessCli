@@ -14,7 +14,7 @@ public class TransactionResponse
     public int Amount { get; set; }
     
     [JsonPropertyName("flag_color")]
-    public string? FlagColor { get; set; }
+    public FlagColor? FlagColor { get; set; }
     
     [JsonPropertyName("flag_name")]
     public string? FlagName { get; set; }
