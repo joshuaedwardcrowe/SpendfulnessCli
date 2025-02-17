@@ -35,13 +35,19 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
         var criticalCategoryGroups = await GetCriticalCategoryGroups(budget);
     
         var aggregator = new CategoryDeductedBalanceAggregator(filteredAccounts, criticalCategoryGroups);
-    
-        var viewModel = _viewModelBuilder
+
+        _viewModelBuilder
             .AddAggregator(aggregator)
             .AddColumnNames(["Spare Money"])
-            .AddRowCount(false)
-            .Build();
-    
+            .AddRowCount(false);
+
+        if (command.Minus.HasValue)
+        {
+            _viewModelBuilder.AddMinus(command.Minus.Value);
+        }
+
+        var viewModel = _viewModelBuilder.Build();
+
         return Compile(viewModel);
     }
     
