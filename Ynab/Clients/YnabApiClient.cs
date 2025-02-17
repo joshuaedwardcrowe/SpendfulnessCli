@@ -1,10 +1,18 @@
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Ynab.Http;
 
 namespace Ynab.Clients;
 
 public class YnabApiClient
 {
+    private readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        PropertyNameCaseInsensitive = true,
+        Converters = { new JsonStringEnumConverter() }
+    };
+    
     protected virtual HttpClient GetHttpClient()
     {
         throw new Exception("No override");
@@ -18,7 +26,7 @@ public class YnabApiClient
         
         response.EnsureSuccessStatusCode();
         
-        var responseContent = await response.Content.ReadFromJsonAsync<YnabHttpResponseContent<TApiResponse>>();
+        var responseContent = await response.Content.ReadFromJsonAsync<YnabHttpResponseContent<TApiResponse>>(_jsonOptions);
         if (responseContent is null)
         {
             throw new NullReferenceException("Response is null");
