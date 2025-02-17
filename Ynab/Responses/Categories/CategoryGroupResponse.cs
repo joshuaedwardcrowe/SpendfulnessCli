@@ -1,9 +1,12 @@
+using System.Text.Json.Serialization;
 using Ynab.Responses.Category;
 namespace Ynab.Responses.Categories;
 
 public class CategoryGroupResponse
 {
-    public Guid Id { get; set; }
+    [JsonPropertyName("name")]
     public required string Name { get; set; }
+    
+    [JsonPropertyName("categories")]
     public required IEnumerable<CategoryResponse> Categories { get; set; }
 }

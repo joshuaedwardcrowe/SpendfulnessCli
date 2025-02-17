@@ -10,9 +10,7 @@ public static class IdentifierSanitiser
         return $"{monthName} {date.Year}";
     }
     
-    public static string SanitiseForYear(DateTime date)
-        => date.Year.ToString();
+    public static string SanitiseForYear(DateTime date) => date.Year.ToString();
     
-    public static string SanitiseForFlag(string? flagName, FlagColor? flagColour)
-        => $"{flagName} ({flagColour})";
+    public static string SanitiseForFlag(string? flagName, FlagColor? flagColour) => $"{flagName} ({flagColour})";
 }

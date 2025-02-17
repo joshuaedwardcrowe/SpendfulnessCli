@@ -4,6 +4,7 @@ namespace Ynab.Responses.Category;
 
 public class CategoryResponse
 {
+    [JsonPropertyName("id")]
     public Guid Id { get; set; }
 
     /// <summary>

@@ -2,7 +2,7 @@ namespace Ynab.Sanitisers;
 
 public static class MilliunitSanitiser
 {
-    public const decimal ConversationRate = 1000m;
+    private const decimal ConversationRate = 1000m;
     
     /// <summary>
     /// YNAB API stores currency in milliunit.
