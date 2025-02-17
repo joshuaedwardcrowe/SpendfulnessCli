@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Ynab.Converters;
 using Ynab.Http;
 
 namespace Ynab.Clients;
@@ -10,7 +11,10 @@ public class YnabApiClient
     private readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web)
     {
         PropertyNameCaseInsensitive = true,
-        Converters = { new JsonStringEnumConverter() }
+        Converters = { 
+            new JsonStringEnumConverter(),
+            new IgnoreEmptyStringNullableEnumConverter()
+        }
     };
     
     protected virtual HttpClient GetHttpClient()
