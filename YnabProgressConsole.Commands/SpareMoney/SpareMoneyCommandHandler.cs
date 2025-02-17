@@ -19,7 +19,7 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
         _viewModelBuilder = viewModelBuilder;
     }
 
-    public async Task<ConsoleTable> Handle(SpareMoneyCommand request, CancellationToken cancellationToken)
+    public async Task<ConsoleTable> Handle(SpareMoneyCommand command, CancellationToken cancellationToken)
     {
         var budgets = await _budgetsClient.GetBudgets();
     
@@ -27,12 +27,15 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
 
         var accounts = await budget.GetAccounts();
         var checkingAccounts = accounts.FilterToChecking();
+
+        if (command.MinusSavings.HasValue && command.MinusSavings.Value)
+        {
+            checkingAccounts = checkingAccounts.Where(account => !account.Name.StartsWith("Racer"));
+        }
     
         var criticalCategoryGroups = await GetCriticalCategoryGroups(budget);
     
-        var aggregator = new CategoryDeductedBalanceAggregator(
-            checkingAccounts.ToList(), 
-            criticalCategoryGroups.ToList());
+        var aggregator = new CategoryDeductedBalanceAggregator(checkingAccounts, criticalCategoryGroups);
     
         var viewModel = _viewModelBuilder
             .AddAggregator(aggregator)
@@ -43,7 +46,7 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
         return Compile(viewModel);
     }
     
-    private async Task<IEnumerable<CategoryGroup>> GetCriticalCategoryGroups(Budget budget)
+    private static async Task<IEnumerable<CategoryGroup>> GetCriticalCategoryGroups(Budget budget)
     {
         var criticalCategoryGroupNames = new List<string>
         {

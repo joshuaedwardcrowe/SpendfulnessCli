@@ -7,6 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddConsoleInstructions(this IServiceCollection serviceCollection)
         => serviceCollection
+            .AddSingleton<IInstructionArgumentBuilder, BoolInstructionArgumentBuilder>()
             .AddSingleton<IInstructionArgumentBuilder, StringInstructionArgumentBuilder>()
             .AddSingleton<IInstructionArgumentBuilder, IntInstructionArgumentBuilder>()
             .AddSingleton<IInstructionArgumentBuilder, DateOnlyInstructionArgumentBuilder>()
