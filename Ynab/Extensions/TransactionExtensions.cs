@@ -48,7 +48,7 @@ public static class TransactionExtensions
 
         foreach (var group in groups)
         {
-            yield return new TransactionsByYear(group.Key, group);
+            yield return new TransactionsByYear(group.Key, group.ToList());
         }
     }
     
@@ -84,4 +84,10 @@ public static class TransactionExtensions
             };
         }
     }
+
+    public static IEnumerable<TransactionsByCategory> GroupByCategory(this IEnumerable<Transaction> transactions)
+        => transactions
+            .Where(transaction => !YnabConstants.AutomatedCategoryNames.Contains(transaction.CategoryName))
+            .GroupBy(transaction => transaction.CategoryName)
+            .Select(group => new TransactionsByCategory(group.Key, group.ToList()));
 }

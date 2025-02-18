@@ -33,7 +33,8 @@ public class TransactionByMemoOccurrenceByPayeeNameExtensionsTests
         {
             PayeeName = "payeeName",
             Memo = "memo",
-            Amount = 2500
+            Amount = 2500,
+            CategoryName = "categoryName"
         };
 
     private static List<TransactionsByMemoOccurrenceByPayeeName> GetCollection(TransactionResponse transactionResponse)

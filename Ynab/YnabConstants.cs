@@ -12,6 +12,7 @@ public static class YnabConstants
     public static readonly List<string> AutomatedCategoryNames = new List<string>
     {
         "Inflow: Ready to Assign",
-        "Split"
+        "Split",
+        "Uncategorized"
     };
 }
