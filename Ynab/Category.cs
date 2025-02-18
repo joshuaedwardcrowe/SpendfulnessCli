@@ -7,5 +7,6 @@ public class Category(CategoriesClient categoriesClient, CategoryResponse catego
 {
     private readonly CategoriesClient _categoriesClient = categoriesClient;
 
-    public Guid Id => categoryResponse.Id;
+    public Guid? Id => categoryResponse?.Id;
+    public string Name => categoryResponse.Name;
 }

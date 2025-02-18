@@ -13,5 +13,6 @@ public class Transaction(TransactionResponse transactionResponse)
     public FlagColor? FlagColour => _transactionResponse.FlagColor;
     public string PayeeName => _transactionResponse.PayeeName;
     public Guid? CategoryId => _transactionResponse.CategoryId;
+    public string CategoryName => _transactionResponse.CategoryName;
     public bool IsTransfer => !string.IsNullOrEmpty(_transactionResponse.TransferTransactionId);
 }

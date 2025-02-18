@@ -5,7 +5,10 @@ namespace Ynab.Responses.Category;
 public class CategoryResponse
 {
     [JsonPropertyName("id")]
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
+    
+    [JsonPropertyName("name")]
+    public required string Name { get; set; }
 
     /// <summary>
     /// Money in this category assigned.

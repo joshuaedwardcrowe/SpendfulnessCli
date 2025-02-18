@@ -17,7 +17,9 @@ public class CategoryGroup
         _categoryGroupResponse = categoryGroupResponse;
     }
     
-    public IEnumerable<Category> Categories => _categoryGroupResponse.Categories
+    public IEnumerable<Category> Categories => _categoryGroupResponse
+        .Categories
+        .Where(category => !YnabConstants.AutomatedCategoryNames.Contains(category.Name))
         .Select(category => new Category(_categoryClient, category));
     
     /// <summary>
@@ -26,5 +28,7 @@ public class CategoryGroup
     public decimal Available => _categoryGroupResponse.Categories.Sum(category =>
         MilliunitSanitiser.Calculate(category.Available));
     
-    public IEnumerable<Guid> GetCategoryIds() => Categories.Select(category => category.Id);
+    public IEnumerable<Guid> GetCategoryIds() => Categories
+        .Where(category => category.Id.HasValue)
+        .Select(category => category.Id.Value);
 }

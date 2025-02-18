@@ -25,6 +25,9 @@ public class TransactionResponse
     [JsonPropertyName("category_id")]
     public Guid? CategoryId { get; set; }
     
+    [JsonPropertyName("category_name")]
+    public required string CategoryName { get; set; }
+    
     [JsonPropertyName("transfer_transaction_id")]
     public string? TransferTransactionId { get; set; }
 }

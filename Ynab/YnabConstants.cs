@@ -8,4 +8,10 @@ public static class YnabConstants
         "Manual Balance Adjustment",
         "Reconciliation Balance Adjustment"
     ];
+
+    public static readonly List<string> AutomatedCategoryNames = new List<string>
+    {
+        "Inflow: Ready to Assign",
+        "Split"
+    };
 }
