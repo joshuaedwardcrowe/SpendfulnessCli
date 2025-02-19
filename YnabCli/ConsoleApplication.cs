@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using YnabCli.Commands;
+using YnabCli.Commands.Clear;
 using YnabCli.Commands.Exit;
 using YnabCli.Instructions;
 
@@ -37,6 +38,12 @@ public class ConsoleApplication(IServiceProvider serviceProvider)
                 continue;
             }
             
+            if (tokens.NameToken is ClearCommand.CommandName or ClearCommand.ShorthandCommandName)
+            {
+                ClearTheConsole();
+                continue;
+            }
+            
             var instruction = instructionParser.Parse(tokens);
             if (instruction.Prefix is null)
             {
@@ -67,4 +74,6 @@ public class ConsoleApplication(IServiceProvider serviceProvider)
         Console.WriteLine(print);
         Console.WriteLine();
     }
+    
+    public static void ClearTheConsole() => Console.Clear();
 }
