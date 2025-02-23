@@ -4,17 +4,8 @@ namespace YnabCli.Instructions.Extraction;
 
 public class InstructionTokenExtractor
 {
-    private readonly InstructionTokenIndexer _instructionTokenIndexer;
-
-    public InstructionTokenExtractor(InstructionTokenIndexer instructionTokenIndexer)
+    public InstructionTokenExtraction Extract(InstructionTokenIndexes indexes, string terminalInput)
     {
-        _instructionTokenIndexer = instructionTokenIndexer;
-    }
-
-    public InstructionTokenExtraction Extract(string terminalInput)
-    {
-        var indexes = _instructionTokenIndexer.Index(terminalInput);
-
         var prefixToken = ExtractPrefixToken(indexes, terminalInput);
         var nameToken = ExtractNameToken(indexes, terminalInput);
         var subNameToken = ExtractSubNameToken(indexes, terminalInput);

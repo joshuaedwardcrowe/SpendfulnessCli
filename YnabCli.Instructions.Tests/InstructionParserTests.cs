@@ -2,6 +2,7 @@ using NUnit.Framework;
 using YnabCli.Instructions.Arguments;
 using YnabCli.Instructions.Builders;
 using YnabCli.Instructions.Extraction;
+using YnabCli.Instructions.Indexers;
 using YnabCli.Instructions.Parsers;
 
 namespace YnabCli.Instructions.Tests;
@@ -9,85 +10,58 @@ namespace YnabCli.Instructions.Tests;
 [TestFixture]
 public class InstructionParserTests
 {
-    private IEnumerable<IInstructionArgumentBuilder> _argumentBuilders;
+    private InstructionTokenIndexer _instructionTokenIndexer;
+    private InstructionTokenExtractor _instructionTokenExtractor;
+    private IEnumerable<IInstructionArgumentBuilder> _instructionArgumentBuilders;
     private InstructionParser _parser;
 
     [SetUp]
     public void SetUp()
     {
-        _argumentBuilders = new List<IInstructionArgumentBuilder>
+        _instructionTokenIndexer = new InstructionTokenIndexer();
+        
+        _instructionTokenExtractor = new InstructionTokenExtractor();
+        
+        _instructionArgumentBuilders = new List<IInstructionArgumentBuilder>
         {
             new StringInstructionArgumentBuilder(),
             new IntInstructionArgumentBuilder(),
         };
 
-        _parser = new InstructionParser(_argumentBuilders);
+        _parser = new InstructionParser(
+            _instructionTokenIndexer,
+            _instructionTokenExtractor,
+            _instructionArgumentBuilders);
     }
 
     [Test]
     public void GivenParserTokensWithPrefix_WhenParse_ThenReturnsInstructionWithPrefix()
     {
-        var prefix = "/";
+        var result = _parser.Parse("/name");
         
-        var tokens = new InstructionTokenExtraction(
-            prefix, 
-            string.Empty, 
-            string.Empty,
-            new Dictionary<string, string?>());
-        
-        var result = _parser.Parse(tokens);
-        
-        Assert.That(result.Prefix, Is.EqualTo(prefix));
+        Assert.That(result.Prefix, Is.EqualTo("/"));
     }
 
     [Test]
     public void GivenParserTokensWithName_WhenParse_ThenReturnsInstructionWithName()
     {
-        var name = "/";
+        var result = _parser.Parse("/name");
         
-        var tokens = new InstructionTokenExtraction(
-            string.Empty,
-            name, 
-            string.Empty,
-            new Dictionary<string, string?>());
-        
-        var result = _parser.Parse(tokens);
-        
-        Assert.That(result.Name, Is.EqualTo(name));
+        Assert.That(result.Name, Is.EqualTo("name"));
     }
 
     [Test]
     public void GivenExtractionWithSubNae_WhenParse_ThenReturnsInstructionWithSubNae()
     {
-        var subname = "help";
+        var result = _parser.Parse("/name subname");
         
-        var tokens = new InstructionTokenExtraction(
-            string.Empty,
-            string.Empty, 
-            subname,
-            new Dictionary<string, string?>());
-        
-        var result = _parser.Parse(tokens);
-        
-        Assert.That(result.SubName, Is.EqualTo(subname));
+        Assert.That(result.SubName, Is.EqualTo("subname"));
     }
 
     [Test]
     public void GivenParserWithStringArguments_WhenParse_ThenReturnsInstructionWithStringTypedArguments()
     {
-        var argumentName = "argumentName";
-        var arvumentValue = "arvumentValue";
-        
-        var tokens = new InstructionTokenExtraction(
-            string.Empty, 
-            string.Empty, 
-            string.Empty,
-            new Dictionary<string, string?>
-            {
-                { argumentName, arvumentValue }
-            });
-        
-        var result = _parser.Parse(tokens);
+        var result = _parser.Parse("/command --argument-one hello world");
 
         var argument = result.Arguments
             .OfType<TypedInstructionArgument<string>>()
@@ -100,19 +74,7 @@ public class InstructionParserTests
     [Test]
     public void GivenParserWithIntArguments_WhenParse_ThenReturnsInstructionWithIntTypedArguments()
     {
-        var argumentName = "argumentName";
-        var arvumentValue = "1";
-        
-        var tokens = new InstructionTokenExtraction(
-            string.Empty, 
-            string.Empty,
-            string.Empty,
-            new Dictionary<string, string?>
-            {
-                { argumentName, arvumentValue }
-            });
-        
-        var result = _parser.Parse(tokens);
+        var result = _parser.Parse("/name --argument-one 1");
 
         var argument = result.Arguments
             .OfType<TypedInstructionArgument<int>>()

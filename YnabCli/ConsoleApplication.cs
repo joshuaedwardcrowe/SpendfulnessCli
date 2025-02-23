@@ -13,8 +13,7 @@ public class ConsoleApplication(IServiceProvider serviceProvider)
     public async Task Run()
     {
         PrintToConsole("Welcome to YnabCli!");
-
-        var instructionTokenExtractor = serviceProvider.GetRequiredService<InstructionTokenExtractor>();
+        
         var instructionParser = serviceProvider.GetRequiredService<InstructionParser>();
         var mediator = serviceProvider.GetRequiredService<IMediator>();
 
@@ -31,21 +30,19 @@ public class ConsoleApplication(IServiceProvider serviceProvider)
                 continue;
             }
 
-            var tokens = instructionTokenExtractor.Extract(input);
-            if (tokens.NameToken is ExitCommand.CommandName or ExitCommand.ShorthandCommandName)
+            var instruction = instructionParser.Parse(input);
+            if (instruction.Name is ExitCommand.CommandName or ExitCommand.ShorthandCommandName)
             {
                 PrintToConsole("Exiting...");
                 noExitCommand = false;
                 continue;
             }
             
-            if (tokens.NameToken is ClearCommand.CommandName or ClearCommand.ShorthandCommandName)
+            if (instruction.Name is ClearCommand.CommandName or ClearCommand.ShorthandCommandName)
             {
                 ClearTheConsole();
                 continue;
             }
-            
-            var instruction = instructionParser.Parse(tokens);
             
             var generator = serviceProvider.GetKeyedService<ICommandGenerator>(instruction.Name);
             if (generator == null)
@@ -60,9 +57,6 @@ public class ConsoleApplication(IServiceProvider serviceProvider)
 
             PrintToConsole(table.ToString());
         }
-        
-        // Function never returns because... true is always true.
-        // TODO: Exit While loop if command was exist command.
     }
 
     private static void PrintToConsole(string print)

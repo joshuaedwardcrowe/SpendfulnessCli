@@ -7,32 +7,50 @@ namespace YnabCli.Instructions.Tests;
 [TestFixture]
 public class InstructionTokenExtractorTests
 {
-    private InstructionTokenIndexer _instructionTokenIndexer;
     private InstructionTokenExtractor _legacyInstructionTokenExtractor;
 
     [SetUp]
     public void SetUp()
     {
-        _instructionTokenIndexer = new InstructionTokenIndexer();
-        _legacyInstructionTokenExtractor = new InstructionTokenExtractor(_instructionTokenIndexer);
+        _legacyInstructionTokenExtractor = new InstructionTokenExtractor();
     }
     
     [Test]
     public void GivenInputString_WhenParse_ReturnsInstructionPrefixs()
     {
         var input = $"/command";
+
+        var indexes = new InstructionTokenIndexes
+        {
+            PrefixTokenIndexed = true,
+            PrefixTokenStartIndex = 0,
+            PrefixTokenEndIndex = 1,
+            NameTokenIndexed = true,
+            NameTokenStartIndex = 1,
+            NameTokenEndIndex = 7,
+        };
         
-        var result = _legacyInstructionTokenExtractor.Extract(input);
+        var result = _legacyInstructionTokenExtractor.Extract(indexes, input);
         
         Assert.That(result.PrefixToken, Is.EqualTo("/"));
     }
     
     [Test]
-    public void GivenInputStringWithoutArguments_WhenaParse_ReturnsInstructionWithoutArguments()
+    public void GivenInputStringWithoutArguments_WhenParse_ReturnsInstructionWithoutArguments()
     {
         var input = $"/command";
         
-        var result = _legacyInstructionTokenExtractor.Extract(input);
+        var indexes = new InstructionTokenIndexes
+        {
+            PrefixTokenIndexed = true,
+            PrefixTokenStartIndex = 0,
+            PrefixTokenEndIndex = 1,
+            NameTokenIndexed = true,
+            NameTokenStartIndex = 1,
+            NameTokenEndIndex = input.Length,
+        };
+        
+        var result = _legacyInstructionTokenExtractor.Extract(indexes, input);
         
         Assert.That(result.NameToken, Is.EqualTo("command"));
     }
@@ -42,7 +60,20 @@ public class InstructionTokenExtractorTests
     {
         var input = $"/command sub-command";
         
-        var result = _legacyInstructionTokenExtractor.Extract(input);
+        var indexes = new InstructionTokenIndexes
+        {
+            PrefixTokenIndexed = true,
+            PrefixTokenStartIndex = 0,
+            PrefixTokenEndIndex = 1,
+            NameTokenIndexed = true,
+            NameTokenStartIndex = 1,
+            NameTokenEndIndex = 7,
+            SubNameTokenIndexed = true,
+            SubNameStartIndex = 9,
+            SubNameEndIndex = input.Length
+        };
+        
+        var result = _legacyInstructionTokenExtractor.Extract(indexes, input);
         
         Assert.That(result.SubNameToken, Is.EqualTo("sub-command"));
     }
@@ -52,7 +83,20 @@ public class InstructionTokenExtractorTests
     {
         var input = $"/command --argumentOne hello world";
         
-        var result = _legacyInstructionTokenExtractor.Extract(input);
+        var indexes = new InstructionTokenIndexes
+        {
+            PrefixTokenIndexed = true,
+            PrefixTokenStartIndex = 0,
+            PrefixTokenEndIndex = 1,
+            NameTokenIndexed = true,
+            NameTokenStartIndex = 1,
+            NameTokenEndIndex = 8,
+            ArgumentTokensIndexed = true,
+            ArgumentTokensStartIndex = 9,
+            ArgumentTokensEndIndex = input.Length,
+        };
+        
+        var result = _legacyInstructionTokenExtractor.Extract(indexes, input);
         
         Assert.That(result.NameToken, Is.EqualTo("command"));
     }
@@ -65,7 +109,20 @@ public class InstructionTokenExtractorTests
         
         var input = $"/command --{argumentName}";
         
-        var result = _legacyInstructionTokenExtractor.Extract(input);
+        var indexes = new InstructionTokenIndexes
+        {
+            PrefixTokenIndexed = true,
+            PrefixTokenStartIndex = 0,
+            PrefixTokenEndIndex = 1,
+            NameTokenIndexed = true,
+            NameTokenStartIndex = 1,
+            NameTokenEndIndex = 7,
+            ArgumentTokensIndexed = true,
+            ArgumentTokensStartIndex = 9,
+            ArgumentTokensEndIndex = input.Length,
+        };
+        
+        var result = _legacyInstructionTokenExtractor.Extract(indexes, input);
         
         var resultingArgument = result.ArgumentTokens.First();
         
@@ -81,7 +138,20 @@ public class InstructionTokenExtractorTests
         
         var input = $"/command --{argumentName} {argumentValue}";
         
-        var result = _legacyInstructionTokenExtractor.Extract(input);
+        var indexes = new InstructionTokenIndexes
+        {
+            PrefixTokenIndexed = true,
+            PrefixTokenStartIndex = 0,
+            PrefixTokenEndIndex = 1,
+            NameTokenIndexed = true,
+            NameTokenStartIndex = 1,
+            NameTokenEndIndex = 7,
+            ArgumentTokensIndexed = true,
+            ArgumentTokensStartIndex = 9,
+            ArgumentTokensEndIndex = input.Length,
+        };
+        
+        var result = _legacyInstructionTokenExtractor.Extract(indexes, input);
         
         var resultingArgument = result.ArgumentTokens.First();
         
@@ -99,7 +169,20 @@ public class InstructionTokenExtractorTests
         
         var input = $"/command --{argumentOneName} {argumentOneValue} --{argumentTwoName} {argumentTwoValue}";
         
-        var result = _legacyInstructionTokenExtractor.Extract(input);
+        var indexes = new InstructionTokenIndexes
+        {
+            PrefixTokenIndexed = true,
+            PrefixTokenStartIndex = 0,
+            PrefixTokenEndIndex = 1,
+            NameTokenIndexed = true,
+            NameTokenStartIndex = 1,
+            NameTokenEndIndex = 7,
+            ArgumentTokensIndexed = true,
+            ArgumentTokensStartIndex = 9,
+            ArgumentTokensEndIndex = input.Length,
+        };
+        
+        var result = _legacyInstructionTokenExtractor.Extract(indexes, input);
 
         var resultingArgumentOne = result.ArgumentTokens.FirstOrDefault();
         
@@ -122,7 +205,20 @@ public class InstructionTokenExtractorTests
         
         var input = $"/command --{argumentOneName} {argumentOneValue} --{argumentTwoName} {argumentTwoValue}";
         
-        var result = _legacyInstructionTokenExtractor.Extract(input);
+        var indexes = new InstructionTokenIndexes
+        {
+            PrefixTokenIndexed = true,
+            PrefixTokenStartIndex = 0,
+            PrefixTokenEndIndex = 1,
+            NameTokenIndexed = true,
+            NameTokenStartIndex = 1,
+            NameTokenEndIndex = 7,
+            ArgumentTokensIndexed = true,
+            ArgumentTokensStartIndex = 9,
+            ArgumentTokensEndIndex = input.Length,
+        };
+        
+        var result = _legacyInstructionTokenExtractor.Extract(indexes, input);
         
         var resultingArgumentOne = result.ArgumentTokens.FirstOrDefault();
         
