@@ -27,7 +27,7 @@ public class InstructionParserTests
     {
         var prefix = "/";
         
-        var tokens = new InstructionTokens(prefix, string.Empty, new Dictionary<string, string>());
+        var tokens = new InstructionTokens(prefix, string.Empty, new Dictionary<string, string?>());
         
         var result = _parser.Parse(tokens);
         
@@ -39,7 +39,7 @@ public class InstructionParserTests
     {
         var name = "/";
         
-        var tokens = new InstructionTokens(string.Empty, name, new Dictionary<string, string>());
+        var tokens = new InstructionTokens(string.Empty, name, new Dictionary<string, string?>());
         
         var result = _parser.Parse(tokens);
         
@@ -52,7 +52,7 @@ public class InstructionParserTests
         var argumentName = "argumentName";
         var arvumentValue = "arvumentValue";
         
-        var tokens = new InstructionTokens(string.Empty, string.Empty, new Dictionary<string, string>
+        var tokens = new InstructionTokens(string.Empty, string.Empty, new Dictionary<string, string?>
         {
             { argumentName, arvumentValue }
         });
@@ -73,7 +73,7 @@ public class InstructionParserTests
         var argumentName = "argumentName";
         var arvumentValue = "1";
         
-        var tokens = new InstructionTokens(string.Empty, string.Empty, new Dictionary<string, string>
+        var tokens = new InstructionTokens(string.Empty, string.Empty, new Dictionary<string, string?>
         {
             { argumentName, arvumentValue }
         });

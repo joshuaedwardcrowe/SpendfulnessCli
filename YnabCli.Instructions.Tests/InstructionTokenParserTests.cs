@@ -14,7 +14,7 @@ public class InstructionTokenParserTests
     }
     
     [Test]
-    public void GivenInputstring_WhenaParse_ReturnsInstructionPrefixs()
+    public void GivenInputString_WhenParse_ReturnsInstructionPrefixs()
     {
         var input = $"/command";
         
@@ -41,6 +41,22 @@ public class InstructionTokenParserTests
         var result = _instructionTokenParser.Parse(input);
         
         Assert.That(result.NameToken, Is.EqualTo("command"));
+    }
+    
+    
+    [Test]
+    public void GivenInputStringWithArgumentsAndNoValue_WhenParse_ReturnsInstructionWithEmptyArguments()
+    {
+        var argumentName = "argumentOne";
+        
+        var input = $"/command --{argumentName}";
+        
+        var result = _instructionTokenParser.Parse(input);
+        
+        var resultingArgument = result.ArgumentTokens.First();
+        
+        Assert.That(resultingArgument.Key, Is.EqualTo(argumentName));
+        Assert.That(resultingArgument.Value, Is.Null);
     }
     
     [Test]
