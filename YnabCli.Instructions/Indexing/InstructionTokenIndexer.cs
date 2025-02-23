@@ -1,4 +1,4 @@
-namespace YnabCli.Instructions;
+namespace YnabCli.Instructions.Indexing;
 
 public class InstructionTokenIndexer
 {
