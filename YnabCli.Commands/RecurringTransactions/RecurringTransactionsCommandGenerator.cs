@@ -4,7 +4,7 @@ namespace YnabCli.Commands.RecurringTransactions;
 
 public class RecurringTransactionsCommandGenerator : ICommandGenerator, ITypedCommandGenerator<RecurringTransactionsCommand>
 {
-    public ICommand Generate(string? subCommandName, List<InstructionArgument>? arguments)
+    public ICommand Generate(string? subCommandName, List<InstructionArgument> arguments)
     {
         var fromArgument = arguments
             .OfType<DateOnly>(RecurringTransactionsCommand.ArgumentNames.From);

@@ -6,6 +6,16 @@ public class SpareMoneyCommandGenerator : ICommandGenerator, ITypedCommandGenera
 {
     public ICommand Generate(string? subCommandName, List<InstructionArgument> arguments)
     {
+        if (subCommandName == SpareMoneyCommand.SubCommandNames.Help)
+        {
+            return new SpareMoneyHelpCommand();
+        }
+        
+        return GenerateDefaultCommand(arguments);
+    }
+
+    private static SpareMoneyCommand GenerateDefaultCommand(List<InstructionArgument> arguments)
+    {
         var minusArgument = arguments.OfCurrencyType(SpareMoneyCommand.ArgumentNames.Minus);
         var minusSavingsArgument = arguments.OfType<bool>(SpareMoneyCommand.ArgumentNames.MinusSavings);
 

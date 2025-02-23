@@ -13,10 +13,11 @@ public static class ServiceCollectionExtensions
         {
             throw new NullReferenceException("No Assembly Containing ICommand Implementation");
         }
-        
+
         return serviceCollection
             .AddMediatRCommandsAndHandlers(commandsAssembly)
-            .AddCommandGenerators(commandsAssembly);
+            .AddCommandGenerators(commandsAssembly)
+            .AddSingleton<CommandHelpViewModelBuilder>();
     }
 
     private static IServiceCollection AddMediatRCommandsAndHandlers(this IServiceCollection serviceCollection, Assembly assembly)

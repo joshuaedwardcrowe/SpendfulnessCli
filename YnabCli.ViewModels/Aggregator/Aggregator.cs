@@ -8,6 +8,13 @@ public abstract class Aggregator<TAggregation>
     protected IEnumerable<CategoryGroup> CategoryGroups { get; }
     protected IEnumerable<Transaction> Transactions { get; }
 
+    protected Aggregator()
+    {
+        Accounts = new List<Account>();
+        CategoryGroups = new List<CategoryGroup>();
+        Transactions = new List<Transaction>();
+    }
+
     protected Aggregator(IEnumerable<Account> accounts, IEnumerable<CategoryGroup> categoryGroups)
     {
         Accounts = accounts;
