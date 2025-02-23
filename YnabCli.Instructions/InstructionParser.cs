@@ -9,7 +9,7 @@ public class InstructionParser(IEnumerable<IInstructionArgumentBuilder> instruct
     {
         var arguments = MapInstructionArguments(tokens.ArgumentTokens);
 
-        return new Instruction(tokens.PrefixToken, tokens.NameToken, arguments);
+        return new Instruction(tokens.CommandPrefixToken, tokens.CommandNameToken, arguments);
     }
 
     private IEnumerable<InstructionArgument> MapInstructionArguments(Dictionary<string, string?> argumentTokens)

@@ -31,14 +31,14 @@ public class ConsoleApplication(IServiceProvider serviceProvider)
             }
 
             var tokens = instructionTokenParser.Parse(input);
-            if (tokens.NameToken is ExitCommand.CommandName or ExitCommand.ShorthandCommandName)
+            if (tokens.CommandNameToken is ExitCommand.CommandName or ExitCommand.ShorthandCommandName)
             {
                 PrintToConsole("Exiting...");
                 noExitCommand = false;
                 continue;
             }
             
-            if (tokens.NameToken is ClearCommand.CommandName or ClearCommand.ShorthandCommandName)
+            if (tokens.CommandNameToken is ClearCommand.CommandName or ClearCommand.ShorthandCommandName)
             {
                 ClearTheConsole();
                 continue;

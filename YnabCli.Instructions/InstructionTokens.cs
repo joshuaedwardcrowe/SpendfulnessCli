@@ -1,6 +1,6 @@
 namespace YnabCli.Instructions;
 
 public record InstructionTokens(
-    string? PrefixToken,
-    string NameToken,
+    string? CommandPrefixToken,
+    string CommandNameToken,
     Dictionary<string, string?> ArgumentTokens);
