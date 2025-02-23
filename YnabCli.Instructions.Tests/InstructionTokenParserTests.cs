@@ -20,7 +20,7 @@ public class InstructionTokenParserTests
         
         var result = _instructionTokenParser.Parse(input);
         
-        Assert.That(result.PrefixToken, Is.EqualTo("/"));
+        Assert.That(result.CommandPrefixToken, Is.EqualTo("/"));
     }
     
     [Test]
@@ -30,7 +30,7 @@ public class InstructionTokenParserTests
         
         var result = _instructionTokenParser.Parse(input);
         
-        Assert.That(result.NameToken, Is.EqualTo("command"));
+        Assert.That(result.CommandNameToken, Is.EqualTo("command"));
     }
 
     [Test]
@@ -40,7 +40,7 @@ public class InstructionTokenParserTests
         
         var result = _instructionTokenParser.Parse(input);
         
-        Assert.That(result.NameToken, Is.EqualTo("command"));
+        Assert.That(result.CommandNameToken, Is.EqualTo("command"));
     }
     
     
