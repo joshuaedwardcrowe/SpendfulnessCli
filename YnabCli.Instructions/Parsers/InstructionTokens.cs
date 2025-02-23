@@ -1,6 +1,7 @@
 namespace YnabCli.Instructions.Parsers;
 
-public record LegacyInstructionTokens(
-    string? CommandPrefixToken,
-    string CommandNameToken,
-    Dictionary<string, string?> ArgumentTokens);
+public record InstructionTokens(
+    string? PrefixToken,
+    string? NameToken,
+    string? SubNameToken,
+    Dictionary<string, string?>? ArgumentTokens);

@@ -27,7 +27,7 @@ public class InstructionTokenIndexer
         // e.g. /<here>spare-money help --argumentOne hello world --argumentTwo 1
         var afterPunctuationMarkIndex = firstPunctuationMarkIndex + 1;
  
-        var firstSpaceIndex = terminalInput.IndexOf(InstructionTokenIndexerConstants.DefaultSpaceCharacter);
+        var firstSpaceIndex = terminalInput.IndexOf(InstructionConstants.DefaultSpaceCharacter);
         var hasFirstSpace = firstSpaceIndex != -1;
         
         // If command name is present, the first space should not be after the /
@@ -38,7 +38,7 @@ public class InstructionTokenIndexer
         
         // e.g. /spare-money help <here>--argumentOne hello world --argumentTwo 1
         var firstArgumentIndex = terminalInput.IndexOf(
-            InstructionTokenIndexerConstants.DefaultArgumentPrefix,
+            InstructionConstants.DefaultArgumentPrefix,
             StringComparison.Ordinal);
 
         var beforeFirstArgumentIndex = firstArgumentIndex - 1;

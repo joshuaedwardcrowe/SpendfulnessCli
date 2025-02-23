@@ -1,6 +1,6 @@
-namespace YnabCli.Instructions.Indexers;
+namespace YnabCli.Instructions;
 
-public static class InstructionTokenIndexerConstants
+public static class InstructionConstants
 {
     public const string DefaultNamePrefix = "/";
     public const string DefaultArgumentPrefix = "--";
