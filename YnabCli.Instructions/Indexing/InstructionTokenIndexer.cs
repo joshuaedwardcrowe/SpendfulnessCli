@@ -2,12 +2,12 @@ namespace YnabCli.Instructions.Indexing;
 
 public class InstructionTokenIndexer
 {
-    public InstructionTokensIndexes Index(string terminalInput)
+    public InstructionTokenIndexes Index(string terminalInput)
     {
         var characters = terminalInput.ToCharArray();
         if (characters.Length == 0)
         {
-            return new InstructionTokensIndexes
+            return new InstructionTokenIndexes
             {
                 PrefixTokenIndexed = false,
                 NameTokenIndexed = false,
@@ -56,7 +56,7 @@ public class InstructionTokenIndexer
             ? firstArgumentIndex - 1
             : terminalInput.Length;
         
-        return new InstructionTokensIndexes
+        return new InstructionTokenIndexes
         {
             PrefixTokenIndexed = hasFirstPunctuationMark,
             PrefixTokenStartIndex = firstPunctuationMarkIndex,
@@ -70,8 +70,9 @@ public class InstructionTokenIndexer
             SubNameStartIndex = subCommandNameStartIndex,
             SubNameEndIndex = subCommandNameEndIndex,
             
-            ArgumentTokensIndexed = false, // TODO:
-            ArgumentTokensStartIndex = firstArgumentIndex
+            ArgumentTokensIndexed = hasArgumentTokens,
+            ArgumentTokensStartIndex = firstArgumentIndex,
+            ArgumentTokensEndIndex = terminalInput.Length
         };
     }
 }

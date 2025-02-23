@@ -113,4 +113,27 @@ public class InstructionTokenIndexerTests
         var match = input[result.SubNameStartIndex..result.SubNameEndIndex];
         Assert.That(match, Is.EqualTo(expectedMatch));
     }
+    
+    [TestCase("/command-example")]
+    [TestCase("/command-example sub-command-example")]
+    public void GivenInputStringWithNoArgumentTokens_WhenIndex_ReturnsFalseForArgumentTokensIndexed(string input)
+    {
+        var result = _instructionTokenIndexer.Index(input);
+        
+        Assert.That(result.ArgumentTokensIndexed, Is.False);
+    }
+    
+    [TestCase("/command-example sub-command-example --argument-example", "--argument-example")]
+    [TestCase("/command-example sub-command-example --argument-example hello world", "--argument-example hello world")]
+    [TestCase("/command-example sub-command-example --argument-example hello world --argument-two", "--argument-example hello world --argument-two")]
+    [TestCase("/command-example sub-command-example --argument-example hello world --argument-two 1", "--argument-example hello world --argument-two 1")]
+    public void GivenInputString_WhenIndex_ReturnsCorrectIndexesForArgumentTokens(string input, string expectedMatch)
+    {
+        var result = _instructionTokenIndexer.Index(input);
+        
+        Assert.That(result.ArgumentTokensIndexed, Is.True);
+
+        var match = input[result.ArgumentTokensStartIndex..result.ArgumentTokensEndIndex];
+        Assert.That(match, Is.EqualTo(expectedMatch));
+    }
 }
