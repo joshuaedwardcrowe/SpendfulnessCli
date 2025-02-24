@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 		LICENSE = LICENSE
+		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.ViewModels", "YnabCli.ViewModels\YnabCli.ViewModels.csproj", "{D6DDBC52-9946-434B-814E-536E8E4D49CB}"
@@ -29,7 +30,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADR", "ADR", "{B5381D3F-A87
 		ADR\ADR01-Null-ArgumentValue-In-InstructionArgumentBuilders.md = ADR\ADR01-Null-ArgumentValue-In-InstructionArgumentBuilders.md
 		CONCEPTS.md = CONCEPTS.md
 		FUTURE-ADR.md = FUTURE-ADR.md
+		ADR\ADR02-Storing-Data.md = ADR\ADR02-Storing-Data.md
+		ADR\ynab-database-diagram.png = ADR\ynab-database-diagram.png
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Database", "YnabCli.Database\YnabCli.Database.csproj", "{80B41408-9A47-4AC6-8847-A37EF2EC327C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,5 +78,9 @@ Global
 		{E72E9E9F-C093-4924-AFF2-67E1E46F1039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E72E9E9F-C093-4924-AFF2-67E1E46F1039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E72E9E9F-C093-4924-AFF2-67E1E46F1039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80B41408-9A47-4AC6-8847-A37EF2EC327C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80B41408-9A47-4AC6-8847-A37EF2EC327C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80B41408-9A47-4AC6-8847-A37EF2EC327C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80B41408-9A47-4AC6-8847-A37EF2EC327C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
