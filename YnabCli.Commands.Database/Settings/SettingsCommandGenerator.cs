@@ -1,4 +1,5 @@
 using YnabCli.Commands.Database.Settings.Create;
+using YnabCli.Commands.Database.Settings.View;
 using YnabCli.Instructions.Arguments;
 
 namespace YnabCli.Commands.Database.Settings;
@@ -7,12 +8,12 @@ public class SettingsCommandGenerator : ICommandGenerator, ITypedCommandGenerato
 {
     public ICommand Generate(string? subCommandName, List<InstructionArgument> arguments)
     {
-        if (subCommandName == SettingsCommand.SubCommandNames.Create)
+        return subCommandName switch
         {
-            return GenerateCreateCommand(arguments);
-        }
-
-        return new SettingsCommand();
+            SettingsCommand.SubCommandNames.Create => GenerateCreateCommand(arguments),
+            SettingsCommand.SubCommandNames.View => new SettingsViewCommand(),
+            _ => new SettingsCommand()
+        };
     }
 
     private SettingCreateCommand GenerateCreateCommand(List<InstructionArgument> arguments)
