@@ -36,6 +36,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADR", "ADR", "{B5381D3F-A87
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Database", "YnabCli.Database\YnabCli.Database.csproj", "{80B41408-9A47-4AC6-8847-A37EF2EC327C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Commands.Database", "YnabCli.Commands.Database\YnabCli.Commands.Database.csproj", "{9EDF82AA-7E61-485B-8B95-815EA0407C93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Commands.Ynab", "YnabCli.Commands.Ynab\YnabCli.Commands.Ynab.csproj", "{B15BC118-26C7-43F1-8315-EB71C92DF16A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,5 +86,13 @@ Global
 		{80B41408-9A47-4AC6-8847-A37EF2EC327C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80B41408-9A47-4AC6-8847-A37EF2EC327C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80B41408-9A47-4AC6-8847-A37EF2EC327C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EDF82AA-7E61-485B-8B95-815EA0407C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EDF82AA-7E61-485B-8B95-815EA0407C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EDF82AA-7E61-485B-8B95-815EA0407C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EDF82AA-7E61-485B-8B95-815EA0407C93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B15BC118-26C7-43F1-8315-EB71C92DF16A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B15BC118-26C7-43F1-8315-EB71C92DF16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B15BC118-26C7-43F1-8315-EB71C92DF16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B15BC118-26C7-43F1-8315-EB71C92DF16A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

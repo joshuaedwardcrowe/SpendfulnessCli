@@ -6,24 +6,15 @@ namespace YnabCli.Commands;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddConsoleCommands(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddYnabCommands(this IServiceCollection serviceCollection)
     {
-        var commandsAssembly = Assembly.GetAssembly(typeof(ICommand));
-        if (commandsAssembly == null)
-        {
-            throw new NullReferenceException("No Assembly Containing ICommand Implementation");
-        }
-
-        return serviceCollection
-            .AddMediatRCommandsAndHandlers(commandsAssembly)
-            .AddCommandGenerators(commandsAssembly)
-            .AddSingleton<CommandHelpViewModelBuilder>();
+        return serviceCollection.AddSingleton<CommandHelpViewModelBuilder>();
     }
 
-    private static IServiceCollection AddMediatRCommandsAndHandlers(this IServiceCollection serviceCollection, Assembly assembly)
+    public static IServiceCollection AddMediatRCommandsAndHandlers(this IServiceCollection serviceCollection, Assembly assembly)
         => serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
 
-    private static IServiceCollection AddCommandGenerators(this IServiceCollection serviceCollection, Assembly assembly)
+    public static IServiceCollection AddCommandGenerators(this IServiceCollection serviceCollection, Assembly assembly)
     {
         var implementationTypes = assembly.WhereClassTypesImplementType(typeof(ICommandGenerator));
         

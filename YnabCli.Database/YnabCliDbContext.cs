@@ -18,7 +18,7 @@ public class YnabCliDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite("Data Source=YnabCli.db");
-        optionsBuilder.LogTo(Console.WriteLine);
+        // optionsBuilder.LogTo(Console.WriteLine);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -5,7 +5,7 @@ namespace YnabCli.Database.Settings;
 public class Setting
 {
     public int Id { get; set; }
-    public string Value { get; set; }
-    public SettingType Type { get; set; }
-    public User User { get; set; }
+    public required string Value { get; set; }
+    public required SettingType Type { get; set; }
+    public required User User { get; set; }
 }
