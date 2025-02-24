@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\YnabCli.Commands.Database\YnabCli.Commands.Database.csproj" />
-      <ProjectReference Include="..\YnabCli.Commands.Ynab\YnabCli.Commands.Ynab.csproj" />
+      <ProjectReference Include="..\YnabCli.Commands.Personalisation\YnabCli.Commands.Personalisation.csproj" />
+      <ProjectReference Include="..\YnabCli.Commands.Reporting\YnabCli.Commands.Reporting.csproj" />
       <ProjectReference Include="..\YnabCli.Database\YnabCli.Database.csproj" />
       <ProjectReference Include="..\YnabCli.ViewModels\YnabCli.ViewModels.csproj" />
       <ProjectReference Include="..\YnabCli.Instructions\YnabCli.Instructions.csproj" />

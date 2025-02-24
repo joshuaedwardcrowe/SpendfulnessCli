@@ -2,8 +2,8 @@
 using Ynab.Extensions;
 using YnabCli;
 using YnabCli.Commands;
-using YnabCli.Commands.Database;
-using YnabCli.Commands.Ynab;
+using YnabCli.Commands.Personalisation;
+using YnabCli.Commands.Reporting;
 using YnabCli.Database;
 using YnabCli.Instructions;
 using YnabCli.ViewModels.Extensions;
