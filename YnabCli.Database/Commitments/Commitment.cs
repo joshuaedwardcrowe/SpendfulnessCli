@@ -9,4 +9,5 @@ public class Commitment
     public decimal Amount { get; set; }
     public required CommitmentType Type { get; set; }
     public required User User { get; set; }
+    public required Guid YnabCategoryId { get; set; }
 }
