@@ -40,21 +40,20 @@ public class InstructionTokenIndexer
         var firstArgumentIndex = terminalInput.IndexOf(
             InstructionConstants.DefaultArgumentPrefix,
             StringComparison.Ordinal);
+        
+        var hasArgumentTokens = firstArgumentIndex != -1;
 
         var beforeFirstArgumentIndex = firstArgumentIndex - 1;
-
-        var hasArgumentTokens = firstArgumentIndex != -1;
+        var inputBetweenFirstSpaceAndFirstArgument = beforeFirstArgumentIndex != firstSpaceIndex;
         
         // The space between the first argument and command name has nothing in it - if there is a space at all
-        var hasSubCommandNameToken = hasFirstSpace && beforeFirstArgumentIndex != firstSpaceIndex;
+        var hasSubCommandNameToken = hasFirstSpace && inputBetweenFirstSpaceAndFirstArgument;
         
         // e.g. /spare-money <here>help --argumentOne hello world --argumentTwo 1
         var subCommandNameStartIndex = firstSpaceIndex + 1;
         
         // e.g. /spare-money help<here> --argumentOne hello world --argumentTwo 1
-        var subCommandNameEndIndex = hasArgumentTokens
-            ? firstArgumentIndex - 1
-            : terminalInput.Length;
+        var subCommandNameEndIndex = hasArgumentTokens ? firstArgumentIndex - 1 : terminalInput.Length;
         
         return new InstructionTokenIndexes
         {
