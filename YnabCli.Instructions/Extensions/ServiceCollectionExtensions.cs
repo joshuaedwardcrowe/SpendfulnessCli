@@ -4,7 +4,7 @@ using YnabCli.Instructions.Extraction;
 using YnabCli.Instructions.Indexers;
 using YnabCli.Instructions.Parsers;
 
-namespace YnabCli.Instructions;
+namespace YnabCli.Instructions.Extensions;
 
 public static class ServiceCollectionExtensions
 {

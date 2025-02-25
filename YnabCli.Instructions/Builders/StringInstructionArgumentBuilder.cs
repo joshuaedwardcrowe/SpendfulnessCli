@@ -1,5 +1,5 @@
-
 using YnabCli.Instructions.Arguments;
+using YnabCli.Instructions.Extensions;
 
 namespace YnabCli.Instructions.Builders;
 
@@ -8,10 +8,8 @@ public class StringInstructionArgumentBuilder : NoDefaultInstructionArgumentBuil
     public bool For(string? argumentValue)
     {
         if (argumentValue == null) return false;
-        
-        var characters = argumentValue.ToCharArray();
-        var nonWhiteSpacecharacters = characters.Where(c => !char.IsWhiteSpace(c));
-        return nonWhiteSpacecharacters.Any(char.IsLetter);
+
+        return argumentValue.AnyLetters() && !bool.TryParse(argumentValue, out _);
     }
 
     public InstructionArgument Create(string argumentName, string? argumentValue)
