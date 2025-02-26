@@ -7,7 +7,7 @@ namespace YnabCli.Commands.Reporting;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddYnabCliYnabCommands(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddReportingCommands(this IServiceCollection serviceCollection)
     {
         var commandsAssembly = Assembly.GetAssembly(typeof(SpareMoneyCommand));
         if (commandsAssembly == null)

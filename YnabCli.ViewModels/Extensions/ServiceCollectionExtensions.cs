@@ -5,7 +5,7 @@ namespace YnabCli.ViewModels.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddConsoleCompilation(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddCompilation(this IServiceCollection serviceCollection)
         => serviceCollection
             .AddSingleton<TransactionMemoOccurrenceViewModelBuilder>()
             .AddSingleton<TransactionYearAverageViewModelBuilder>()

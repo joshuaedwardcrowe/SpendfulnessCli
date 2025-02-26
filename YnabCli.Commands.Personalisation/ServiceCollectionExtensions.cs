@@ -7,7 +7,7 @@ namespace YnabCli.Commands.Personalisation;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddYnabCliDatabaseCommands(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddPersonalisationCommands(this IServiceCollection serviceCollection)
     {
         var commandsAssembly = Assembly.GetAssembly(typeof(DatabaseCommand));
         if (commandsAssembly == null)

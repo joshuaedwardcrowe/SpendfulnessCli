@@ -12,12 +12,12 @@ using YnabCli.ViewModels.Extensions;
 
 var serviceProvider = new ServiceCollection()
     .AddYnab() // Speak to the YNAB API
-    .AddConsoleCompilation() // Compile into ConsoleTables.
-    .AddYnabCommands() // Convert them into MediatR requests
-    .AddYnabCliYnabCommands() // Commands that work with YNAB data
-    .AddYnabCliDatabaseCommands() // Commands that work with db data
-    .AddConsoleInstructions() // Understand terminal commands
-    .AddYnabCliDb() // Store data
+    .AddCompilation() // Compile into ConsoleTables.
+    .AddCommands() // Convert them into MediatR requests
+    .AddReportingCommands() // Commands that work with YNAB data
+    .AddPersonalisationCommands() // Commands that work with db data
+    .AddInstructions() // Understand terminal commands
+    .AddDb() // Store data
     .AddSingleton<ConsoleApplication>() // Front-end
     .BuildServiceProvider();
 

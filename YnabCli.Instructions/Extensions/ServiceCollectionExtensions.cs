@@ -8,7 +8,7 @@ namespace YnabCli.Instructions.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddConsoleInstructions(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddInstructions(this IServiceCollection serviceCollection)
         => serviceCollection
             .AddSingleton<IInstructionArgumentBuilder, StringInstructionArgumentBuilder>()
             .AddSingleton<IInstructionArgumentBuilder, DecimalInstructionArgumentBuilder>()
