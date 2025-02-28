@@ -1,6 +1,8 @@
+using YnabCli.Abstractions;
+
 namespace YnabCli.Instructions.Exceptions;
 
-public class InstructionException : Exception
+public class InstructionException : YnabCliException
 {
     public InstructionExceptionCode Code { get; }
     

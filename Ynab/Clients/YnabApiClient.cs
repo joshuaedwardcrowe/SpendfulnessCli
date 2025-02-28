@@ -36,7 +36,7 @@ public class YnabApiClient
         var responseContent = await response.Content.ReadFromJsonAsync<YnabHttpResponseContent<TApiResponse>>(_jsonOptions);
         if (responseContent is null)
         {
-            throw new YnabExceptin(YnabExceptionCode.ApiResponseIsEmpty, $"No response on {url}");
+            throw new YnabException(YnabExceptionCode.ApiResponseIsEmpty, $"No response on {url}");
         }
         
         return responseContent;

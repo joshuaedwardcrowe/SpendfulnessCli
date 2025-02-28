@@ -1,6 +1,8 @@
+using YnabCli.Abstractions;
+
 namespace YnabCli.Database;
 
-public class YnabCliDbException : Exception
+public class YnabCliDbException : YnabCliException
 {
     public YnabCliDbExceptionCode Code { get; }
     

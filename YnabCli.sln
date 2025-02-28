@@ -51,6 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ynab", "Ynab", "{D40F83D7-C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Sync", "YnabCli.Sync\YnabCli.Sync.csproj", "{E34D5843-983A-4548-9D68-CB479F2711EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Abstractions", "YnabCli.Abstractions\YnabCli.Abstractions.csproj", "{909758A2-8F82-4742-9538-DBE8DA2B5445}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,10 @@ Global
 		{E34D5843-983A-4548-9D68-CB479F2711EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E34D5843-983A-4548-9D68-CB479F2711EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E34D5843-983A-4548-9D68-CB479F2711EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{909758A2-8F82-4742-9538-DBE8DA2B5445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{909758A2-8F82-4742-9538-DBE8DA2B5445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{909758A2-8F82-4742-9538-DBE8DA2B5445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{909758A2-8F82-4742-9538-DBE8DA2B5445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9EDF82AA-7E61-485B-8B95-815EA0407C93} = {C8123769-FEC9-4998-9856-E05E1C17D297}

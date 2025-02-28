@@ -1,6 +1,8 @@
+using YnabCli.Abstractions;
+
 namespace YnabCli.Commands.Exceptions;
 
-public class CommandException : Exception
+public class CommandException : YnabCliException
 {
     public CommandExceptionCode Code { get; }
     
