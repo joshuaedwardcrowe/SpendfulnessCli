@@ -16,7 +16,7 @@ public class UserSwitchCommandHandler : CommandHandler, ICommandHandler<UserSwit
 
     public async Task<ConsoleTable> Handle(UserSwitchCommand command, CancellationToken cancellationToken)
     {
-        var currentActiveUser = await _dbContext.Users.FindActiveUserAsync();
+        var currentActiveUser = await _dbContext.Users.FirstAsync(u => u.Active, cancellationToken);
 
         if (currentActiveUser.Name == command.UserName)
         {

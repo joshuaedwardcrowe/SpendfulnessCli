@@ -16,9 +16,9 @@ public class SettingCreateCommandHandler : CommandHandler, ICommandHandler<Setti
 
     public async Task<ConsoleTable> Handle(SettingCreateCommand command, CancellationToken cancellationToken)
     {
-        var activeUser = await _dbContext.Users.FindActiveUserAsync();
+        var activeUser = await _dbContext.Users.FirstAsync(u => u.Active, cancellationToken);
         
-        var type = await _dbContext.SettingTypes.FirstOrDefaultAsync(s => s.Name == command.Type);
+        var type = await _dbContext.SettingTypes.FirstOrDefaultAsync(s => s.Name == command.Type, cancellationToken);
         if (type == null)
         {
             throw new Exception($"{type} is not a Setting");
@@ -28,7 +28,7 @@ public class SettingCreateCommandHandler : CommandHandler, ICommandHandler<Setti
         {
             Type = type,
             Value = command.Value,
-            User = activeUser,
+            User = activeUser
         };
         
         await _dbContext.Settings.AddAsync(setting, cancellationToken);

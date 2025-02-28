@@ -11,11 +11,9 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        PrintToConsole($"Identifying User and Budget to Sync");
         var user = await unitOfWork.GetActiveUser();
-        
         var budget = await budgetGetter.Get();
-        PrintToConsole($"Syncing Budget; {budget.Id}");
+        PrintToConsole($"Syncing Commitments for Budget: {budget.Id}");
         
         var categoryGroups = await budget.GetCategoryGroups();
         var farmCategoryGroups = categoryGroups
@@ -36,25 +34,24 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
         {
             var commitment = user.Commitments
                 .FirstOrDefault(commitment => commitment.YnabCategoryId == category.Id);
-
-            // If there is a commitment but no longer a tracked goal
-            if (commitment != null && !category.HasGoal)
+            
+            if (commitment is not null && !category.HasGoal)
             {
+                PrintToConsole($"Removing Commitment for: {category.Name}");
                 user.Commitments.Remove(commitment);
             }
             
-            // If we identified a current commitment and the category goal is valid
-            if (commitment != null)
+            if (commitment is not null && category.HasGoal)
             {
                 PrintToConsole($"Updating Commitment for: {category.Name}");
                 UpdateCommitment(commitment, category);
 
                 continue;
             }
-
-            // If there's no commitment and no tracked category goal
+            
             if (!category.HasGoal)
             {
+                PrintToConsole($"Skipping for: {category.Name}");
                 continue;
             }
                 

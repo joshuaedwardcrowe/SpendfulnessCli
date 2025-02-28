@@ -1,7 +1,5 @@
 using ConsoleTables;
-using Ynab.Http;
 using YnabCli.Commands.Handlers;
-using YnabCli.Database;
 using YnabCli.ViewModels.ViewModels;
 
 namespace YnabCli.Commands.Tests;

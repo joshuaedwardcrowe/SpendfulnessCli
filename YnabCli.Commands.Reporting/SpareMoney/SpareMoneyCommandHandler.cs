@@ -1,6 +1,5 @@
 using ConsoleTables;
 using Ynab;
-using Ynab.Clients;
 using Ynab.Connected;
 using Ynab.Extensions;
 using Ynab.Responses.Accounts;
@@ -38,6 +37,8 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
             
             var placeholderResponse = new AccountResponse
             {
+                Id = Guid.Empty,
+                Name = nameof(SpareMoneyCommand),
                 Type = AccountType.Checking,
                 ClearedBalance = milliunit
             };

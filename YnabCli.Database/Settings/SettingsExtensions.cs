@@ -15,7 +15,7 @@ public static class SettingsExtensions
         if (!Guid.TryParse(setting?.Value, out var result))
         {
             return null;
-        };
+        }
 
         return result;
     }

@@ -19,5 +19,7 @@ public class StringExtensionsTests
     public void GivenString_WhenToLowerTitleCaseCharacters_ReturnsCharacters(string input, string expected)
     {
         var result = "".ToLowerTitleCharacters();
+        
+        Assert.That(result, Is.EqualTo(expected));
     }
 }

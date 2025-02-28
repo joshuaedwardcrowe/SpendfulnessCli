@@ -10,8 +10,11 @@ public class User
     public required string Name { get; set; }
     public bool Active { get; set; }
     public ICollection<Setting> Settings { get; set; }
+        = new List<Setting>();
     public ICollection<Commitment> Commitments { get; set; }
-    public ICollection<AccountCustomAccountType> CustomAccountTypes { get; set; } = new List<AccountCustomAccountType>();
+        = new List<Commitment>();
+    public ICollection<AccountCustomAccountType> CustomAccountTypes { get; set; }
+        = new List<AccountCustomAccountType>();
 
     public string? YnabApiKey => Settings.AsString(SettingTypeNames.YnabApiKey);
     
