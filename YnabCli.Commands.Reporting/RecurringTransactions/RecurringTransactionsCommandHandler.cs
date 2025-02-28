@@ -1,11 +1,9 @@
 using ConsoleTables;
 using Ynab;
-using Ynab.Clients;
+using Ynab.Connected;
 using Ynab.Extensions;
-using Ynab.Http;
 using YnabCli.Commands.Factories;
 using YnabCli.Commands.Handlers;
-using YnabCli.Database;
 using YnabCli.ViewModels.Aggregator;
 using YnabCli.ViewModels.ViewModelBuilders;
 using YnabCli.ViewModels.ViewModels;
@@ -48,25 +46,27 @@ public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandl
         return Compile(viewModel);
     }
     
-    private async Task<IEnumerable<Transaction>> GetTransactions(Budget budget, RecurringTransactionsCommand command)
+    private async Task<IEnumerable<Transaction>> GetTransactions(ConnectedBudget connectedBudget, RecurringTransactionsCommand command)
     {
-        var transactions = await budget.GetTransactions();
+        var transactions = await connectedBudget.GetTransactions();
+
+        var castedTransactions = transactions.Cast<Transaction>();
 
         if (command.From.HasValue)
         {
-            transactions = transactions.FilterFrom(command.From.Value);
+            castedTransactions = castedTransactions.FilterFrom(command.From.Value);
         }
 
         if (command.To.HasValue)
         {
-            transactions = transactions.FilterTo(command.To.Value);
+            castedTransactions = castedTransactions.FilterTo(command.To.Value);
         }
 
         if (command.PayeeName != null)
         {
-            transactions = transactions.FilterByPayeeName(command.PayeeName);
+            castedTransactions = castedTransactions.FilterByPayeeName(command.PayeeName);
         }
         
-        return transactions;
+        return castedTransactions;
     }
 }

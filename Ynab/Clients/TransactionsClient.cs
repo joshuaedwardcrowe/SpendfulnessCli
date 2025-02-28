@@ -1,3 +1,4 @@
+using Ynab.Connected;
 using Ynab.Http;
 using Ynab.Responses.Transactions;
 
@@ -8,10 +9,10 @@ public class TransactionsClient(YnabHttpClientBuilder ynabHttpClientBuilder, str
 {
     private const string TransactionsApiPath = "transactions";
 
-    public async Task<IEnumerable<Transaction>> GetTransactions()
+    public async Task<IEnumerable<ConnectedTransaction>> GetTransactions()
     {
         var response = await Get<GetTransactionsResponseData>(TransactionsApiPath);
-        return response.Data.Transactions.Select(t => new Transaction(t));
+        return response.Data.Transactions.Select(t => new ConnectedTransaction(this, t));
     }
     
     protected override HttpClient GetHttpClient()

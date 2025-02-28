@@ -1,5 +1,6 @@
 using Ynab;
 using Ynab.Collections;
+using Ynab.Connected;
 using Ynab.Extensions;
 using YnabCli.ViewModels.Aggregates;
 using YnabCli.ViewModels.Calculators;

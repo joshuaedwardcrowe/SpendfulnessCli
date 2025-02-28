@@ -1,6 +1,7 @@
 using ConsoleTables;
 using Ynab;
 using Ynab.Clients;
+using Ynab.Connected;
 using Ynab.Extensions;
 using Ynab.Responses.Accounts;
 using Ynab.Sanitisers;
@@ -70,7 +71,7 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
         return Compile(viewModel);
     }
     
-    private static async Task<IEnumerable<CategoryGroup>> GetCriticalCategoryGroups(Budget budget)
+    private static async Task<IEnumerable<CategoryGroup>> GetCriticalCategoryGroups(ConnectedBudget connectedBudget)
     {
         var criticalCategoryGroupNames = new List<string>
         {
@@ -81,7 +82,7 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
             "Credit Card Payments"
         };
         
-        var categoryGroups = await budget.GetCategoryGroups();
+        var categoryGroups = await connectedBudget.GetCategoryGroups();
 
         return categoryGroups.FilterTo(criticalCategoryGroupNames);
     }

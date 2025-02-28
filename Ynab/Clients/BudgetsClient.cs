@@ -1,3 +1,4 @@
+using Ynab.Connected;
 using Ynab.Http;
 using Ynab.Responses.Budgets;
 
@@ -7,13 +8,13 @@ public class BudgetsClient(YnabHttpClientBuilder ynabHttpClientBuilder) : YnabAp
 {
     private const string BudgetsApiPath = "budgets";
 
-    public async Task<IEnumerable<Budget>> GetBudgets()
+    public async Task<IEnumerable<ConnectedBudget>> GetBudgets()
     {
         var response = await Get<GetBudgetsResponseData>(BudgetsApiPath);
         return ConvertBudgetResponsesToWrappers(response.Data.Budgets);
     }
 
-    private IEnumerable<Budget> ConvertBudgetResponsesToWrappers(IEnumerable<BudgetResponse> budgetResponses)
+    private IEnumerable<ConnectedBudget> ConvertBudgetResponsesToWrappers(IEnumerable<BudgetResponse> budgetResponses)
     {
         foreach (var budgetResponse in budgetResponses)
         {
@@ -24,7 +25,7 @@ public class BudgetsClient(YnabHttpClientBuilder ynabHttpClientBuilder) : YnabAp
             var transactions = new TransactionsClient(ynabHttpClientBuilder, parentApiPath);
             var scheduledTransactions = new ScheduledTransactionsClient(ynabHttpClientBuilder, parentApiPath);
 
-            yield return new Budget(
+            yield return new ConnectedBudget(
                 accounts,
                 categories,
                 transactions,

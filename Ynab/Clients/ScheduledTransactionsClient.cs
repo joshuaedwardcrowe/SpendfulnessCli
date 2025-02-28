@@ -1,3 +1,4 @@
+using Ynab.Connected;
 using Ynab.Http;
 using Ynab.Responses.ScheduledTransactions;
 
@@ -8,10 +9,10 @@ public class ScheduledTransactionsClient(YnabHttpClientBuilder ynabHttpClientBui
 {
     private const string ScheduledTransactionsPath = "scheduled_transactions";
 
-    public async Task<IEnumerable<ScheduledTransaction>> GetScheduledTransactions()
+    public async Task<IEnumerable<ConnectedScheduledTransaction>> GetScheduledTransactions()
     {
         var response = await Get<GetScheduledTransactionResponseData>(ScheduledTransactionsPath);
-        return response.Data.ScheduledTransactions.Select(st => new ScheduledTransaction(this, st));
+        return response.Data.ScheduledTransactions.Select(st => new ConnectedScheduledTransaction(this, st));
     }
     
     protected override HttpClient GetHttpClient()

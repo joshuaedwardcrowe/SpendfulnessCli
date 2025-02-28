@@ -1,3 +1,5 @@
+using Ynab.Connected;
+
 namespace Ynab.Extensions;
 
 public static class CategoryGroupExtensions

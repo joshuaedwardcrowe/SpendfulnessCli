@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Hosting;
 using Ynab;
+using Ynab.Connected;
 using Ynab.Extensions;
 using YnabCli.Database;
 using YnabCli.Database.Commitments;
@@ -15,7 +16,9 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
         
         var budget = await budgetGetter.Get();
         var categoryGroups = await budget.GetCategoryGroups();
-        var farmCategoryGroups = categoryGroups.FilterToFarmCategories();
+        var farmCategoryGroups = categoryGroups
+            .FilterToFarmCategories()
+            .Cast<ConnectedCategoryGroup>();
 
         foreach (var farmCategoryGroup in farmCategoryGroups)
         {

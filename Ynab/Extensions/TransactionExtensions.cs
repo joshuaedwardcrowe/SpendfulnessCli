@@ -1,4 +1,6 @@
+using Microsoft.VisualBasic;
 using Ynab.Collections;
+using Ynab.Connected;
 using Ynab.Sanitisers;
 
 namespace Ynab.Extensions;

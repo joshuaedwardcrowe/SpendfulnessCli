@@ -1,5 +1,5 @@
 using ConsoleTables;
-using Ynab.Clients;
+using Ynab;
 using Ynab.Extensions;
 using YnabCli.Commands.Factories;
 using YnabCli.Commands.Handlers;
@@ -29,17 +29,20 @@ public class FlagChangesCommandHandler : CommandHandler, ICommandHandler<FlagCha
         var categoryGroups = await budget.GetCategoryGroups();
         var transactions = await budget.GetTransactions();
 
+        var castedTransactions = transactions.Cast<Transaction>();
+
         if (command.From.HasValue)
         {
-            transactions = transactions.FilterFrom(command.From.Value);
+            castedTransactions = castedTransactions
+                .FilterFrom(command.From.Value);
         }
 
         if (command.To.HasValue)
         {
-            transactions = transactions.FilterTo(command.To.Value);
+            castedTransactions = castedTransactions.FilterTo(command.To.Value);
         }
         
-        var aggregator = new TransactionMonthFlaggedAggregator(categoryGroups, transactions);
+        var aggregator = new TransactionMonthFlaggedAggregator(categoryGroups, castedTransactions);
         
         var viewModel = _viewModelBuilder
             .AddAggregator(aggregator)

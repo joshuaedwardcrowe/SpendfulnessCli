@@ -1,7 +1,7 @@
 using Ynab.Clients;
 using Ynab.Responses.Accounts;
 
-namespace Ynab;
+namespace Ynab.Connected;
 
 public class ConnectedAccount(AccountsClient client, AccountResponse response) : Account(response)
 {

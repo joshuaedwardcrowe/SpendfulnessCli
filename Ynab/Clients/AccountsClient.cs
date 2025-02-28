@@ -1,3 +1,4 @@
+using Ynab.Connected;
 using Ynab.Http;
 using Ynab.Responses.Accounts;
 

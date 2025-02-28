@@ -1,5 +1,6 @@
 using Ynab;
 using Ynab.Clients;
+using Ynab.Connected;
 using Ynab.Http;
 using YnabCli.Database;
 
@@ -7,7 +8,7 @@ namespace YnabCli.Sync;
 
 public class BudgetGetter(UnitOfWork unitOfWork, YnabHttpClientBuilder httpClientBuilder)
 {
-    public async Task<Budget> Get()
+    public async Task<ConnectedBudget> Get()
     {
         var activeUser = await unitOfWork.GetActiveUser();
         if (activeUser == null)

@@ -1,3 +1,4 @@
+using Ynab.Connected;
 using Ynab.Http;
 using Ynab.Responses.Categories;
 
@@ -8,10 +9,10 @@ public class CategoriesClient(YnabHttpClientBuilder ynabHttpClientBuilder, strin
 {
     private const string CategoriesApiPath = "categories";
 
-    public async Task<IEnumerable<CategoryGroup>> GetCategoryGroups()
+    public async Task<IEnumerable<ConnectedCategoryGroup>> GetCategoryGroups()
     {
         var response = await Get<GetCategoriesResponseData>(CategoriesApiPath);
-        return response.Data.CategoryGroups.Select(cg => new CategoryGroup(this, cg));
+        return response.Data.CategoryGroups.Select(cg => new ConnectedCategoryGroup(this, cg));
     }
     
     protected override HttpClient GetHttpClient() =>

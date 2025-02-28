@@ -1,13 +1,10 @@
-using Ynab.Clients;
 using Ynab.Responses.Category;
 using Ynab.Sanitisers;
 
 namespace Ynab;
 
-public class Category(CategoriesClient categoriesClient, CategoryResponse categoryResponse)
+public class Category(CategoryResponse categoryResponse)
 {
-    private readonly CategoriesClient _categoriesClient = categoriesClient;
-
     public Guid Id => categoryResponse.Id;
     public string Name => categoryResponse.Name;
     public int GoalTarget => categoryResponse.GoalTarget;
