@@ -23,11 +23,7 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
 
         foreach (var farmCategoryGroup in farmCategoryGroups)
         {
-            var categories = farmCategoryGroup
-                .Categories
-                .Where(category => category.HasGoal);
-            
-            SyncCommitment(user, categories);
+            SyncCommitment(user, farmCategoryGroup.Categories);
         }
         
         PrintToConsole($"Finalising Sync...");
@@ -41,6 +37,13 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
             var commitment = user.Commitments
                 .FirstOrDefault(commitment => commitment.YnabCategoryId == category.Id);
 
+            // If there is a commitment but no longer a tracked goal
+            if (commitment != null && !category.HasGoal)
+            {
+                user.Commitments.Remove(commitment);
+            }
+            
+            // If we identified a current commitment and the category goal is valid
             if (commitment != null)
             {
                 PrintToConsole($"Updating Commitment for: {category.Name}");
@@ -48,21 +51,18 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
 
                 continue;
             }
+
+            // If there's no commitment and no tracked category goal
+            if (!category.HasGoal)
+            {
+                continue;
+            }
                 
             PrintToConsole($"Adding a New Commitment for: {category.Name}");
             AddCommitmentToUser(user, category);
         }
     }
-
-    private void UpdateCommitment(Commitment commitment, Category category)
-    {
-        commitment.Name = category.Name;
-        commitment.Funded = category.GoalOverallFunded.Value;
-        commitment.Needed = category.GoalOverallLeft.Value;
-        commitment.Started = category.GoalCreationMonth.Value;
-        commitment.RequiredBy = category.GoalTargetMonth.Value;
-    }
-
+    
     private void AddCommitmentToUser(User user, Category category)
     {
         var commitment = new Commitment
@@ -77,6 +77,16 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
         };
                     
         user.Commitments.Add(commitment);
+    }
+
+
+    private void UpdateCommitment(Commitment commitment, Category category)
+    {
+        commitment.Name = category.Name;
+        commitment.Funded = category.GoalOverallFunded.Value;
+        commitment.Needed = category.GoalOverallLeft.Value;
+        commitment.Started = category.GoalCreationMonth.Value;
+        commitment.RequiredBy = category.GoalTargetMonth.Value;
     }
     
     private void PrintToConsole(string message)
