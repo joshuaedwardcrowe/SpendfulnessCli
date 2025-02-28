@@ -4,6 +4,12 @@ namespace Ynab.Responses.Accounts;
 
 public record AccountResponse
 {
+    [JsonPropertyName("id")]
+    public Guid Id { get; init; }
+    
+    [JsonPropertyName("name")]
+    public string Name { get; init; }
+    
     [JsonPropertyName("type")]
     public AccountType Type { get; set; }
     

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using YnabCli.Database.Accounts;
 using YnabCli.Database.Commitments;
 using YnabCli.Database.Milestones;
 using YnabCli.Database.Settings;
@@ -13,6 +14,8 @@ public class YnabCliDbContext : DbContext
     public DbSet<SettingType> SettingTypes { get; set; }
     public DbSet<Commitment> Commitments { get; set; }
     public DbSet<Milestone> Milestones { get; set; }
+    public DbSet<CustomAccountType> CustomAccountTypes { get; set; }
+    public DbSet<AccountCustomAccountType> AccountAccountTypes { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -33,6 +36,17 @@ public class YnabCliDbContext : DbContext
                 {
                     Id = 1,
                     Name = nameof(SettingTypeNames.YnabApiKey)
+                }
+            });
+
+        modelBuilder
+            .Entity<CustomAccountType>()
+            .HasData(new List<CustomAccountType>
+            {
+                new()
+                {
+                    Id = 1,
+                    Name = "Stocks and Shares ISA"
                 }
             });
     }

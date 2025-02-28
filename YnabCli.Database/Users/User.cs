@@ -1,3 +1,4 @@
+using YnabCli.Database.Accounts;
 using YnabCli.Database.Commitments;
 using YnabCli.Database.Settings;
 
@@ -10,6 +11,7 @@ public class User
     public bool Active { get; set; }
     public ICollection<Setting> Settings { get; set; }
     public ICollection<Commitment> Commitments { get; set; }
+    public ICollection<AccountCustomAccountType> CustomAccountTypes { get; set; } = new List<AccountCustomAccountType>();
 
     public string? YnabApiToken => Settings.AsString(SettingTypeNames.YnabApiKey);
     
