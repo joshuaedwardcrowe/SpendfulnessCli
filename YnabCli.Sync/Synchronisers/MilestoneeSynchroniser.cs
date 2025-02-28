@@ -11,9 +11,12 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        PrintToConsole($"Identifying User and Budget to Sync");
         var user = await unitOfWork.GetActiveUser();
         
         var budget = await budgetGetter.Get();
+        PrintToConsole($"Syncing Budget; {budget.Id}");
+        
         var categoryGroups = await budget.GetCategoryGroups();
         var farmCategoryGroups = categoryGroups
             .FilterToFarmCategories();
@@ -27,9 +30,8 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
             SyncCommitment(user, categories);
         }
         
+        PrintToConsole($"Finalising Sync...");
         await unitOfWork.Save();
-        
-        Console.WriteLine("Milestone indexing worker ran...");
     }
 
     private void SyncCommitment(User user, IEnumerable<Category> categories)
@@ -41,11 +43,13 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
 
             if (commitment != null)
             {
+                PrintToConsole($"Updating Commitment for: {category.Name}");
                 UpdateCommitment(commitment, category);
 
                 continue;
             }
                 
+            PrintToConsole($"Adding a New Commitment for: {category.Name}");
             AddCommitmentToUser(user, category);
         }
     }
@@ -74,4 +78,7 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
                     
         user.Commitments.Add(commitment);
     }
+    
+    private void PrintToConsole(string message)
+        => Console.WriteLine($"[{nameof(CommitmentSynchroniser)}] - {message}");
 }
