@@ -19,4 +19,16 @@ public static class SettingsExtensions
 
         return result;
     }
+
+    public static int? AsInt(this ICollection<Setting> settings, string settingType)
+    {
+        var setting = settings.FirstOrDefault(y => y.Type.Name == settingType);
+
+        if (!int.TryParse(setting?.Value, out var result))
+        {
+            return null;
+        }
+
+        return result;
+    }
 }

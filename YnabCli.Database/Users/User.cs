@@ -19,4 +19,6 @@ public class User
     public string? YnabApiKey => Settings.AsString(SettingTypeNames.YnabApiKey);
     
     public Guid? DefaultBudgetId => Settings.AsGuid(SettingTypeNames.DefaultBudgetId);
+
+    public int? SyncFrequency => Settings.AsInt(SettingTypeNames.SyncFrequencyInHours);
 }

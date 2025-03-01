@@ -10,9 +10,26 @@ namespace YnabCli.Sync.Synchronisers;
 
 public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOfWork) : BackgroundService
 {
+    private const int DefaultSyncFrequency = 1;
+    
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var user = await unitOfWork.GetActiveUser();
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            var user = await unitOfWork.GetActiveUser();
+
+            var syncFrequency = user.SyncFrequency ?? DefaultSyncFrequency;
+            var syncFrequencyInMilliseconds = syncFrequency / 60 / 60 / 60;
+            
+            await SynchroniseCommitments(user);
+            
+            // Wait 5s until 
+            await Task.Delay(syncFrequencyInMilliseconds, stoppingToken);
+        }
+    }
+
+    private async Task SynchroniseCommitments(User user)
+    {
         var budget = await budgetGetter.Get();
         PrintToConsole($"Syncing Commitments for Budget: {budget.Id}");
         
