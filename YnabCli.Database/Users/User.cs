@@ -12,7 +12,6 @@ public class User
     public ICollection<Setting> Settings { get; set; } = new List<Setting>();
     public ICollection<Commitment> Commitments { get; set; } = new List<Commitment>();
     public ICollection<AccountAttributes> AccountAttributes { get; set; } = new List<AccountAttributes>();
-    public ICollection<UserSync> Synchronisations { get; set; } = new List<UserSync>();
     public string? YnabApiKey => Settings.AsString(SettingTypeNames.YnabApiKey);
     
     public Guid? DefaultBudgetId => Settings.AsGuid(SettingTypeNames.DefaultBudgetId);

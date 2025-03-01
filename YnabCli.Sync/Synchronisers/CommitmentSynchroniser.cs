@@ -8,7 +8,7 @@ using YnabCli.Database.Users;
 
 namespace YnabCli.Sync.Synchronisers;
 
-public class CommitmentSynchroniser(BudgetGetter budgetGetter, YnabCliDb ynabCliDb) : BackgroundService
+public class CommitmentSynchroniser(BudgetGetter budgetGetter, YnabCliDb db) : BackgroundService
 {
     private const int DefaultSyncFrequency = 1;
     
@@ -16,15 +16,15 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, YnabCliDb ynabCli
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            var user = await ynabCliDb.GetActiveUser();
+            var user = await db.GetActiveUser();
 
             var syncFrequency = user.SyncFrequency ?? DefaultSyncFrequency;
-            var syncFrequencyInMilliseconds = syncFrequency / 60 / 60 / 60;
+            var syncFrequencyInMilliseconds = syncFrequency * 60 * 60 * 60;
             
             await SynchroniseCommitments(user);
             
             // Wait 5s until 
-            await Task.Delay(syncFrequencyInMilliseconds, stoppingToken);
+            await Task.Delay(500, stoppingToken);
         }
     }
 
@@ -55,9 +55,16 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, YnabCliDb ynabCli
             
             PerformSync(user, commitment, category);
         }
+
+        foreach (var category in categories)
+        {
+            var commitment = user.Commitments.FirstOrDefault(c => c.YnabCategoryId == category.Id);
+            
+            PerformSync(user, commitment, category);
+        }
         
         PrintToConsole($"Finalising Sync...");
-        await ynabCliDb.Save();
+        await db.Save();
     }
 
     private void PerformSync(User user, Commitment? commitment, Category? category)

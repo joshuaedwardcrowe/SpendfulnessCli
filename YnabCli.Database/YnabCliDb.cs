@@ -15,6 +15,8 @@ public class YnabCliDb(YnabCliDbContext ynabCliDbContext)
             .CustomAccountTypes
             .ToListAsync();
     
+    public void Sync() => ynabCliDbContext.ChangeTracker.DetectChanges();
+    
     public Task Save() => ynabCliDbContext.SaveChangesAsync();
 
     private IIncludableQueryable<User, ICollection<Commitment>> GetUserIncludable()
