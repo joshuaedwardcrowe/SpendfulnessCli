@@ -6,11 +6,11 @@ using YnabCli.Database.Users;
 
 namespace YnabCli.Sync;
 
-public class BudgetGetter(UnitOfWork unitOfWork, YnabHttpClientBuilder httpClientBuilder)
+public class BudgetGetter(YnabCliDb ynabCliDb, YnabHttpClientBuilder httpClientBuilder)
 {
     public async Task<ConnectedBudget> Get()
     {
-        var activeUser = await unitOfWork.GetActiveUser();
+        var activeUser = await ynabCliDb.GetActiveUser();
         if (activeUser == null)
         {
             throw new YnabCliDbException(YnabCliDbExceptionCode.DataNotFound, "No active user found");

@@ -6,7 +6,7 @@ using YnabCli.Database.Users;
 
 namespace YnabCli.Database;
 
-public class UnitOfWork(YnabCliDbContext ynabCliDbContext)
+public class YnabCliDb(YnabCliDbContext ynabCliDbContext)
 {
     public Task<User> GetActiveUser() => GetUserIncludable().FirstAsync(u => u.Active);
     

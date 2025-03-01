@@ -6,11 +6,11 @@ using YnabCli.ViewModels.ViewModelBuilders;
 
 namespace YnabCli.Commands.Personalisation.Commitments;
 
-public class CommitmentsCommandHandler(UnitOfWork unitOfWork) : CommandHandler, ICommandHandler<CommitmentsCommand>
+public class CommitmentsCommandHandler(YnabCliDb ynabCliDb) : CommandHandler, ICommandHandler<CommitmentsCommand>
 {
     public async Task<ConsoleTable> Handle(CommitmentsCommand request, CancellationToken cancellationToken)
     {
-        var user = await unitOfWork.GetActiveUser();
+        var user = await ynabCliDb.GetActiveUser();
 
         var aggregator = new CommitmentsAggregator(user.Commitments);
         

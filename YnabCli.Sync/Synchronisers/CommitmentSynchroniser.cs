@@ -8,7 +8,7 @@ using YnabCli.Database.Users;
 
 namespace YnabCli.Sync.Synchronisers;
 
-public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOfWork) : BackgroundService
+public class CommitmentSynchroniser(BudgetGetter budgetGetter, YnabCliDb ynabCliDb) : BackgroundService
 {
     private const int DefaultSyncFrequency = 1;
     
@@ -16,7 +16,7 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            var user = await unitOfWork.GetActiveUser();
+            var user = await ynabCliDb.GetActiveUser();
 
             var syncFrequency = user.SyncFrequency ?? DefaultSyncFrequency;
             var syncFrequencyInMilliseconds = syncFrequency / 60 / 60 / 60;
@@ -57,7 +57,7 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, UnitOfWork unitOf
         }
         
         PrintToConsole($"Finalising Sync...");
-        await unitOfWork.Save();
+        await ynabCliDb.Save();
     }
 
     private void PerformSync(User user, Commitment? commitment, Category? category)

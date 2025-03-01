@@ -10,19 +10,19 @@ namespace YnabCli.Commands.Personalisation.Accounts.Identify;
 
 public class AccountsIdentifyCommandHandler : CommandHandler, ICommandHandler<AccountsIdentifyCommand>
 {
-    private readonly UnitOfWork _unitOfWork;
+    private readonly YnabCliDb _ynabCliDb;
     private readonly CommandBudgetGetter _commandBudgetGetter;
 
-    public AccountsIdentifyCommandHandler(UnitOfWork unitOfWork, CommandBudgetGetter commandBudgetGetter)
+    public AccountsIdentifyCommandHandler(YnabCliDb ynabCliDb, CommandBudgetGetter commandBudgetGetter)
     {
-        _unitOfWork = unitOfWork;
+        _ynabCliDb = ynabCliDb;
         _commandBudgetGetter = commandBudgetGetter;
     }
 
     public async Task<ConsoleTable> Handle(AccountsIdentifyCommand command, CancellationToken cancellationToken)
     {
-        var user = await _unitOfWork.GetActiveUser();
-        var accountTypes = await _unitOfWork.GetAccountTypes();
+        var user = await _ynabCliDb.GetActiveUser();
+        var accountTypes = await _ynabCliDb.GetAccountTypes();
         
         var budget = await _commandBudgetGetter.Get();
         var accounts = await budget.GetAccounts();
@@ -43,7 +43,7 @@ public class AccountsIdentifyCommandHandler : CommandHandler, ICommandHandler<Ac
                 "Name of a custom account type not found");
         }
 
-        var accountAccountType = user.CustomAccountTypes.Find(account.Id);
+        var accountAccountType = user.AccountAttributes.Find(account.Id);
         if (accountAccountType != null)
         {
             accountAccountType.CustomAccountType = type;
@@ -56,9 +56,9 @@ public class AccountsIdentifyCommandHandler : CommandHandler, ICommandHandler<Ac
             User = user,
         };
         
-        user.CustomAccountTypes.Add(newAccountAccountType);
+        user.AccountAttributes.Add(newAccountAccountType);
         
-        await _unitOfWork.Save();
+        await _ynabCliDb.Save();
         
         return CompileMessage($"Account {account.Name} identified as {type.Name}.");
     }

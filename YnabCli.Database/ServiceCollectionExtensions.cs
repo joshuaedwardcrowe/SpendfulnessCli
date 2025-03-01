@@ -7,5 +7,5 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDb(this IServiceCollection services)
         => services
             .AddDbContext<YnabCliDbContext>()
-            .AddSingleton<UnitOfWork>();
+            .AddSingleton<YnabCliDb>();
 }
