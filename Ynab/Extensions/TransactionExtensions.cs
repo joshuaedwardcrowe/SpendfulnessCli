@@ -12,6 +12,11 @@ public static class TransactionExtensions
             => transactions.Where(transaction => transaction.CategoryId.HasValue && 
                                                  categoryIds.Contains(transaction.CategoryId.Value));
     
+    public static IEnumerable<Transaction> FilterOutCategories(
+        this IEnumerable<Transaction> transactions, IEnumerable<Guid> categoryIds)
+            => transactions.Where(transaction => transaction.CategoryId.HasValue &&
+                                                 !categoryIds.Contains(transaction.CategoryId.Value));
+    
     public static IEnumerable<Transaction> FilterToInflow(
         this IEnumerable<Transaction> transactions) 
             => transactions.Where(transaction => transaction.Amount > 0);

@@ -48,7 +48,9 @@ public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandl
     {
         var transactions = await connectedBudget.GetTransactions();
 
-        var castedTransactions = transactions.Cast<Transaction>();
+        var splitCategoryId = Guid.Parse("26330e86-4711-41f9-bd3e-a1c983da936a");
+
+        var castedTransactions = transactions.FilterOutCategories([splitCategoryId]);
 
         if (command.From.HasValue)
         {
