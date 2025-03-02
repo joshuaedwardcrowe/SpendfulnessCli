@@ -1,14 +1,13 @@
 using Ynab.Clients;
 using Ynab.Connected;
 using Ynab.Http;
-using YnabCli.Database;
 using YnabCli.Database.Users;
 
-namespace YnabCli.Sync;
+namespace YnabCli.Database;
 
-public class BudgetGetter(YnabCliDb db, YnabHttpClientBuilder httpClientBuilder)
+public class DbBudgetClient(YnabCliDb db, YnabHttpClientBuilder httpClientBuilder)
 {
-    public async Task<ConnectedBudget> Get()
+    public async Task<ConnectedBudget> GetDefaultBudget()
     {
         var activeUser = await db.GetActiveUser();
         if (activeUser == null)

@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\YnabCli.Abstractions\YnabCli.Abstractions.csproj" />
+      <ProjectReference Include="..\Ynab\Ynab.csproj" />
     </ItemGroup>
 
 </Project>

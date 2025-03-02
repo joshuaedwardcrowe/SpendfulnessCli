@@ -1,8 +1,8 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using YnabCli.Commands.Builders;
-using YnabCli.Commands.Factories;
 using YnabCli.Commands.Generators;
+using YnabCli.Database;
 using YnabCli.Instructions;
 
 namespace YnabCli.Commands.Extensions;

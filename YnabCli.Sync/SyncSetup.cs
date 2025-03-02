@@ -16,7 +16,6 @@ public static class SyncSetup
         
         // Sync-related
         serviceCollection
-            .AddSingleton<BudgetGetter>()
             .AddHostedService<DatabaseSynchroniser>() // Ensure db is created.
             .AddHostedService<CommitmentSynchroniser>();
     }

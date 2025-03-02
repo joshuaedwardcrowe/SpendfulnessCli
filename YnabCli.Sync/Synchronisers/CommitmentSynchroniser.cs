@@ -8,7 +8,7 @@ using YnabCli.Database.Users;
 
 namespace YnabCli.Sync.Synchronisers;
 
-public class CommitmentSynchroniser(BudgetGetter budgetGetter, YnabCliDb db) : BackgroundService
+public class CommitmentSynchroniser(DbBudgetClient dbBudgetClient, YnabCliDb db) : BackgroundService
 {
     private const int DefaultSyncFrequency = 1;
     
@@ -30,7 +30,7 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, YnabCliDb db) : B
 
     private async Task SynchroniseCommitments(User user)
     {
-        var budget = await budgetGetter.Get();
+        var budget = await dbBudgetClient.GetDefaultBudget();
         PrintToConsole($"Syncing Commitments for Budget: {budget.Id}");
         
         var categoryGroups = await budget.GetCategoryGroups();

@@ -1,7 +1,6 @@
 using ConsoleTables;
 using Ynab.Extensions;
 using YnabCli.Commands.Exceptions;
-using YnabCli.Commands.Factories;
 using YnabCli.Commands.Handlers;
 using YnabCli.Database;
 using YnabCli.Database.Accounts;
