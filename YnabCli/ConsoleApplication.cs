@@ -13,6 +13,10 @@ public class ConsoleApplication(IServiceProvider serviceProvider)
 {
     public async Task Run()
     {
+        var instructionParser = serviceProvider.GetRequiredService<InstructionParser>();
+        var mediator = serviceProvider.GetRequiredService<IMediator>();
+        var db = serviceProvider.GetRequiredService<YnabCliDb>();
+        
         PrintToConsole("Welcome to YnabCli!");
         
         bool noExitCommandEnteredd = true;
@@ -21,12 +25,6 @@ public class ConsoleApplication(IServiceProvider serviceProvider)
         {
             try
             {
-                var instructionParser = serviceProvider.GetRequiredService<InstructionParser>();
-                var mediator = serviceProvider.GetRequiredService<IMediator>();
-                var db = serviceProvider.GetRequiredService<YnabCliDb>();
-
-                db.Sync();
-                
                 PrintToConsole("Enter a Command:");
 
                 var input = Console.ReadLine();
