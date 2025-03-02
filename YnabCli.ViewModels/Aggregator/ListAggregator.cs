@@ -4,6 +4,7 @@ namespace YnabCli.ViewModels.Aggregator;
 
 public abstract class ListAggregator<TAggregate> : Aggregator<IEnumerable<TAggregate>>
 {
+    private readonly List<Func<IEnumerable<Account>, IEnumerable<Account>>> _accountOperationFunctions = [];
     private readonly List<Func<IEnumerable<Transaction>, IEnumerable<Transaction>>> _transactionOperationFunctions = [];
     private readonly List<Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>>> _aggregationOperationFunctions = [];
 
@@ -14,6 +15,11 @@ public abstract class ListAggregator<TAggregate> : Aggregator<IEnumerable<TAggre
 
     public override IEnumerable<TAggregate> Aggregate()
     {
+        foreach (var accountOperationFunction in _accountOperationFunctions)
+        {
+            Accounts = accountOperationFunction(Accounts);
+        }
+        
         foreach (var transactionOperationFunction in _transactionOperationFunctions)
         {
             Transactions = transactionOperationFunction(Transactions);
@@ -29,13 +35,19 @@ public abstract class ListAggregator<TAggregate> : Aggregator<IEnumerable<TAggre
         return specificAggregation;
     }
 
-    public ListAggregator<TAggregate> WhereTransactions(Func<IEnumerable<Transaction>, IEnumerable<Transaction>> operationFunction)
+    public ListAggregator<TAggregate> BeforeAggregation(Func<IEnumerable<Transaction>, IEnumerable<Transaction>> operationFunction)
     {
         _transactionOperationFunctions.Add(operationFunction);
         return this;
     }
 
-    public ListAggregator<TAggregate> WhereAggregates(Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>> operationFunction)
+    public ListAggregator<TAggregate> BeforeAggregation(Func<IEnumerable<Account>, IEnumerable<Account>> operationFunction)
+    {
+        _accountOperationFunctions.Add(operationFunction);
+        return this;
+    }
+
+    public ListAggregator<TAggregate> AfterAggregation(Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>> operationFunction)
     {
         _aggregationOperationFunctions.Add(operationFunction);
         return this;

@@ -5,7 +5,7 @@ namespace YnabCli.ViewModels.Aggregator;
 
 public abstract class Aggregator<TAggregation>
 {
-    protected IEnumerable<Account> Accounts { get; } 
+    protected IEnumerable<Account> Accounts { get; set; } 
     protected IEnumerable<CategoryGroup> CategoryGroups { get; }
     protected IEnumerable<Transaction> Transactions { get; set; }
     protected ICollection<Commitment> Commitments { get; }
