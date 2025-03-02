@@ -4,6 +4,7 @@ using Ynab.Connected;
 using Ynab.Extensions;
 using YnabCli.Commands.Factories;
 using YnabCli.Commands.Handlers;
+using YnabCli.ViewModels.Aggregates;
 using YnabCli.ViewModels.Aggregator;
 using YnabCli.ViewModels.Extensions;
 using YnabCli.ViewModels.ViewModelBuilders;
@@ -26,22 +27,18 @@ public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandl
 
     private const int DefaultMinimumOccurrences = 2;
     
-
     public async Task<ConsoleTable> Handle(RecurringTransactionsCommand command, CancellationToken cancellationToken)
     {
         var budget =  await _budgetGetter.Get();
         
         var transactions = await GetTransactions(budget, command);
 
-        var aggregator = new TransactionMemoOccurrenceAggregator(transactions);
-        
-        aggregator.AddAggregationFilter(x =>
-            x.FilterByMinimumOccurrences(command.MinimumOccurrences ?? DefaultMinimumOccurrences));
-
-        _viewModelBuilder.WithAggregator(aggregator);
+        var aggregator = new TransactionMemoOccurrenceAggregator(transactions)
+            .AddAggregationOperation(a => FilterByMinimumOccurrences(command.MinimumOccurrences, a))
+            .AddAggregationOperation(SortByMinimumOccurrence);
 
         var viewModel = _viewModelBuilder
-            .WithSortOrder(ViewModelSortOrder.Descending)
+            .WithAggregator(aggregator)
             .Build();
 
         return Compile(viewModel);
@@ -72,4 +69,12 @@ public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandl
         
         return castedTransactions;
     }
+
+    private IEnumerable<TransactionMemoOccurrenceAggregate> FilterByMinimumOccurrences(int? minimumOccurrences,
+        IEnumerable<TransactionMemoOccurrenceAggregate> aggregates)
+            => aggregates.FilterByMinimumOccurrences(minimumOccurrences ?? DefaultMinimumOccurrences);
+    
+    private IEnumerable<TransactionMemoOccurrenceAggregate> SortByMinimumOccurrence(
+        IEnumerable<TransactionMemoOccurrenceAggregate> aggregates)
+            => aggregates.OrderByDescending(aggregate => aggregate.MemoOccurrence);
 }

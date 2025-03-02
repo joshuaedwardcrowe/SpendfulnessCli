@@ -8,14 +8,13 @@ using YnabCli.ViewModels.ViewModels;
 namespace YnabCli.ViewModels.ViewModelBuilders;
 
 public class TransactionMemoOccurrenceViewModelBuilder : 
-    ViewModelBuilder<TransactionMemoOccurrenceAggregator, IEnumerable<TransactionMemoOccurrenceAggregate>>
+    ViewModelBuilder<ListAggregator<TransactionMemoOccurrenceAggregate>, IEnumerable<TransactionMemoOccurrenceAggregate>>
 {
     protected override List<string> BuildColumnNames(IEnumerable<TransactionMemoOccurrenceAggregate> evaluation)
         => TransactionMemoOccurrenceViewModel.GetColumnNames();
 
     protected override List<List<object>> BuildRows(IEnumerable<TransactionMemoOccurrenceAggregate> aggregates)
         => aggregates
-            .OrderBySortOrder(ViewModelSortOrder, aggregate => aggregate.MemoOccurrence)
             .Select(BuildMemoOccurrenceRow)
             .ToList();
 

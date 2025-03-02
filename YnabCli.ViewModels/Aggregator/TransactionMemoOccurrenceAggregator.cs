@@ -19,8 +19,7 @@ public class TransactionMemoOccurrenceAggregator(IEnumerable<Transaction> transa
 
 public abstract class ListAggregator<TAggregate> : Aggregator<IEnumerable<TAggregate>>
 {
-    private readonly List<Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>>> _filterFunctions = [];
-    private readonly List<Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>>> _sortingFunctions = [];
+    private readonly List<Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>>> _operationFunctions = [];
 
     protected ListAggregator(IEnumerable<Transaction> transactions)
         : base(transactions)
@@ -34,21 +33,19 @@ public abstract class ListAggregator<TAggregate> : Aggregator<IEnumerable<TAggre
         var specificAggregation = ListAggregate();
 
         // TODO: Post-aggregation filters
-        foreach (var filterFunction in _filterFunctions)
+        foreach (var operationFunction in _operationFunctions)
         {
-            specificAggregation = filterFunction(specificAggregation);
-        }
-        
-        foreach (var soringFunction in _sortingFunctions)
-        {
-            specificAggregation = soringFunction(specificAggregation);
+            specificAggregation = operationFunction(specificAggregation);
         }
         
         return specificAggregation;
     }
 
-    public void AddAggregationFilter(Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>> filter) => _filterFunctions.Add(filter);
-    public void AddAggregationSorter(Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>> action) => _sortingFunctions.Add(action);
+    public ListAggregator<TAggregate> AddAggregationOperation(Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>> filter)
+    {
+        _operationFunctions.Add(filter);
+        return this;
+    }
 
     protected abstract IEnumerable<TAggregate> ListAggregate();
 }
