@@ -24,7 +24,7 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, YnabCliDb db) : B
             await SynchroniseCommitments(user);
             
             // Wait 5s until 
-            await Task.Delay(500, stoppingToken);
+            await Task.Delay(syncFrequencyInMilliseconds, stoppingToken);
         }
     }
 
@@ -104,10 +104,10 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, YnabCliDb db) : B
             Name = category.Name,
             User = user,
             YnabCategoryId = category.Id,
-            Funded = category.GoalOverallFunded.Value,
-            Needed = category.GoalOverallLeft.Value,
-            Started = category.GoalCreationMonth.Value,
-            RequiredBy = category.GoalTargetMonth.Value,
+            Funded = category.GoalOverallFunded,
+            Needed = category.GoalOverallLeft,
+            Started = category.GoalCreationMonth,
+            RequiredBy = category.GoalTargetMonth,
         };
                     
         user.Commitments.Add(commitment);
@@ -117,10 +117,10 @@ public class CommitmentSynchroniser(BudgetGetter budgetGetter, YnabCliDb db) : B
     private static void UpdateCommitment(Commitment commitment, Category category)
     {
         commitment.Name = category.Name;
-        commitment.Funded = category.GoalOverallFunded.Value;
-        commitment.Needed = category.GoalOverallLeft.Value;
-        commitment.Started = category.GoalCreationMonth.Value;
-        commitment.RequiredBy = category.GoalTargetMonth.Value;
+        commitment.Funded = category.GoalOverallFunded;
+        commitment.Needed = category.GoalOverallLeft;
+        commitment.Started = category.GoalCreationMonth;
+        commitment.RequiredBy = category.GoalTargetMonth;
     }
     
     private void PrintToConsole(string message)

@@ -8,6 +8,6 @@ public class AccountsIdentifyCommand : ICommand
         public const string Type = "type";
     }
     
-    public string YnabAccountName { get; set; }
-    public string CustomAccountTypeName { get; set; }
+    public required string YnabAccountName { get; set; }
+    public required string CustomAccountTypeName { get; set; }
 }

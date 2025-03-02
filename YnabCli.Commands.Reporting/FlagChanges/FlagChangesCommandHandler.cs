@@ -5,7 +5,6 @@ using YnabCli.Commands.Factories;
 using YnabCli.Commands.Handlers;
 using YnabCli.ViewModels.Aggregator;
 using YnabCli.ViewModels.ViewModelBuilders;
-using YnabCli.ViewModels.ViewModels;
 
 namespace YnabCli.Commands.Reporting.FlagChanges;
 

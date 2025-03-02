@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace YnabCli.Database.Accounts;
 
 public class CustomAccountType
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+    [MaxLength(2000)]
+    public required string Name { get; set; }
 }

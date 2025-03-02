@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using YnabCli.Database.Accounts;
 using YnabCli.Database.Commitments;
 using YnabCli.Database.Settings;
@@ -7,6 +8,7 @@ namespace YnabCli.Database.Users;
 public class User
 {
     public int Id { get; set; }
+    [MaxLength(1000)]
     public required string Name { get; set; }
     public bool Active { get; set; }
     public ICollection<Setting> Settings { get; set; } = new List<Setting>();

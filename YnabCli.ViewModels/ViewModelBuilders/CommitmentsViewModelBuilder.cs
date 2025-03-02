@@ -27,13 +27,26 @@ public class CommitmentsViewModelBuilder : ViewModelBuilder<CommitmentsAggregato
 
     private List<object> BuildRow(Commitment commitment)
     {
-        var displayableStarted = IdentifierSanitiser.SanitiseForMonth(commitment.Started);
-        var displayableRequiredBy = IdentifierSanitiser.SanitiseForMonth(commitment.RequiredBy);
+        var displayableStarted = commitment.Started.HasValue
+            ? IdentifierSanitiser.SanitiseForMonth(commitment.Started.Value)
+            : string.Empty;
+
+        var displayableRequiredBy = commitment.RequiredBy.HasValue
+            ? IdentifierSanitiser.SanitiseForMonth(commitment.RequiredBy.Value)
+            : string.Empty;
+
+        var displayableFunded = commitment.Funded.HasValue
+            ? CurrencyDisplayFormatter.Format(commitment.Funded.Value)
+            : string.Empty;
+
+        var displayableNeeded = commitment.Needed.HasValue
+            ? CurrencyDisplayFormatter.Format(commitment.Needed.Value)
+            : string.Empty;
+
+        var percentageMet = commitment is { Funded: not null, Target: not null }
+            ? PercentageCalculator.Calculate(commitment.Funded.Value, commitment.Target.Value)
+            : 0;
         
-        var displayableFunded = CurrencyDisplayFormatter.Format(commitment.Funded);
-        var displayableNeeded = CurrencyDisplayFormatter.Format(commitment.Needed);
-        
-        var percentageMet = PercentageCalculator.Calculate(commitment.Funded, commitment.Target);
         var displayablePercentageMet = PercentageDisplayFormatter.Format(percentageMet);
 
         return
