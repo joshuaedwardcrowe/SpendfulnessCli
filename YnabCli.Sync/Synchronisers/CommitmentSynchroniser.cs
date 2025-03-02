@@ -47,18 +47,14 @@ public class CommitmentSynchroniser(DbBudgetClient dbBudgetClient, YnabCliDb db)
             .SelectMany(cg => cg.Categories)
             .ToList();
 
-        var clone = new List<Commitment>(user.Commitments.ToList());
-
-        foreach (var commitment in clone)
+        var categoryIds = farmCategoryGroups.SelectMany(cg => cg.GetCategoryIds());
+        var commitmentsCategoryIds = user.Commitments.Select(c => c.YnabCategoryId);
+        var allCategoryIds = categoryIds.Concat(commitmentsCategoryIds).Distinct();
+        
+        foreach (var categoryId in allCategoryIds)
         {
-            var category = categories.FirstOrDefault(cg => cg.Name == commitment.Name);
-            
-            PerformSync(user, commitment, category);
-        }
-
-        foreach (var category in categories)
-        {
-            var commitment = user.Commitments.FirstOrDefault(c => c.YnabCategoryId == category.Id);
+            var category = categories.FirstOrDefault(cg => cg.Id == categoryId);
+            var commitment = user.Commitments.FirstOrDefault(c => c.YnabCategoryId == categoryId);
             
             PerformSync(user, commitment, category);
         }
