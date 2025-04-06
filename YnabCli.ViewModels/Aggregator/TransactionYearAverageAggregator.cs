@@ -1,4 +1,4 @@
-using Ynab;
+﻿using Ynab;
 using Ynab.Collections;
 using Ynab.Extensions;
 using YnabCli.ViewModels.Aggregates;
@@ -6,16 +6,12 @@ using YnabCli.ViewModels.Calculators;
 
 namespace YnabCli.ViewModels.Aggregator;
 
-[Obsolete("Please use TransactionYearAverageAggregator instead.")]
-public class LegacyTransactionYearAverageAggregator(IEnumerable<Transaction> transactions)
-    : Aggregator<IEnumerable<TransactionYearAverageAggregate>>(transactions)
+public class TransactionYearAverageAggregator(IEnumerable<Transaction> transactions)
+    : ListAggregator<TransactionYearAverageAggregate>(transactions)
 {
-    public override IEnumerable<TransactionYearAverageAggregate> Aggregate()
+    protected override IEnumerable<TransactionYearAverageAggregate> ListAggregate()
     {
         var transactionsGroupedByYear = Transactions
-            .FilterToInflow()
-            .FilterByPayeeName("BrightHR")
-            .OrderByYear()
             .GroupByYear()
             .ToList();
         
@@ -24,7 +20,7 @@ public class LegacyTransactionYearAverageAggregator(IEnumerable<Transaction> tra
         
         return new List<TransactionYearAverageAggregate> { firstGroup }.Concat(remainingRows);
     }
-
+    
     private TransactionYearAverageAggregate AggregateFirstGroup(List<TransactionsByYear> transactionGroups)
     {
         var firstGroup = transactionGroups.FirstOrDefault();
