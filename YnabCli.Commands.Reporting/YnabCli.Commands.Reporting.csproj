@@ -10,8 +10,4 @@
       <ProjectReference Include="..\YnabCli.Commands\YnabCli.Commands.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="AverageSpending\" />
-    </ItemGroup>
-
 </Project>

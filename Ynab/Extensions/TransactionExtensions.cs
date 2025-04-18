@@ -19,6 +19,10 @@ public static class TransactionExtensions
         this IEnumerable<Transaction> transactions) 
             => transactions.Where(transaction => transaction.Amount > 0);
     
+    public static IEnumerable<Transaction> FilterToOutflow(
+        this IEnumerable<Transaction> transactions) 
+        => transactions.Where(transaction => transaction.Amount < 0);
+    
     public static IEnumerable<Transaction> FilterByPayeeName(
         this IEnumerable<Transaction> transactions, params string[] payeeNames)
             => transactions.Where(t => payeeNames.Contains(t.PayeeName));
