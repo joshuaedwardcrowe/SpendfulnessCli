@@ -1,5 +1,4 @@
-using YnabCli.ViewModels.Aggregator;
-using YnabCli.ViewModels.Aggregator.AmountAggregators;
+using YnabCli.Aggregation.Aggregator;
 using YnabCli.ViewModels.ViewModels;
 
 namespace YnabCli.ViewModels.ViewModelBuilders;

@@ -1,19 +1,16 @@
 using Ynab;
-using Ynab.Collections;
 using Ynab.Extensions;
-using YnabCli.ViewModels.Aggregates;
-using YnabCli.ViewModels.Calculators;
+using YnabCli.Aggregation.Aggregates;
+using YnabCli.Aggregation.Calculators;
 
-namespace YnabCli.ViewModels.Aggregator.ListAggregators;
+namespace YnabCli.Aggregation.Aggregator.ListAggregators;
 
 public class TransactionAverageAcrossYearAggregator(IEnumerable<Transaction> transactions)
     : ListAggregator<TransactionYearAverageAggregate>(transactions)
 {
     protected override IEnumerable<TransactionYearAverageAggregate> ListAggregate()
     {
-        var transactionsGroupedByYear = Transactions
-            .GroupByYear()
-            .ToList();
+        var transactionsGroupedByYear = Transactions.GroupByYear().ToList();
         
         for (var i = 0; i < transactionsGroupedByYear.Count; i++)
         {

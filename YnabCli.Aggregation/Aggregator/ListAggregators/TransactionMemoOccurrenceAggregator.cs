@@ -1,9 +1,9 @@
 using Ynab;
 using Ynab.Extensions;
-using YnabCli.ViewModels.Aggregates;
-using YnabCli.ViewModels.Extensions;
+using YnabCli.Aggregation.Aggregates;
+using YnabCli.Aggregation.Extensions;
 
-namespace YnabCli.ViewModels.Aggregator.ListAggregators;
+namespace YnabCli.Aggregation.Aggregator.ListAggregators;
 
 public class TransactionMemoOccurrenceAggregator(IEnumerable<Transaction> transactions)
     : ListAggregator<TransactionMemoOccurrenceAggregate>(transactions)

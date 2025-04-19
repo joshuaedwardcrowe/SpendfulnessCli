@@ -1,8 +1,9 @@
 using Ynab;
 using YnabCli.Database.Commitments;
 
-namespace YnabCli.ViewModels.Aggregator;
+namespace YnabCli.Aggregation.Aggregator;
 
+// TODO: I dont like that this needs to depend on the entire YNAB project for these models.
 public abstract class Aggregator<TAggregation>
 {
     protected IEnumerable<Account> Accounts { get; set; } 

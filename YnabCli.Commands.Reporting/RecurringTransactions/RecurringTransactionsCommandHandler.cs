@@ -1,12 +1,13 @@
+
+
 using ConsoleTables;
 using Ynab;
 using Ynab.Extensions;
+using YnabCli.Aggregation.Aggregates;
+using YnabCli.Aggregation.Aggregator.ListAggregators;
+using YnabCli.Aggregation.Extensions;
 using YnabCli.Commands.Handlers;
 using YnabCli.Database;
-using YnabCli.ViewModels.Aggregates;
-using YnabCli.ViewModels.Aggregator;
-using YnabCli.ViewModels.Aggregator.ListAggregators;
-using YnabCli.ViewModels.Extensions;
 using YnabCli.ViewModels.ViewModelBuilders;
 
 namespace YnabCli.Commands.Reporting.RecurringTransactions;

@@ -1,11 +1,10 @@
 using Ynab;
 using Ynab.Collections;
 using Ynab.Extensions;
-using YnabCli.ViewModels.Aggregates;
-using YnabCli.ViewModels.Aggregator.AmountAggregators;
-using YnabCli.ViewModels.Calculators;
+using YnabCli.Aggregation.Aggregates;
+using YnabCli.Aggregation.Calculators;
 
-namespace YnabCli.ViewModels.Aggregator;
+namespace YnabCli.Aggregation.Aggregator;
 
 public class TransactionMonthFlaggedAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
     : Aggregator<IEnumerable<TransactionMonthFlaggedAggregate>>(categoryGroups, transactions)

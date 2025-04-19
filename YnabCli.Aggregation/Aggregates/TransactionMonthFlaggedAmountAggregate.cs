@@ -1,4 +1,4 @@
-namespace YnabCli.ViewModels.Aggregates;
+namespace YnabCli.Aggregation.Aggregates;
 
 public record TransactionMonthFlaggedAmountAggregate(
     string Flag,

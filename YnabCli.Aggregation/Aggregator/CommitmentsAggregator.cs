@@ -1,7 +1,6 @@
 using YnabCli.Database.Commitments;
-using YnabCli.ViewModels.Aggregator.AmountAggregators;
 
-namespace YnabCli.ViewModels.Aggregator;
+namespace YnabCli.Aggregation.Aggregator;
 
 public class CommitmentsAggregator(ICollection<Commitment> commitments)
     : Aggregator<IEnumerable<Commitment>>(commitments)

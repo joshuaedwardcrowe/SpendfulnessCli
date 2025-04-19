@@ -1,4 +1,4 @@
-using YnabCli.ViewModels.Calculators;
+using YnabCli.Aggregation.Calculators;
 
 namespace YnabCli.ViewModels.Tests.Calculators;
 

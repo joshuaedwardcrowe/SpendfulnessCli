@@ -1,7 +1,7 @@
 using Ynab.Collections;
-using YnabCli.ViewModels.Aggregates;
+using YnabCli.Aggregation.Aggregates;
 
-namespace YnabCli.ViewModels.Extensions;
+namespace YnabCli.Aggregation.Extensions;
 
 public static class TransactionByMemoOccurrenceByPayeeNameExtensions
 {

@@ -1,10 +1,9 @@
 using Ynab;
 using Ynab.Collections;
 using Ynab.Extensions;
-using YnabCli.ViewModels.Aggregates;
-using YnabCli.ViewModels.Aggregator.AmountAggregators;
+using YnabCli.Aggregation.Aggregates;
 
-namespace YnabCli.ViewModels.Aggregator;
+namespace YnabCli.Aggregation.Aggregator;
 
 public class CategoryYearAverageAggregator(IEnumerable<Transaction> transactions)
     : Aggregator<IEnumerable<CategoryYearAverageAggregate>>(transactions)

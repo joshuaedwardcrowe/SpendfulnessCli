@@ -1,4 +1,4 @@
-namespace YnabCli.ViewModels.Aggregates;
+namespace YnabCli.Aggregation.Aggregates;
 
 public record TransactionMemoOccurrenceAggregate(
     string PayeeName,

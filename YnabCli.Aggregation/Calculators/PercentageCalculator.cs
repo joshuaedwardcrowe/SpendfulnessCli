@@ -1,4 +1,4 @@
-namespace YnabCli.ViewModels.Calculators;
+namespace YnabCli.Aggregation.Calculators;
 
 public static class PercentageCalculator
 {

@@ -1,8 +1,10 @@
+
+
 using ConsoleTables;
 using Ynab.Extensions;
+using YnabCli.Aggregation.Aggregator.ListAggregators;
 using YnabCli.Commands.Handlers;
 using YnabCli.Database;
-using YnabCli.ViewModels.Aggregator.ListAggregators;
 using YnabCli.ViewModels.ViewModelBuilders;
 
 namespace YnabCli.Commands.Reporting.AverageSpendingCreepByYear;
