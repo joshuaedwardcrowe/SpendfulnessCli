@@ -12,5 +12,6 @@ public static class ServiceCollectionExtensions
             .AddSingleton<AmountViewModelBuilder>()
             .AddSingleton<TransactionMonthChangeViewModelBuilder>()
             .AddSingleton<TransactionMonthFlaggedViewModelBuilder>()
-            .AddSingleton<CategoryYearAverageViewModelBuilder>();
+            .AddSingleton<CategoryYearAverageViewModelBuilder>()
+            .AddSingleton<CategoryViewModelBuilder>();
 }

@@ -9,6 +9,12 @@ public static class TransactionExtensions
         this IEnumerable<Transaction> transactions, IEnumerable<Guid> categoryIds) 
             => transactions.Where(transaction => transaction.CategoryId.HasValue && 
                                                  categoryIds.Contains(transaction.CategoryId.Value));
+
+    // TODO: This naming scheme should be 'FilterTo'
+    public static IEnumerable<Transaction> FilterByCategories(
+        this IEnumerable<Transaction> transactions, params Guid[] categoryIds)
+             => transactions.Where(transaction => transaction.CategoryId.HasValue && 
+                                                  categoryIds.Contains(transaction.CategoryId.Value));
     
     public static IEnumerable<Transaction> FilterOutCategories(
         this IEnumerable<Transaction> transactions, IEnumerable<Guid> categoryIds)

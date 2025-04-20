@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInstructions(this IServiceCollection serviceCollection)
         => serviceCollection
+            .AddSingleton<IInstructionArgumentBuilder, GuidInstructionArgumentBuilder>()
             .AddSingleton<IInstructionArgumentBuilder, StringInstructionArgumentBuilder>()
             .AddSingleton<IInstructionArgumentBuilder, IntInstructionArgumentBuilder>()
             .AddSingleton<IInstructionArgumentBuilder, DecimalInstructionArgumentBuilder>()

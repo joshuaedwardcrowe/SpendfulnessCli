@@ -7,6 +7,11 @@ public class MonthlySpendingCreepCommandGenerator : ICommandGenerator, ITypedCom
 {
     public ICommand Generate(string? subCommandName, List<InstructionArgument> arguments)
     {
-        return new MonthlySpendingCreepCommand();
+        var categoryIdArgument = arguments.OfType<Guid>(MonthlySpendingCreepCommand.ArgumentNames.CategoryId);
+
+        return new MonthlySpendingCreepCommand
+        {
+            CategoryId = categoryIdArgument?.ArgumentValue
+        };
     }
 }
