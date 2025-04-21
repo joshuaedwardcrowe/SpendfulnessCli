@@ -14,6 +14,10 @@ public abstract class ListAggregator<TAggregate> : Aggregator<IEnumerable<TAggre
     {
     }
 
+    protected ListAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions) : base(categoryGroups, transactions)
+    {
+    }
+
     protected ListAggregator(IEnumerable<Transaction> transactions) : base(transactions)
     {
     }

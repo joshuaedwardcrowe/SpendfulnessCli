@@ -2,14 +2,15 @@ using Ynab;
 using Ynab.Collections;
 using Ynab.Extensions;
 using YnabCli.Aggregation.Aggregates;
+using YnabCli.Aggregation.Aggregator.ListAggregators;
 using YnabCli.Aggregation.Calculators;
 
 namespace YnabCli.Aggregation.Aggregator;
 
 public class TransactionMonthFlaggedAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
-    : Aggregator<IEnumerable<TransactionMonthFlaggedAggregate>>(categoryGroups, transactions)
+    : ListAggregator<TransactionMonthFlaggedAggregate>(categoryGroups, transactions)
 {
-    protected override IEnumerable<TransactionMonthFlaggedAggregate> GenerateAggregate()
+    protected override IEnumerable<TransactionMonthFlaggedAggregate> ListAggregate()
     {
         var spendingCategoryIds = CategoryGroups
             .FilterToSpendingCategories()

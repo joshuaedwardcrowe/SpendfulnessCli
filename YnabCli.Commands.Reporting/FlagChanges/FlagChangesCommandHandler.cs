@@ -18,20 +18,17 @@ public class FlagChangesCommandHandler(ConfiguredBudgetClient configuredBudgetCl
         var categoryGroups = await budget.GetCategoryGroups();
         var transactions = await budget.GetTransactions();
 
-        var castedTransactions = transactions.Cast<Transaction>();
-
+        var aggregator = new TransactionMonthFlaggedAggregator(categoryGroups, transactions);
+            
         if (command.From.HasValue)
         {
-            castedTransactions = castedTransactions
-                .FilterFrom(command.From.Value);
+            aggregator.BeforeAggregation(t => t.FilterFrom(command.From.Value));
         }
 
         if (command.To.HasValue)
         {
-            castedTransactions = castedTransactions.FilterTo(command.To.Value);
+            aggregator.BeforeAggregation(t => t.FilterTo(command.To.Value));
         }
-        
-        var aggregator = new TransactionMonthFlaggedAggregator(categoryGroups, castedTransactions);
         
         var viewModel = new TransactionMonthFlaggedViewModelBuilder()
             .WithAggregator(aggregator)

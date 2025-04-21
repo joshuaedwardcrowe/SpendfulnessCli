@@ -3,7 +3,7 @@ using YnabCli.Instructions.Arguments;
 
 namespace YnabCli.Commands.Reporting.AverageYearlySpending;
 
-public class AverageYearlySpendingGenericCommandGenerator : ICommandGenerator<AverageYearlySpendingCommand>
+public class AverageYearlySpendingCommandGenerator : ICommandGenerator<AverageYearlySpendingCommand>
 {
     public ICommand Generate(string? subCommandName, List<InstructionArgument> arguments)
     {
