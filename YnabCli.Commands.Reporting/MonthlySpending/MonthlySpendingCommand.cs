@@ -1,6 +1,6 @@
-namespace YnabCli.Commands.Reporting.MonthlySpendingCreep;
+namespace YnabCli.Commands.Reporting.MonthlySpending;
 
-public class MonthlySpendingCreepCommand : ICommand
+public class MonthlySpendingCommand : ICommand
 {
     public static class ArgumentNames
     {

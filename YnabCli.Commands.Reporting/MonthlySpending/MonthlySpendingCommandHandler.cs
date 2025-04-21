@@ -6,20 +6,20 @@ using YnabCli.Commands.Handlers;
 using YnabCli.Database;
 using YnabCli.ViewModels.ViewModelBuilders;
 
-namespace YnabCli.Commands.Reporting.MonthlySpendingCreep;
+namespace YnabCli.Commands.Reporting.MonthlySpending;
 
-public class MonthlySpendingCreepCommandHandler: CommandHandler, ICommandHandler<MonthlySpendingCreepCommand>
+public class MonthlySpendingCommandHandler: CommandHandler, ICommandHandler<MonthlySpendingCommand>
 {
     private readonly ConfiguredBudgetClient _configuredBudgetClient;
     private readonly TransactionMonthChangeViewModelBuilder _transactionMonthChangeViewModelBuilder;
 
-    public MonthlySpendingCreepCommandHandler(ConfiguredBudgetClient configuredBudgetClient, TransactionMonthChangeViewModelBuilder transactionMonthChangeViewModelBuilder)
+    public MonthlySpendingCommandHandler(ConfiguredBudgetClient configuredBudgetClient, TransactionMonthChangeViewModelBuilder transactionMonthChangeViewModelBuilder)
     {
         _configuredBudgetClient = configuredBudgetClient;
         _transactionMonthChangeViewModelBuilder = transactionMonthChangeViewModelBuilder;
     }
 
-    public async Task<ConsoleTable> Handle(MonthlySpendingCreepCommand command, CancellationToken cancellationToken)
+    public async Task<ConsoleTable> Handle(MonthlySpendingCommand command, CancellationToken cancellationToken)
     {
         var aggregator = await PrepareAggregator(command);
 
@@ -30,7 +30,7 @@ public class MonthlySpendingCreepCommandHandler: CommandHandler, ICommandHandler
         return Compile(viewModel);
     }
 
-    private async Task<ListAggregator<TransactionMonthTotalAggregate>> PrepareAggregator(MonthlySpendingCreepCommand command)
+    private async Task<ListAggregator<TransactionMonthTotalAggregate>> PrepareAggregator(MonthlySpendingCommand command)
     {
         var budget = await _configuredBudgetClient.GetDefaultBudget();
 

@@ -1,5 +1,3 @@
-
-
 using ConsoleTables;
 using Ynab.Extensions;
 using YnabCli.Aggregation.Aggregates;
@@ -8,22 +6,22 @@ using YnabCli.Commands.Handlers;
 using YnabCli.Database;
 using YnabCli.ViewModels.ViewModelBuilders;
 
-namespace YnabCli.Commands.Reporting.AveragePayByYear;
+namespace YnabCli.Commands.Reporting.AverageYearlyPay;
 
-public class AveragePayByYearCommandHandler : CommandHandler, ICommandHandler<AveragePayByYearCommand>
+public class AverageYearlyPayCommandHandler : CommandHandler, ICommandHandler<AverageYearlyPayCommand>
 {
     private readonly ConfiguredBudgetClient _budgetClient;
     private readonly TransactionYearAverageViewModelBuilder _averageViewModelBuilder;
 
-    public AveragePayByYearCommandHandler(ConfiguredBudgetClient budgetClient, TransactionYearAverageViewModelBuilder averageViewModelBuilder)
+    public AverageYearlyPayCommandHandler(ConfiguredBudgetClient budgetClient, TransactionYearAverageViewModelBuilder averageViewModelBuilder)
     {
         _budgetClient = budgetClient;
         _averageViewModelBuilder = averageViewModelBuilder;
     }
 
-    public async Task<ConsoleTable> Handle(AveragePayByYearCommand byYearCommand, CancellationToken cancellationToken)
+    public async Task<ConsoleTable> Handle(AverageYearlyPayCommand command, CancellationToken cancellationToken)
     {
-        var aggregator = await PrepareAggregator(byYearCommand);
+        var aggregator = await PrepareAggregator(command);
 
         var viewModel = _averageViewModelBuilder
             .WithAggregator(aggregator)
@@ -33,7 +31,7 @@ public class AveragePayByYearCommandHandler : CommandHandler, ICommandHandler<Av
         return Compile(viewModel);
     }
 
-    private async Task<ListAggregator<TransactionYearAverageAggregate>> PrepareAggregator(AveragePayByYearCommand byYearCommand)
+    private async Task<ListAggregator<TransactionYearAverageAggregate>> PrepareAggregator(AverageYearlyPayCommand command)
     {
         var budget =  await _budgetClient.GetDefaultBudget();
         

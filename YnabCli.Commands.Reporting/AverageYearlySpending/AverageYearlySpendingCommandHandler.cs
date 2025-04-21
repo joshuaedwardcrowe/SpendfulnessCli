@@ -1,5 +1,3 @@
-
-
 using ConsoleTables;
 using Ynab.Extensions;
 using YnabCli.Aggregation.Aggregator.ListAggregators;
@@ -7,20 +5,20 @@ using YnabCli.Commands.Handlers;
 using YnabCli.Database;
 using YnabCli.ViewModels.ViewModelBuilders;
 
-namespace YnabCli.Commands.Reporting.AverageSpendingCreepByYear;
+namespace YnabCli.Commands.Reporting.AverageYearlySpending;
 
-public class AverageSpendingCreepByYearCommandHandler : CommandHandler, ICommandHandler<AverageSpendingCreepByYearCommand>
+public class AverageYearlySpendingCommandHandler : CommandHandler, ICommandHandler<AverageYearlySpendingCommand>
 {
     private readonly ConfiguredBudgetClient _configuredBudgetClient;
     private readonly TransactionYearAverageViewModelBuilder _transactionYearAverageViewModelBuilder;
 
-    public AverageSpendingCreepByYearCommandHandler(ConfiguredBudgetClient configuredBudgetClient, TransactionYearAverageViewModelBuilder transactionYearAverageViewModelBuilder)
+    public AverageYearlySpendingCommandHandler(ConfiguredBudgetClient configuredBudgetClient, TransactionYearAverageViewModelBuilder transactionYearAverageViewModelBuilder)
     {
         _configuredBudgetClient = configuredBudgetClient;
         _transactionYearAverageViewModelBuilder = transactionYearAverageViewModelBuilder;
     }
 
-    public async Task<ConsoleTable> Handle(AverageSpendingCreepByYearCommand request, CancellationToken cancellationToken)
+    public async Task<ConsoleTable> Handle(AverageYearlySpendingCommand request, CancellationToken cancellationToken)
     {
         var budget =  await _configuredBudgetClient.GetDefaultBudget();
         
