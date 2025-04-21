@@ -11,22 +11,12 @@ using YnabCli.ViewModels.ViewModelBuilders;
 
 namespace YnabCli.Commands.Reporting.SpareMoney;
 
-public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMoneyCommand>
+public class SpareMoneyCommandHandler(ConfiguredBudgetClient budgetClient)
+    : CommandHandler, ICommandHandler<SpareMoneyCommand>
 {
-    private readonly ConfiguredBudgetClient _budgetClient;
-    private readonly AmountViewModelBuilder _viewModelBuilder;
-
-    public SpareMoneyCommandHandler(
-        ConfiguredBudgetClient budgetClient,
-        AmountViewModelBuilder viewModelBuilder)
-    {
-        _budgetClient = budgetClient;
-        _viewModelBuilder = viewModelBuilder;
-    }
-
     public async Task<ConsoleTable> Handle(SpareMoneyCommand command, CancellationToken cancellationToken)
     {
-        var budget =  await _budgetClient.GetDefaultBudget();
+        var budget =  await budgetClient.GetDefaultBudget();
 
         var accounts = await budget.GetAccounts();
         var filteredAccounts = accounts.FilterToTypes(AccountType.Checking, AccountType.Savings);
@@ -57,16 +47,17 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
     
         var aggregator = new CategoryDeductedAmountAggregator(filteredAccounts, criticalCategoryGroups);
 
-        _viewModelBuilder
+        var viewModelBuilder = new AmountViewModelBuilder();
+        viewModelBuilder
             .WithAggregator(aggregator)
             .WithRowCount(false);
 
         if (command.Minus.HasValue)
         {
-            _viewModelBuilder.WithSubtraction(command.Minus.Value);
+            viewModelBuilder.WithSubtraction(command.Minus.Value);
         }
 
-        var viewModel = _viewModelBuilder.Build();
+        var viewModel = viewModelBuilder.Build();
         viewModel.Columns = ["Spare Money"];
 
         return Compile(viewModel);
