@@ -10,7 +10,6 @@ using YnabCli.ViewModels.Extensions;
 
 var serviceProvider = new ServiceCollection()
     .AddYnab() // Speak to the YNAB API
-    .AddViewModelBuilding() // Compile into ConsoleTables.
     .AddCommands() // Convert them into MediatR requests
     .AddReportingCommands() // Commands that work with YNAB data
     .AddPersonalisationCommands() // Commands that work with db data
