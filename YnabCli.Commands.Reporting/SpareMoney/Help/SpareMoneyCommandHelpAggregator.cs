@@ -1,11 +1,11 @@
+using YnabCli.Aggregation.Aggregator.ListAggregators;
 using YnabCli.Commands.Aggregate;
-using YnabCli.Commands.Aggregator;
 
 namespace YnabCli.Commands.Reporting.SpareMoney.Help;
 
-public class SpareMoneyCommandHelpAggregator : CommandHelpAggregator
+public class SpareMoneyCommandHelpAggregator : ListAggregator<CommandHelpAggregate>
 {
-    protected override List<CommandHelpAggregate> AggregateForCommand()
+    protected override IEnumerable<CommandHelpAggregate> ListAggregate()
         => [
             new(
                 "/spare-money",
@@ -22,5 +22,4 @@ public class SpareMoneyCommandHelpAggregator : CommandHelpAggregator
                 CommandActionType.Argument,
                 "Get spare moeny after critical expenses, minus savings")
         ];
-
 }

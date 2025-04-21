@@ -8,6 +8,10 @@ public abstract class ListAggregator<TAggregate> : Aggregator<IEnumerable<TAggre
     private readonly List<Func<IEnumerable<Transaction>, IEnumerable<Transaction>>> _transactionOperationFunctions = [];
     private readonly List<Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>>> _aggregationOperationFunctions = [];
 
+    public ListAggregator()
+    {
+    }
+    
     protected ListAggregator(IEnumerable<CategoryGroup> categoryGroups) : base(categoryGroups)
     {
     }

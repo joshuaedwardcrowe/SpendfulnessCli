@@ -1,15 +1,15 @@
+using YnabCli.Aggregation.Aggregator.ListAggregators;
 using YnabCli.Commands.Aggregate;
-using YnabCli.Commands.Aggregator;
 using YnabCli.ViewModels.ViewModelBuilders;
 
 namespace YnabCli.Commands.Builders;
 
-public class CommandHelpViewModelBuilder : ViewModelBuilder<CommandHelpAggregator, List<CommandHelpAggregate>>
+public class CommandHelpViewModelBuilder : ViewModelBuilder<ListAggregator<CommandHelpAggregate>, IEnumerable<CommandHelpAggregate>>
 {
-    protected override List<string> BuildColumnNames(List<CommandHelpAggregate> evaluation)
+    protected override List<string> BuildColumnNames(IEnumerable<CommandHelpAggregate> evaluation)
         => [nameof(CommandHelpAggregate.Call), nameof(CommandHelpAggregate.Type), nameof(CommandHelpAggregate.Summary)];
 
-    protected override List<List<object>> BuildRows(List<CommandHelpAggregate> aggregates)
+    protected override List<List<object>> BuildRows(IEnumerable<CommandHelpAggregate> aggregates)
     {
         var rows = aggregates
             .Select(aggregate => new List<object>
