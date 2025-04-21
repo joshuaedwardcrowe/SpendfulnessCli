@@ -6,16 +6,17 @@ namespace Ynab.Extensions;
 public static class TransactionExtensions
 {
     public static IEnumerable<Transaction> FilterByCategories(
-        this IEnumerable<Transaction> transactions, IEnumerable<Guid> categoryIds) 
-            => transactions.Where(transaction => transaction.CategoryId.HasValue && 
-                                                 categoryIds.Contains(transaction.CategoryId.Value));
-
-    // TODO: This naming scheme should be 'FilterTo'
-    public static IEnumerable<Transaction> FilterByCategories(
         this IEnumerable<Transaction> transactions, params Guid[] categoryIds)
-             => transactions.Where(transaction => transaction.CategoryId.HasValue && 
-                                                  categoryIds.Contains(transaction.CategoryId.Value));
-    
+        => transactions.Where(transaction 
+            => transaction.SubTransactions
+                .Concat([transaction])
+                .Any(t => t.CategoryId.HasValue &&
+                          categoryIds.Contains(t.CategoryId.Value)));
+
+    public static IEnumerable<Transaction> FilterByCategories(
+        this IEnumerable<Transaction> transactions, IEnumerable<Guid> categoryIds) 
+            => FilterByCategories(transactions, categoryIds.ToArray());
+
     public static IEnumerable<Transaction> FilterOutCategories(
         this IEnumerable<Transaction> transactions, IEnumerable<Guid> categoryIds)
             => transactions.Where(transaction => transaction.CategoryId.HasValue &&
@@ -102,7 +103,6 @@ public static class TransactionExtensions
 
     public static IEnumerable<TransactionsByCategory> GroupByCategory(this IEnumerable<Transaction> transactions)
         => transactions
-            .Where(transaction => !YnabConstants.AutomatedCategoryNames.Contains(transaction.CategoryName))
             .GroupBy(transaction => transaction.CategoryName)
             .Select(group => new TransactionsByCategory(group.Key, group.ToList()));
 }

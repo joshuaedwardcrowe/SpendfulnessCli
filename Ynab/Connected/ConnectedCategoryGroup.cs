@@ -17,6 +17,5 @@ public class ConnectedCategoryGroup : CategoryGroup
     
     public new IEnumerable<ConnectedCategory> Categories => _categoryGroupResponse
         .Categories
-        .Where(category => !YnabConstants.AutomatedCategoryNames.Contains(category.Name))
         .Select(category => new ConnectedCategory(_categoryClient, category));
 }

@@ -4,8 +4,7 @@ using Ynab.Responses.Transactions;
 
 namespace Ynab.Clients;
 
-public class TransactionsClient(YnabHttpClientBuilder ynabHttpClientBuilder, string parentApiPath)
-    : YnabApiClient
+public class TransactionsClient(YnabHttpClientBuilder ynabHttpClientBuilder, string parentApiPath) : YnabApiClient
 {
     private const string TransactionsApiPath = "transactions";
 

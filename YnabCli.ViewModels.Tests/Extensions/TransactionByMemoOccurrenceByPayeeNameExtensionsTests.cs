@@ -38,9 +38,9 @@ public class TransactionByMemoOccurrenceByPayeeNameExtensionsTests
             CategoryName = "categoryName"
         };
 
-    private static List<TransactionsByMemoOccurrenceByPayeeName> GetCollection(TransactionResponse transactionResponse)
+    private static List<TransactionsByMemoOccurrenceByPayeeName> GetCollection(TransactionResponse subTransactionResponse)
     {
-        var transaction = new Transaction(transactionResponse);
+        var transaction = new Transaction(subTransactionResponse);
         
         var transactionsByMemoOccurrences = new List<TransactionsByMemoOccurrence>
         {

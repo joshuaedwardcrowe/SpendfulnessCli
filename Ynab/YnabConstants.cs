@@ -8,13 +8,6 @@ public static class YnabConstants
         "Manual Balance Adjustment",
         "Reconciliation Balance Adjustment"
     ];
-
-    public static readonly List<string> AutomatedCategoryNames = new List<string>
-    {
-        "Inflow: Ready to Assign",
-        "Split",
-        "Uncategorized"
-    };
     
     public static Guid SplitCategoryId => Guid.Parse("26330e86-4711-41f9-bd3e-a1c983da936a");
 }

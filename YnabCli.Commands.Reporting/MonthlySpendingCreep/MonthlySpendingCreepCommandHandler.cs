@@ -36,12 +36,6 @@ public class MonthlySpendingCreepCommandHandler: CommandHandler, ICommandHandler
 
         var transactions = await budget.GetTransactions();
 
-        var test = transactions
-            .GroupByMonth()
-            .Last()
-            .Transactions
-            .GroupBy(y => y.CategoryName);
-
         var aggregator = new TransactionMonthTotalAggregator(transactions);
 
         if (command.CategoryId.HasValue)
