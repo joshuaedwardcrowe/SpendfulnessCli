@@ -40,7 +40,7 @@ public class MonthlySpendingCreepCommandHandler: CommandHandler, ICommandHandler
 
         if (command.CategoryId.HasValue)
         {
-            aggregator.BeforeAggregation(o => o.FilterByCategories(command.CategoryId.Value));
+            aggregator.BeforeAggregation(o => o.FilterToCategories(command.CategoryId.Value));
         }
         
         return aggregator;

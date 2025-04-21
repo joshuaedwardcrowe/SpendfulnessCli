@@ -29,7 +29,7 @@ public class SpareMoneyCommandHandler : CommandHandler, ICommandHandler<SpareMon
         var budget =  await _budgetClient.GetDefaultBudget();
 
         var accounts = await budget.GetAccounts();
-        var filteredAccounts = accounts.FilterByType(AccountType.Checking, AccountType.Savings);
+        var filteredAccounts = accounts.FilterToTypes(AccountType.Checking, AccountType.Savings);
 
         if (command.Add.HasValue)
         {

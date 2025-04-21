@@ -5,17 +5,16 @@ namespace Ynab.Extensions;
 
 public static class TransactionExtensions
 {
-    public static IEnumerable<Transaction> FilterByCategories(
+    public static IEnumerable<Transaction> FilterToCategories(
         this IEnumerable<Transaction> transactions, params Guid[] categoryIds)
-        => transactions.Where(transaction 
-            => transaction.SubTransactions
-                .Concat([transaction])
-                .Any(t => t.CategoryId.HasValue &&
-                          categoryIds.Contains(t.CategoryId.Value)));
+            => transactions.Where(transaction
+                => transaction.SubTransactions
+                    .Concat([transaction])
+                    .Any(subTransaction => subTransaction.InCategories(categoryIds)));
 
-    public static IEnumerable<Transaction> FilterByCategories(
+    public static IEnumerable<Transaction> FilterToCategories(
         this IEnumerable<Transaction> transactions, IEnumerable<Guid> categoryIds) 
-            => FilterByCategories(transactions, categoryIds.ToArray());
+            => FilterToCategories(transactions, categoryIds.ToArray());
 
     public static IEnumerable<Transaction> FilterOutCategories(
         this IEnumerable<Transaction> transactions, IEnumerable<Guid> categoryIds)
@@ -30,7 +29,7 @@ public static class TransactionExtensions
         this IEnumerable<Transaction> transactions) 
         => transactions.Where(transaction => transaction.Amount < 0);
     
-    public static IEnumerable<Transaction> FilterByPayeeName(
+    public static IEnumerable<Transaction> FilterToPayeeNames(
         this IEnumerable<Transaction> transactions, params string[] payeeNames)
             => transactions.Where(t => payeeNames.Contains(t.PayeeName));
 

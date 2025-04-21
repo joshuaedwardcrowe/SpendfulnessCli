@@ -12,4 +12,7 @@ public class SubTransaction(SubTransactionResponse subTransactionResponse)
     public Guid? CategoryId => subTransactionResponse.CategoryId;
     public string CategoryName => subTransactionResponse.CategoryName;
     public bool IsTransfer => !string.IsNullOrEmpty(subTransactionResponse.TransferTransactionId);
+    
+    public bool InCategories(IEnumerable<Guid> categoryIds)
+        => CategoryId.HasValue && categoryIds.Contains(CategoryId.Value);
 }

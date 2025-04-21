@@ -58,11 +58,11 @@ public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandl
 
         if (command.PayeeName != null)
         {
-            aggregator.BeforeAggregation(ts => ts.FilterByPayeeName(command.PayeeName));
+            aggregator.BeforeAggregation(ts => ts.FilterToPayeeNames(command.PayeeName));
         }
 
         return aggregator
-            .AfterAggregation(a => a.FilterByMinimumOccurrences(command.MinimumOccurrences ?? DefaultMinimumOccurrences))
+            .AfterAggregation(a => a.FilterToMinimumOccurrences(command.MinimumOccurrences ?? DefaultMinimumOccurrences))
             .AfterAggregation(a => a.OrderByDescending(aggregate => aggregate.MemoOccurrence));
     }
 }

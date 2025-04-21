@@ -43,7 +43,7 @@ public class AveragePayByYearCommandHandler : CommandHandler, ICommandHandler<Av
 
         aggregator
             .BeforeAggregation(t => t.FilterToInflow())
-            .BeforeAggregation(t => t.FilterByPayeeName("BrightHR"))
+            .BeforeAggregation(t => t.FilterToPayeeNames("BrightHR"))
             .BeforeAggregation(t => t.OrderByYear()); 
 
         return aggregator;

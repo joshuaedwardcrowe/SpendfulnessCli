@@ -18,7 +18,7 @@ public class TransactionMonthFlaggedAggregator(IEnumerable<CategoryGroup> catego
             .SelectMany(categoryGroup => categoryGroup.GetCategoryIds());
 
         var transactionGroups = Transactions
-            .FilterByCategories(spendingCategoryIds)
+            .FilterToCategories(spendingCategoryIds)
             .GroupByMonth()
             .GroupByFlags()
             .ToList();
