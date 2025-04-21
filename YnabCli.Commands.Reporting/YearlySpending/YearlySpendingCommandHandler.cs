@@ -16,7 +16,7 @@ public class YearlySpendingCommandHandler(ConfiguredBudgetClient budgetClient)
         
         var transactions = await budget.GetTransactions();
 
-        var aggregator = new CategoryYearAverageAggregator(transactions)
+        var aggregator = new LegacyCategoryYearAverageAggregator(transactions)
             .BeforeAggregation(t => t.FilterOutTransfers())
             .BeforeAggregation(t => t.FilterOutAutomations());
 

@@ -6,7 +6,9 @@ using YnabCli.Aggregation.Aggregates;
 namespace YnabCli.Aggregation.Aggregator;
 
 // TODO: This should be a list aggregator.
-public class CategoryYearAverageAggregator(IEnumerable<Transaction> transactions)
+
+[Obsolete("Please do not use this method.")]
+public class LegacyCategoryYearAverageAggregator(IEnumerable<Transaction> transactions)
     : Aggregator<IEnumerable<CategoryYearAverageAggregate>>(transactions)
 {
     protected override IEnumerable<CategoryYearAverageAggregate> GenerateAggregate()
