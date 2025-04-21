@@ -7,11 +7,12 @@ namespace YnabCli.Aggregation.Aggregator;
 public abstract class Aggregator<TAggregation>
 {
     protected IEnumerable<Account> Accounts { get; set; } 
-    protected IEnumerable<CategoryGroup> CategoryGroups { get; }
+    protected IEnumerable<CategoryGroup> CategoryGroups { get; set; }
     protected IEnumerable<Transaction> Transactions { get; set; }
     protected ICollection<Commitment> Commitments { get; }
     
     private readonly List<Func<IEnumerable<Account>, IEnumerable<Account>>> _accountOperationFunctions = [];
+    private readonly List<Func<IEnumerable<CategoryGroup>, IEnumerable<CategoryGroup>>> _categoryGroupOperations = [];
     private readonly List<Func<IEnumerable<Transaction>, IEnumerable<Transaction>>> _transactionOperationFunctions = [];
 
     protected Aggregator()
@@ -70,6 +71,11 @@ public abstract class Aggregator<TAggregation>
         {
             Accounts = accountOperationFunction(Accounts);
         }
+
+        foreach (var categoryGroupOperation in _categoryGroupOperations)
+        {
+            CategoryGroups = categoryGroupOperation(CategoryGroups);
+        }
         
         foreach (var transactionOperationFunction in _transactionOperationFunctions)
         {
@@ -82,6 +88,12 @@ public abstract class Aggregator<TAggregation>
     public Aggregator<TAggregation> BeforeAggregation(Func<IEnumerable<Transaction>, IEnumerable<Transaction>> operationFunction)
     {
         _transactionOperationFunctions.Add(operationFunction);
+        return this;
+    }
+
+    public Aggregator<TAggregation> BeforeAggregation(Func<IEnumerable<CategoryGroup>, IEnumerable<CategoryGroup>> operationFunction)
+    {
+        _categoryGroupOperations.Add(operationFunction);
         return this;
     }
 
