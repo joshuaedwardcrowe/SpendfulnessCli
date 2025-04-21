@@ -3,7 +3,6 @@ using Ynab.Collections;
 using Ynab.Responses.Transactions;
 using Ynab.Sanitisers;
 using YnabCli.Aggregation.Extensions;
-using YnabCli.ViewModels.Extensions;
 
 namespace YnabCli.ViewModels.Tests.Extensions;
 
@@ -32,10 +31,11 @@ public class TransactionByMemoOccurrenceByPayeeNameExtensionsTests
     private static TransactionResponse GetResponse()
         => new()
         {
+            Id = string.Empty,
             PayeeName = "payeeName",
             Memo = "memo",
             Amount = 2500,
-            CategoryName = "categoryName"
+            CategoryName = "categoryName",
         };
 
     private static List<TransactionsByMemoOccurrenceByPayeeName> GetCollection(TransactionResponse subTransactionResponse)

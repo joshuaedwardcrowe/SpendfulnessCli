@@ -6,7 +6,6 @@ using YnabCli.Commands.Personalisation;
 using YnabCli.Commands.Reporting;
 using YnabCli.Database;
 using YnabCli.Instructions.Extensions;
-using YnabCli.ViewModels.Extensions;
 
 var serviceProvider = new ServiceCollection()
     .AddYnab() // Speak to the YNAB API

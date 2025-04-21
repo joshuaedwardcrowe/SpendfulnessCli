@@ -6,7 +6,7 @@ public abstract class ListAggregator<TAggregate> : Aggregator<IEnumerable<TAggre
 {
     private readonly List<Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>>> _aggregationOperationFunctions = [];
 
-    public ListAggregator()
+    protected ListAggregator()
     {
     }
     

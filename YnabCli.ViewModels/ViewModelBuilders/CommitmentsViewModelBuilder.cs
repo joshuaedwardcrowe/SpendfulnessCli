@@ -1,5 +1,4 @@
 using Ynab.Sanitisers;
-using YnabCli.Aggregation.Aggregator;
 using YnabCli.Aggregation.Calculators;
 using YnabCli.Database.Commitments;
 using YnabCli.ViewModels.Extensions;

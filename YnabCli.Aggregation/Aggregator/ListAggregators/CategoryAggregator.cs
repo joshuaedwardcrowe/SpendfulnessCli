@@ -7,7 +7,7 @@ public class CategoryAggregator(IEnumerable<CategoryGroup> categoryGroups)
     : ListAggregator<CategoryAggregate>(categoryGroups)
 {
     protected override IEnumerable<CategoryAggregate> ListAggregate()
-        => categoryGroups
+        => CategoryGroups
             .SelectMany(categoryGroup => categoryGroup.Categories)
             .Select(category => new CategoryAggregate(category.Id, category.Name));
 }

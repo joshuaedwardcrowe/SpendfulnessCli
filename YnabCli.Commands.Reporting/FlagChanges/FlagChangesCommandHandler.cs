@@ -1,5 +1,4 @@
 using ConsoleTables;
-using Ynab;
 using Ynab.Extensions;
 using YnabCli.Aggregation.Aggregator;
 using YnabCli.Commands.Handlers;

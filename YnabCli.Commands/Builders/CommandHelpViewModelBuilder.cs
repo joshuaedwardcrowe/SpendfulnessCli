@@ -1,4 +1,3 @@
-using YnabCli.Aggregation.Aggregator.ListAggregators;
 using YnabCli.Commands.Aggregate;
 using YnabCli.ViewModels.ViewModelBuilders;
 
