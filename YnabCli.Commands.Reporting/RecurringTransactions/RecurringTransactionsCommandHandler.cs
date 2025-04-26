@@ -1,5 +1,3 @@
-
-
 using ConsoleTables;
 using Ynab;
 using Ynab.Extensions;
