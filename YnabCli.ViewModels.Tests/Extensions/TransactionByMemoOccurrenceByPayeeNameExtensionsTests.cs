@@ -17,7 +17,7 @@ public class TransactionByMemoOccurrenceByPayeeNameExtensionsTests
         var transactions = GetCollection(response);
         
         var aggregate = transactions
-            .AggregateMemoOccurrences()
+            .AggregatePayeeMemoOccurrences()
             .First();
         
         var sanitisedAmount = MilliunitSanitiser.Calculate(response.Amount);

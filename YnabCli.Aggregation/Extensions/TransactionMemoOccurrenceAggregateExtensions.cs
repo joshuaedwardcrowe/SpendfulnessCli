@@ -4,11 +4,11 @@ namespace YnabCli.Aggregation.Extensions;
 
 public static class TransactionMemoOccurrenceAggregateExtensions
 {
-    public static IEnumerable<TransactionMemoOccurrenceAggregate> FilterToPayeeName(
-        this IEnumerable<TransactionMemoOccurrenceAggregate> source, string payeeName) 
+    public static IEnumerable<TransactionPayeeMemoOccurrenceAggregate> FilterToPayeeName(
+        this IEnumerable<TransactionPayeeMemoOccurrenceAggregate> source, string payeeName) 
             => source.Where(agg => agg.PayeeName == payeeName);
     
-    public static IEnumerable<TransactionMemoOccurrenceAggregate> FilterToMinimumOccurrences(
-        this IEnumerable<TransactionMemoOccurrenceAggregate> source, int minimumOccurrences)
+    public static IEnumerable<TransactionPayeeMemoOccurrenceAggregate> FilterToMinimumOccurrences(
+        this IEnumerable<TransactionPayeeMemoOccurrenceAggregate> source, int minimumOccurrences)
             => source.Where(agg => agg.MemoOccurrence >= minimumOccurrences);
 }

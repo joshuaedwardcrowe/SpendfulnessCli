@@ -38,12 +38,12 @@ public class RecurringTransactionsCommandHandler : CommandHandler, ICommandHandl
         return Compile(viewModel);
     }
 
-    private async Task<ListAggregator<TransactionMemoOccurrenceAggregate>> PrepareAggregator(RecurringTransactionsCommand command)
+    private async Task<ListAggregator<TransactionPayeeMemoOccurrenceAggregate>> PrepareAggregator(RecurringTransactionsCommand command)
     {
         var budget =  await _budgetClient.GetDefaultBudget();
         var transactions = await budget.GetTransactions();
         
-        var aggregator = new TransactionMemoOccurrenceAggregator(transactions);
+        var aggregator = new TransactionPayeeMemoOccurrenceAggregator(transactions);
             
         aggregator.BeforeAggregation(ts => ts.FilterOutCategories([YnabConstants.SplitCategoryId]));
 

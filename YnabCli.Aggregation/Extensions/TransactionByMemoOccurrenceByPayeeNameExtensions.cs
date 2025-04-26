@@ -5,7 +5,7 @@ namespace YnabCli.Aggregation.Extensions;
 
 public static class TransactionByMemoOccurrenceByPayeeNameExtensions
 {
-    public static IEnumerable<TransactionMemoOccurrenceAggregate> AggregateMemoOccurrences(
+    public static IEnumerable<TransactionPayeeMemoOccurrenceAggregate> AggregatePayeeMemoOccurrences(
         this IEnumerable<TransactionsByMemoOccurrenceByPayeeName> transactionGroups)
     {
         foreach (var transactionGroup in transactionGroups)
@@ -15,7 +15,7 @@ public static class TransactionByMemoOccurrenceByPayeeNameExtensions
                 var averageAmount = transactionSubGroup.Transactions.Average(o => o.Amount);
                 var totalAmount = transactionSubGroup.Transactions.Sum(o => o.Amount);
                 
-                var occurrence = new TransactionMemoOccurrenceAggregate(
+                var occurrence = new TransactionPayeeMemoOccurrenceAggregate(
                     transactionGroup.PayeeName,
                     transactionSubGroup.Memo,
                     transactionSubGroup.MemoOccurence,

@@ -1,6 +1,6 @@
 namespace YnabCli.Aggregation.Aggregates;
 
-public record TransactionMemoOccurrenceAggregate(
+public record TransactionPayeeMemoOccurrenceAggregate(
     string PayeeName,
     string? Memo,
     int MemoOccurrence,

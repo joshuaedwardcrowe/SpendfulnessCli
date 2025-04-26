@@ -6,17 +6,17 @@ using YnabCli.ViewModels.ViewModels;
 namespace YnabCli.ViewModels.ViewModelBuilders;
 
 public class TransactionMemoOccurrenceViewModelBuilder : 
-    ViewModelBuilder<IEnumerable<TransactionMemoOccurrenceAggregate>>
+    ViewModelBuilder<IEnumerable<TransactionPayeeMemoOccurrenceAggregate>>
 {
-    protected override List<string> BuildColumnNames(IEnumerable<TransactionMemoOccurrenceAggregate> evaluation)
+    protected override List<string> BuildColumnNames(IEnumerable<TransactionPayeeMemoOccurrenceAggregate> evaluation)
         => TransactionMemoOccurrenceViewModel.GetColumnNames();
 
-    protected override List<List<object>> BuildRows(IEnumerable<TransactionMemoOccurrenceAggregate> aggregates)
+    protected override List<List<object>> BuildRows(IEnumerable<TransactionPayeeMemoOccurrenceAggregate> aggregates)
         => aggregates
             .Select(BuildMemoOccurrenceRow)
             .ToList();
 
-    private List<object> BuildMemoOccurrenceRow(TransactionMemoOccurrenceAggregate aggregate)
+    private List<object> BuildMemoOccurrenceRow(TransactionPayeeMemoOccurrenceAggregate aggregate)
     {
         var flowSanitisedAverageAmount = TransactionFlowSanitiser.Sanitise(aggregate.AverageAmount);
         var displayableAverageAmount = CurrencyDisplayFormatter.Format(flowSanitisedAverageAmount);
