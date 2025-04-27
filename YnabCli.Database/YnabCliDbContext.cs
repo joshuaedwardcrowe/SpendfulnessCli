@@ -42,6 +42,10 @@ public class YnabCliDbContext : DbContext
                     Name = nameof(SettingTypeNames.YnabApiKey)
                 }
             });
+        
+        modelBuilder
+            .Entity<SpendingSampleMatch>()
+            .Ignore(x => x.MostRecentPrice);
 
         modelBuilder
             .Entity<CustomAccountType>()

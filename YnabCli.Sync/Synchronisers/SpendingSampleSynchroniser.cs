@@ -90,6 +90,7 @@ public class SpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetC
             {
                 Created = DateTime.UtcNow, // TODO: Automatically create through EF
                 YnabTransactionDerivedFromId = unsampledTransaction.Id,
+                YnabPayeeId = unsampledTransaction.PayeeId!.Value,
                 Matches = newlyCreatedSamples
             };
 

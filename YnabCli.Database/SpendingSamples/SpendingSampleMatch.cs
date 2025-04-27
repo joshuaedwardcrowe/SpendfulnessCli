@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace YnabCli.Database.SpendingSamples;
 
@@ -28,4 +29,8 @@ public class SpendingSampleMatch
     public required string YnabMemo { get; set; }
     
     public ICollection<SpendingSampleMatchPrice> Prices { get; set; } = [];
+    
+    public SpendingSampleMatchPrice MostRecentPrice => Prices
+        .OrderBy(price => price.EffectiveFrom)
+        .First();
 }

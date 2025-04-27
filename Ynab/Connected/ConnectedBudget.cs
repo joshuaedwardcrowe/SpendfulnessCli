@@ -25,4 +25,5 @@ public class ConnectedBudget : Budget
 
     public Task<IEnumerable<CategoryGroup>> GetCategoryGroups() => _categoriesClient.GetCategoryGroups();
     public Task<IEnumerable<Transaction>> GetTransactions() => _transactionsClient.GetTransactions();
+    public Task<Transaction> GetTransaction(string id) => _transactionsClient.GetTransaction(id);
 }

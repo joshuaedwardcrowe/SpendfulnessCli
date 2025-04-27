@@ -26,6 +26,7 @@ I can see this solution comprimising of three parts:
 
 
 
+
 ## Constraints
 
 ### Not all patterns will match the total amount

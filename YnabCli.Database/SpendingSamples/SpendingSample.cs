@@ -7,6 +7,8 @@ public class SpendingSample
     public Guid Id { get; set; }
     
     public DateTime Created { get; set; }
+    
+    public Guid YnabPayeeId { get; set; }
 
     [MaxLength(50)]
     public required string YnabTransactionDerivedFromId { get; set; }

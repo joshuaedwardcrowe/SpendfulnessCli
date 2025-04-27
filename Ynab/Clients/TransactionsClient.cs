@@ -12,6 +12,12 @@ public class TransactionsClient(YnabHttpClientBuilder builder, string parentApiP
         var response = await Get<GetTransactionsResponseData>(TransactionsApiPath);
         return response.Data.Transactions.Select(t => new Transaction(t));
     }
+
+    public async Task<Transaction> GetTransaction(string id)
+    {
+        var response = await Get<GetTransactionResponseData>($"{TransactionsApiPath}/{id}");
+        return new Transaction(response.Data.Transaction);
+    }
     
     protected override HttpClient GetHttpClient() => builder.Build(parentApiPath,  TransactionsApiPath);
 }
