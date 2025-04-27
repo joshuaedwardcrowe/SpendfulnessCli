@@ -2,11 +2,11 @@ using Ynab.Responses.Transactions;
 
 namespace Ynab;
 
-public class Transaction(TransactionResponse transactionResponse) : SubTransaction(transactionResponse)
+public class Transaction(TransactionResponse transactionResponse) : SplitTransactions(transactionResponse)
 {
     public DateTime Occured => transactionResponse.Occured;
     public string? FlagName => transactionResponse.FlagName;
     public FlagColor? FlagColour => transactionResponse.FlagColor;
-    public IEnumerable<SubTransaction> SubTransactions => transactionResponse.SubTransactions
-        .Select(transaction => new SubTransaction(transaction));
+    public IEnumerable<SplitTransactions> SplitTransactions => transactionResponse.SplitTransactions
+        .Select(transaction => new SplitTransactions(transaction));
 }

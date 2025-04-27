@@ -8,7 +8,7 @@ public static class TransactionExtensions
     public static IEnumerable<Transaction> FilterToCategories(
         this IEnumerable<Transaction> transactions, params Guid[] categoryIds)
             => transactions.Where(transaction
-                => transaction.SubTransactions
+                => transaction.SplitTransactions
                     .Concat([transaction])
                     .Any(subTransaction => subTransaction.InCategories(categoryIds)));
 

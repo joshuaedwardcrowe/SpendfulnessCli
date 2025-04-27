@@ -14,7 +14,7 @@ public class SpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetC
 
         var transactions = await budget.GetTransactions();
 
-        var possibleSamples = transactions.Where(t => t.SubTransactions.Any());
+        var possibleSamples = transactions.Where(t => t.SplitTransactions.Any());
 
         var alreadySampledTransactionIds = await db.Context.SpendingSampleGroups
             .Select(spendingSampleGroup => spendingSampleGroup.YnabTransactionDerivedFromId)
@@ -25,15 +25,15 @@ public class SpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetC
             .ToListAsync(stoppingToken);
 
         var unsampledTransactions = possibleSamples.Where(ps
-            => ps.SubTransactions.All(st => st.CanIdentifyIntent()) && !alreadySampledTransactionIds.Contains(ps.Id));
+            => ps.SplitTransactions.All(st => st.CanIdentifyIntent()) && !alreadySampledTransactionIds.Contains(ps.Id));
 
         // TODO: This is asynchronously synchronous, can it be made paralell.
         foreach (var unsampledTransaction in unsampledTransactions)
         {
-            PrintToConsole($"Processing {unsampledTransaction.SubTransactions.Count()} SubTransactions for Transaction: {unsampledTransaction.Id}");
+            PrintToConsole($"Processing {unsampledTransaction.SplitTransactions.Count()} SubTransactions for Transaction: {unsampledTransaction.Id}");
             
             var newlyCreatedSamples = new List<SpendingSample>();
-            foreach (var unsampledSubTransaction in unsampledTransaction.SubTransactions)
+            foreach (var unsampledSubTransaction in unsampledTransaction.SplitTransactions)
             {
                 var foundSample = spendingSamples.FirstOrDefault(u => u.Matches(unsampledSubTransaction));
                 
@@ -102,14 +102,14 @@ public class SpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetC
 
 public static class SpendingSampleExtensions
 {
-    public static bool Matches(this SpendingSample sample, SubTransaction transaction)
-        => sample.YnabPayeeId == transaction.PayeeId &&
-           sample.YnabCategoryId == transaction.CategoryId &&
-           sample.YnabMemo == transaction.Memo;
+    public static bool Matches(this SpendingSample sample, SplitTransactions splitTransactions)
+        => sample.YnabPayeeId == splitTransactions.PayeeId &&
+           sample.YnabCategoryId == splitTransactions.CategoryId &&
+           sample.YnabMemo == splitTransactions.Memo;
 }
 
 public static class SubTransactionExtensions
 {
-    public static bool CanIdentifyIntent(this SubTransaction subTransaction)
-        => subTransaction is { PayeeId: not null, CategoryId: not null, Memo: not null };
+    public static bool CanIdentifyIntent(this SplitTransactions splitTransactions)
+        => splitTransactions is { PayeeId: not null, CategoryId: not null, Memo: not null };
 }

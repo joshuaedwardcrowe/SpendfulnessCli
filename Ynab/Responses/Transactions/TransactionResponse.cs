@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Ynab.Responses.Transactions;
 
-public class TransactionResponse : SubTransactionResponse
+public class TransactionResponse : SplitTransactionResponse
 {
     [JsonPropertyName("date")]
     public DateTime Occured { get; set; }
@@ -14,5 +14,5 @@ public class TransactionResponse : SubTransactionResponse
     public string? FlagName { get; set; }
     
     [JsonPropertyName("subtransactions")]
-    public IEnumerable<SubTransactionResponse> SubTransactions { get; set; } = [];
+    public IEnumerable<SplitTransactionResponse> SplitTransactions { get; set; } = [];
 }
