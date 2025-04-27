@@ -1,0 +1,25 @@
+using Ynab;
+using YnabCli.ViewModels.ViewModels;
+
+namespace YnabCli.ViewModels.ViewModelBuilders;
+
+public class TransactionsViewModelBuilder : ViewModelBuilder<IEnumerable<Transaction>>
+{
+    protected override List<string> BuildColumnNames(IEnumerable<Transaction> evaluation)
+        => TransactionVIewModel.GetColumnNames();
+
+    protected override List<List<object>> BuildRows(IEnumerable<Transaction> aggregates)
+        => aggregates
+            .Select(BuildIndividualRow)
+            .Select(row => row.ToList())
+            .ToList();
+    
+    private IEnumerable<object> BuildIndividualRow(Transaction transaction) 
+        => [
+            transaction.Id,
+            transaction.Occured,
+            transaction.PayeeName,
+            transaction.CategoryName,
+            transaction.Amount
+        ];
+}

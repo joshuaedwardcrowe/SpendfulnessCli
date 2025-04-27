@@ -11,5 +11,5 @@ public class GetTransactionsResponseData
 public class GetTransactionResponseData
 {
     [JsonPropertyName("transaction")]
-    public TransactionResponse Transaction { get; set; }
+    public required TransactionResponse Transaction { get; set; }
 }

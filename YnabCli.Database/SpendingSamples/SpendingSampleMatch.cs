@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace YnabCli.Database.SpendingSamples;
+
+// TODO: Not really sure if this can be considered a 'match'.
 
 /// <summary>
 /// A sample of unique spending.
