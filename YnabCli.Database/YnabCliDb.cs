@@ -3,22 +3,25 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using YnabCli.Database.Accounts;
 using YnabCli.Database.Commitments;
+using YnabCli.Database.SpendingSamples;
 using YnabCli.Database.Users;
 
 namespace YnabCli.Database;
 
 public class YnabCliDb(YnabCliDbContext ynabCliDbContext)
 {
+    public readonly YnabCliDbContext Context = ynabCliDbContext;
+    
     public Task<User> GetActiveUser() => GetUserIncludable().FirstAsync(u => u.Active);
     
     public Task<List<CustomAccountType>> GetAccountTypes()
-        => ynabCliDbContext
+        => Context
             .CustomAccountTypes
             .ToListAsync();
-
+    
     public async Task Sync<TEntity>() where TEntity : class
     {
-        var recentlyUsedEntries = ynabCliDbContext.ChangeTracker.Entries();
+        var recentlyUsedEntries = Context.ChangeTracker.Entries();
 
         var relevantEntities = recentlyUsedEntries.Where(o => o.Entity is TEntity);
 
@@ -28,10 +31,10 @@ public class YnabCliDb(YnabCliDbContext ynabCliDbContext)
         await Task.WhenAll(reloadsToCarryOut);
     }
 
-    public Task Save() => ynabCliDbContext.SaveChangesAsync();
+    public Task Save() => Context.SaveChangesAsync();
 
     private IIncludableQueryable<User, ICollection<Commitment>> GetUserIncludable()
-        => ynabCliDbContext
+        => Context
             .Users
             .Include(u => u.Settings)
             .ThenInclude(s => s.Type)

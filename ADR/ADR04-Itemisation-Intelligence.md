@@ -16,6 +16,11 @@ I can see this solution comprimising of three parts:
 2. An itemisation pattern indexing service that looks at everything parent transaction with subtransactions, indexing a copy.
 2. An itemisation pattern validating service, finding exact matches and automatically applying the pattern.
 
+### Storing Samples
+1. SpendingSampleGroup
+2. SpendingSample
+3. SpendingSamplePricing.
+
 ### Itemisation Pattern Indexing
 
 
@@ -25,7 +30,8 @@ I can see this solution comprimising of three parts:
 
 ### Not all patterns will match the total amount
 
-### Constraint 2
+### Being detailed for the sake of sample matching
+Subtransactions must be fully formed.
 
 ## Questions & Answers
 

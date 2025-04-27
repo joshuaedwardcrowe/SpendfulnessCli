@@ -3,6 +3,7 @@ using YnabCli.Database.Accounts;
 using YnabCli.Database.Commitments;
 using YnabCli.Database.Milestones;
 using YnabCli.Database.Settings;
+using YnabCli.Database.SpendingSamples;
 using YnabCli.Database.Users;
 
 namespace YnabCli.Database;
@@ -14,6 +15,9 @@ public class YnabCliDbContext : DbContext
     public DbSet<SettingType> SettingTypes { get; set; }
     public DbSet<Commitment> Commitments { get; set; }
     public DbSet<Milestone> Milestones { get; set; }
+    public DbSet<SpendingSample> SpendingSamples { get; set; }
+    public DbSet<SpendingSamplePrices> SpendingSamplePrices { get; set; }
+    public DbSet<SpendingSampleGroup> SpendingSampleGroups { get; set; }
     public DbSet<CustomAccountType> CustomAccountTypes { get; set; }
     public DbSet<AccountAttributes> AccountAccountTypes { get; set; }
     

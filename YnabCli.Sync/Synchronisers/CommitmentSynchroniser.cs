@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Hosting;
 using Ynab;
 using Ynab.Extensions;
 using YnabCli.Abstractions;
@@ -8,7 +7,7 @@ using YnabCli.Database.Users;
 
 namespace YnabCli.Sync.Synchronisers;
 
-public class CommitmentSynchroniser(ConfiguredBudgetClient configuredBudgetClient, YnabCliDb db) : BackgroundService
+public class CommitmentSynchroniser(ConfiguredBudgetClient configuredBudgetClient, YnabCliDb db) : Synchroniser
 {
     private const int DefaultSyncFrequency = 1;
     
@@ -118,7 +117,4 @@ public class CommitmentSynchroniser(ConfiguredBudgetClient configuredBudgetClien
         commitment.Started = category.GoalCreationMonth;
         commitment.RequiredBy = category.GoalTargetMonth;
     }
-    
-    private void PrintToConsole(string message)
-        => Console.WriteLine($"[{nameof(CommitmentSynchroniser)}] - {message}");
 }

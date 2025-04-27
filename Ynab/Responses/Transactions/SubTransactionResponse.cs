@@ -13,6 +13,9 @@ public class SubTransactionResponse
     [JsonPropertyName("amount")]
     public int Amount { get; set; }
     
+    [JsonPropertyName("payee_id")]
+    public Guid? PayeeId { get; set; }
+    
     [JsonPropertyName("payee_name")]
     public required string PayeeName { get; set; }
     

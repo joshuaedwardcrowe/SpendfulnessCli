@@ -3,11 +3,13 @@ using Ynab.Sanitisers;
 
 namespace Ynab;
 
+// TODO: Hate that this is called 'sub'
 public class SubTransaction(SubTransactionResponse subTransactionResponse)
 {
     public string Id => subTransactionResponse.Id;
     public string? Memo => subTransactionResponse.Memo;
     public decimal Amount => MilliunitSanitiser.Calculate(subTransactionResponse.Amount);
+    public Guid? PayeeId => subTransactionResponse.PayeeId;
     public string PayeeName => subTransactionResponse.PayeeName;
     public Guid? CategoryId => subTransactionResponse.CategoryId;
     public string CategoryName => subTransactionResponse.CategoryName;
