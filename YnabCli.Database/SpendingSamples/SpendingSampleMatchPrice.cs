@@ -1,6 +1,6 @@
 namespace YnabCli.Database.SpendingSamples;
 
-public class SpendingSamplePrices
+public class SpendingSampleMatchPrice
 {
     public Guid Id { get; set; }
     public DateTime EffectiveFrom { get; set; }

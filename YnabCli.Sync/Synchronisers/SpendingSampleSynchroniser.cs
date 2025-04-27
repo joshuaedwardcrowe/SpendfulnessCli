@@ -16,11 +16,11 @@ public class SpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetC
 
         var possibleSamples = transactions.Where(t => t.SplitTransactions.Any());
 
-        var alreadySampledTransactionIds = await db.Context.SpendingSampleGroups
+        var alreadySampledTransactionIds = await db.Context.SpendingSamples
             .Select(spendingSampleGroup => spendingSampleGroup.YnabTransactionDerivedFromId)
             .ToListAsync(stoppingToken);
 
-        var spendingSamples = await db.Context.SpendingSamples
+        var spendingSamples = await db.Context.SpendingSampleMatches
             .Include(ss => ss.Prices)
             .ToListAsync(stoppingToken);
 
@@ -32,7 +32,7 @@ public class SpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetC
         {
             PrintToConsole($"Processing {unsampledTransaction.SplitTransactions.Count()} SubTransactions for Transaction: {unsampledTransaction.Id}");
             
-            var newlyCreatedSamples = new List<SpendingSample>();
+            var newlyCreatedSamples = new List<SpendingSampleMatch>();
             foreach (var unsampledSubTransaction in unsampledTransaction.SplitTransactions)
             {
                 var foundSample = spendingSamples.FirstOrDefault(u => u.Matches(unsampledSubTransaction));
@@ -42,14 +42,14 @@ public class SpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetC
                 {
                     PrintToConsole($"Creating New Spending Sample for SubTransaction: {unsampledSubTransaction.Id}");
                     
-                    var completelyNewSample = new SpendingSample
+                    var completelyNewSample = new SpendingSampleMatch
                     {
                         YnabPayeeId = unsampledSubTransaction.PayeeId!.Value,
                         YnabCategoryId = unsampledSubTransaction.CategoryId!.Value,
                         YnabMemo = unsampledSubTransaction.Memo!,
-                        Prices = new List<SpendingSamplePrices>
+                        Prices = new List<SpendingSampleMatchPrice>
                         {
-                            new SpendingSamplePrices
+                            new SpendingSampleMatchPrice
                             {
                                 EffectiveFrom = unsampledTransaction.Occured,
                                 Amount = unsampledSubTransaction.Amount,
@@ -71,7 +71,7 @@ public class SpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetC
                 {
                     PrintToConsole($"Creating New Price for SubTransaction: {unsampledSubTransaction.Id} in Sample: {foundSample.Id}");
                     
-                    var newPrice = new SpendingSamplePrices
+                    var newPrice = new SpendingSampleMatchPrice
                     {
                         Amount = unsampledSubTransaction.Amount, // TODO: move to constructor.
                     };
@@ -86,14 +86,14 @@ public class SpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetC
                 PrintToConsole($"Found Existing Price for SubTransaction: {unsampledSubTransaction.Id} as Price {foundPricing.Id}");
             }
 
-            var group = new SpendingSampleGroup
+            var group = new SpendingSample
             {
                 Created = DateTime.UtcNow, // TODO: Automatically create through EF
                 YnabTransactionDerivedFromId = unsampledTransaction.Id,
-                Samples = newlyCreatedSamples
+                Matches = newlyCreatedSamples
             };
 
-            db.Context.SpendingSampleGroups.Add(group);
+            db.Context.SpendingSamples.Add(group);
         }
 
         await db.Save();
@@ -102,10 +102,10 @@ public class SpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetC
 
 public static class SpendingSampleExtensions
 {
-    public static bool Matches(this SpendingSample sample, SplitTransactions splitTransactions)
-        => sample.YnabPayeeId == splitTransactions.PayeeId &&
-           sample.YnabCategoryId == splitTransactions.CategoryId &&
-           sample.YnabMemo == splitTransactions.Memo;
+    public static bool Matches(this SpendingSampleMatch sampleMatch, SplitTransactions splitTransactions)
+        => sampleMatch.YnabPayeeId == splitTransactions.PayeeId &&
+           sampleMatch.YnabCategoryId == splitTransactions.CategoryId &&
+           sampleMatch.YnabMemo == splitTransactions.Memo;
 }
 
 public static class SubTransactionExtensions

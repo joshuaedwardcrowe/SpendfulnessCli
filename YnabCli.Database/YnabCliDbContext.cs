@@ -16,8 +16,8 @@ public class YnabCliDbContext : DbContext
     public DbSet<Commitment> Commitments { get; set; }
     public DbSet<Milestone> Milestones { get; set; }
     public DbSet<SpendingSample> SpendingSamples { get; set; }
-    public DbSet<SpendingSamplePrices> SpendingSamplePrices { get; set; }
-    public DbSet<SpendingSampleGroup> SpendingSampleGroups { get; set; }
+    public DbSet<SpendingSampleMatch> SpendingSampleMatches { get; set; }
+    public DbSet<SpendingSampleMatchPrice> SpendingSampleMatchPrices { get; set; }
     public DbSet<CustomAccountType> CustomAccountTypes { get; set; }
     public DbSet<AccountAttributes> AccountAccountTypes { get; set; }
     

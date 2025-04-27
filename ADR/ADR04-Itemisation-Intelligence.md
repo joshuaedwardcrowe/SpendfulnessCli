@@ -17,9 +17,9 @@ I can see this solution comprimising of three parts:
 2. An itemisation pattern validating service, finding exact matches and automatically applying the pattern.
 
 ### Storing Samples
-1. SpendingSampleGroup
-2. SpendingSample
-3. SpendingSamplePricing.
+1. SpendingSample
+2. SpendingSampleMatch
+3. SpendingSampleMatchPrice
 
 ### Itemisation Pattern Indexing
 
