@@ -7,6 +7,8 @@ public class Transaction(TransactionResponse transactionResponse) : SplitTransac
     public DateTime Occured => transactionResponse.Occured;
     public string? FlagName => transactionResponse.FlagName;
     public FlagColor? FlagColour => transactionResponse.FlagColor;
-    public IEnumerable<SplitTransactions> SplitTransactions => transactionResponse.SplitTransactions
-        .Select(transaction => new SplitTransactions(transaction));
+    public IEnumerable<SplitTransactions> SplitTransactions 
+        => transactionResponse
+            .SplitTransactions
+            .Select(transaction => new SplitTransactions(transaction));
 }
