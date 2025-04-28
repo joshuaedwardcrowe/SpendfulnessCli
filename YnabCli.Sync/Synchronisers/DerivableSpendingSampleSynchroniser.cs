@@ -9,7 +9,6 @@ namespace YnabCli.Sync.Synchronisers;
 /// </summary>
 public class DerivableSpendingSampleSynchroniser(ConfiguredBudgetClient configuredBudgetClient, YnabCliDb db) : Synchroniser
 {
-        
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         PrintToConsole("Syncing Spending Samples ...");
