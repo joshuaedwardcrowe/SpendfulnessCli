@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using YnabCli.Database.Accounts;
 using YnabCli.Database.Commitments;
+using YnabCli.Database.SpendingSamples;
 using YnabCli.Database.Users;
 
 namespace YnabCli.Database;
@@ -16,6 +17,19 @@ public class YnabCliDb(YnabCliDbContext ynabCliDbContext)
     public Task<List<CustomAccountType>> GetAccountTypes()
         => Context
             .CustomAccountTypes
+            .ToListAsync();
+    
+    public Task<List<string>> GetDerivedSpendingSamples()
+        => Context
+            .SpendingSamples
+            .Where(ss => ss.YnabTransactionId != null)
+            .Select(ss => ss.YnabTransactionId!)
+            .ToListAsync();
+    
+    public Task<List<SpendingSampleMatchCriteria>> GetSpendingSampleMatchCriteria()
+        => Context
+            .SpendingSampleMatchCriteria
+            .Include(ss => ss.Prices)
             .ToListAsync();
     
     public async Task Sync<TEntity>() where TEntity : class

@@ -32,26 +32,22 @@ public class DerivableSpendingSampleSynchroniser(ConfiguredBudgetClient configur
 
         // TODO: Add support for 'SpendingSampleImport' timing and filter transactions on it.
         var transactions = await budget.GetTransactions();
+
+        var sampledTransactionIds = await db.GetDerivedSpendingSamples();
         
-        var sampledTransactionIds = await db.Context.SpendingSamples
-            .Where(ss => ss.YnabTransactionId != null)
-            .Select(ss => ss.YnabTransactionId)
-            .ToListAsync();
-        ;
         return transactions
-            .Where(t => t.SplitTransactions.All(st => st.IsFullyFormed) && !sampledTransactionIds.Contains(t.Id))
+            .Where(t => t.SplitTransactions.AllFullyFormed() && !sampledTransactionIds.Contains(t.Id))
             .ToList();
     }
     
     private async Task SyncDerivableSpendingSamples(List<Transaction> unsampledTransactions) 
     {
-        var matchCriteria = await db.Context.SpendingSampleMatchCriteria
-            .Include(ss => ss.Prices)
-            .ToListAsync();
+        var matchCriteria = await db.GetSpendingSampleMatchCriteria();
         
         foreach (var unsampledTransaction in unsampledTransactions)
         {
             PrintToConsole($"Sampling transaction: {unsampledTransaction.Id}");
+
             var foundMatchCriteria = new List<SpendingSampleMatchCriteria>();
             foreach (var unsampledSplitTransaction in unsampledTransaction.SplitTransactions)
             {
