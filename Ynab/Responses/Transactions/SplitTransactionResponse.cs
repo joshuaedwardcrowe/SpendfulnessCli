@@ -27,4 +27,7 @@ public class SplitTransactionResponse
     
     [JsonPropertyName("transfer_transaction_id")]
     public string? TransferTransactionId { get; set; }
+    
+    [JsonPropertyName("account_id")]
+    public Guid? AccountId { get; set; }
 }

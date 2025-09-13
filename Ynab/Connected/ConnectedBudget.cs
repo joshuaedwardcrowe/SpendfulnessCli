@@ -23,6 +23,12 @@ public class ConnectedBudget : Budget
     public Task<IEnumerable<Account>> GetAccounts()
         => _accountsClient.GetAccounts();
 
+    public Task<ConnectedAccount> GetAccount(Guid id)
+        => _accountsClient.GetAccount(id);
+
+    public Task<ConnectedAccount> CreateAccount(NewAccount newAccount) 
+        => _accountsClient.CreateAccount(newAccount);
+
     public Task<IEnumerable<CategoryGroup>> GetCategoryGroups() => _categoriesClient.GetCategoryGroups();
     public Task<IEnumerable<Transaction>> GetTransactions() => _transactionsClient.GetTransactions();
     public Task<Transaction> GetTransaction(string id) => _transactionsClient.GetTransaction(id);

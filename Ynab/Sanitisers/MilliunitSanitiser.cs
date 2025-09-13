@@ -19,6 +19,7 @@ public static class MilliunitSanitiser
         return null;
     }
     
+    // TODO: This is a poor naming convention.
     public static int Desanitise(decimal currency)
     {
         var conversion = currency * ConversationRate;

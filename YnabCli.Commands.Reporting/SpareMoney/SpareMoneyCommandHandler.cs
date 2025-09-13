@@ -67,7 +67,9 @@ public class SpareMoneyCommandHandler(ConfiguredBudgetClient configuredBudgetCli
             Id = Guid.Empty,
             Name = nameof(SpareMoneyCommand),
             Type = AccountType.Checking,
-            ClearedBalance = milliunit
+            ClearedBalance = milliunit,
+            OnBudget = false,
+            Closed = false
         };
         
         var account = new Account(placeholderResponse);

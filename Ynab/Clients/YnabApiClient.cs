@@ -13,7 +13,7 @@ public abstract class YnabApiClient
     {
         PropertyNameCaseInsensitive = true,
         Converters = { 
-            new JsonStringEnumConverter(),
+            new JsonStringEnumConverter(JsonNamingPolicy.CamelCase),
             new IgnoreEmptyStringNullableEnumConverter()
         }
     };
@@ -34,6 +34,24 @@ public abstract class YnabApiClient
             throw new YnabException(YnabExceptionCode.ApiResponseIsEmpty, $"No response on {url}");
         }
         
+        return responseContent;
+    }
+
+    protected async Task<YnabHttpResponseContent<TApiResponse>> Post<TApiResponse>(string url, object payload) where TApiResponse : class
+    {
+        var client = GetHttpClient();
+
+        var response = await client.PostAsJsonAsync(url, payload, _jsonOptions);
+
+        response.EnsureSuccessStatusCode();
+
+        var responseContent = await response.Content.ReadFromJsonAsync<YnabHttpResponseContent<TApiResponse>>(_jsonOptions);
+
+        if (responseContent is null)
+        {
+            throw new YnabException(YnabExceptionCode.ApiResponseIsEmpty, $"No response on {url}");
+        }
+
         return responseContent;
     }
 }

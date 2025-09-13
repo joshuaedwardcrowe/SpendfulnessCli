@@ -14,6 +14,7 @@ public class SplitTransactions(SplitTransactionResponse splitTransactionResponse
     public Guid? CategoryId => splitTransactionResponse.CategoryId;
     public string CategoryName => splitTransactionResponse.CategoryName;
     public bool IsTransfer => !string.IsNullOrEmpty(splitTransactionResponse.TransferTransactionId);
+    public Guid? AccountId => splitTransactionResponse.AccountId;
     
     public bool InCategories(IEnumerable<Guid> categoryIds)
         => CategoryId.HasValue && categoryIds.Contains(CategoryId.Value);
