@@ -21,7 +21,8 @@ public class AccountsClient(YnabHttpClientBuilder builder, string parentApiPath)
         
         // TODO: Can probably make the bottom two lines into a reusable private method.
         var transactionClient = new TransactionsClient(builder, parentApiPath);
-        return new ConnectedAccount(transactionClient, response.Data.Account);
+        var scheduledTransactionClient = new ScheduledTransactionClient(builder, parentApiPath);
+        return new ConnectedAccount(transactionClient, scheduledTransactionClient, response.Data.Account);
     }
     
     public async Task<ConnectedAccount> CreateAccount(NewAccount newAccount)
@@ -39,7 +40,8 @@ public class AccountsClient(YnabHttpClientBuilder builder, string parentApiPath)
 
         var response = await Post<CreateAccountRequest, CreateAccountResponse>(AccountsApiPath, request);
         var transactionClient = new TransactionsClient(builder, parentApiPath);
-        return new ConnectedAccount(transactionClient, response.Data.Account);
+        var scheduledTransactionClient = new ScheduledTransactionClient(builder, parentApiPath);
+        return new ConnectedAccount(transactionClient, scheduledTransactionClient, response.Data.Account);
     }
     
     protected override HttpClient GetHttpClient() => builder.Build(parentApiPath, AccountsApiPath);

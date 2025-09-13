@@ -12,4 +12,7 @@ public class ScheduledTransactionsResponse
     
     [JsonPropertyName("date_next")]
     public DateTime NextOccurence { get; set; }
+    
+    [JsonPropertyName("account_id")]
+    public Guid AccountId { get; set; }
 }
