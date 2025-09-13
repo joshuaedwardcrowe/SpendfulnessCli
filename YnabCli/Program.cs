@@ -2,6 +2,7 @@
 using Ynab.Extensions;
 using YnabCli;
 using YnabCli.Commands.Extensions;
+using YnabCli.Commands.Organisation;
 using YnabCli.Commands.Personalisation;
 using YnabCli.Commands.Reporting;
 using YnabCli.Database;
@@ -11,7 +12,8 @@ var serviceProvider = new ServiceCollection()
     .AddYnab() // Speak to the YNAB API
     .AddCommands() // Convert them into MediatR requests
     .AddReportingCommands() // Commands that work with YNAB data
-    .AddPersonalisationCommands() // Commands that work with db data
+    .AddOrganisationCommands() // Commands that help organise the data
+    .AddPersonalisationCommands() // Commands for CRUD with db data
     .AddInstructions() // Understand terminal commands
     .AddDb() // Store data
     .AddSingleton<ConsoleApplication>() // Front-end

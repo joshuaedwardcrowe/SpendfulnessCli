@@ -7,6 +7,11 @@ public class MoveOnBudgetCommandGenerator : ICommandGenerator<MoveOnBudgetComman
 {
     public ICommand Generate(string? subCommandName, List<InstructionArgument> arguments)
     {
-        return new MoveOnBudgetCommand();
+        var accountIdArgument = arguments.OfRequiredType<Guid>(MoveOnBudgetCommand.ArgumentNames.AccountId);
+
+        return new MoveOnBudgetCommand
+        {
+            AccountId = accountIdArgument.ArgumentValue
+        };
     }
 }

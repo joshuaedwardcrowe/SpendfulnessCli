@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\YnabCli.Abstractions\YnabCli.Abstractions.csproj" />
+      <ProjectReference Include="..\YnabCli.Commands.Organisation\YnabCli.Commands.Organisation.csproj" />
       <ProjectReference Include="..\YnabCli.Commands.Personalisation\YnabCli.Commands.Personalisation.csproj" />
       <ProjectReference Include="..\YnabCli.Commands.Reporting\YnabCli.Commands.Reporting.csproj" />
       <ProjectReference Include="..\YnabCli.Database\YnabCli.Database.csproj" />

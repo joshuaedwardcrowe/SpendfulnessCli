@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Abstractions", "Yna
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Aggregation", "YnabCli.Aggregation\YnabCli.Aggregation.csproj", "{83E6F779-DD81-42CD-B9F6-6DA58BFAE9ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Commands.Organisation", "YnabCli.Commands.Organisation\YnabCli.Commands.Organisation.csproj", "{6A7CA104-3649-4C11-9F2E-FE77130475E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,10 @@ Global
 		{83E6F779-DD81-42CD-B9F6-6DA58BFAE9ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83E6F779-DD81-42CD-B9F6-6DA58BFAE9ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83E6F779-DD81-42CD-B9F6-6DA58BFAE9ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A7CA104-3649-4C11-9F2E-FE77130475E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A7CA104-3649-4C11-9F2E-FE77130475E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A7CA104-3649-4C11-9F2E-FE77130475E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A7CA104-3649-4C11-9F2E-FE77130475E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
