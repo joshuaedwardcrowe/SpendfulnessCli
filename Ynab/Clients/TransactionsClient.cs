@@ -9,13 +9,13 @@ public class TransactionsClient(YnabHttpClientBuilder builder, string parentApiP
 
     public async Task<IEnumerable<Transaction>> GetTransactions()
     {
-        var response = await Get<GetTransactionsResponseData>(TransactionsApiPath);
+        var response = await Get<GetTransactionsResponse>(TransactionsApiPath);
         return response.Data.Transactions.Select(t => new Transaction(t));
     }
 
     public async Task<Transaction> GetTransaction(string id)
     {
-        var response = await Get<GetTransactionResponseData>($"{TransactionsApiPath}/{id}");
+        var response = await Get<GetTransactionResponse>($"{TransactionsApiPath}/{id}");
         return new Transaction(response.Data.Transaction);
     }
     
