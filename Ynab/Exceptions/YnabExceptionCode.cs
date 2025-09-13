@@ -2,5 +2,7 @@ namespace Ynab.Exceptions;
 
 public enum YnabExceptionCode
 {
-    ApiResponseIsEmpty
+    ApiResponseIsEmpty,
+    CloseAccountCannotBeMovedOnBudget,
+    OnBudgetAccountCannotBeMovedOnBudget
 }

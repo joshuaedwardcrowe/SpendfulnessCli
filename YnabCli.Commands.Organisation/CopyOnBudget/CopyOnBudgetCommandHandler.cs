@@ -1,5 +1,6 @@
 using ConsoleTables;
 using Ynab;
+using Ynab.Exceptions;
 using YnabCli.Commands.Handlers;
 using YnabCli.Commands.Organisation.MoveOnBudget;
 using YnabCli.Database;
@@ -16,14 +17,16 @@ public class CopyOnBudgetCommandHandler(ConfiguredBudgetClient budgetClient) : C
 
         if (originalAccount.Closed)
         {
-            // TODO: Migrate to use exceptions consistent with other handlers.
-            throw new InvalidOperationException("Cannot move a closed account.");
+            throw new YnabException(
+                YnabExceptionCode.CloseAccountCannotBeMovedOnBudget,
+                $"{originalAccount.Name} is closed, so cannot be moved on budget.");
         }
 
         if (originalAccount.OnBudget)
         {
-            // TODO: Migrate to use exceptions consistent with other handlers.
-            throw new InvalidOperationException("Account must be on budget to move.");
+            throw new YnabException(
+                YnabExceptionCode.OnBudgetAccountCannotBeMovedOnBudget,
+                $"{originalAccount.Name} is already on budget, so cannot be moved on budget.");
         }
 
         var newAccount = new NewAccount($"[YnabCli Moved: {originalAccount.Name}]", AccountType.Checking, 0);
