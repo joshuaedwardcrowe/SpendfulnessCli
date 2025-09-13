@@ -22,7 +22,7 @@ public static class TransactionExtensions
     
     public static IEnumerable<Transaction> FilterOutAutomations(
         this IEnumerable<Transaction> transactions)
-             => transactions.Where(transaction => !YnabConstants.AutomatedPayeeNames.Contains(transaction.PayeeName));
+             => transactions.Where(transaction => !AutomatedPayeeNames.All.Contains(transaction.PayeeName));
     
     public static IEnumerable<Transaction> FilterOutCategories(
         this IEnumerable<Transaction> transactions, IEnumerable<Guid> categoryIds)
@@ -58,7 +58,7 @@ public static class TransactionExtensions
     public static IEnumerable<Transaction> FilterToSpending(this IEnumerable<Transaction> transactions)
         => transactions.Where(transaction =>
             !transaction.IsTransfer && 
-            !YnabConstants.AutomatedPayeeNames.Contains(transaction.PayeeName));
+            !AutomatedPayeeNames.All.Contains(transaction.PayeeName));
     
     public static IEnumerable<Transaction> OrderByYear(
         this IEnumerable<Transaction> transactions)
