@@ -30,7 +30,7 @@ public class ConnectedBudget : Budget
     public Task<Transaction> GetTransaction(string id) => _transactionsClient.GetTransaction(id);
     public Task<ConnectedAccount> CreateAccount(NewAccount newAccount) => _accountsClient.CreateAccount(newAccount);
     
-    public async Task MoveTransactions(ConnectedAccount originalAccount, ConnectedAccount newAccount)
+    public async Task MoveAllTransactions(ConnectedAccount originalAccount, ConnectedAccount newAccount)
     {
         var transactionsTask = originalAccount.GetTransactions();
         var scheduledTransactionsTask = originalAccount.GetScheduledTransactions();
@@ -44,14 +44,13 @@ public class ConnectedBudget : Budget
             .Select(transaction => new MovedTransaction(transaction.Id, newAccount.Id))
             .ToList();
         
-        var scheduledTransactionsToMove = scheduledTransactionsTask
+        var scheduledTransactionsMoveTasks = scheduledTransactionsTask
             .Result
             .Select(scheduledTransaction => new MovedScheduledTransaction(scheduledTransaction.Id, newAccount.Id))
+            .Select(movedScheduledTransaction => _scheduledTransactionsClient.MoveTransaction(movedScheduledTransaction))
             .ToList();
         
-        var moveTransactionsTask  = _transactionsClient.MoveTransactions(transactionsToMove);
-        var moveScheduledTransactionsTask =  _scheduledTransactionsClient.MoveTransaction(scheduledTransactionsToMove);
-        
-        await Task.WhenAll(moveTransactionsTask, moveScheduledTransactionsTask);
+        await Task.WhenAll(scheduledTransactionsMoveTasks);
+        _  = await _transactionsClient.MoveTransactions(transactionsToMove);
     }
 }

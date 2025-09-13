@@ -47,6 +47,15 @@ public abstract class YnabApiClient
         return await ReadResponseContent<TApiResponse>(response, url);
     }
 
+    protected async Task<YnabHttpResponseContent<TApiResponse>> Put<TApiRequest, TApiResponse>(string url, TApiRequest payload)
+        where TApiRequest : class where TApiResponse : class
+    {
+        var client = GetHttpClient();        
+        var response = await client.PutAsJsonAsync(url, payload, _jsonOptions);
+        response.EnsureSuccessStatusCode();
+        return await ReadResponseContent<TApiResponse>(response, url);
+    }
+
     private async Task<YnabHttpResponseContent<TApiResponse>> ReadResponseContent<TApiResponse>(HttpResponseMessage response, string url)
         where TApiResponse : class
     {

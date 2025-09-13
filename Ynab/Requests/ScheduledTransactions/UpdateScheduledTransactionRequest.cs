@@ -4,6 +4,6 @@ namespace Ynab.Requests.ScheduledTransactions;
 
 public class UpdateScheduledTransactionRequest
 {
-    [JsonPropertyName("scheduled_transactions")]
-    public IEnumerable<ScheduledTransactionRequest> ScheduledTransactions { get; set; }
+    [JsonPropertyName("scheduled_transaction")]
+    public ScheduledTransactionRequest ScheduledTransaction { get; set; }
 }

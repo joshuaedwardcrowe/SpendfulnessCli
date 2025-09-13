@@ -14,30 +14,24 @@ public class CopyOnBudgetCommandHandler(ConfiguredBudgetClient budgetClient) : C
 
         var originalAccount = await budget.GetAccount(command.AccountId);
 
-        ValidateAccountCanBeMoved(originalAccount);
-        
-        // TODO: Use old account name.
-        var newAccount = new NewAccount($"[YnabCli Moved: {originalAccount.Name}]", AccountType.Checking, 0);
-
-        var createdAccount =  await budget.CreateAccount(newAccount);
-        
-        await budget.MoveTransactions(originalAccount, createdAccount);
-
-        return CompileMessage("Moved Account");
-    }
-
-    private void ValidateAccountCanBeMoved(Account account)
-    {
-        if (account.Closed)
+        if (originalAccount.Closed)
         {
             // TODO: Migrate to use exceptions consistent with other handlers.
             throw new InvalidOperationException("Cannot move a closed account.");
         }
 
-        if (account.OnBudget)
+        if (originalAccount.OnBudget)
         {
             // TODO: Migrate to use exceptions consistent with other handlers.
             throw new InvalidOperationException("Account must be on budget to move.");
         }
+
+        var newAccount = new NewAccount($"[YnabCli Moved: {originalAccount.Name}]", AccountType.Checking, 0);
+
+        var createdAccount =  await budget.CreateAccount(newAccount);
+        
+        await budget.MoveAllTransactions(originalAccount, createdAccount);
+
+        return CompileMessage($"Copied Account: {originalAccount.Name} On Budget");
     }
 }
