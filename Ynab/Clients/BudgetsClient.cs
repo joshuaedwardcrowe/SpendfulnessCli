@@ -23,11 +23,13 @@ public class BudgetsClient(YnabHttpClientBuilder builder) : YnabApiClient
             var accounts = new AccountsClient(builder, parentApiPath);
             var categories = new CategoriesClient(builder, parentApiPath);
             var transactions = new TransactionsClient(builder, parentApiPath);
+            var scheduledTransactions = new ScheduledTransactionClient(builder, parentApiPath);
 
             yield return new ConnectedBudget(
                 accounts,
                 categories,
                 transactions,
+                scheduledTransactions,
                 budgetResponse);
         }
     }

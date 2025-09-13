@@ -14,8 +14,8 @@ public class ConnectedBudget : Budget
         AccountsClient accountsClient,
         CategoriesClient categoriesClient,
         TransactionsClient transactionsClient,
-        BudgetResponse budgetResponse, 
-        ScheduledTransactionClient scheduledTransactionsClient) : base(budgetResponse)
+        ScheduledTransactionClient scheduledTransactionsClient,
+        BudgetResponse budgetResponse) : base(budgetResponse)
     {
         _accountsClient = accountsClient;
         _categoriesClient = categoriesClient;
