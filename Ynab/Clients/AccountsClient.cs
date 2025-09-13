@@ -37,7 +37,7 @@ public class AccountsClient(YnabHttpClientBuilder builder, string parentApiPath)
             }
         };
 
-        var response = await Post<CreateAccountResponse>(AccountsApiPath, request);
+        var response = await Post<CreateAccountRequest, CreateAccountResponse>(AccountsApiPath, request);
         var transactionClient = new TransactionsClient(builder, parentApiPath);
         return new ConnectedAccount(transactionClient, response.Data.Account);
     }

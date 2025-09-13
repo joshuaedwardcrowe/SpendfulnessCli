@@ -20,10 +20,10 @@ public class TransactionsClient(YnabHttpClientBuilder builder, string parentApiP
         return new Transaction(response.Data.Transaction);
     }
 
-    public async Task<IEnumerable<Transaction>> UpdateTransactions(IEnumerable<UpdatedTransaction> transactions)
+    public async Task<IEnumerable<Transaction>> MoveTransactions(IEnumerable<MovedTransaction> movedTransactions)
     {
         // TODO: some kind of mapper.
-        var requests = transactions
+        var requests = movedTransactions
             .Select(transaction => new TransactionRequest
             {
                 Id = transaction.Id,

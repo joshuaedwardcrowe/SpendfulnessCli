@@ -1,6 +1,6 @@
 namespace YnabCli.Commands.Organisation.MoveOnBudget;
 
-public class MoveOnBudgetCommand : ICommand
+public class CopyOnBudgetCommand : ICommand
 {
     public static class ArgumentNames
     {

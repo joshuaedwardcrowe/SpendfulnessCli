@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     // TODO: This is repetitive, create an .AddReportingCommands extension.
     public static IServiceCollection AddOrganisationCommands(this IServiceCollection serviceCollection)
     {
-        var commandsAssembly = Assembly.GetAssembly(typeof(MoveOnBudgetCommand));
+        var commandsAssembly = Assembly.GetAssembly(typeof(CopyOnBudgetCommand));
         if (commandsAssembly == null)
         {
             throw new NullReferenceException("No Assembly Containing ICommand Implementation");

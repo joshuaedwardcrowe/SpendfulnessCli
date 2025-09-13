@@ -28,6 +28,9 @@ public class ConnectedBudget : Budget
 
     public Task<ConnectedAccount> CreateAccount(NewAccount newAccount) 
         => _accountsClient.CreateAccount(newAccount);
+    
+    public Task<IEnumerable<Transaction>> MoveTransactions(IEnumerable<MovedTransaction> transactions) 
+        => _transactionsClient.MoveTransactions(transactions);
 
     public Task<IEnumerable<CategoryGroup>> GetCategoryGroups() => _categoriesClient.GetCategoryGroups();
     public Task<IEnumerable<Transaction>> GetTransactions() => _transactionsClient.GetTransactions();

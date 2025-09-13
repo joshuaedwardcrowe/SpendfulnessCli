@@ -3,13 +3,13 @@ using YnabCli.Instructions.Arguments;
 
 namespace YnabCli.Commands.Organisation.MoveOnBudget;
 
-public class MoveOnBudgetCommandGenerator : ICommandGenerator<MoveOnBudgetCommand>
+public class CopyOnBudgetCommandGenerator : ICommandGenerator<CopyOnBudgetCommand>
 {
     public ICommand Generate(string? subCommandName, List<InstructionArgument> arguments)
     {
-        var accountIdArgument = arguments.OfRequiredType<Guid>(MoveOnBudgetCommand.ArgumentNames.AccountId);
+        var accountIdArgument = arguments.OfRequiredType<Guid>(CopyOnBudgetCommand.ArgumentNames.AccountId);
 
-        return new MoveOnBudgetCommand
+        return new CopyOnBudgetCommand
         {
             AccountId = accountIdArgument.ArgumentValue
         };
