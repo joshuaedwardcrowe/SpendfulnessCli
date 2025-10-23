@@ -8,7 +8,8 @@ using YnabCli.Commands.Generators;
 
 namespace YnabCli;
 
-public class ConsoleApplication(IServiceProvider serviceProvider)
+[Obsolete("Going to create a new one.")]
+public class YnabCliApp(IServiceProvider serviceProvider)
 {
     public async Task Run()
     {

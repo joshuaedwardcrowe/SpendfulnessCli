@@ -8,6 +8,7 @@ using YnabCli.Commands.Personalisation;
 using YnabCli.Commands.Reporting;
 using YnabCli.Database;
 
+// TODO: Reorganise for CliApp. In theory you can do anything as long as you use ICommand framework.
 var serviceProvider = new ServiceCollection()
     .AddYnab() // Speak to the YNAB API
     .AddCommands() // Convert them into MediatR requests
@@ -15,11 +16,11 @@ var serviceProvider = new ServiceCollection()
     .AddOrganisationCommands() // Commands that help organise the data
     .AddPersonalisationCommands() // Commands for CRUD with db data
     .AddInstructions() // Understand terminal commands
-    .AddDb() // Store data
-    .AddSingleton<ConsoleApplication>() // Front-end
+    .AddDb() // Store da
+    .AddSingleton<YnabCliApp>() // Front-end
     .BuildServiceProvider();
 
-var app = serviceProvider.GetRequiredService<ConsoleApplication>();
+var app = serviceProvider.GetRequiredService<YnabCliApp>();
 
  await app.Run();
 

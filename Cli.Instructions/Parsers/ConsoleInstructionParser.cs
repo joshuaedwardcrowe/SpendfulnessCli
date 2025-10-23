@@ -4,6 +4,7 @@ using Cli.Instructions.Indexers;
 
 namespace Cli.Instructions.Parsers;
 
+// TODO: Rename to CliInstructionParser
 public class ConsoleInstructionParser
 {
     private readonly ConsoleInstructionTokenIndexer _consoleInstructionTokenIndexer;
