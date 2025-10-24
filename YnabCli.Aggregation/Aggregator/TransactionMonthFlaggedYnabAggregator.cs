@@ -7,8 +7,8 @@ using YnabCli.Aggregation.Calculators;
 
 namespace YnabCli.Aggregation.Aggregator;
 
-public class TransactionMonthFlaggedAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
-    : ListAggregator<TransactionMonthFlaggedAggregate>(categoryGroups, transactions)
+public class TransactionMonthFlaggedYnabAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
+    : ListYnabAggregator<TransactionMonthFlaggedAggregate>(categoryGroups, transactions)
 {
     protected override IEnumerable<TransactionMonthFlaggedAggregate> ListAggregate()
     {

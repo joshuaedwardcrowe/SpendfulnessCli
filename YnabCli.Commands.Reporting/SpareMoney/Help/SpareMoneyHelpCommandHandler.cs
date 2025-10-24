@@ -7,14 +7,14 @@ using YnabCli.Commands.Handlers;
 
 namespace YnabCli.Commands.Reporting.SpareMoney.Help;
 
-public class SpareMoneyHelpCommandHandler(CommandHelpViewModelBuilder commandHelpViewModelBuilder)
+public class SpareMoneyHelpCommandHandler(CommandHelpCliTableBuilder commandHelpCliTableBuilder)
     : CommandHandler, ICommandHandler<SpareMoneyHelpCommand>
 {
     public Task<CliCommandOutcome> Handle(SpareMoneyHelpCommand request, CancellationToken cancellationToken)
     {
-        var aggregator = new SpareMoneyCommandHelpAggregator();
+        var aggregator = new SpareMoneyCommandHelpYnabAggregator();
         
-        var viewModel = commandHelpViewModelBuilder
+        var viewModel = commandHelpCliTableBuilder
             .WithAggregator(aggregator)
             .WithRowCount(false)
             .Build();

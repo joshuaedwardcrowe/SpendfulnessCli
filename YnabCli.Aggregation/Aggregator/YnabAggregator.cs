@@ -1,10 +1,11 @@
+using Cli.Abstractions;
 using Ynab;
 using YnabCli.Database.Commitments;
 
 namespace YnabCli.Aggregation.Aggregator;
 
 // TODO: I dont like that this needs to depend on the entire YNAB project for these models.
-public abstract class Aggregator<TAggregation>
+public abstract class YnabAggregator<TAggregation> : CliAggregator<TAggregation>
 {
     protected IEnumerable<Account> Accounts { get; set; } 
     protected IEnumerable<CategoryGroup> CategoryGroups { get; set; }
@@ -15,7 +16,7 @@ public abstract class Aggregator<TAggregation>
     private readonly List<Func<IEnumerable<CategoryGroup>, IEnumerable<CategoryGroup>>> _categoryGroupOperations = [];
     private readonly List<Func<IEnumerable<Transaction>, IEnumerable<Transaction>>> _transactionOperationFunctions = [];
 
-    protected Aggregator()
+    protected YnabAggregator()
     {
         Accounts = new List<Account>();
         CategoryGroups = new List<CategoryGroup>();
@@ -23,7 +24,7 @@ public abstract class Aggregator<TAggregation>
         Commitments = new List<Commitment>();
     }
 
-    protected Aggregator(IEnumerable<Account> accounts, IEnumerable<CategoryGroup> categoryGroups)
+    protected YnabAggregator(IEnumerable<Account> accounts, IEnumerable<CategoryGroup> categoryGroups)
     {
         Accounts = accounts;
         CategoryGroups = categoryGroups;
@@ -31,7 +32,7 @@ public abstract class Aggregator<TAggregation>
         Commitments = new List<Commitment>();
     }
 
-    protected Aggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
+    protected YnabAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
     {
         Accounts = new List<Account>();
         CategoryGroups = categoryGroups;
@@ -39,7 +40,7 @@ public abstract class Aggregator<TAggregation>
         Commitments = new List<Commitment>();
     }
 
-    protected Aggregator(IEnumerable<CategoryGroup> categoryGroups)
+    protected YnabAggregator(IEnumerable<CategoryGroup> categoryGroups)
     {
         Accounts = new List<Account>();
         CategoryGroups = categoryGroups;
@@ -47,7 +48,7 @@ public abstract class Aggregator<TAggregation>
         Commitments = new List<Commitment>();
     }
 
-    protected Aggregator(IEnumerable<Transaction> transactions)
+    protected YnabAggregator(IEnumerable<Transaction> transactions)
     {
         Accounts = new List<Account>();
         CategoryGroups = new List<CategoryGroup>();
@@ -55,7 +56,7 @@ public abstract class Aggregator<TAggregation>
         Commitments = new List<Commitment>();
     }
 
-    protected Aggregator(ICollection<Commitment> commitments)
+    protected YnabAggregator(ICollection<Commitment> commitments)
     {
         Accounts = new List<Account>();
         CategoryGroups = new List<CategoryGroup>();
@@ -65,7 +66,7 @@ public abstract class Aggregator<TAggregation>
 
     protected abstract TAggregation GenerateAggregate();
 
-    public TAggregation Aggregate()
+    public override TAggregation Aggregate()
     {
         foreach (var accountOperationFunction in _accountOperationFunctions)
         {
@@ -85,19 +86,19 @@ public abstract class Aggregator<TAggregation>
         return GenerateAggregate();
     }
     
-    public Aggregator<TAggregation> BeforeAggregation(Func<IEnumerable<Transaction>, IEnumerable<Transaction>> operationFunction)
+    public YnabAggregator<TAggregation> BeforeAggregation(Func<IEnumerable<Transaction>, IEnumerable<Transaction>> operationFunction)
     {
         _transactionOperationFunctions.Add(operationFunction);
         return this;
     }
 
-    public Aggregator<TAggregation> BeforeAggregation(Func<IEnumerable<CategoryGroup>, IEnumerable<CategoryGroup>> operationFunction)
+    public YnabAggregator<TAggregation> BeforeAggregation(Func<IEnumerable<CategoryGroup>, IEnumerable<CategoryGroup>> operationFunction)
     {
         _categoryGroupOperations.Add(operationFunction);
         return this;
     }
 
-    public Aggregator<TAggregation> BeforeAggregation(Func<IEnumerable<Account>, IEnumerable<Account>> operationFunction)
+    public YnabAggregator<TAggregation> BeforeAggregation(Func<IEnumerable<Account>, IEnumerable<Account>> operationFunction)
     {
         _accountOperationFunctions.Add(operationFunction);
         return this;

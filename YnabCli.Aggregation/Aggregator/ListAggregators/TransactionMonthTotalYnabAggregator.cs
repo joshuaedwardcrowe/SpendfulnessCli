@@ -5,8 +5,8 @@ using YnabCli.Aggregation.Calculators;
 
 namespace YnabCli.Aggregation.Aggregator.ListAggregators;
 
-public class TransactionMonthTotalAggregator(IEnumerable<Transaction> transactions)
-    : ListAggregator<TransactionMonthTotalAggregate>(transactions)
+public class TransactionMonthTotalYnabAggregator(IEnumerable<Transaction> transactions)
+    : ListYnabAggregator<TransactionMonthTotalAggregate>(transactions)
 {
     protected override IEnumerable<TransactionMonthTotalAggregate> ListAggregate()
     {

@@ -7,8 +7,8 @@ namespace YnabCli.Aggregation.Aggregator;
 
 // TODO: This should be a list aggregator.
 
-public class CategoryYearAverageAggregator(IEnumerable<Transaction> transactions)
-    : Aggregator<IEnumerable<CategoryYearAverageAggregate>>(transactions)
+public class CategoryYearAverageYnabAggregator(IEnumerable<Transaction> transactions)
+    : YnabAggregator<IEnumerable<CategoryYearAverageAggregate>>(transactions)
 {
     protected override IEnumerable<CategoryYearAverageAggregate> GenerateAggregate()
          => Transactions

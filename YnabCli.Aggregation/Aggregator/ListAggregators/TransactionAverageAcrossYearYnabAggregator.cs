@@ -5,8 +5,8 @@ using YnabCli.Aggregation.Calculators;
 
 namespace YnabCli.Aggregation.Aggregator.ListAggregators;
 
-public class TransactionAverageAcrossYearAggregator(IEnumerable<Transaction> transactions)
-    : ListAggregator<TransactionYearAverageAggregate>(transactions)
+public class TransactionAverageAcrossYearYnabAggregator(IEnumerable<Transaction> transactions)
+    : ListYnabAggregator<TransactionYearAverageAggregate>(transactions)
 {
     protected override IEnumerable<TransactionYearAverageAggregate> ListAggregate()
     {

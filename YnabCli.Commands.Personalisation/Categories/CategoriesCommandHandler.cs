@@ -11,12 +11,12 @@ namespace YnabCli.Commands.Personalisation.Categories;
 public class CategoriesCommandHandler: CommandHandler, ICommandHandler<CategoriesCommand>
 {
     private readonly ConfiguredBudgetClient _configuredBudgetClient;
-    private readonly CategoryViewModelBuilder _categoryViewModelBuilder;
+    private readonly CategoryCliTableBuilder _categoryCliTableBuilder;
 
-    public CategoriesCommandHandler(ConfiguredBudgetClient configuredBudgetClient, CategoryViewModelBuilder categoryViewModelBuilder)
+    public CategoriesCommandHandler(ConfiguredBudgetClient configuredBudgetClient, CategoryCliTableBuilder categoryCliTableBuilder)
     {
         _configuredBudgetClient = configuredBudgetClient;
-        _categoryViewModelBuilder = categoryViewModelBuilder;
+        _categoryCliTableBuilder = categoryCliTableBuilder;
     }
 
     public async Task<CliCommandOutcome> Handle(CategoriesCommand request, CancellationToken cancellationToken)
@@ -25,9 +25,9 @@ public class CategoriesCommandHandler: CommandHandler, ICommandHandler<Categorie
         
         var categoryGroups = await budget.GetCategoryGroups();
         
-        var aggregator = new CategoryAggregator(categoryGroups);
+        var aggregator = new CategoryYnabAggregator(categoryGroups);
 
-        var viewModel = _categoryViewModelBuilder
+        var viewModel = _categoryCliTableBuilder
             .WithAggregator(aggregator)
             .Build();
         

@@ -3,8 +3,8 @@ using YnabCli.Aggregation.Aggregates;
 
 namespace YnabCli.Aggregation.Aggregator.ListAggregators;
 
-public class CategoryAggregator(IEnumerable<CategoryGroup> categoryGroups) 
-    : ListAggregator<CategoryAggregate>(categoryGroups)
+public class CategoryYnabAggregator(IEnumerable<CategoryGroup> categoryGroups) 
+    : ListYnabAggregator<CategoryAggregate>(categoryGroups)
 {
     protected override IEnumerable<CategoryAggregate> ListAggregate()
         => CategoryGroups

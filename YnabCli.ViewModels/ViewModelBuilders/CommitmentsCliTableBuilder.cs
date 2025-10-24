@@ -6,7 +6,7 @@ using YnabCli.ViewModels.Formatters;
 
 namespace YnabCli.ViewModels.ViewModelBuilders;
 
-public class CommitmentsViewModelBuilder : ViewModelBuilder<IEnumerable<Commitment>>
+public class CommitmentsCliTableBuilder : CliTableBuilder<IEnumerable<Commitment>>
 {
     protected override List<string> BuildColumnNames(IEnumerable<Commitment> evaluation)
         => [
@@ -20,7 +20,7 @@ public class CommitmentsViewModelBuilder : ViewModelBuilder<IEnumerable<Commitme
 
     protected override List<List<object>> BuildRows(IEnumerable<Commitment> aggregates)
         => aggregates
-            .OrderBySortOrder(ViewModelSortOrder, c => c.RequiredBy)
+            .OrderBySortOrder(CliTableSortOrder, c => c.RequiredBy)
             .Select(BuildRow)
             .ToList();
 

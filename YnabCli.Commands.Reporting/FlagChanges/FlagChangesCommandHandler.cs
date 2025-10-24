@@ -20,7 +20,7 @@ public class FlagChangesCommandHandler(ConfiguredBudgetClient configuredBudgetCl
         var categoryGroups = await budget.GetCategoryGroups();
         var transactions = await budget.GetTransactions();
 
-        var aggregator = new TransactionMonthFlaggedAggregator(categoryGroups, transactions);
+        var aggregator = new TransactionMonthFlaggedYnabAggregator(categoryGroups, transactions);
             
         if (command.From.HasValue)
         {
@@ -32,7 +32,7 @@ public class FlagChangesCommandHandler(ConfiguredBudgetClient configuredBudgetCl
             aggregator.BeforeAggregation(t => t.FilterTo(command.To.Value));
         }
         
-        var viewModel = new TransactionMonthFlaggedViewModelBuilder()
+        var viewModel = new TransactionMonthFlaggedCliTableBuilder()
             .WithAggregator(aggregator)
             .Build();
         

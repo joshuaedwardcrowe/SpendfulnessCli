@@ -3,7 +3,7 @@ using YnabCli.ViewModels.ViewModels;
 
 namespace YnabCli.ViewModels.ViewModelBuilders;
 
-public class TransactionsViewModelBuilder : ViewModelBuilder<IEnumerable<Transaction>>
+public class TransactionsCliTableBuilder : CliTableBuilder<IEnumerable<Transaction>>
 {
     protected override List<string> BuildColumnNames(IEnumerable<Transaction> evaluation)
         => TransactionVIewModel.GetColumnNames();

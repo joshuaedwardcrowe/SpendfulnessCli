@@ -3,7 +3,7 @@ using YnabCli.Commands.Aggregate;
 
 namespace YnabCli.Commands.Reporting.SpareMoney.Help;
 
-public class SpareMoneyCommandHelpAggregator : ListAggregator<CommandHelpAggregate>
+public class SpareMoneyCommandHelpYnabAggregator : ListYnabAggregator<CommandHelpAggregate>
 {
     protected override IEnumerable<CommandHelpAggregate> ListAggregate()
         => [

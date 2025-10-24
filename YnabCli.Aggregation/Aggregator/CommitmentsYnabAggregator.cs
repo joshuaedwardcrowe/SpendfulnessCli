@@ -2,8 +2,8 @@ using YnabCli.Database.Commitments;
 
 namespace YnabCli.Aggregation.Aggregator;
 
-public class CommitmentsAggregator(ICollection<Commitment> commitments)
-    : Aggregator<IEnumerable<Commitment>>(commitments)
+public class CommitmentsYnabAggregator(ICollection<Commitment> commitments)
+    : YnabAggregator<IEnumerable<Commitment>>(commitments)
 {
     protected override IEnumerable<Commitment> GenerateAggregate() => Commitments;
 }

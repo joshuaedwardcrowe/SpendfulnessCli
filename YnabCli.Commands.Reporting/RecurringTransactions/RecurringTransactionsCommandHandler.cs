@@ -22,19 +22,19 @@ public class RecurringTransactionsCommandHandler(ConfiguredBudgetClient budgetCl
     {
         var aggregator = await PrepareAggregator(command);
 
-        var viewModel = new TransactionPayeeMemoOccurrenceViewModelBuilder()
+        var viewModel = new TransactionPayeeMemoOccurrenceCliTableBuilder()
             .WithAggregator(aggregator)
             .Build();
 
         return Compile(viewModel);
     }
 
-    private async Task<ListAggregator<TransactionPayeeMemoOccurrenceAggregate>> PrepareAggregator(RecurringTransactionsCommand command)
+    private async Task<ListYnabAggregator<TransactionPayeeMemoOccurrenceAggregate>> PrepareAggregator(RecurringTransactionsCommand command)
     {
         var budget =  await budgetClient.GetDefaultBudget();
         var transactions = await budget.GetTransactions();
         
-        var aggregator = new TransactionPayeeMemoOccurrenceAggregator(transactions);
+        var aggregator = new TransactionPayeeMemoOccurrenceYnabAggregator(transactions);
             
         aggregator.BeforeAggregation(ts => ts.FilterOutCategories([YnabConstants.SplitCategoryId]));
 

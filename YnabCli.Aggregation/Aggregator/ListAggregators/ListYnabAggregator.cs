@@ -2,23 +2,23 @@ using Ynab;
 
 namespace YnabCli.Aggregation.Aggregator.ListAggregators;
 
-public abstract class ListAggregator<TAggregate> : Aggregator<IEnumerable<TAggregate>>
+public abstract class ListYnabAggregator<TAggregate> : YnabAggregator<IEnumerable<TAggregate>>
 {
     private readonly List<Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>>> _aggregationOperationFunctions = [];
 
-    protected ListAggregator()
+    protected ListYnabAggregator()
     {
     }
     
-    protected ListAggregator(IEnumerable<CategoryGroup> categoryGroups) : base(categoryGroups)
+    protected ListYnabAggregator(IEnumerable<CategoryGroup> categoryGroups) : base(categoryGroups)
     {
     }
 
-    protected ListAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions) : base(categoryGroups, transactions)
+    protected ListYnabAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions) : base(categoryGroups, transactions)
     {
     }
 
-    protected ListAggregator(IEnumerable<Transaction> transactions) : base(transactions)
+    protected ListYnabAggregator(IEnumerable<Transaction> transactions) : base(transactions)
     {
     }
 
@@ -34,7 +34,7 @@ public abstract class ListAggregator<TAggregate> : Aggregator<IEnumerable<TAggre
         return specificAggregation;
     }
     
-    public ListAggregator<TAggregate> AfterAggregation(Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>> operationFunction)
+    public ListYnabAggregator<TAggregate> AfterAggregation(Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>> operationFunction)
     {
         _aggregationOperationFunctions.Add(operationFunction);
         return this;

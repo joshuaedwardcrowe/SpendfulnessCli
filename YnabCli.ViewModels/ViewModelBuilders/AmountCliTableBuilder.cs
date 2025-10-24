@@ -2,12 +2,12 @@ using YnabCli.ViewModels.Formatters;
 
 namespace YnabCli.ViewModels.ViewModelBuilders;
 
-public class AmountViewModelBuilder : ViewModelBuilder<decimal>
+public class AmountCliTableBuilder : CliTableBuilder<decimal>
 {
     private decimal? _minus;
 
     // TODO: I dont like this!
-    public AmountViewModelBuilder WithSubtraction(decimal minus)
+    public AmountCliTableBuilder WithSubtraction(decimal minus)
     {
         _minus = minus;
         return this;

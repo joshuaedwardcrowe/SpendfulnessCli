@@ -19,11 +19,11 @@ public class YearlySpendingCommandHandler(ConfiguredBudgetClient budgetClient)
         
         var transactions = await budget.GetTransactions();
 
-        var aggregator = new CategoryYearAverageAggregator(transactions)
+        var aggregator = new CategoryYearAverageYnabAggregator(transactions)
             .BeforeAggregation(t => t.FilterOutTransfers())
             .BeforeAggregation(t => t.FilterOutAutomations());
 
-        var viewModel = new CategoryYearAverageViewModelBuilder()
+        var viewModel = new CategoryYearAverageCliTableBuilder()
             .WithAggregator(aggregator)
             .Build();
 

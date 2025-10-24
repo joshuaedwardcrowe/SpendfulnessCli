@@ -2,8 +2,8 @@ using Ynab;
 
 namespace YnabCli.Aggregation.Aggregator.AmountAggregators;
 
-public class CategoryDeductedAmountAggregator(IEnumerable<Account> accounts, IEnumerable<CategoryGroup> categoryGroups)
-    : Aggregator<decimal>(accounts, categoryGroups)
+public class CategoryDeductedAmountYnabAggregator(IEnumerable<Account> accounts, IEnumerable<CategoryGroup> categoryGroups)
+    : YnabAggregator<decimal>(accounts, categoryGroups)
 {
     protected override decimal GenerateAggregate()
     {

@@ -4,8 +4,8 @@ using YnabCli.ViewModels.ViewModels;
 
 namespace YnabCli.ViewModels.ViewModelBuilders;
 
-public class TransactionMonthFlaggedViewModelBuilder 
-    : ViewModelBuilder<IEnumerable<TransactionMonthFlaggedAggregate>>
+public class TransactionMonthFlaggedCliTableBuilder 
+    : CliTableBuilder<IEnumerable<TransactionMonthFlaggedAggregate>>
 {
     private List<string> _flagNames = [];
     

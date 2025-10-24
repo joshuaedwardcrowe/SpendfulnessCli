@@ -1,29 +1,28 @@
+using Cli.Abstractions;
 using Cli.ViewModel.Abstractions;
-using YnabCli.Aggregation.Aggregator;
-using YnabCli.ViewModels.ViewModels;
 
 namespace YnabCli.ViewModels.ViewModelBuilders;
 
-public abstract class ViewModelBuilder<TAggregation> : IViewModelBuilder<TAggregation>
+public abstract class CliTableBuilder<TAggregation> : ICliTableBuilder<TAggregation>
     where TAggregation : notnull
 {
-    protected ViewModelSortOrder ViewModelSortOrder = ViewModelSortOrder.Ascending;
-    private Aggregator<TAggregation>? _aggregator;
+    protected CliTableSortOrder CliTableSortOrder = CliTableSortOrder.Ascending;
+    private CliAggregator<TAggregation>? _aggregator;
     private bool _showRowCount = true;
 
-    public IViewModelBuilder<TAggregation> WithAggregator(Aggregator<TAggregation> aggregator)
+    public ICliTableBuilder<TAggregation> WithAggregator(CliAggregator<TAggregation> ynabAggregator)
     {
-        _aggregator = aggregator;
+        _aggregator = ynabAggregator;
         return GetCurrentBuilder();
     }
 
-    public IViewModelBuilder<TAggregation> WithSortOrder(ViewModelSortOrder viewModelSortOrder)
+    public ICliTableBuilder<TAggregation> WithSortOrder(CliTableSortOrder cliTableSortOrder)
     {
-        ViewModelSortOrder = viewModelSortOrder;
+        CliTableSortOrder = cliTableSortOrder;
         return GetCurrentBuilder();
     }
 
-    public IViewModelBuilder<TAggregation> WithRowCount(bool showRowCount)
+    public ICliTableBuilder<TAggregation> WithRowCount(bool showRowCount)
     {
         _showRowCount = showRowCount;
         return GetCurrentBuilder();
@@ -59,9 +58,9 @@ public abstract class ViewModelBuilder<TAggregation> : IViewModelBuilder<TAggreg
         };
     }
 
-    private IViewModelBuilder<TAggregation> GetCurrentBuilder()
+    private ICliTableBuilder<TAggregation> GetCurrentBuilder()
     {
-        if (this is not IViewModelBuilder<TAggregation> current)
+        if (this is not ICliTableBuilder<TAggregation> current)
         {
             throw new Exception("Attempted to return a non-IViewModelBuilder superclass of ViewModelBuilder");
         }

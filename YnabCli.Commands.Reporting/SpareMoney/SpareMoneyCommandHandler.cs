@@ -21,7 +21,7 @@ public class SpareMoneyCommandHandler(ConfiguredBudgetClient configuredBudgetCli
     {
         var aggregator = await PrepareAggregator(command);
         
-        var viewModelBuilder = new AmountViewModelBuilder();
+        var viewModelBuilder = new AmountCliTableBuilder();
         viewModelBuilder
             .WithAggregator(aggregator)
             .WithRowCount(false);
@@ -37,14 +37,14 @@ public class SpareMoneyCommandHandler(ConfiguredBudgetClient configuredBudgetCli
         return Compile(viewModel);
     }
 
-    private async Task<Aggregator<decimal>> PrepareAggregator(SpareMoneyCommand command)
+    private async Task<YnabAggregator<decimal>> PrepareAggregator(SpareMoneyCommand command)
     {
         var budget = await configuredBudgetClient.GetDefaultBudget();
         
         var accounts = await budget.GetAccounts();
         var categoryGroups = await budget.GetCategoryGroups();
 
-        var aggregator = new CategoryDeductedAmountAggregator(accounts, categoryGroups)
+        var aggregator = new CategoryDeductedAmountYnabAggregator(accounts, categoryGroups)
             .BeforeAggregation(a => a.FilterToTypes(AccountType.Checking, AccountType.Savings))
             .BeforeAggregation(FilterToCriticalCategoryGroups);
 

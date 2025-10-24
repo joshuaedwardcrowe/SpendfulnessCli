@@ -14,7 +14,7 @@ public static class ServiceCollectionExtensions
     {
         return serviceCollection
             .AddSingleton<ConfiguredBudgetClient>()
-            .AddSingleton<CommandHelpViewModelBuilder>();
+            .AddSingleton<CommandHelpCliTableBuilder>();
     }
     
     public static IServiceCollection AddCommandsFromAssembly(this IServiceCollection serviceCollection, Assembly? assembly) 

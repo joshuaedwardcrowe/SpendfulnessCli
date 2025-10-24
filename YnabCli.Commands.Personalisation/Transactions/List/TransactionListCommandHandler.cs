@@ -18,7 +18,7 @@ public class TransactionListCommandHandler(ConfiguredBudgetClient configuredBudg
 
         var transactions = await budget.GetTransactions();
 
-        var aggregator = new TransactionAggregator(transactions);
+        var aggregator = new TransactionYnabAggregator(transactions);
 
         if (command.PayeeName is not null)
         {
@@ -29,7 +29,7 @@ public class TransactionListCommandHandler(ConfiguredBudgetClient configuredBudg
         aggregator.AfterAggregation(aggregates
             => aggregates.OrderByDescending(x => x.Occured));
         
-        var viewModel = new TransactionsViewModelBuilder()
+        var viewModel = new TransactionsCliTableBuilder()
             .WithAggregator(aggregator)
             .Build();
 

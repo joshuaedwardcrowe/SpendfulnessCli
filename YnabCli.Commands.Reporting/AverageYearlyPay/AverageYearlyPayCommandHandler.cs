@@ -18,7 +18,7 @@ public class AverageYearlyPayCommandHandler(ConfiguredBudgetClient budgetClient)
     {
         var aggregator = await PrepareAggregator();
 
-        var viewModel = new TransactionYearAverageViewModelBuilder()
+        var viewModel = new TransactionYearAverageCliTableBuilder()
             .WithAggregator(aggregator)
             .WithRowCount(false)
             .Build();
@@ -26,13 +26,13 @@ public class AverageYearlyPayCommandHandler(ConfiguredBudgetClient budgetClient)
         return Compile(viewModel);
     }
 
-    private async Task<ListAggregator<TransactionYearAverageAggregate>> PrepareAggregator()
+    private async Task<ListYnabAggregator<TransactionYearAverageAggregate>> PrepareAggregator()
     {
         var budget =  await budgetClient.GetDefaultBudget();
         
         var transactions = await budget.GetTransactions();
         
-        var aggregator = new TransactionAveragePerYearAggregator(transactions);
+        var aggregator = new TransactionAveragePerYearYnabAggregator(transactions);
 
         aggregator
             .BeforeAggregation(t => t.FilterToInflow())

@@ -3,7 +3,7 @@ using YnabCli.ViewModels.ViewModelBuilders;
 
 namespace YnabCli.Commands.Builders;
 
-public class CommandHelpViewModelBuilder : ViewModelBuilder<IEnumerable<CommandHelpAggregate>>
+public class CommandHelpCliTableBuilder : CliTableBuilder<IEnumerable<CommandHelpAggregate>>
 {
     protected override List<string> BuildColumnNames(IEnumerable<CommandHelpAggregate> evaluation)
         => [nameof(CommandHelpAggregate.Call), nameof(CommandHelpAggregate.Type), nameof(CommandHelpAggregate.Summary)];

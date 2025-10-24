@@ -4,7 +4,7 @@ using YnabCli.ViewModels.ViewModels;
 
 namespace YnabCli.ViewModels.ViewModelBuilders;
 
-public class TransactionMonthChangeViewModelBuilder : ViewModelBuilder<IEnumerable<TransactionMonthTotalAggregate>>
+public class TransactionMonthChangeCliTableBuilder : CliTableBuilder<IEnumerable<TransactionMonthTotalAggregate>>
 {
     protected override List<string> BuildColumnNames(IEnumerable<TransactionMonthTotalAggregate> evaluation)
         => TransactionMonthChangeTable.GetColumnNames();

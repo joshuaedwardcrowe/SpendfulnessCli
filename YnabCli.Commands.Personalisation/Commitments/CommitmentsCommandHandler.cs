@@ -20,9 +20,9 @@ public class CommitmentsCommandHandler(YnabCliDb ynabCliDb) : CommandHandler, IC
         
         var user = await ynabCliDb.GetActiveUser();
 
-        var aggregator = new CommitmentsAggregator(user.Commitments);
+        var aggregator = new CommitmentsYnabAggregator(user.Commitments);
         
-        var viewModel = new CommitmentsViewModelBuilder()
+        var viewModel = new CommitmentsCliTableBuilder()
             .WithAggregator(aggregator)
             .Build();
 
