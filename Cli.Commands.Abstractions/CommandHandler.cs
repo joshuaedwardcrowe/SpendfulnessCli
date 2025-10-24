@@ -1,3 +1,4 @@
+using Cli.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
 using ConsoleTables;
 
@@ -6,7 +7,7 @@ namespace Cli.Commands.Abstractions;
 // TODO: Rename to CliCommandHandler.
 public abstract class CommandHandler
 {
-    protected static CliCommandTableOutcome Compile(ViewModel.Abstractions.CliTable cliTable)
+    protected static CliCommandTableOutcome Compile(CliTable cliTable)
     {
         var table = new ConsoleTable
         {

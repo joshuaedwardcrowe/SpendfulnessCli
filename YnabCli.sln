@@ -9,19 +9,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{528597EC-7
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Ynab.CliTables", "Cli.Ynab.CliTables\Cli.Ynab.CliTables.csproj", "{D6DDBC52-9946-434B-814E-536E8E4D49CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.CliTables", "Cli.Spendfulness.CliTables\Cli.Spendfulness.CliTables.csproj", "{D6DDBC52-9946-434B-814E-536E8E4D49CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Commands", "YnabCli.Commands\YnabCli.Commands.csproj", "{A856A1D8-73AB-47EA-8D8C-F53880052A16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands", "Cli.Spendfulness.Commands\Cli.Spendfulness.Commands.csproj", "{A856A1D8-73AB-47EA-8D8C-F53880052A16}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Instructions", "Cli.Instructions\Cli.Instructions.csproj", "{3DAF9443-CB74-4549-8032-551259B306FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Instructions.Tests", "Cli.Instructions.Tests\Cli.Instructions.Tests.csproj", "{93506C09-B06A-4498-AA93-836C22677798}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Commands.Tests", "YnabCli.Commands.Tests\YnabCli.Commands.Tests.csproj", "{7EAF17CD-C47E-4573-A658-2D8F1C7AA1FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands.Tests", "Cli.Spendfulness.Commands.Tests\Cli.Spendfulness.Commands.Tests.csproj", "{7EAF17CD-C47E-4573-A658-2D8F1C7AA1FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ynab.Tests", "Ynab.Tests\Ynab.Tests.csproj", "{603D8C36-71AF-423D-B27D-F78C3B09EA0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Ynab.CliTables.Tests", "Cli.Ynab.CliTables.Tests\Cli.Ynab.CliTables.Tests.csproj", "{E72E9E9F-C093-4924-AFF2-67E1E46F1039}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.CliTables.Tests", "Cli.Spendfulness.CliTables.Tests\Cli.Spendfulness.CliTables.Tests.csproj", "{E72E9E9F-C093-4924-AFF2-67E1E46F1039}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADR", "ADR", "{B5381D3F-A87C-459E-BE0F-27B0AC6A1D56}"
 	ProjectSection(SolutionItems) = preProject
@@ -34,17 +34,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADR", "ADR", "{B5381D3F-A87
 		ADR\ADR04-Itemisation-Intelligence.md = ADR\ADR04-Itemisation-Intelligence.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Database", "YnabCli.Database\YnabCli.Database.csproj", "{80B41408-9A47-4AC6-8847-A37EF2EC327C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Database", "Cli.Spendfulness.Database\Cli.Spendfulness.Database.csproj", "{80B41408-9A47-4AC6-8847-A37EF2EC327C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Commands.Personalisation", "YnabCli.Commands.Personalisation\YnabCli.Commands.Personalisation.csproj", "{9EDF82AA-7E61-485B-8B95-815EA0407C93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands.Personalisation", "Cli.Spendfulness.Commands.Personalisation\Cli.Spendfulness.Commands.Personalisation.csproj", "{9EDF82AA-7E61-485B-8B95-815EA0407C93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Commands.Reporting", "YnabCli.Commands.Reporting\YnabCli.Commands.Reporting.csproj", "{B15BC118-26C7-43F1-8315-EB71C92DF16A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands.Reporting", "Cli.Spendfulness.Commands.Reporting\Cli.Spendfulness.Commands.Reporting.csproj", "{B15BC118-26C7-43F1-8315-EB71C92DF16A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Sync", "YnabCli.Sync\YnabCli.Sync.csproj", "{E34D5843-983A-4548-9D68-CB479F2711EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Sync", "Cli.Spendfulness.Sync\Cli.Spendfulness.Sync.csproj", "{E34D5843-983A-4548-9D68-CB479F2711EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Aggregation", "YnabCli.Aggregation\YnabCli.Aggregation.csproj", "{83E6F779-DD81-42CD-B9F6-6DA58BFAE9ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Aggregation", "Cli.Spendfulness.Aggregation\Cli.Spendfulness.Aggregation.csproj", "{83E6F779-DD81-42CD-B9F6-6DA58BFAE9ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabCli.Commands.Organisation", "YnabCli.Commands.Organisation\YnabCli.Commands.Organisation.csproj", "{6A7CA104-3649-4C11-9F2E-FE77130475E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands.Organisation", "Cli.Spendfulness.Commands.Organisation\Cli.Spendfulness.Commands.Organisation.csproj", "{6A7CA104-3649-4C11-9F2E-FE77130475E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli", "Cli\Cli.csproj", "{1C607C1F-B2A8-4405-B5F9-224D8434FDA4}"
 EndProject
@@ -60,7 +60,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Workflow", "Cli.Workflo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Abstractions", "Cli.Abstractions\Cli.Abstractions.csproj", "{DB034198-8794-4A9D-89AC-E4057E5B9E41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Ynab", "Cli.Ynab\Cli.Ynab.csproj", "{3CA3D4A0-5C8C-41A1-A22B-61B9EBA19590}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness", "Cli.Spendfulness\Cli.Spendfulness.csproj", "{3CA3D4A0-5C8C-41A1-A22B-61B9EBA19590}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cli", "Cli", "{68F25F73-18EB-4E65-80EB-1EDCAF174DFA}"
 EndProject

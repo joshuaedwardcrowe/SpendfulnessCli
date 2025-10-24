@@ -1,10 +1,9 @@
 using Cli.Instructions.Parsers;
-using Cli.Workflow;
 using Cli.Workflow.Abstractions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cli;
+namespace Cli.Workflow;
 
 public class CliWorkflow
 {

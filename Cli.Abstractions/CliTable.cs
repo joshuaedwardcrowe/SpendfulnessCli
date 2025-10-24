@@ -1,4 +1,4 @@
-namespace Cli.ViewModel.Abstractions;
+namespace Cli.Abstractions;
 
 public class CliTable
 {

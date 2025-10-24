@@ -1,5 +1,3 @@
-using Cli.ViewModel.Abstractions;
-
 namespace Cli.Abstractions;
 
 public interface ICliTableBuilder<TAggregation> where TAggregation : notnull

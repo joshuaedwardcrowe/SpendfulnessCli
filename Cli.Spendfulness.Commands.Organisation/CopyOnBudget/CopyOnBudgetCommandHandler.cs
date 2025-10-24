@@ -1,0 +1,39 @@
+using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Outcomes;
+using Cli.Spendfulness.Database;
+using Ynab;
+using Ynab.Exceptions;
+
+namespace Cli.Spendfulness.Commands.Organisation.CopyOnBudget;
+
+public class CopyOnBudgetCommandHandler(ConfiguredBudgetClient budgetClient) : CommandHandler, ICommandHandler<CopyOnBudgetCommand>
+{
+    public async Task<CliCommandOutcome> Handle(CopyOnBudgetCommand command, CancellationToken cancellationToken)
+    {
+        var budget = await budgetClient.GetDefaultBudget();
+
+        var originalAccount = await budget.GetAccount(command.AccountId);
+
+        if (originalAccount.Closed)
+        {
+            throw new YnabException(
+                YnabExceptionCode.CloseAccountCannotBeMovedOnBudget,
+                $"{originalAccount.Name} is closed, so cannot be moved on budget.");
+        }
+
+        if (originalAccount.OnBudget)
+        {
+            throw new YnabException(
+                YnabExceptionCode.OnBudgetAccountCannotBeMovedOnBudget,
+                $"{originalAccount.Name} is already on budget, so cannot be moved on budget.");
+        }
+
+        var newAccount = new NewAccount($"[YnabCli Moved: {originalAccount.Name}]", AccountType.Checking, 0);
+
+        var createdAccount =  await budget.CreateAccount(newAccount);
+        
+        await budget.MoveAccountTransactions(originalAccount, createdAccount);
+
+        return Compile($"Copied Account: {originalAccount.Name} On Budget");
+    }
+}

@@ -1,4 +1,4 @@
-namespace Cli.Instructions.Exceptions;
+namespace Cli.Instructions.Abstractions;
 
 public enum ConsoleInstructionExceptionCode
 {

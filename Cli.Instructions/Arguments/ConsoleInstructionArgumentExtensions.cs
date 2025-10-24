@@ -1,5 +1,4 @@
 using Cli.Instructions.Abstractions;
-using Cli.Instructions.Exceptions;
 
 namespace Cli.Instructions.Arguments;
 

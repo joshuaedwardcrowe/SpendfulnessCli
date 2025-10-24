@@ -1,0 +1,29 @@
+using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Outcomes;
+using Cli.Spendfulness.Aggregation.Aggregator;
+using Cli.Spendfulness.CliTables.ViewModelBuilders;
+using Cli.Spendfulness.Database;
+using Ynab.Extensions;
+
+namespace Cli.Ynab.Commands.Reporting.YearlySpending;
+
+public class YearlySpendingCommandHandler(ConfiguredBudgetClient budgetClient)
+    : CommandHandler, ICommandHandler<YearlySpendingCommand>
+{
+    public async Task<CliCommandOutcome> Handle(YearlySpendingCommand request, CancellationToken cancellationToken)
+    {
+        var budget =  await budgetClient.GetDefaultBudget();
+        
+        var transactions = await budget.GetTransactions();
+
+        var aggregator = new CategoryYearAverageYnabAggregator(transactions)
+            .BeforeAggregation(t => t.FilterOutTransfers())
+            .BeforeAggregation(t => t.FilterOutAutomations());
+
+        var viewModel = new CategoryYearAverageCliTableBuilder()
+            .WithAggregator(aggregator)
+            .Build();
+
+        return Compile(viewModel);
+    }
+}
