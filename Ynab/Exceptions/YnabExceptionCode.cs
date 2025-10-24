@@ -1,5 +1,6 @@
 namespace Ynab.Exceptions;
 
+// TODO: Abstract into a CliExceptionCode, CliOutcomeExeptionCode etc.
 public enum YnabExceptionCode
 {
     ApiResponseIsEmpty,
@@ -8,4 +9,5 @@ public enum YnabExceptionCode
     OnBudgetAccountCannotBeMovedOnBudget,
     NoInstruction,
     NoCommandGenerator,
+    UnknownCliCommandOutcome,
 }

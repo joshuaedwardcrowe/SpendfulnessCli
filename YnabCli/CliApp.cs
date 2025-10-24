@@ -1,17 +1,19 @@
-namespace YnabCli;
+using YnabCli.Abstractions;
 
-// TODO: Build CliCommandOutcome... Destructor? Outputter? Manager? Reader?
+namespace YnabCli;
 
 public abstract class CliApp
 {
     // TODO: I can probably set this in the ServiceCollectionExtension based on class name.
     private string _cliAppName;
-    private CliWorkflow _cliWorkflow;
+    private readonly CliWorkflow _cliWorkflow;
+    private readonly CliIo _cliIo;
 
-    public CliApp(string cliAppName, CliWorkflow cliWorkflow)
+    public CliApp(string cliAppName, CliWorkflow cliWorkflow, CliIo cliIo)
     {
         _cliAppName = cliAppName;
         _cliWorkflow = cliWorkflow;
+        _cliIo = cliIo;
     }
     
     public async Task Run()
@@ -24,19 +26,30 @@ public abstract class CliApp
 
             await OnRunCreated(cliWorkflowRun);
             
-            // TODO: Change me to by awaited.
-            // This will ask for a command, send it to meditor.
             var cliWorkflowRunTask =  cliWorkflowRun.Action();
             
             await OnRunStarted(cliWorkflowRun);
             
-            var cliWorkflowOutcome = await cliWorkflowRunTask;
+            SayOutcome(await cliWorkflowRunTask);
+        }
+    }
 
-            // TODO: Have some outcome result thing abstraction.
-            // var cliWorkflowRunOutcome = new CliCommandOutputOutcome("Test");
-            //
-            // // This will log something in the console.
-            // cliWorkflowRunOutcome.Do();
+    private void SayOutcome(CliCommandOutcome outcome)
+    {
+        switch (outcome)
+        {
+            case CliCommandTableOutcome tableOutcome:
+                _cliIo.Say(tableOutcome);
+                break;
+            case CliCommandOutputOutcome outputOutcome:
+                _cliIo.Say(outputOutcome);
+                break;
+            case CliCommandNothingOutcome nothingOutcome:
+                _cliIo.Say(nothingOutcome);
+                break;
+            default:
+                throw new UnknownCliCommandOutcomeException(
+                    $"{outcome.Kind} outcomes not supported");
         }
     }
 
