@@ -4,40 +4,40 @@ namespace Cli.Workflow;
 
 public class CliWorkflowRunState
 {
-    private readonly List<CliWorkflowRunStateChange> _stateChanges = [];
+    private readonly List<RecordedCliWorkflowRunStateChange> _recordedStateChanges = [];
 
-    public void ChangeTo(ClIWorkflowRunState stateToChangeTo)
+    public void ChangeTo(ClIWorkflowRunStateType stateTypeToChangeTo)
     {
-        var mostRecentState = _stateChanges.LastOrDefault();
-        var currentState = mostRecentState?.MovedTo ?? ClIWorkflowRunState.NotInitialized;
+        var mostRecentState = _recordedStateChanges.LastOrDefault();
+        var currentState = mostRecentState?.MovedTo ?? ClIWorkflowRunStateType.NotInitialized;
         
         // Can chnge from most recently changed to, to new state to change to.
         var possibleStateChange = PossibleStateChanges
             .Any(cliWorkflowRunStateChange =>
                 cliWorkflowRunStateChange.StartedAt == currentState && 
-                cliWorkflowRunStateChange.MovedTo == stateToChangeTo);
+                cliWorkflowRunStateChange.MovedTo == stateTypeToChangeTo);
 
         if (!possibleStateChange)
         {
-            throw new ImpossibleStateChangeException($"Invalid state change: {currentState} > {stateToChangeTo}");
+            throw new ImpossibleStateChangeException($"Invalid state change: {currentState} > {stateTypeToChangeTo}");
         }
 
-        var newState = new CliWorkflowRunStateChange(currentState, stateToChangeTo);
-        _stateChanges.Add(newState);
+        var newState = new RecordedCliWorkflowRunStateChange(DateTime.UtcNow, currentState, stateTypeToChangeTo);
+        _recordedStateChanges.Add(newState);
     }
 
     // TODO: CLI - Does this matter at all?
     private static readonly List<CliWorkflowRunStateChange> PossibleStateChanges =
     [
-        new(ClIWorkflowRunState.NotInitialized, ClIWorkflowRunState.Created),
-        new(ClIWorkflowRunState.Created, ClIWorkflowRunState.Running),
+        new(ClIWorkflowRunStateType.NotInitialized, ClIWorkflowRunStateType.Created),
+        new(ClIWorkflowRunStateType.Created, ClIWorkflowRunStateType.Running),
         
-        new(ClIWorkflowRunState.Running, ClIWorkflowRunState.InvalidAsk),
-        new(ClIWorkflowRunState.InvalidAsk, ClIWorkflowRunState.Finished),
+        new(ClIWorkflowRunStateType.Running, ClIWorkflowRunStateType.InvalidAsk),
+        new(ClIWorkflowRunStateType.InvalidAsk, ClIWorkflowRunStateType.Finished),
         
-        new(ClIWorkflowRunState.Running, ClIWorkflowRunState.Exceptional),
-        new(ClIWorkflowRunState.Exceptional, ClIWorkflowRunState.Finished),
+        new(ClIWorkflowRunStateType.Running, ClIWorkflowRunStateType.Exceptional),
+        new(ClIWorkflowRunStateType.Exceptional, ClIWorkflowRunStateType.Finished),
         
-        new(ClIWorkflowRunState.Running, ClIWorkflowRunState.Finished)
+        new(ClIWorkflowRunStateType.Running, ClIWorkflowRunStateType.Finished)
     ];
 }

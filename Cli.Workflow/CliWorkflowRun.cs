@@ -32,17 +32,17 @@ public class CliWorkflowRun
     public async Task<CliCommandOutcome> RespondToAsk(string? ask)
     {
         _stopwatch.Start();
-        _state.ChangeTo(ClIWorkflowRunState.Created);
+        _state.ChangeTo(ClIWorkflowRunStateType.Created);
         
         if (!IsValidAsk(ask))
         {
-            _state.ChangeTo(ClIWorkflowRunState.InvalidAsk);
+            _state.ChangeTo(ClIWorkflowRunStateType.InvalidAsk);
             return new CliCommandNothingOutcome();
         }
 
         try
         {
-            _state.ChangeTo(ClIWorkflowRunState.Running);
+            _state.ChangeTo(ClIWorkflowRunStateType.Running);
             
             var instruction = _consoleInstructionParser.Parse(ask!);
 
@@ -53,27 +53,27 @@ public class CliWorkflowRun
         // TODO: CLI - Custom/re-use exception at some point.
         catch (ArgumentNullException)
         {
-            _state.ChangeTo(ClIWorkflowRunState.InvalidAsk);
+            _state.ChangeTo(ClIWorkflowRunStateType.InvalidAsk);
             return new CliCommandNothingOutcome();
         }
         catch (NoInstructionException)
         {
-            _state.ChangeTo(ClIWorkflowRunState.InvalidAsk);
+            _state.ChangeTo(ClIWorkflowRunStateType.InvalidAsk);
             return new CliCommandNothingOutcome();
         }
         catch (NoCommandGeneratorException)
         {
-            _state.ChangeTo(ClIWorkflowRunState.InvalidAsk);
+            _state.ChangeTo(ClIWorkflowRunStateType.InvalidAsk);
             return new CliCommandNothingOutcome();
         }
         catch (Exception exception)
         {
-            _state.ChangeTo(ClIWorkflowRunState.Exceptional);
+            _state.ChangeTo(ClIWorkflowRunStateType.Exceptional);
             return new CliCommandExceptionOutcome(exception);
         }
         finally
         {
-            _state.ChangeTo(ClIWorkflowRunState.Finished);
+            _state.ChangeTo(ClIWorkflowRunStateType.Finished);
             _stopwatch.Stop();
         }
     }

@@ -1,6 +1,6 @@
 namespace Cli.Workflow.Abstractions;
 
-public enum ClIWorkflowRunState
+public enum ClIWorkflowRunStateType
 {
     NotInitialized,
     Created,
