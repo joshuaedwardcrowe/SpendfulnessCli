@@ -33,6 +33,7 @@ public class CliWorkflowRun
         _stopwatch = new Stopwatch();
         
         State = ClIWorkflowRunState.Created;
+        _stateChanges = [];
     }
     
     public Task<CliCommandOutcome> Action()
@@ -95,6 +96,8 @@ public class CliWorkflowRun
     
     private void UpdateState(ClIWorkflowRunState newState)
     {
+        // TODO: I think this state stuff can be done a better way.
+        
         if (State == newState)
         {
             // Already in that state, no mutation needed.
@@ -103,7 +106,6 @@ public class CliWorkflowRun
 
         if (State == ClIWorkflowRunState.Created && newState == ClIWorkflowRunState.Running)
         {
-            // TODO: I think this state stuff can be done a better way.
             AddStateChange(State, newState);
             State = newState;
             

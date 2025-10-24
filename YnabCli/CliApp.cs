@@ -1,5 +1,7 @@
 namespace YnabCli;
 
+// TODO: Build CliCommandOutcome... Destructor? Outputter? Manager? Reader?
+
 public abstract class CliApp
 {
     // TODO: I can probably set this in the ServiceCollectionExtension based on class name.
