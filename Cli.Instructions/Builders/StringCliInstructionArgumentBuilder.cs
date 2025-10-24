@@ -4,7 +4,7 @@ using Cli.Instructions.Extensions;
 
 namespace Cli.Instructions.Builders;
 
-public class StringConsoleInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, IConsoleInstructionArgumentBuilder
+public class StringCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue)
     {

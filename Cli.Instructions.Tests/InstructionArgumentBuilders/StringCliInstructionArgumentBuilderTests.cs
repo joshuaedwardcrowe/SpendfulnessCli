@@ -5,12 +5,12 @@ using NUnit.Framework;
 namespace Cli.Instructions.Tests.InstructionArgumentBuilders;
 
 [TestFixture]
-public class StringConsoleInstructionArgumentBuilderTests
+public class StringCliInstructionArgumentBuilderTests
 {
     [Test]
     public void GivenStringArgumentValue_WhenCreate_ShouldReturnInstructionArgument()
     {
-        var builder = new StringConsoleInstructionArgumentBuilder();
+        var builder = new StringCliInstructionArgumentBuilder();
         
         var result = builder.Create(string.Empty, "test test test");
 
@@ -23,7 +23,7 @@ public class StringConsoleInstructionArgumentBuilderTests
     [Test]
     public void GivenStringArgumentValue_WhenFor_ShouldReturnTrue()
     {
-        var builder = new StringConsoleInstructionArgumentBuilder();
+        var builder = new StringCliInstructionArgumentBuilder();
         
         var result = builder.For("hello hello hello");
         
@@ -33,7 +33,7 @@ public class StringConsoleInstructionArgumentBuilderTests
     [Test]
     public void GivenWrongArgumentValue_WhenFor_ShouldReturnFalse()
     {
-        var builder = new StringConsoleInstructionArgumentBuilder();
+        var builder = new StringCliInstructionArgumentBuilder();
         
         var result = builder.For("1");
         

@@ -3,7 +3,7 @@ using Cli.Instructions.Arguments;
 
 namespace Cli.Instructions.Builders;
 
-public class BoolConsoleInstructionArgumentBuilder : IConsoleInstructionArgumentBuilder
+public class BoolCliInstructionArgumentBuilder : ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue) => true;
 

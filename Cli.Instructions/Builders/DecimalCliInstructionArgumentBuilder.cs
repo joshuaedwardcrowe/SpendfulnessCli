@@ -3,7 +3,7 @@ using Cli.Instructions.Arguments;
 
 namespace Cli.Instructions.Builders;
 
-public class DecimalConsoleInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, IConsoleInstructionArgumentBuilder
+public class DecimalCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue) => decimal.TryParse(argumentValue, out _);
 

@@ -8,29 +8,29 @@ using NUnit.Framework;
 namespace Cli.Instructions.Tests;
 
 [TestFixture]
-public class ConsoleInstructionParserTests
+public class CliInstructionParserTests
 {
-    private ConsoleInstructionTokenIndexer _consoleInstructionTokenIndexer;
-    private ConsoleInstructionTokenExtractor _consoleInstructionTokenExtractor;
-    private IEnumerable<IConsoleInstructionArgumentBuilder> _instructionArgumentBuilders;
-    private ConsoleInstructionParser _parser;
+    private CliInstructionTokenIndexer _cliInstructionTokenIndexer;
+    private CliInstructionTokenExtractor _cliInstructionTokenExtractor;
+    private IEnumerable<ICliInstructionArgumentBuilder> _instructionArgumentBuilders;
+    private CliInstructionParser _parser;
 
     [SetUp]
     public void SetUp()
     {
-        _consoleInstructionTokenIndexer = new ConsoleInstructionTokenIndexer();
+        _cliInstructionTokenIndexer = new CliInstructionTokenIndexer();
         
-        _consoleInstructionTokenExtractor = new ConsoleInstructionTokenExtractor();
+        _cliInstructionTokenExtractor = new CliInstructionTokenExtractor();
         
-        _instructionArgumentBuilders = new List<IConsoleInstructionArgumentBuilder>
+        _instructionArgumentBuilders = new List<ICliInstructionArgumentBuilder>
         {
-            new StringConsoleInstructionArgumentBuilder(),
-            new IntConsoleInstructionArgumentBuilder(),
+            new StringCliInstructionArgumentBuilder(),
+            new IntCliInstructionArgumentBuilder(),
         };
 
-        _parser = new ConsoleInstructionParser(
-            _consoleInstructionTokenIndexer,
-            _consoleInstructionTokenExtractor,
+        _parser = new CliInstructionParser(
+            _cliInstructionTokenIndexer,
+            _cliInstructionTokenExtractor,
             _instructionArgumentBuilders);
     }
 

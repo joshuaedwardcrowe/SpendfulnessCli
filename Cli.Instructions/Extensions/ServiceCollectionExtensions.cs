@@ -8,15 +8,15 @@ namespace Cli.Instructions.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddConsoleInstructions(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddCliInstructions(this IServiceCollection serviceCollection)
         => serviceCollection
-            .AddSingleton<IConsoleInstructionArgumentBuilder, GuidConsoleInstructionArgumentBuilder>()
-            .AddSingleton<IConsoleInstructionArgumentBuilder, StringConsoleInstructionArgumentBuilder>()
-            .AddSingleton<IConsoleInstructionArgumentBuilder, IntConsoleInstructionArgumentBuilder>()
-            .AddSingleton<IConsoleInstructionArgumentBuilder, DecimalConsoleInstructionArgumentBuilder>()
-            .AddSingleton<IConsoleInstructionArgumentBuilder, DateOnlyConsoleInstructionArgumentBuilder>()
-            .AddSingleton<IConsoleInstructionArgumentBuilder, BoolConsoleInstructionArgumentBuilder>()
-            .AddSingleton<ConsoleInstructionTokenIndexer>()
-            .AddSingleton<ConsoleInstructionTokenExtractor>()
-            .AddSingleton<ConsoleInstructionParser>();
+            .AddSingleton<ICliInstructionArgumentBuilder, GuidCliInstructionArgumentBuilder>()
+            .AddSingleton<ICliInstructionArgumentBuilder, StringCliInstructionArgumentBuilder>()
+            .AddSingleton<ICliInstructionArgumentBuilder, IntCliInstructionArgumentBuilder>()
+            .AddSingleton<ICliInstructionArgumentBuilder, DecimalCliInstructionArgumentBuilder>()
+            .AddSingleton<ICliInstructionArgumentBuilder, DateOnlyCliInstructionArgumentBuilder>()
+            .AddSingleton<ICliInstructionArgumentBuilder, BoolCliInstructionArgumentBuilder>()
+            .AddSingleton<CliInstructionTokenIndexer>()
+            .AddSingleton<CliInstructionTokenExtractor>()
+            .AddSingleton<CliInstructionParser>();
 }

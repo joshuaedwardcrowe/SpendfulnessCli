@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCli<TCliApp>(this IServiceCollection serviceCollection) where TCliApp : OriginalCli
     {
-        serviceCollection.AddConsoleInstructions();
+        serviceCollection.AddCliInstructions();
         serviceCollection.AddCommandsFromAssembly(typeof(ExitCommand).Assembly);
         
         serviceCollection.AddSingleton<CliWorkflowCommandProvider>();

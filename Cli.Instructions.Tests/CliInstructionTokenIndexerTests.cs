@@ -4,14 +4,14 @@ using NUnit.Framework;
 namespace Cli.Instructions.Tests;
 
 [TestFixture]
-public class ConsoleInstructionTokenIndexerTests
+public class CliInstructionTokenIndexerTests
 {
-    private ConsoleInstructionTokenIndexer _consoleInstructionTokenIndexer;
+    private CliInstructionTokenIndexer _cliInstructionTokenIndexer;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        _consoleInstructionTokenIndexer = new ConsoleInstructionTokenIndexer();
+        _cliInstructionTokenIndexer = new CliInstructionTokenIndexer();
     }
 
     [Test]
@@ -19,7 +19,7 @@ public class ConsoleInstructionTokenIndexerTests
     {
         var input = string.Empty;
         
-        var result = _consoleInstructionTokenIndexer.Index(input);
+        var result = _cliInstructionTokenIndexer.Index(input);
         
         Assert.That(result.PrefixTokenIndexed, Is.False);
         Assert.That(result.NameTokenIndexed, Is.False);
@@ -36,7 +36,7 @@ public class ConsoleInstructionTokenIndexerTests
     [TestCase("command-example sub-command-example --argument-example hello world --argument-two 1")]
     public void GivenInputStringWithNoPrefix_WhenIndex_ReturnsFalseForFlag(string input)
     {
-        var result = _consoleInstructionTokenIndexer.Index(input);
+        var result = _cliInstructionTokenIndexer.Index(input);
         
         Assert.That(result.PrefixTokenIndexed, Is.False);
     }
@@ -51,7 +51,7 @@ public class ConsoleInstructionTokenIndexerTests
     [TestCase("/command-example sub-command-example --argument-example hello world --argument-two 1")]
     public void GivenInputString_WhenIndex_ReturnsCorrectIndexesForCommandPrefixToken(string input)
     {
-        var result = _consoleInstructionTokenIndexer.Index(input);
+        var result = _cliInstructionTokenIndexer.Index(input);
         
         Assert.That(result.PrefixTokenIndexed, Is.True);
         Assert.That(result.PrefixTokenStartIndex, Is.EqualTo(0));
@@ -66,7 +66,7 @@ public class ConsoleInstructionTokenIndexerTests
     [TestCase("/ sub-command-example --argument-example hello world --argument-two 1")]
     public void GivenInputStringWithNoCommandNameToken_WhenIndex_ReturnsFalseForCommandNameTokenFlag(string input)
     {
-        var result = _consoleInstructionTokenIndexer.Index(input);
+        var result = _cliInstructionTokenIndexer.Index(input);
         
         Assert.That(result.NameTokenIndexed, Is.False);
     }
@@ -79,7 +79,7 @@ public class ConsoleInstructionTokenIndexerTests
     [TestCase("/command-example sub-command-example --argument-example hello world --argument-two 1", "command-example")]
     public void GivenInputString_WhenIndex_ReturnsCorrectIndexesForCommandNameToken(string input, string expectedMatch)
     {
-        var result = _consoleInstructionTokenIndexer.Index(input);
+        var result = _cliInstructionTokenIndexer.Index(input);
         
         Assert.That(result.NameTokenIndexed, Is.True);
 
@@ -94,7 +94,7 @@ public class ConsoleInstructionTokenIndexerTests
     [TestCase("/command-example --argument-example hello world --argument-two 1")]
     public void GivenInputStringWithNoSubCommandNameToken_WhenIndex_ReturnsFalseForSubCommandNameTokenFlag(string input)
     {
-        var result = _consoleInstructionTokenIndexer.Index(input);
+        var result = _cliInstructionTokenIndexer.Index(input);
         
         Assert.That(result.SubNameTokenIndexed, Is.False);
     }
@@ -106,7 +106,7 @@ public class ConsoleInstructionTokenIndexerTests
     [TestCase("/command-example sub-command-example --argument-example hello world --argument-two 1", "sub-command-example")]
     public void GivenInputString_WhenIndex_ReturnsCorrectIndexesForSubCommandNameToken(string input, string expectedMatch)
     {
-        var result = _consoleInstructionTokenIndexer.Index(input);
+        var result = _cliInstructionTokenIndexer.Index(input);
         
         Assert.That(result.SubNameTokenIndexed, Is.True);
 
@@ -118,7 +118,7 @@ public class ConsoleInstructionTokenIndexerTests
     [TestCase("/command-example sub-command-example")]
     public void GivenInputStringWithNoArgumentTokens_WhenIndex_ReturnsFalseForArgumentTokensIndexed(string input)
     {
-        var result = _consoleInstructionTokenIndexer.Index(input);
+        var result = _cliInstructionTokenIndexer.Index(input);
         
         Assert.That(result.ArgumentTokensIndexed, Is.False);
     }
@@ -131,7 +131,7 @@ public class ConsoleInstructionTokenIndexerTests
     [TestCase("/command-example sub-command-example --argument-example --argument-two 1", "--argument-example --argument-two 1")]
     public void GivenInputString_WhenIndex_ReturnsCorrectIndexesForArgumentTokens(string input, string expectedMatch)
     {
-        var result = _consoleInstructionTokenIndexer.Index(input);
+        var result = _cliInstructionTokenIndexer.Index(input);
         
         Assert.That(result.ArgumentTokensIndexed, Is.True);
 

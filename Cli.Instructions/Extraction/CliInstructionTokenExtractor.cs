@@ -3,7 +3,7 @@ using Cli.Instructions.Indexers;
 
 namespace Cli.Instructions.Extraction;
 
-public class ConsoleInstructionTokenExtractor
+public class CliInstructionTokenExtractor
 {
     public ConsoleInstructionTokenExtraction Extract(ConsoleInstructionTokenIndexes indexes, string terminalInput)
     {

@@ -5,21 +5,21 @@ using NUnit.Framework;
 namespace Cli.Instructions.Tests.InstructionArgumentBuilders;
 
 [TestFixture]
-public class IntConsoleInstructionArgumentBuilderTests
+public class IntCliInstructionArgumentBuilderTests
 {
-    private IntConsoleInstructionArgumentBuilder _intConsoleInstructionArgumentBuilder;
+    private IntCliInstructionArgumentBuilder _intCliInstructionArgumentBuilder;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        _intConsoleInstructionArgumentBuilder = new IntConsoleInstructionArgumentBuilder();
+        _intCliInstructionArgumentBuilder = new IntCliInstructionArgumentBuilder();
     }
     
     
     [Test]
     public void GivenIntArgumentValue_WhenFor_ShouldReturnTrue()
     {
-        var result = _intConsoleInstructionArgumentBuilder.For("1");
+        var result = _intCliInstructionArgumentBuilder.For("1");
         
         Assert.That(result, Is.True);
     }
@@ -27,7 +27,7 @@ public class IntConsoleInstructionArgumentBuilderTests
     [Test]
     public void GivenWrongArgumentValue_WhenFor_ShouldReturnFalse()
     {
-        var result = _intConsoleInstructionArgumentBuilder.For("hello test");
+        var result = _intCliInstructionArgumentBuilder.For("hello test");
         
         Assert.That(result, Is.False);
     }
@@ -35,7 +35,7 @@ public class IntConsoleInstructionArgumentBuilderTests
     [Test]
     public void GivenIntArgumentValue_WhenCreate_ShouldReturnInstructionArgument()
     {
-        var result = _intConsoleInstructionArgumentBuilder.Create(string.Empty, "1");
+        var result = _intCliInstructionArgumentBuilder.Create(string.Empty, "1");
 
         var typed = result as TypedConsoleInstructionArgument<int>;
         

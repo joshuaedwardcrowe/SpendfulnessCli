@@ -21,7 +21,7 @@ public class CliWorkflow
     {
         var state = new CliWorkflowRunState();
         
-        var consoleInstructionParser = _serviceProvider.GetRequiredService<ConsoleInstructionParser>();
+        var consoleInstructionParser = _serviceProvider.GetRequiredService<CliInstructionParser>();
         
         var commandProvider = _serviceProvider.GetRequiredService<CliWorkflowCommandProvider>();
         

@@ -5,14 +5,14 @@ using NUnit.Framework;
 namespace Cli.Instructions.Tests;
 
 [TestFixture]
-public class ConsoleInstructionTokenExtractorTests
+public class CliInstructionTokenExtractorTests
 {
-    private ConsoleInstructionTokenExtractor _legacyConsoleInstructionTokenExtractor;
+    private CliInstructionTokenExtractor _legacyCliInstructionTokenExtractor;
 
     [SetUp]
     public void SetUp()
     {
-        _legacyConsoleInstructionTokenExtractor = new ConsoleInstructionTokenExtractor();
+        _legacyCliInstructionTokenExtractor = new CliInstructionTokenExtractor();
     }
     
     [Test]
@@ -30,7 +30,7 @@ public class ConsoleInstructionTokenExtractorTests
             NameTokenEndIndex = 7,
         };
         
-        var result = _legacyConsoleInstructionTokenExtractor.Extract(indexes, input);
+        var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
         
         Assert.That(result.PrefixToken, Is.EqualTo("/"));
     }
@@ -50,7 +50,7 @@ public class ConsoleInstructionTokenExtractorTests
             NameTokenEndIndex = input.Length,
         };
         
-        var result = _legacyConsoleInstructionTokenExtractor.Extract(indexes, input);
+        var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
         
         Assert.That(result.NameToken, Is.EqualTo("command"));
     }
@@ -73,7 +73,7 @@ public class ConsoleInstructionTokenExtractorTests
             SubNameEndIndex = input.Length
         };
         
-        var result = _legacyConsoleInstructionTokenExtractor.Extract(indexes, input);
+        var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
         
         Assert.That(result.SubNameToken, Is.EqualTo("sub-command"));
     }
@@ -96,7 +96,7 @@ public class ConsoleInstructionTokenExtractorTests
             ArgumentTokensEndIndex = input.Length,
         };
         
-        var result = _legacyConsoleInstructionTokenExtractor.Extract(indexes, input);
+        var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
         
         Assert.That(result.NameToken, Is.EqualTo("command"));
     }
@@ -122,7 +122,7 @@ public class ConsoleInstructionTokenExtractorTests
             ArgumentTokensEndIndex = input.Length,
         };
         
-        var result = _legacyConsoleInstructionTokenExtractor.Extract(indexes, input);
+        var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
         
         var resultingArgument = result.ArgumentTokens.First();
         
@@ -151,7 +151,7 @@ public class ConsoleInstructionTokenExtractorTests
             ArgumentTokensEndIndex = input.Length,
         };
         
-        var result = _legacyConsoleInstructionTokenExtractor.Extract(indexes, input);
+        var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
         
         var resultingArgument = result.ArgumentTokens.First();
         
@@ -182,7 +182,7 @@ public class ConsoleInstructionTokenExtractorTests
             ArgumentTokensEndIndex = input.Length,
         };
         
-        var result = _legacyConsoleInstructionTokenExtractor.Extract(indexes, input);
+        var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
 
         var resultingArgumentOne = result.ArgumentTokens.FirstOrDefault();
         
@@ -218,7 +218,7 @@ public class ConsoleInstructionTokenExtractorTests
             ArgumentTokensEndIndex = input.Length,
         };
         
-        var result = _legacyConsoleInstructionTokenExtractor.Extract(indexes, input);
+        var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
         
         var resultingArgumentOne = result.ArgumentTokens.FirstOrDefault();
         
@@ -253,7 +253,7 @@ public class ConsoleInstructionTokenExtractorTests
             ArgumentTokensEndIndex = input.Length,
         };
         
-        var result = _legacyConsoleInstructionTokenExtractor.Extract(indexes, input);
+        var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
         
         var resultingArgumentOne = result.ArgumentTokens.FirstOrDefault();
         

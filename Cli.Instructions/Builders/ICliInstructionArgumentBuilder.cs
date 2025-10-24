@@ -2,7 +2,7 @@ using Cli.Instructions.Abstractions;
 
 namespace Cli.Instructions.Builders;
 
-public interface IConsoleInstructionArgumentBuilder
+public interface ICliInstructionArgumentBuilder
 {
     bool For(string? argumentValue);
 

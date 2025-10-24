@@ -2,7 +2,7 @@ using Cli.Instructions.Abstractions;
 
 namespace Cli.Instructions.Indexers;
 
-public class ConsoleInstructionTokenIndexer
+public class CliInstructionTokenIndexer
 {
     public ConsoleInstructionTokenIndexes Index(string terminalInput)
     {

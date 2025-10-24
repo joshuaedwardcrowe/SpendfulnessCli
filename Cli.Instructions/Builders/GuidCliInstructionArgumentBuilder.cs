@@ -3,7 +3,7 @@ using Cli.Instructions.Arguments;
 
 namespace Cli.Instructions.Builders;
 
-public class GuidConsoleInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, IConsoleInstructionArgumentBuilder
+public class GuidCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue) => Guid.TryParse(argumentValue, out _);
 

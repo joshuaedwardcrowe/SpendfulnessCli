@@ -3,7 +3,7 @@ using Cli.Instructions.Arguments;
 
 namespace Cli.Instructions.Builders;
 
-public class IntConsoleInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, IConsoleInstructionArgumentBuilder
+public class IntCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue) => argumentValue != null && int.TryParse(argumentValue, out _);
 

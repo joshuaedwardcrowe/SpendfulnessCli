@@ -19,7 +19,7 @@ var serviceProvider = new ServiceCollection()
     .AddReportingCommands() // Commands that work with YNAB data
     .AddOrganisationCommands() // Commands that help organise the data
     .AddPersonalisationCommands() // Commands for CRUD with db data
-    .AddConsoleInstructions() // Understand terminal commands
+    .AddCliInstructions() // Understand terminal commands
     .BuildServiceProvider();
 
 var cliApp = serviceProvider.GetRequiredService<OriginalCli>();

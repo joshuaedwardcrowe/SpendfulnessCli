@@ -11,19 +11,19 @@ namespace Cli.Workflow;
 public class CliWorkflowRun
 {
     private readonly CliWorkflowRunState _state;
-    private readonly ConsoleInstructionParser _consoleInstructionParser;
+    private readonly CliInstructionParser _cliInstructionParser;
     private readonly CliWorkflowCommandProvider _workflowCommandProvider;
     private readonly IMediator _mediator;
     private readonly Stopwatch _stopwatch;
 
     public CliWorkflowRun(
         CliWorkflowRunState state,
-        ConsoleInstructionParser consoleInstructionParser,
+        CliInstructionParser cliInstructionParser,
         CliWorkflowCommandProvider workflowCommandProvider,
         IMediator mediator)
     {
         _state = state;
-        _consoleInstructionParser = consoleInstructionParser;
+        _cliInstructionParser = cliInstructionParser;
         _workflowCommandProvider = workflowCommandProvider;
         _mediator = mediator;
         _stopwatch = new Stopwatch();
@@ -46,7 +46,7 @@ public class CliWorkflowRun
         {
             _state.ChangeTo(ClIWorkflowRunStateType.Running);
             
-            var instruction = _consoleInstructionParser.Parse(ask!);
+            var instruction = _cliInstructionParser.Parse(ask!);
 
             var command = _workflowCommandProvider.GetCommand(instruction);
 
