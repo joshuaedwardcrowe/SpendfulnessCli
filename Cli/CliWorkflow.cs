@@ -1,10 +1,9 @@
-using Cli;
 using Cli.Instructions.Parsers;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using YnabCli.Abstractions;
+using YnabCli;
 
-namespace YnabCli;
+namespace Cli;
 
 public class CliWorkflow
 {
@@ -20,7 +19,7 @@ public class CliWorkflow
 
     public CliWorkflowRun CreateRun()
     {
-        var io = _serviceProvider.GetRequiredService<CliIo>();
+        var stateManager = _serviceProvider.GetRequiredService<CliWorkflowRunStateManager>();
         
         var consoleInstructionParser = _serviceProvider.GetRequiredService<ConsoleInstructionParser>();
         
@@ -29,7 +28,8 @@ public class CliWorkflow
         // TODO: I'd like to remove the dependency on MediatR one day.
         var mediator = _serviceProvider.GetRequiredService<IMediator>();
         
-        var run = new CliWorkflowRun(io, consoleInstructionParser, commandProvider, mediator);
+        // TODO: CLI - I dont want all of these services hanging in the run forever? 
+        var run = new CliWorkflowRun(stateManager, consoleInstructionParser, commandProvider, mediator);
         
         _workflowRuns.Add(run);
 

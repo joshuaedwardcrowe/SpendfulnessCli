@@ -1,9 +1,8 @@
-using Cli;
 using Cli.Commands.Abstractions;
 using Cli.Instructions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace YnabCli;
+namespace Cli;
 
 public class CliCommandProvider(IServiceProvider serviceProvider)
 {
@@ -11,14 +10,12 @@ public class CliCommandProvider(IServiceProvider serviceProvider)
     {
         if (string.IsNullOrEmpty(instruction.Name))
         {
-            // TODO: Custom command.
             throw new NoInstructionException("No instruction entered.");
         }
         
         var generator = serviceProvider.GetKeyedService<IGenericCommandGenerator>(instruction.Name);
         if (generator == null)
         {
-            // TODO: Custom command.
             throw new NoCommandGeneratorException("Did not find generator for " + instruction.Name);
         }
 

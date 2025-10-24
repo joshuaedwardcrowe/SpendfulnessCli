@@ -9,118 +9,66 @@ namespace Cli;
 
 public class CliWorkflowRun
 {
-    private readonly CliIo _cliIO;
+    private readonly CliWorkflowRunStateManager _stateManager;
     private readonly ConsoleInstructionParser _consoleInstructionParser;
     private readonly CliCommandProvider _commandProvider;
     private readonly IMediator _mediator;
-
-    private ClIWorkflowRunState _state { get; set; }
-    private List<CliWorkflowRunStateChange> _stateChanges;
-    private Stopwatch _stopwatch;
+    private readonly Stopwatch _stopwatch;
 
     public CliWorkflowRun(
-        CliIo cliIo,
+        CliWorkflowRunStateManager stateManager,
         ConsoleInstructionParser consoleInstructionParser,
         CliCommandProvider commandProvider,
         IMediator mediator)
     {
-        _cliIO = cliIo;
+        _stateManager = stateManager;
         _consoleInstructionParser = consoleInstructionParser;
         _commandProvider = commandProvider;
         _mediator = mediator;
-        
         _stopwatch = new Stopwatch();
-        _state = ClIWorkflowRunState.Created;
-        _stateChanges = [];
     }
+
+    public bool IsValidAsk(string? ask) => string.IsNullOrEmpty(ask);
     
-    public Task<CliCommandOutcome> Execute()
+    public async Task<CliCommandOutcome> RespondToAsk(string? ask)
     {
         _stopwatch.Start();
         
-        var input = _cliIO.Ask();
-        if (string.IsNullOrEmpty(input))
+        if (!IsValidAsk(ask))
         {
-            _cliIO.Say($"Command '{input}' not found");
-            UpdateState(ClIWorkflowRunState.NoInput);
-            return CreatingNothingOutcome();
+            _stateManager.ChangeTo(ClIWorkflowRunState.InvalidAsk);
+            return new CliCommandNothingOutcome();
         }
         
-        var instruction = _consoleInstructionParser.Parse(input);
+        var instruction = _consoleInstructionParser.Parse(ask!);
 
         try
         {
-            UpdateState(ClIWorkflowRunState.Running);
+            _stateManager.ChangeTo(ClIWorkflowRunState.Running);
 
             var command = _commandProvider.GetCommand(instruction);
 
-            return _mediator.Send(command);
+            return await _mediator.Send(command);
         }
         catch (NoInstructionException)
         {
-            UpdateState(ClIWorkflowRunState.NoInput);
-            return CreatingNothingOutcome();
+            _stateManager.ChangeTo(ClIWorkflowRunState.InvalidAsk);
+            return new CliCommandNothingOutcome();
         }
         catch (NoCommandGeneratorException)
         {
-            UpdateState(ClIWorkflowRunState.NoCommand);
-            return CreatingNothingOutcome();
+            _stateManager.ChangeTo(ClIWorkflowRunState.InvalidAsk);
+            return new CliCommandNothingOutcome();
         }
         catch (Exception exception)
         {
-            _cliIO.Say("Exceptional circumstance ran into.");
-            _cliIO.Say(exception.Message);
-            
-            UpdateState(ClIWorkflowRunState.Exceptional);
-            return CreatingNothingOutcome();
+            _stateManager.ChangeTo(ClIWorkflowRunState.Exceptional);
+            return new CliCommandExceptionOutcome(exception);
         }
         finally
         {
-            UpdateState(ClIWorkflowRunState.Finished);
+            _stateManager.ChangeTo(ClIWorkflowRunState.Finished);
             _stopwatch.Stop();
         }
-    }
-
-    private Task<CliCommandOutcome> CreatingNothingOutcome()
-    {
-        // TODO: Get last state of this run out.
-        // In theory, when this is executed, the finally block has not
-        // executed so the last state in the state change list
-        // will be the appropriate state to passs throgh
-        var lastStateChange = _stateChanges.Last();
-        var outcome = new CliCommandNothingOutcome(lastStateChange.To);
-        return Task.FromResult<CliCommandOutcome>(outcome);
-    }
-    
-    private void UpdateState(ClIWorkflowRunState newState)
-    {
-        // TODO: I think this state stuff can be done a better way. Maybe a state change abstraction.
-        
-        if (_state == newState)
-        {
-            // Already in that state, no mutation needed.
-            return;
-        }
-
-        if (_state == ClIWorkflowRunState.Created && newState == ClIWorkflowRunState.Running)
-        {
-            AddStateChange(_state, newState);
-            _state = newState;
-            
-        }
-
-        if (_state == ClIWorkflowRunState.Running && newState == ClIWorkflowRunState.Finished)
-        {
-            AddStateChange(_state, newState);
-            _state = newState;
-        }
-
-        throw new Exception($"Invalid Workflow state transition: {_state} > {newState}");
-    }
-
-    private void AddStateChange(ClIWorkflowRunState from, ClIWorkflowRunState to)
-    {
-        var stateChange = new CliWorkflowRunStateChange(from, to);
-        _stateChanges.Add(stateChange);
     }
 }

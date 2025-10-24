@@ -1,72 +1,49 @@
-using Cli.Outcomes;
 using YnabCli;
-using YnabCli.Abstractions;
 
 namespace Cli;
 
 public abstract class CliApp
 {
-    // TODO: I can probably set this in the ServiceCollectionExtension based on class name.
-    private string _cliAppName;
     private readonly CliWorkflow _cliWorkflow;
-    private readonly CliIo _cliIo;
+    private readonly CliCommandOutcomeIo _cliCommandOutcomeIo;
 
-    public CliApp(string cliAppName, CliWorkflow cliWorkflow, CliIo cliIo)
+    protected CliApp(CliWorkflow cliWorkflow, CliCommandOutcomeIo cliCommandOutcomeIo)
     {
-        _cliAppName = cliAppName;
         _cliWorkflow = cliWorkflow;
-        _cliIo = cliIo;
+        _cliCommandOutcomeIo = cliCommandOutcomeIo;
     }
     
     public async Task Run()
     {
-        await OnRun(_cliWorkflow);
+        await OnRun(_cliWorkflow, _cliCommandOutcomeIo);
         
         while (_cliWorkflow.State != CliWorkflowState.Stopped)
         {
             var cliWorkflowRun = _cliWorkflow.CreateRun();
 
-            await OnRunCreated(cliWorkflowRun);
+            await OnRunCreated(cliWorkflowRun, _cliCommandOutcomeIo);
             
-            var cliWorkflowRunTask =  cliWorkflowRun.Execute();
+            var ask = _cliCommandOutcomeIo.Ask();
             
-            await OnRunStarted(cliWorkflowRun);
+            var cliWorkflowRunTask =  cliWorkflowRun.RespondToAsk(ask);
             
-            SayOutcome(await cliWorkflowRunTask);
+            await OnRunStarted(cliWorkflowRun, _cliCommandOutcomeIo);
+            
+            _cliCommandOutcomeIo.Say(await cliWorkflowRunTask);
         }
     }
 
-    // TODO: CLI - Move to abstraction? Extend CliIo to CliAppIo?
-    private void SayOutcome(CliCommandOutcome outcome)
-    {
-        switch (outcome)
-        {
-            case CliCommandTableOutcome tableOutcome:
-                _cliIo.Say(tableOutcome);
-                break;
-            case CliCommandOutputOutcome outputOutcome:
-                _cliIo.Say(outputOutcome);
-                break;
-            case CliCommandNothingOutcome nothingOutcome:
-                _cliIo.Say(nothingOutcome);
-                break;
-            default:
-                throw new UnknownCliCommandOutcomeException(
-                    $"{outcome.Kind} outcomes not supported");
-        }
-    }
-
-    protected virtual Task OnRun(CliWorkflow cliWorkflow)
+    protected virtual Task OnRun(CliWorkflow cliWorkflow, CliIo cliIo)
     {
         return Task.CompletedTask;
     }
 
-    protected virtual Task OnRunCreated(CliWorkflowRun cliWorkflowRun)
+    protected virtual Task OnRunCreated(CliWorkflowRun cliWorkflowRun, CliIo cliIo)
     {
         return Task.CompletedTask;
     }
 
-    protected virtual Task OnRunStarted(CliWorkflowRun cliWorkflowRun)
+    protected virtual Task OnRunStarted(CliWorkflowRun cliWorkflowRun, CliIo cliIo)
     {
         return Task.CompletedTask;
     }

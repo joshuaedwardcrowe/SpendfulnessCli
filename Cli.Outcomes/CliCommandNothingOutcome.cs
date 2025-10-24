@@ -1,9 +1,6 @@
-using Cli.Workflow.Abstractions;
-
 namespace Cli.Outcomes;
 
-public class CliCommandNothingOutcome(ClIWorkflowRunState lastCliWorkflowRunState)
-    : CliCommandOutcome(CliWorkflowRunOutcomeKind.Nothing)
+// TODO: Potentially rename to NothingCliCommandOutcome, or NothingOutcome.
+public class CliCommandNothingOutcome() : CliCommandOutcome(CliWorkflowRunOutcomeKind.Nothing)
 {
-    public ClIWorkflowRunState LastCliWorkflowRunState = lastCliWorkflowRunState;
 }

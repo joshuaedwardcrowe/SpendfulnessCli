@@ -2,10 +2,10 @@ namespace Cli.Workflow.Abstractions;
 
 public enum ClIWorkflowRunState
 {
+    NotInitialized,
     Created,
     Running,
-    NoInput,
-    NoCommand,
+    InvalidAsk,
     Finished,
     Exceptional,
 }
