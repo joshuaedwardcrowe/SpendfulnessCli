@@ -5,18 +5,27 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cli.Workflow;
 
+/// <summary>
+/// State machine of a command line interface.
+/// </summary>
 public class CliWorkflow
 {
     private readonly IServiceProvider _serviceProvider;
-    private List<CliWorkflowRun> _workflowRuns = [];
+    // TODO: CLI - Export this?
+    // ReSharper disable once CollectionNeverQueried.Local
+    private List<CliWorkflowRun> _runs = [];
     
-    public CliWorkflowState State = CliWorkflowState.Started;
+    public CliWorkflowStatus Status = CliWorkflowStatus.Started;
 
     public CliWorkflow(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
 
+    /// <summary>
+    /// Create a new run, a sub-state machine of an individual execution.
+    /// </summary>
+    /// <returns>A sub-state mchine of an individual execution.</returns>
     public CliWorkflowRun CreateRun()
     {
         // TODO: CLI - Store this somewhere?
@@ -30,13 +39,16 @@ public class CliWorkflow
         
         var run = new CliWorkflowRun(state, instructionParser, commandProvider, mediator);
         
-        _workflowRuns.Add(run);
+        _runs.Add(run);
 
         return run;
     }
 
+    /// <summary>
+    /// Close the state machine.
+    /// </summary>
     public void Stop()
     {
-        State = CliWorkflowState.Stopped;
+        Status = CliWorkflowStatus.Stopped;
     }
 }

@@ -13,7 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Cli.Commands.Abstractions\Cli.Commands.Abstractions.csproj" />
-      <ProjectReference Include="..\Cli.Spendfulness.Database\Cli.Spendfulness.Database.csproj" />
+      <ProjectReference Include="..\Spendfulness.Database\Spendfulness.Database.csproj" />
       <ProjectReference Include="..\Cli.Spendfulness.CliTables\Cli.Spendfulness.CliTables.csproj" />
       <ProjectReference Include="..\Cli.Instructions\Cli.Instructions.csproj" />
     </ItemGroup>

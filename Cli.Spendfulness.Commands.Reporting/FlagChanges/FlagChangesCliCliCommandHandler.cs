@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Spendfulness.Aggregation.Aggregator;
 using Cli.Spendfulness.CliTables.ViewModelBuilders;
-using Cli.Spendfulness.Database;
+using Spendfulness.Database;
 using Ynab.Extensions;
 
 namespace Cli.Ynab.Commands.Reporting.FlagChanges;

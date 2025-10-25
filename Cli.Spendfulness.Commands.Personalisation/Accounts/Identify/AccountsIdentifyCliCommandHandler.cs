@@ -1,8 +1,8 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Spendfulness.Database;
-using Cli.Spendfulness.Database.Abstractions;
-using Cli.Spendfulness.Database.Accounts;
+using Spendfulness.Database;
+using Spendfulness.Database.Abstractions;
+using Spendfulness.Database.Accounts;
 using Ynab.Extensions;
 
 namespace Cli.Spendfulness.Commands.Personalisation.Accounts.Identify;

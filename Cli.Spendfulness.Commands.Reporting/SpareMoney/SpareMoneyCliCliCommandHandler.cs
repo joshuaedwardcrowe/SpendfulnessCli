@@ -3,7 +3,7 @@ using Cli.Commands.Abstractions.Outcomes;
 using Cli.Spendfulness.Aggregation.Aggregator;
 using Cli.Spendfulness.Aggregation.Aggregator.AmountAggregators;
 using Cli.Spendfulness.CliTables.ViewModelBuilders;
-using Cli.Spendfulness.Database;
+using Spendfulness.Database;
 using Ynab;
 using Ynab.Extensions;
 using Ynab.Responses.Accounts;

@@ -1,6 +1,5 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
-using ConsoleTables;
 
 namespace Cli.Spendfulness.Commands.Personalisation.Databases;
 

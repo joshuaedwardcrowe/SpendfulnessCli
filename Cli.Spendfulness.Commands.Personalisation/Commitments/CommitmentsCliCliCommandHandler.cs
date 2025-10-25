@@ -2,9 +2,9 @@ using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Spendfulness.Aggregation.Aggregator;
 using Cli.Spendfulness.CliTables.ViewModelBuilders;
-using Cli.Spendfulness.Database;
-using Cli.Spendfulness.Database.Commitments;
-using Cli.Spendfulness.Database.Users;
+using Spendfulness.Database;
+using Spendfulness.Database.Commitments;
+using Spendfulness.Database.Users;
 
 namespace Cli.Spendfulness.Commands.Personalisation.Commitments;
 

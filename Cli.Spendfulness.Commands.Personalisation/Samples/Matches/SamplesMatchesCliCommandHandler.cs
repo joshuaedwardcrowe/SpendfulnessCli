@@ -1,8 +1,8 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Spendfulness.Database;
-using Cli.Spendfulness.Database.SpendingSamples;
 using Microsoft.EntityFrameworkCore;
+using Spendfulness.Database;
+using Spendfulness.Database.SpendingSamples;
 
 namespace Cli.Spendfulness.Commands.Personalisation.Samples.Matches;
 

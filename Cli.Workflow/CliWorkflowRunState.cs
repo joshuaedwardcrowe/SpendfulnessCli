@@ -50,7 +50,7 @@ public class CliWorkflowRunState
 
         if (stateTypeToChangeTo == ClIWorkflowRunStateType.Finished)
         {
-            _stopwatch.Stop(); ;
+            _stopwatch.Stop();
         }
     }
 

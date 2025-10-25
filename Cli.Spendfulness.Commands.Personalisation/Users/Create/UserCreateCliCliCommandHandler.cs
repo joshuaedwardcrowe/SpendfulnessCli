@@ -1,16 +1,16 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Spendfulness.Database;
-using Cli.Spendfulness.Database.Users;
 using Microsoft.EntityFrameworkCore;
+using Spendfulness.Database;
+using Spendfulness.Database.Users;
 
 namespace Cli.Spendfulness.Commands.Personalisation.Users.Create;
 
 public class UserCreateCliCliCommandHandler : CliCommandHandler, ICliCommandHandler<UserCreateCliCommand>
 {
-    private readonly YnabCliDbContext _dbContext;
+    private readonly SpendfulnessDbContext _dbContext;
 
-    public UserCreateCliCliCommandHandler(YnabCliDbContext dbContext)
+    public UserCreateCliCliCommandHandler(SpendfulnessDbContext dbContext)
     {
         _dbContext = dbContext;
     }

@@ -1,4 +1,4 @@
-using Cli.Spendfulness.Database.Settings;
+using Spendfulness.Database.Settings;
 
 namespace Cli.Spendfulness.Commands.Extensions;
 

@@ -25,7 +25,7 @@ public class CliWorkflowRun
         _mediator = mediator;
     }
 
-    public bool IsValidAsk(string? ask) => !string.IsNullOrEmpty(ask);
+    private bool IsValidAsk(string? ask) => !string.IsNullOrEmpty(ask);
     
     public async Task<CliCommandOutcome> RespondToAsk(string? ask)
     {

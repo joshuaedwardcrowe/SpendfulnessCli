@@ -1,5 +1,5 @@
 using Cli.Spendfulness.Commands.Builders;
-using Cli.Spendfulness.Database;
+using Spendfulness.Database;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cli.Spendfulness.Commands.Extensions;

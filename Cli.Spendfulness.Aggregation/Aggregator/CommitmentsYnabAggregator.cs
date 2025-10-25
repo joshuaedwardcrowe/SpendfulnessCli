@@ -1,4 +1,4 @@
-using Cli.Spendfulness.Database.Commitments;
+using Spendfulness.Database.Commitments;
 
 namespace Cli.Spendfulness.Aggregation.Aggregator;
 

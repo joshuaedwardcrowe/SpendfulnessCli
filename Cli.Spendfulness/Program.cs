@@ -6,15 +6,16 @@ using Cli.Spendfulness;
 using Cli.Spendfulness.Commands.Extensions;
 using Cli.Spendfulness.Commands.Organisation;
 using Cli.Spendfulness.Commands.Personalisation;
-using Cli.Spendfulness.Database;
 using Cli.Ynab.Commands.Reporting;
 using Microsoft.Extensions.DependencyInjection;
+using Spendfulness.Database;
 using Ynab.Extensions;
 
+// TODO: CLI - I wonder if I could simplify this to new CliBuilder() or something.
 var serviceProvider = new ServiceCollection()
     .AddCli<SpendfulnessCli>()
     .AddYnab() // Speak to the YNAB API
-    .AddDb() // Store data in an SQLite databaase.
+    .AddSpendfulnessDb() // Store data in an SQLite databaase.
     .AddCommands() // Convert them into MediatR requests
     .AddReportingCommands() // Commands that work with YNAB data
     .AddOrganisationCommands() // Commands that help organise the data

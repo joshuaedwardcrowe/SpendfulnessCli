@@ -1,6 +1,6 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Spendfulness.Database;
+using Spendfulness.Database;
 using Ynab;
 using Ynab.Exceptions;
 

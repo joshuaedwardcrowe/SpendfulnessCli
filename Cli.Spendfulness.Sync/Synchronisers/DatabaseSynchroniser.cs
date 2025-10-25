@@ -1,9 +1,9 @@
-using Cli.Spendfulness.Database;
+using Spendfulness.Database;
 using Microsoft.Extensions.Hosting;
 
 namespace YnabCli.Sync.Synchronisers;
 
-public class DatabaseSynchroniser(YnabCliDbContext dbContext) : BackgroundService
+public class DatabaseSynchroniser(SpendfulnessDbContext dbContext) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {

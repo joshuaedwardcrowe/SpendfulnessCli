@@ -1,6 +1,5 @@
 using Cli.Commands.Abstractions;
 using Cli.Instructions.Abstractions;
-using Cli.Instructions.Arguments;
 using Cli.Spendfulness.Commands.Personalisation.Commitments.Find;
 
 namespace Cli.Spendfulness.Commands.Personalisation.Commitments;

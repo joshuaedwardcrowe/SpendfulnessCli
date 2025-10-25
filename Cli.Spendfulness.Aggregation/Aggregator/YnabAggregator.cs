@@ -1,5 +1,5 @@
 using Cli.Abstractions;
-using Cli.Spendfulness.Database.Commitments;
+using Spendfulness.Database.Commitments;
 using Ynab;
 
 namespace Cli.Spendfulness.Aggregation.Aggregator;

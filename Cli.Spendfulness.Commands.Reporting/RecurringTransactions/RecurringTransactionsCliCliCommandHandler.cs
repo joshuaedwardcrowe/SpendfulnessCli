@@ -4,7 +4,7 @@ using Cli.Spendfulness.Aggregation.Aggregates;
 using Cli.Spendfulness.Aggregation.Aggregator.ListAggregators;
 using Cli.Spendfulness.Aggregation.Extensions;
 using Cli.Spendfulness.CliTables.ViewModelBuilders;
-using Cli.Spendfulness.Database;
+using Spendfulness.Database;
 using Ynab;
 using Ynab.Extensions;
 

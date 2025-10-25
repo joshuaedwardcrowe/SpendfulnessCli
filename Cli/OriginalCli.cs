@@ -1,4 +1,3 @@
-using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Io;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Workflow;
@@ -21,7 +20,7 @@ public abstract class OriginalCli
     { 
         OnRun(_workflow, _io);
         
-        while (_workflow.State != CliWorkflowState.Stopped)
+        while (_workflow.Status != CliWorkflowStatus.Stopped)
         {
             var cliWorkflowRun = _workflow.CreateRun();
             

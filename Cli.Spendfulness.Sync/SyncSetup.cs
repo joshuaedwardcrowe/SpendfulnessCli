@@ -1,4 +1,4 @@
-using Cli.Spendfulness.Database;
+using Spendfulness.Database;
 using Microsoft.Extensions.DependencyInjection;
 using Ynab.Extensions;
 using YnabCli.Sync.Synchronisers;
@@ -12,7 +12,7 @@ public static class SyncSetup
         // Dependencies
         serviceCollection
             .AddYnab()
-            .AddDb();
+            .AddSpendfulnessDb();
         
         // Sync-related
         serviceCollection

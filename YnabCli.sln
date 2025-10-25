@@ -32,9 +32,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADR", "ADR", "{B5381D3F-A87
 		ADR\ynab-database-diagram.png = ADR\ynab-database-diagram.png
 		ADR\ADR03-Exceptional-Cicumstances.md = ADR\ADR03-Exceptional-Cicumstances.md
 		ADR\ADR04-Itemisation-Intelligence.md = ADR\ADR04-Itemisation-Intelligence.md
+		ADR\Best-Practices.md = ADR\Best-Practices.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Database", "Cli.Spendfulness.Database\Cli.Spendfulness.Database.csproj", "{80B41408-9A47-4AC6-8847-A37EF2EC327C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Database", "Spendfulness.Database\Spendfulness.Database.csproj", "{80B41408-9A47-4AC6-8847-A37EF2EC327C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands.Personalisation", "Cli.Spendfulness.Commands.Personalisation\Cli.Spendfulness.Commands.Personalisation.csproj", "{9EDF82AA-7E61-485B-8B95-815EA0407C93}"
 EndProject
@@ -64,7 +65,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cli", "Cli", "{68F25F73-18E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ynab", "Ynab", "{8AA80F62-00BE-444B-8E6C-2F74B6F7F596}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Database.Abstractions", "Cli.Spendfulness.Database.Abstractions\Cli.Spendfulness.Database.Abstractions.csproj", "{DE64B865-301F-4302-B6F4-C7117809E9C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Database.Abstractions", "Spendfulness.Database.Abstractions\Spendfulness.Database.Abstractions.csproj", "{DE64B865-301F-4302-B6F4-C7117809E9C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

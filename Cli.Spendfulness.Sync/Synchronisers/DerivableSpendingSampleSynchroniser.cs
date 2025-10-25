@@ -1,5 +1,5 @@
-using Cli.Spendfulness.Database;
-using Cli.Spendfulness.Database.SpendingSamples;
+using Spendfulness.Database;
+using Spendfulness.Database.SpendingSamples;
 using Ynab;
 
 namespace YnabCli.Sync.Synchronisers;

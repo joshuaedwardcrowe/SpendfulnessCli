@@ -1,14 +1,14 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Spendfulness.Database;
+using Spendfulness.Database;
 
 namespace Cli.Spendfulness.Commands.Personalisation.Databases.Create;
 
 public class DatabaseCreateCliCliCommandHandler : CliCommandHandler, ICliCommandHandler<DatabaseCreateCliCommand>
 {
-    private readonly YnabCliDbContext _dbContext;
+    private readonly SpendfulnessDbContext _dbContext;
 
-    public DatabaseCreateCliCliCommandHandler(YnabCliDbContext dbContext)
+    public DatabaseCreateCliCliCommandHandler(SpendfulnessDbContext dbContext)
     {
         _dbContext = dbContext;
     }

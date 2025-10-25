@@ -1,7 +1,7 @@
 using Cli.Abstractions;
-using Cli.Spendfulness.Database;
-using Cli.Spendfulness.Database.Commitments;
-using Cli.Spendfulness.Database.Users;
+using Spendfulness.Database;
+using Spendfulness.Database.Commitments;
+using Spendfulness.Database.Users;
 using Ynab;
 using Ynab.Extensions;
 

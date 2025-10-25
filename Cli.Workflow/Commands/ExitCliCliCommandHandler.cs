@@ -1,4 +1,3 @@
-using Cli.Commands;
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
 
