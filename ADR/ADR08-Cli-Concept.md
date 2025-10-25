@@ -2,10 +2,10 @@
 
 ## Premise
 
-YnabCli is a terminal-based application that allows users to interact with their YNAB budget data through command-line instructions. Users need a consistent, interactive experience where they can enter commands, receive feedback, and continue working in a persistent session until they choose to exit.
+Cli is a terminal-based application that allows users to interact with their YNAB budget data through command-line instructions. Users need a consistent, interactive experience where they can enter commands, receive feedback, and continue working in a persistent session until they choose to exit.
 
 The application needs to:
-- Accept user input as text commands
+- Accept user input as text commands (extensible with sub-commands and multiple arguments)
 - Parse and execute those commands
 - Display results back to the user
 - Maintain a continuous interaction loop
@@ -36,7 +36,7 @@ The CLI is built on three core components:
 
 1. **OriginalCli** - Abstract base class defining the CLI lifecycle
 2. **CliWorkflow** - State machine managing command execution
-3. **CliCommandOutcomeIo** - Abstraction for input/output operations
+3. **CliCommandOutcomeIo** - Abstraction for interaction with the Console program
 
 ### 1. The OriginalCli Base Class
 
