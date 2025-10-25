@@ -12,4 +12,21 @@
       <ProjectReference Include="..\Ynab\Ynab.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Extensions\TransactionMemoOccurrenceAggregateExtensions 2.cs" />
+      <Compile Remove="Extensions\TransactionByYearByCategoryExtension 2.cs" />
+      <Compile Remove="Extensions\TransactionByMemoOccurrenceByPayeeNameExtensions 2.cs" />
+      <Compile Remove="Aggregator\YnabAggregator 2.cs" />
+      <Compile Remove="Aggregator\TransactionMonthFlaggedYnabAggregator 2.cs" />
+      <Compile Remove="Aggregator\CommitmentsYnabAggregator 2.cs" />
+      <Compile Remove="Aggregator\CategoryYearAverageYnabAggregator 2.cs" />
+      <Compile Remove="Aggregates\TransactionYearAverageAggregate 2.cs" />
+      <Compile Remove="Aggregates\TransactionPayeeMemoOccurrenceAggregate 2.cs" />
+      <Compile Remove="Aggregates\TransactionMonthTotalAggregate 2.cs" />
+      <Compile Remove="Aggregates\TransactionMonthFlaggedAmountAggregate 2.cs" />
+      <Compile Remove="Aggregates\TransactionMonthFlaggedAggregate 2.cs" />
+      <Compile Remove="Aggregates\CategoryYearAverageAggregate 2.cs" />
+      <Compile Remove="Aggregates\CategoryAggregate 2.cs" />
+    </ItemGroup>
+
 </Project>

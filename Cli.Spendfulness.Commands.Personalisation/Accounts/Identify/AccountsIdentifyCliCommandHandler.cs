@@ -1,6 +1,7 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Spendfulness.Database;
+using Cli.Spendfulness.Database.Abstractions;
 using Cli.Spendfulness.Database.Accounts;
 using Ynab.Extensions;
 
@@ -28,16 +29,16 @@ public class AccountsIdentifyCliCommandHandler : CliCommandHandler, ICliCommandH
         var account = accounts.Find(cliCommand.YnabAccountName);
         if (account == null)
         {
-            throw new YnabCliDbException(
-                YnabCliDbExceptionCode.DataNotFound,
+            throw new SpendfulnessDbException(
+                SpendfulnessDbExceptionCode.EntityNotFound,
                 "Account not found");
         }
         
         var type = accountTypes.Find(cliCommand.CustomAccountTypeName);
         if (type == null)
         {
-            throw new YnabCliDbException(
-                YnabCliDbExceptionCode.DataNotFound,
+            throw new SpendfulnessDbException(
+                SpendfulnessDbExceptionCode.EntityNotFound,
                 "Name of a custom account type not found");
         }
 
@@ -47,7 +48,7 @@ public class AccountsIdentifyCliCommandHandler : CliCommandHandler, ICliCommandH
             accountAccountType.CustomAccountType = type;
         }
 
-        var newAccountAccountType = new AccountAttributes
+        var newAccountAccountType = new CustomAccountAttributes
         {
             YnabAccountId = account.Id,
             CustomAccountType = type,
@@ -58,6 +59,7 @@ public class AccountsIdentifyCliCommandHandler : CliCommandHandler, ICliCommandH
         
         await _db.Save();
         
+        // TODO: Maybe make this a table of the account's cusotm properties.
         return Compile($"Account {account.Name} identified as {type.Name}.");
     }
 }

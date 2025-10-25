@@ -24,4 +24,10 @@
       <ProjectReference Include="..\Cli.Spendfulness.CliTables\Cli.Spendfulness.CliTables.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Extensions\TransactionByMemoOccurrenceByPayeeNameExtensionsTests 2.cs" />
+      <Compile Remove="Extensions\EnumerableExtensionsTests 2.cs" />
+      <Compile Remove="Calculators\PercentageCalculatorTests 2.cs" />
+    </ItemGroup>
+
 </Project>

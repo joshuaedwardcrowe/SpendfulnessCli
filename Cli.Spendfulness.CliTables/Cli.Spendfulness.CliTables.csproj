@@ -17,4 +17,23 @@
       <ProjectReference Include="..\Ynab\Ynab.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="ViewModels\TransactionVIewModel 2.cs" />
+      <Compile Remove="ViewModels\TransactionMonthFlaggedViewModel 2.cs" />
+      <Compile Remove="ViewModels\TransactionMonthChangeTable 2.cs" />
+      <Compile Remove="ViewModels\TransactionMemoOccurrenceTable 2.cs" />
+      <Compile Remove="ViewModels\CategoryViewModel 2.cs" />
+      <Compile Remove="ViewModelBuilders\TransactionsCliTableBuilder 2.cs" />
+      <Compile Remove="ViewModelBuilders\TransactionYearAverageCliTableBuilder 2.cs" />
+      <Compile Remove="ViewModelBuilders\TransactionPayeeMemoOccurrenceCliTableBuilder 2.cs" />
+      <Compile Remove="ViewModelBuilders\TransactionMonthFlaggedCliTableBuilder 2.cs" />
+      <Compile Remove="ViewModelBuilders\TransactionMonthChangeCliTableBuilder 2.cs" />
+      <Compile Remove="ViewModelBuilders\CommitmentsCliTableBuilder 2.cs" />
+      <Compile Remove="ViewModelBuilders\CategoryYearAverageCliTableBuilder 2.cs" />
+      <Compile Remove="ViewModelBuilders\CategoryCliTableBuilder 2.cs" />
+      <Compile Remove="Formatters\PercentageDisplayFormatter 2.cs" />
+      <Compile Remove="Formatters\AmountPercentageChangeDisplayFormatter 2.cs" />
+      <Compile Remove="Extensions\EnumerableExtensions 2.cs" />
+    </ItemGroup>
+
 </Project>

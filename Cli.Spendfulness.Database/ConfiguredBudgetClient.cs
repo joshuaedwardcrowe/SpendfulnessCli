@@ -1,3 +1,4 @@
+using Cli.Spendfulness.Database.Abstractions;
 using Cli.Spendfulness.Database.Users;
 using Ynab.Clients;
 using Ynab.Connected;
@@ -7,17 +8,24 @@ namespace Cli.Spendfulness.Database;
 
 public class ConfiguredBudgetClient(YnabCliDb db, YnabHttpClientBuilder httpClientBuilder)
 {
+    // TODO: Could this override the base?
     public async Task<ConnectedBudget> GetDefaultBudget()
     {
         var activeUser = await db.GetActiveUser();
         if (activeUser == null)
         {
-            throw new YnabCliDbException(YnabCliDbExceptionCode.DataNotFound, "No active user found");
+            // TODO: Better exception message.
+            throw new SpendfulnessDbException(
+                SpendfulnessDbExceptionCode.CannotConfigureBudget,
+                "No active user found");
         }
         
         if (activeUser.YnabApiKey is null)
         {
-            throw new YnabCliDbException(YnabCliDbExceptionCode.DataNotFound, $"No {nameof(User.YnabApiKey)} setting");
+            // TODO: Better exception message.
+            throw new SpendfulnessDbException(
+                SpendfulnessDbExceptionCode.CannotConfigureBudget,
+                $"No {nameof(User.YnabApiKey)} setting");
         }
         
         var builder = httpClientBuilder.WithBearerToken(activeUser.YnabApiKey);

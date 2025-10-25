@@ -12,7 +12,21 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Cli.Abstractions\Cli.Abstractions.csproj" />
+      <ProjectReference Include="..\Cli.Spendfulness.Database.Abstractions\Cli.Spendfulness.Database.Abstractions.csproj" />
       <ProjectReference Include="..\Ynab\Ynab.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Users\User 2.cs" />
+      <Compile Remove="SpendingSamples\SpendingSampleMatchCriteriaPrice 2.cs" />
+      <Compile Remove="SpendingSamples\SpendingSampleMatchCriteriaExtensions 2.cs" />
+      <Compile Remove="SpendingSamples\SpendingSampleMatchCriteria 2.cs" />
+      <Compile Remove="SpendingSamples\SpendingSample 2.cs" />
+      <Compile Remove="Settings\SettingTypes 2.cs" />
+      <Compile Remove="Settings\SettingType 2.cs" />
+      <Compile Remove="Settings\Setting 2.cs" />
+      <Compile Remove="Milestones\Milestone 2.cs" />
+      <Compile Remove="Commitments\Commitment 2.cs" />
     </ItemGroup>
 
 </Project>

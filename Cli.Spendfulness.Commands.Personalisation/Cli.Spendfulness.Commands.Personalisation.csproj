@@ -10,4 +10,31 @@
       <ProjectReference Include="..\Cli.Spendfulness.Commands\Cli.Spendfulness.Commands.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Users\UserGenericCommandGenerator 2.cs" />
+      <Compile Remove="Users\UserCliCommandHandler 2.cs" />
+      <Compile Remove="Users\UserCliCommand 2.cs" />
+      <Compile Remove="Transactions\TransactionsCliCommand 2.cs" />
+      <Compile Remove="Transactions\TransactionCommandGenerator 2.cs" />
+      <Compile Remove="Settings\SettingsGenericCommandGenerator 2.cs" />
+      <Compile Remove="Settings\SettingsCliCommandHandler 2.cs" />
+      <Compile Remove="Settings\SettingsCliCommand 2.cs" />
+      <Compile Remove="ServiceCollectionExtensions 2.cs" />
+      <Compile Remove="Samples\SamplesCommandGenerator 2.cs" />
+      <Compile Remove="Samples\SamplesCliCommand 2.cs" />
+      <Compile Remove="Databases\DatabaseGenericCommandGenerator 2.cs" />
+      <Compile Remove="Databases\DatabaseCliCommandHandler 2.cs" />
+      <Compile Remove="Databases\DatabaseCliCommand 2.cs" />
+      <Compile Remove="Commitments\Find\CommitmentFindCliCommand 2.cs" />
+      <Compile Remove="Commitments\Find\CommitmentFindCliCliCommandHandler 2.cs" />
+      <Compile Remove="Commitments\CommitmentsGenericCommandGenerator 2.cs" />
+      <Compile Remove="Commitments\CommitmentsCliCommand 2.cs" />
+      <Compile Remove="Commitments\CommitmentsCliCliCommandHandler 2.cs" />
+      <Compile Remove="Categories\CategoriesGenericCommandGenerator 2.cs" />
+      <Compile Remove="Categories\CategoriesCliCommand 2.cs" />
+      <Compile Remove="Categories\CategoriesCliCliCommandHandler 2.cs" />
+      <Compile Remove="Accounts\AccountsCliCommandHandler 2.cs" />
+      <Compile Remove="Accounts\AccountsCliCommand 2.cs" />
+    </ItemGroup>
+
 </Project>

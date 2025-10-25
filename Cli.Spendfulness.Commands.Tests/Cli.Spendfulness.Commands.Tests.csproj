@@ -26,4 +26,8 @@
       <ProjectReference Include="..\Cli.Spendfulness.Commands\Cli.Spendfulness.Commands.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Extensions\StringExtensionsTests 2.cs" />
+    </ItemGroup>
+
 </Project>

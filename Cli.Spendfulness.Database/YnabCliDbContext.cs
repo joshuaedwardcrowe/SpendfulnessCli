@@ -17,11 +17,12 @@ public class YnabCliDbContext : DbContext
     public DbSet<Milestone> Milestones { get; set; }
     
     
+    // TODO: I'm still not entirely sure about this. 
     public DbSet<SpendingSample> SpendingSamples { get; set; }
     public DbSet<SpendingSampleMatchCriteria> SpendingSampleMatchCriteria { get; set; }
     public DbSet<SpendingSampleMatchCriteriaPrice> SpendingSampleMatchCriteriaPrices { get; set; }
     public DbSet<CustomAccountType> CustomAccountTypes { get; set; }
-    public DbSet<AccountAttributes> AccountAccountTypes { get; set; }
+    public DbSet<CustomAccountAttributes> CustomAccountAttributes { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

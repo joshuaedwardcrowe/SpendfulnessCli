@@ -18,4 +18,11 @@
       <ProjectReference Include="..\Cli.Instructions\Cli.Instructions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Extensions\SettingsExtensions 2.cs" />
+      <Compile Remove="CommandActionType 2.cs" />
+      <Compile Remove="Builders\CommandHelpCliTableBuilder 2.cs" />
+      <Compile Remove="Aggregate\CommandHelpAggregate 2.cs" />
+    </ItemGroup>
+
 </Project>

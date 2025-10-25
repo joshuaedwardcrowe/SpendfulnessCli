@@ -64,6 +64,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cli", "Cli", "{68F25F73-18E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ynab", "Ynab", "{8AA80F62-00BE-444B-8E6C-2F74B6F7F596}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Database.Abstractions", "Cli.Spendfulness.Database.Abstractions\Cli.Spendfulness.Database.Abstractions.csproj", "{DE64B865-301F-4302-B6F4-C7117809E9C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -154,6 +156,10 @@ Global
 		{3CA3D4A0-5C8C-41A1-A22B-61B9EBA19590}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CA3D4A0-5C8C-41A1-A22B-61B9EBA19590}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CA3D4A0-5C8C-41A1-A22B-61B9EBA19590}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE64B865-301F-4302-B6F4-C7117809E9C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE64B865-301F-4302-B6F4-C7117809E9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE64B865-301F-4302-B6F4-C7117809E9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE64B865-301F-4302-B6F4-C7117809E9C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1C607C1F-B2A8-4405-B5F9-224D8434FDA4} = {68F25F73-18EB-4E65-80EB-1EDCAF174DFA}

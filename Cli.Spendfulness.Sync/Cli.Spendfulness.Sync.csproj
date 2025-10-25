@@ -17,4 +17,13 @@
       <ProjectReference Include="..\Ynab\Ynab.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Synchronisers\PossibleSpendingSampleSynchroniser 2.cs" />
+      <Compile Remove="Synchronisers\DerivableSpendingSampleSynchroniser 2.cs" />
+      <Compile Remove="Synchronisers\DatabaseSynchroniser 2.cs" />
+      <Compile Remove="Synchronisers\CommitmentSynchroniser 2.cs" />
+      <Compile Remove="SyncSetup 2.cs" />
+      <Compile Remove="Program 2.cs" />
+    </ItemGroup>
+
 </Project>

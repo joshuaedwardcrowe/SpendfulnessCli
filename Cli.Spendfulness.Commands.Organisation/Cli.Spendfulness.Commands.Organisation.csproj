@@ -14,4 +14,11 @@
       <ProjectReference Include="..\Cli.Spendfulness.Commands\Cli.Spendfulness.Commands.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="ServiceCollectionExtensions 2.cs" />
+      <Compile Remove="CopyOnBudget\CopyOnBudgetCommandGenerator 2.cs" />
+      <Compile Remove="CopyOnBudget\CopyOnBudgetCliCommand 2.cs" />
+      <Compile Remove="CopyOnBudget\CopyOnBudgetCliCliCommandHandler 2.cs" />
+    </ItemGroup>
+
 </Project>

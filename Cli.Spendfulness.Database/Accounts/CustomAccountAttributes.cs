@@ -2,7 +2,7 @@ using Cli.Spendfulness.Database.Users;
 
 namespace Cli.Spendfulness.Database.Accounts;
 
-public class AccountAttributes
+public class CustomAccountAttributes
 {
     public int Id { get; set; }
     public Guid YnabAccountId { get; set; }
