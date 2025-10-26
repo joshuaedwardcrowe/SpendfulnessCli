@@ -69,8 +69,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Database.Abstr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spendfulness", "Spendfulness", "{52E90345-79FA-4FD3-8A3A-1D69887FA38E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands.Personalisation.Tests", "Cli.Spendfulness.Commands.Personalisation.Tests\Cli.Spendfulness.Commands.Personalisation.Tests.csproj", "{5CC3ABF2-F102-446B-BDD8-2D9D288DF9E8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,10 +163,6 @@ Global
 		{DE64B865-301F-4302-B6F4-C7117809E9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE64B865-301F-4302-B6F4-C7117809E9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE64B865-301F-4302-B6F4-C7117809E9C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5CC3ABF2-F102-446B-BDD8-2D9D288DF9E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CC3ABF2-F102-446B-BDD8-2D9D288DF9E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CC3ABF2-F102-446B-BDD8-2D9D288DF9E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CC3ABF2-F102-446B-BDD8-2D9D288DF9E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1C607C1F-B2A8-4405-B5F9-224D8434FDA4} = {68F25F73-18EB-4E65-80EB-1EDCAF174DFA}
