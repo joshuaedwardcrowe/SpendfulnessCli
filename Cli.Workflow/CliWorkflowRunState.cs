@@ -22,6 +22,11 @@ public class CliWorkflowRunState
         _recordedStateChanges.Add(stateChange);
     }
 
+    public List<ClIWorkflowRunStateType> GetStateChangeTimeline()
+        => _recordedStateChanges
+            .Select(x => x.MovedTo)
+            .ToList();
+
     private ClIWorkflowRunStateType CanChangeTo(ClIWorkflowRunStateType stateTypeToChangeTo)
     {
         var mostRecentState = _recordedStateChanges.LastOrDefault();

@@ -13,7 +13,6 @@ public class User
     public bool Active { get; set; }
     public ICollection<Setting> Settings { get; set; } = new List<Setting>();
     public ICollection<Commitment> Commitments { get; set; } = new List<Commitment>();
-    public ICollection<CustomAccountAttributes> AccountAttributes { get; set; } = new List<CustomAccountAttributes>();
     public string? YnabApiKey => Settings.AsString(SettingTypeNames.YnabApiKey);
     
     public Guid? DefaultBudgetId => Settings.AsGuid(SettingTypeNames.DefaultBudgetId);

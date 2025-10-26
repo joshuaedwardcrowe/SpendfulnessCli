@@ -32,9 +32,11 @@ public abstract class OriginalCli
             
             OnRunStarted(cliWorkflowRun, _io);
 
-            var outcome = await cliWorkflowRunTask;
+            var comandOutcome = await cliWorkflowRunTask;
             
-            _io.Say(outcome);
+            _io.Say(comandOutcome);
+            
+            OnRunComplete(comandOutcome, cliWorkflowRun, _io);
         }
     }
 
@@ -47,6 +49,10 @@ public abstract class OriginalCli
     }
 
     protected virtual void OnRunStarted(CliWorkflowRun workflowRun, CliIo io)
+    {
+    }
+
+    protected virtual void OnRunComplete(CliCommandOutcome outcome, CliWorkflowRun workflowRun, CliIo io)
     {
     }
 }

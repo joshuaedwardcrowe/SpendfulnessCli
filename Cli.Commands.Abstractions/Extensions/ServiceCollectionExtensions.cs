@@ -31,7 +31,8 @@ public static class ServiceCollectionExtensions
             
             var typeForReferencedCommand = genericInterfaceType.GenericTypeArguments.First();
             
-            var name = typeForReferencedCommand.Name.Replace("Command", string.Empty);
+            // TODO: This could really do with not being hardcoded.
+            var name = typeForReferencedCommand.Name.Replace("CliCommand", string.Empty);
             
             var commandName = name.ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
             var shorthandCommandName = name.ToLowerTitleCharacters();

@@ -16,9 +16,9 @@ public static class SyncSetup
         
         // Sync-related
         serviceCollection
-            .AddHostedService<DatabaseSynchroniser>() // Ensure db is created.
-            // .AddHostedService<CommitmentSynchroniser>()
-            // .AddHostedService<DerivableSpendingSampleSynchroniser>();
-            .AddHostedService<PossibleSpendingSampleSynchroniser>();
+            .AddHostedService<DatabaseSynchroniser>();  // Ensure db is created with testing settings..
+        // .AddHostedService<CommitmentSynchroniser>()
+        // .AddHostedService<DerivableSpendingSampleSynchroniser>();
+        // .AddHostedService<PossibleSpendingSampleSynchroniser>();
     }
 }

@@ -17,8 +17,12 @@ public class AccountsCommandGenerator : ICommandGenerator<AccountsCliCommand>
     private  AccountsIdentifyCliCommand GenerateIdentifyCommand(List<CliInstructionArgument> arguments)
     {
         var nameArgument = arguments.OfRequiredType<string>(AccountsIdentifyCliCommand.ArgumentNames.Name);
-        var typeArgument = arguments.OfRequiredType<string>(AccountsIdentifyCliCommand.ArgumentNames.Type);
+        var typeArgument = arguments.OfType<string>(AccountsIdentifyCliCommand.ArgumentNames.Type);
+        var interestRateArgument = arguments.OfType<decimal>(AccountsIdentifyCliCommand.ArgumentNames.InterestRate);
 
-        return new AccountsIdentifyCliCommand(nameArgument.ArgumentValue, typeArgument.ArgumentValue);
+        return new AccountsIdentifyCliCommand(
+            nameArgument.ArgumentValue,
+            typeArgument?.ArgumentValue,
+            interestRateArgument?.ArgumentValue);
     }
 }

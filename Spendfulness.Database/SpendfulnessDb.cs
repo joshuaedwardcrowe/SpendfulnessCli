@@ -6,6 +6,7 @@ using Spendfulness.Database.Users;
 
 namespace Spendfulness.Database;
 
+[Obsolete("Please use repository pattern")]
 public class SpendfulnessDb(SpendfulnessDbContext spendfulnessDbContext)
 {
     public readonly SpendfulnessDbContext Context = spendfulnessDbContext;
@@ -17,11 +18,6 @@ public class SpendfulnessDb(SpendfulnessDbContext spendfulnessDbContext)
             .ThenInclude(s => s.Type)
             .Include(u => u.Commitments)
             .FirstAsync(u => u.Active);
-    
-    public Task<List<CustomAccountType>> GetAccountTypes()
-        => Context
-            .CustomAccountTypes
-            .ToListAsync();
 
     public Task<List<string>> GetDerivedSpendingSampleTransactionIds()
         => Context

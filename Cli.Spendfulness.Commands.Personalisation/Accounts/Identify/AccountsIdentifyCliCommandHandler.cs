@@ -1,65 +1,69 @@
+using Cli.Abstractions;
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
 using Spendfulness.Database;
-using Spendfulness.Database.Abstractions;
 using Spendfulness.Database.Accounts;
-using Ynab.Extensions;
+using Spendfulness.Database.Users;
 
 namespace Cli.Spendfulness.Commands.Personalisation.Accounts.Identify;
 
 public class AccountsIdentifyCliCommandHandler : CliCommandHandler, ICliCommandHandler<AccountsIdentifyCliCommand>
 {
-    private readonly SpendfulnessDb _db;
-    private readonly SpendfulnessBudgetClient _budget;
+    private readonly SpendfulnessBudgetClient _budgetClient;
+    private readonly IEnumerable<IAccountAttributeChangeStrategy> _changeStrategies;
+    private readonly CustomAccountAttributeRepository _customAccountAttributeRepository;
+    private readonly CustomAccountTypeRepository _customAccountTypeRepository;
+    private readonly UserRepository _userRepository;
 
-    public AccountsIdentifyCliCommandHandler(SpendfulnessDb db, SpendfulnessBudgetClient budget)
+    public AccountsIdentifyCliCommandHandler(
+        SpendfulnessBudgetClient budgetClient,
+        IEnumerable<IAccountAttributeChangeStrategy> changeStrategies,
+        CustomAccountAttributeRepository customAccountAttributeRepository,
+        CustomAccountTypeRepository customAccountTypeRepository,
+        UserRepository userRepository)
     {
-        _db = db;
-        _budget = budget;
+        _budgetClient = budgetClient;
+        _changeStrategies = changeStrategies;
+        _customAccountAttributeRepository = customAccountAttributeRepository;
+        _customAccountTypeRepository = customAccountTypeRepository;
+        _userRepository = userRepository;
     }
 
-    public async Task<CliCommandOutcome> Handle(AccountsIdentifyCliCommand cliCommand, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome> Handle(AccountsIdentifyCliCommand command, CancellationToken cancellationToken)
     {
-        var user = await _db.GetActiveUser();
-        var accountTypes = await _db.GetAccountTypes();
+        var attribute = await _customAccountAttributeRepository.Get(command.YnabAccountName, cancellationToken);
         
-        var budget = await _budget.GetDefaultBudget();
+        if (attribute is null)
+        {
+            attribute = await CreateCustomAccountAttribute(command, cancellationToken);
+        }
+
+        var strategyTasks = _changeStrategies
+            .Where(strategy => strategy.AttributeHasChangedSince(command, attribute))
+            .Select(strategy => strategy.ChangeAttribute(command, attribute));
+        
+        var accountAttributeChanges = await Task.WhenAll(strategyTasks);
+        
+        // TODO: Create CliTable for AccountAttributeChange.
+        return Compile($"Made {accountAttributeChanges.Length} Changes");
+    }
+
+    private async Task<CustomAccountAttributes> CreateCustomAccountAttribute(AccountsIdentifyCliCommand command, CancellationToken cancellationToken)
+    {
+        // Get the account
+        var budget = await _budgetClient.GetDefaultBudget();
         var accounts = await budget.GetAccounts();
-
-        var account = accounts.Find(cliCommand.YnabAccountName);
-        if (account == null)
-        {
-            throw new SpendfulnessDbException(
-                SpendfulnessDbExceptionCode.EntityNotFound,
-                "Account not found");
-        }
+            
+        var account = accounts.First(account => account.Name.IsSimilarTo(command.YnabAccountName));
         
-        var type = accountTypes.Find(cliCommand.CustomAccountTypeName);
-        if (type == null)
-        {
-            throw new SpendfulnessDbException(
-                SpendfulnessDbExceptionCode.EntityNotFound,
-                "Name of a custom account type not found");
-        }
+        var activeUser = await _userRepository.FindActiveUser();
 
-        var accountAccountType = user.AccountAttributes.Find(account.Id);
-        if (accountAccountType != null)
-        {
-            accountAccountType.CustomAccountType = type;
-        }
-
-        var newAccountAccountType = new CustomAccountAttributes
+        return new CustomAccountAttributes
         {
             YnabAccountId = account.Id,
-            CustomAccountType = type,
-            User = user,
+            YnabAccountName = account.Name,
+            // TODO: I assume this means it will insert it on save anyway.
+            User = activeUser,
         };
-        
-        user.AccountAttributes.Add(newAccountAccountType);
-        
-        await _db.Save();
-        
-        // TODO: Maybe make this a table of the account's cusotm properties.
-        return Compile($"Account {account.Name} identified as {type.Name}.");
     }
 }

@@ -6,6 +6,8 @@ using MediatR;
 
 namespace Cli.Workflow;
 
+// TODO: Cli: I wonder if always attaching this to the command is a great way to add properties?
+// And then let implementers of the CLI pass around properties between commands and hooks.
 public class CliWorkflowRun
 {
     private readonly CliWorkflowRunState _state;
@@ -73,4 +75,7 @@ public class CliWorkflowRun
             _state.ChangeTo(ClIWorkflowRunStateType.Finished);
         }
     }
+
+    public List<ClIWorkflowRunStateType> GetTimeline()
+        => _state.GetStateChangeTimeline();
 }
