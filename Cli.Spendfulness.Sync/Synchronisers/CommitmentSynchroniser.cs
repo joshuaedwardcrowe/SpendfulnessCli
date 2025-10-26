@@ -7,7 +7,7 @@ using Ynab.Extensions;
 
 namespace YnabCli.Sync.Synchronisers;
 
-public class CommitmentSynchroniser(SpendfulnessBudgetClient spendfulnessBudgetClient, SpendfulnessDb db) : Synchroniser
+public class CommitmentSynchroniser(SpendfulnessBudgetClient spendfulnessBudgetClient, UserRepository userRepository, SpendfulnessDbContext dbContext) : Synchroniser
 {
     private const int DefaultSyncFrequency = 1;
     
@@ -15,7 +15,7 @@ public class CommitmentSynchroniser(SpendfulnessBudgetClient spendfulnessBudgetC
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            var user = await db.GetActiveUser();
+            var user = await userRepository.FindActiveUser();
 
             var syncFrequency = user.SyncFrequency ?? DefaultSyncFrequency;
             var syncFrequencyInMilliseconds = syncFrequency * 60 * 60 * 60;
@@ -59,7 +59,7 @@ public class CommitmentSynchroniser(SpendfulnessBudgetClient spendfulnessBudgetC
         }
         
         PrintToConsole($"Finalising Sync...");
-        await db.Save();
+        await dbContext.SaveChangesAsync();
     }
 
     private void PerformSync(User user, Commitment? commitment, Category? category)

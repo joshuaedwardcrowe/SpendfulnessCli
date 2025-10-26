@@ -64,7 +64,7 @@ public class AccountsIdentifyCliCommandHandler : CliCommandHandler, ICliCommandH
             User = activeUser,
         };
 
-        await _customAccountAttributeRepository.Save(attribute);
+        await _customAccountAttributeRepository.Save(attribute, cancellationToken);
         
         return attribute;
     }

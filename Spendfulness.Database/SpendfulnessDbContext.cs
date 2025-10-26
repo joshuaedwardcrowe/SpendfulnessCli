@@ -3,7 +3,6 @@ using Spendfulness.Database.Accounts;
 using Spendfulness.Database.Commitments;
 using Spendfulness.Database.Milestones;
 using Spendfulness.Database.Settings;
-using Spendfulness.Database.SpendingSamples;
 using Spendfulness.Database.Users;
 
 namespace Spendfulness.Database;
@@ -16,12 +15,6 @@ public class SpendfulnessDbContext : DbContext
     public DbSet<SettingType> SettingTypes { get; set; }
     public DbSet<Commitment> Commitments { get; set; }
     public DbSet<Milestone> Milestones { get; set; }
-    
-    
-    // TODO: I'm still not entirely sure about this. 
-    public DbSet<SpendingSample> SpendingSamples { get; set; }
-    public DbSet<SpendingSampleMatchCriteria> SpendingSampleMatchCriteria { get; set; }
-    public DbSet<SpendingSampleMatchCriteriaPrice> SpendingSampleMatchCriteriaPrices { get; set; }
     public DbSet<CustomAccountType> CustomAccountTypes { get; set; }
     public DbSet<CustomAccountAttributes> CustomAccountAttributes { get; set; }
     
@@ -46,10 +39,6 @@ public class SpendfulnessDbContext : DbContext
                     Name = nameof(SettingTypeNames.YnabApiKey)
                 }
             });
-        
-        modelBuilder
-            .Entity<SpendingSampleMatchCriteria>()
-            .Ignore(x => x.MostRecentPrice);
 
         modelBuilder
             .Entity<CustomAccountType>()

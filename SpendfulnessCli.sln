@@ -31,7 +31,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADR", "ADR", "{B5381D3F-A87
 		ADR\ADR02-Storing-Data.md = ADR\ADR02-Storing-Data.md
 		ADR\ynab-database-diagram.png = ADR\ynab-database-diagram.png
 		ADR\ADR03-Exceptional-Cicumstances.md = ADR\ADR03-Exceptional-Cicumstances.md
-		ADR\ADR04-Itemisation-Intelligence.md = ADR\ADR04-Itemisation-Intelligence.md
 		ADR\Best-Practices.md = ADR\Best-Practices.md
 	EndProjectSection
 EndProject

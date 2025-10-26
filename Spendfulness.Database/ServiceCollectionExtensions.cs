@@ -9,7 +9,6 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddSpendfulnessDb(this IServiceCollection services)
         => services
             .AddDbContext<SpendfulnessDbContext>()
-            .AddSingleton<SpendfulnessDb>()
             .AddYnabWrappers()
             .AddAccountRepositories()
             .AddUserRepositories();

@@ -6,12 +6,21 @@ using Ynab.Http;
 
 namespace Spendfulness.Database;
 
-public class SpendfulnessBudgetClient(SpendfulnessDb db, YnabHttpClientBuilder httpClientBuilder)
+public class SpendfulnessBudgetClient
 {
+    private readonly UserRepository _userRepository;
+    private readonly YnabHttpClientBuilder _httpClientBuilder;
+
+    public SpendfulnessBudgetClient(UserRepository userRepository, YnabHttpClientBuilder httpClientBuilder)
+    {
+        _userRepository = userRepository;
+        _httpClientBuilder = httpClientBuilder;
+    }
+
     // TODO: Could this override the base?
     public async Task<ConnectedBudget> GetDefaultBudget()
     {
-        var activeUser = await db.GetActiveUser();
+        var activeUser = await _userRepository.FindActiveUser();
         if (activeUser == null)
         {
             // TODO: Better exception message.
@@ -28,7 +37,7 @@ public class SpendfulnessBudgetClient(SpendfulnessDb db, YnabHttpClientBuilder h
                 $"No {nameof(User.YnabApiKey)} setting");
         }
         
-        var builder = httpClientBuilder.WithBearerToken(activeUser.YnabApiKey);
+        var builder = _httpClientBuilder.WithBearerToken(activeUser.YnabApiKey);
         var budgetClient = new BudgetsClient(builder);
         
         var budgets = await budgetClient.GetBudgets();

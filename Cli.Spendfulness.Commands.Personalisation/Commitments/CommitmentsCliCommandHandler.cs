@@ -8,15 +8,15 @@ using Spendfulness.Database.Users;
 
 namespace Cli.Spendfulness.Commands.Personalisation.Commitments;
 
-public class CommitmentsCliCommandHandler(SpendfulnessDb spendfulnessDb) : CliCommandHandler, ICliCommandHandler<CommitmentsCliCommand>
+public class CommitmentsCliCommandHandler(SpendfulnessDbContext dbContext, UserRepository userRepository) : CliCommandHandler, ICliCommandHandler<CommitmentsCliCommand>
 {
     public async Task<CliCommandOutcome> Handle(CommitmentsCliCommand request, CancellationToken cancellationToken)
     {
         // Respect that there is a sync job.
-        await spendfulnessDb.Sync<User>();
-        await spendfulnessDb.Sync<Commitment>();
+        await dbContext.Sync<User>();
+        await dbContext.Sync<Commitment>();
         
-        var user = await spendfulnessDb.GetActiveUser();
+        var user = await userRepository.FindActiveUser();
 
         var aggregator = new CommitmentsYnabAggregator(user.Commitments);
         
