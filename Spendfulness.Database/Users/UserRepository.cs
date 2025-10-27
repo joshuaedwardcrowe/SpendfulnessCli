@@ -14,5 +14,7 @@ public class UserRepository
     public Task<User> FindActiveUser() 
         => _dbContext
             .Users
+            .Include(user => user.Settings)
+            .ThenInclude(setting => setting.Type)
             .FirstAsync(u => u.Active);
 }

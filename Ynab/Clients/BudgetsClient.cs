@@ -1,11 +1,24 @@
 using Ynab.Connected;
+using Ynab.Factories;
 using Ynab.Http;
 using Ynab.Responses.Budgets;
 
 namespace Ynab.Clients;
 
-public class BudgetsClient(YnabHttpClientBuilder builder) : YnabApiClient
+// TODO: Write unit tests.
+public class BudgetsClient : YnabApiClient
 {
+    private readonly YnabHttpClientBuilder _httpClientBuilder;
+    private readonly IEnumerable<ITransactionFactory> _transactionFactories;
+
+    public BudgetsClient(
+        YnabHttpClientBuilder httpClientBuilder, 
+        IEnumerable<ITransactionFactory> transactionFactories)
+    {
+        _httpClientBuilder = httpClientBuilder;
+        _transactionFactories = transactionFactories;
+    }
+
     public async Task<IEnumerable<ConnectedBudget>> GetBudgets()
     {
         var response = await Get<GetBudgetsResponseData>(string.Empty);
@@ -18,10 +31,11 @@ public class BudgetsClient(YnabHttpClientBuilder builder) : YnabApiClient
         {
             var ynabBudgetApiPath = $"{YnabApiPath.Budgets}/{budgetResponse.Id}";
             
-            var accountClient = new AccountClient(builder, ynabBudgetApiPath);
-            var categoryClient = new CategoryClient(builder, ynabBudgetApiPath);
-            var transactionClient = new TransactionClient(builder, ynabBudgetApiPath);
-            var scheduledTransactionClient = new ScheduledTransactionClient(builder, ynabBudgetApiPath);
+            // TODO: Potentially have these in their own methods.
+            var accountClient = new AccountClient(_httpClientBuilder, ynabBudgetApiPath, _transactionFactories);
+            var categoryClient = new CategoryClient(_httpClientBuilder, ynabBudgetApiPath);
+            var transactionClient = new TransactionClient(_httpClientBuilder, ynabBudgetApiPath, _transactionFactories);
+            var scheduledTransactionClient = new ScheduledTransactionClient(_httpClientBuilder, ynabBudgetApiPath);
 
             yield return new ConnectedBudget(
                 accountClient,
@@ -32,7 +46,7 @@ public class BudgetsClient(YnabHttpClientBuilder builder) : YnabApiClient
         }
     }
 
-    protected override HttpClient GetHttpClient() => builder.Build(
+    protected override HttpClient GetHttpClient() => _httpClientBuilder.Build(
         // is already http://ynab.api/v1/
         null,
         YnabApiPath.Budgets);

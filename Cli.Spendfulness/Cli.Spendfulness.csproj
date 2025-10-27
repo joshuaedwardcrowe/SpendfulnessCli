@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Cli.Spendfulness.Abstractions\Cli.Spendfulness.Abstractions.csproj" />
       <ProjectReference Include="..\Cli\Cli.csproj" />
       <ProjectReference Include="..\Cli.Spendfulness.Commands.Organisation\Cli.Spendfulness.Commands.Organisation.csproj" />
       <ProjectReference Include="..\Cli.Spendfulness.Commands.Personalisation\Cli.Spendfulness.Commands.Personalisation.csproj" />

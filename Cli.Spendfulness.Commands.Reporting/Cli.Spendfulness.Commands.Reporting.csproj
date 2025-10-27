@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Cli.Spendfulness.Abstractions\Cli.Spendfulness.Abstractions.csproj" />
       <ProjectReference Include="..\Cli.Spendfulness.Commands\Cli.Spendfulness.Commands.csproj" />
     </ItemGroup>
 

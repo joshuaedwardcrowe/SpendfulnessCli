@@ -8,22 +8,21 @@ using Ynab.Extensions;
 
 namespace Cli.Ynab.Commands.Reporting.MonthlySpending;
 
+// TODO: Write unit tests.
 public class MonthlySpendingCliCommandHandler: CliCommandHandler, ICliCommandHandler<MonthlySpendingCliCommand>
 {
     private readonly SpendfulnessBudgetClient _spendfulnessBudgetClient;
-    private readonly TransactionMonthChangeCliTableBuilder _transactionMonthChangeCliTableBuilder;
 
-    public MonthlySpendingCliCommandHandler(SpendfulnessBudgetClient spendfulnessBudgetClient, TransactionMonthChangeCliTableBuilder transactionMonthChangeCliTableBuilder)
+    public MonthlySpendingCliCommandHandler(SpendfulnessBudgetClient spendfulnessBudgetClient)
     {
         _spendfulnessBudgetClient = spendfulnessBudgetClient;
-        _transactionMonthChangeCliTableBuilder = transactionMonthChangeCliTableBuilder;
     }
 
     public async Task<CliCommandOutcome> Handle(MonthlySpendingCliCommand cliCommand, CancellationToken cancellationToken)
     {
         var aggregator = await PrepareAggregator(cliCommand);
 
-        var viewModel = _transactionMonthChangeCliTableBuilder
+        var viewModel = new TransactionMonthChangeCliTableBuilder()
             .WithAggregator(aggregator)
             .Build();
         

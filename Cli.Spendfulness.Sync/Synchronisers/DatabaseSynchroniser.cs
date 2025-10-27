@@ -13,47 +13,43 @@ public class DatabaseSynchroniser(SpendfulnessDbContext dbContext) : BackgroundS
     {
         await dbContext.Database.EnsureCreatedAsync(stoppingToken);
         
-        var potentiallyActiveUser = await dbContext
+        var activeUser = await dbContext
             .Users
             .FirstOrDefaultAsync(x => x.Name == "Joshua Crowe", stoppingToken);
         
-        if (potentiallyActiveUser == null)
+        if (activeUser == null)
         {
-            var ynabApiKeySettingType = await dbContext
-                .SettingTypes
-                .FirstAsync(x => x.Name == SettingTypeNames.YnabApiKey, cancellationToken: stoppingToken);
-
-            var activeUser = new User
+            activeUser  = new User
             {
                 Active = true,
                 Name = "Joshua Crowe",
                 Settings = new List<Setting>()
             };
-
-            var apiKeySetting = new Setting()
-            {
-                Type = ynabApiKeySettingType,
-                Value = string.Empty,
-                User = activeUser
-            };
-        
-            activeUser.Settings.Add(apiKeySetting);
+            
             await dbContext.Users.AddAsync(activeUser, stoppingToken);
         }
+        
+        var ynabApiKeySettingType = await dbContext
+            .SettingTypes
+            .FirstAsync(x => x.Name == SettingTypeNames.YnabApiKey, cancellationToken: stoppingToken);
 
+        var ynabApiKeySetting = await dbContext
+            .Settings
+            .FirstOrDefaultAsync(x => 
+                    x.User == activeUser &&
+                    x.Type == ynabApiKeySettingType, 
+                stoppingToken);
 
-        var potentiallyCustomAccountType = await dbContext
-            .CustomAccountTypes
-            .FirstOrDefaultAsync(x => x.Name == "American Express Rewards", cancellationToken: stoppingToken);
-
-        if (potentiallyCustomAccountType == null)
+        if (ynabApiKeySetting == null)
         {
-            var customAccountType = new CustomAccountType
+            ynabApiKeySetting = new Setting
             {
-                Name = "American Express Rewards"
+                Type = ynabApiKeySettingType,
+                User = activeUser,
+                Value = string.Empty,
             };
             
-            await dbContext.CustomAccountTypes.AddAsync(customAccountType, stoppingToken);
+            activeUser.Settings.Add(ynabApiKeySetting);
         }
         
         await dbContext.SaveChangesAsync(stoppingToken);

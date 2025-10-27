@@ -2,19 +2,26 @@ using Spendfulness.Database.Abstractions;
 using Spendfulness.Database.Users;
 using Ynab.Clients;
 using Ynab.Connected;
+using Ynab.Factories;
 using Ynab.Http;
 
 namespace Spendfulness.Database;
 
+// TODO: Write unit tests.
 public class SpendfulnessBudgetClient
 {
     private readonly UserRepository _userRepository;
     private readonly YnabHttpClientBuilder _httpClientBuilder;
+    private readonly IEnumerable<ITransactionFactory> _transactionFactories;
 
-    public SpendfulnessBudgetClient(UserRepository userRepository, YnabHttpClientBuilder httpClientBuilder)
+    public SpendfulnessBudgetClient(
+        UserRepository userRepository,
+        YnabHttpClientBuilder httpClientBuilder,
+        IEnumerable<ITransactionFactory> transactionFactories)
     {
         _userRepository = userRepository;
         _httpClientBuilder = httpClientBuilder;
+        _transactionFactories = transactionFactories;
     }
 
     // TODO: Could this override the base?
@@ -38,7 +45,7 @@ public class SpendfulnessBudgetClient
         }
         
         var builder = _httpClientBuilder.WithBearerToken(activeUser.YnabApiKey);
-        var budgetClient = new BudgetsClient(builder);
+        var budgetClient = new BudgetsClient(builder, _transactionFactories);
         
         var budgets = await budgetClient.GetBudgets();
         

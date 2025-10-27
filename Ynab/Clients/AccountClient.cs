@@ -1,12 +1,28 @@
 using Ynab.Connected;
+using Ynab.Factories;
 using Ynab.Http;
 using Ynab.Mappers;
 using Ynab.Responses.Accounts;
 
 namespace Ynab.Clients;
 
-public class AccountClient(YnabHttpClientBuilder builder, string ynabBudgetApiPath) : YnabApiClient
+// TODO: Write unit tests.
+public class AccountClient : YnabApiClient
 {
+    private readonly YnabHttpClientBuilder _httpClientBuilder;
+    private readonly string _ynabBudgetApiPath;
+    private readonly IEnumerable<ITransactionFactory> _transactionFactories;
+
+    public AccountClient(
+        YnabHttpClientBuilder httpClientBuilder,
+        string ynabBudgetApiPath,
+        IEnumerable<ITransactionFactory> transactionFactories)
+    {
+        _httpClientBuilder = httpClientBuilder;
+        _ynabBudgetApiPath = ynabBudgetApiPath;
+        _transactionFactories = transactionFactories;
+    }
+
     public async Task<IEnumerable<Account>> GetAll()
     {
         var response = await Get<GetAccountsResponseData>(string.Empty);
@@ -28,13 +44,13 @@ public class AccountClient(YnabHttpClientBuilder builder, string ynabBudgetApiPa
     
     private ConnectedAccount ConvertAccountResponseToConnectedAccount(AccountResponse accountResponse)
     {
-        var transactionClient = new TransactionClient(builder, ynabBudgetApiPath);
-        var scheduledTransactionClient = new ScheduledTransactionClient(builder, ynabBudgetApiPath);
+        var transactionClient = new TransactionClient(_httpClientBuilder, _ynabBudgetApiPath, _transactionFactories);
+        var scheduledTransactionClient = new ScheduledTransactionClient(_httpClientBuilder, _ynabBudgetApiPath);
         return new ConnectedAccount(transactionClient, scheduledTransactionClient, accountResponse);
     }
     
-    protected override HttpClient GetHttpClient() => builder.Build(
+    protected override HttpClient GetHttpClient() => _httpClientBuilder.Build(
         // e.g. budgets/{budgetId}/
-        ynabBudgetApiPath,
+        _ynabBudgetApiPath,
         YnabApiPath.Accounts);
 }
