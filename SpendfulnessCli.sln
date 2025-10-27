@@ -32,6 +32,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADR", "ADR", "{B5381D3F-A87
 		ADR\ynab-database-diagram.png = ADR\ynab-database-diagram.png
 		ADR\ADR03-Exceptional-Cicumstances.md = ADR\ADR03-Exceptional-Cicumstances.md
 		ADR\Best-Practices.md = ADR\Best-Practices.md
+		ADR\ADR09-Cli-Workflow-Concept.md = ADR\ADR09-Cli-Workflow-Concept.md
+		ADR\ADR08-SpendfulnessBudgetClient.md = ADR\ADR08-SpendfulnessBudgetClient.md
+		ADR\ADR08-Cli-Concept.md = ADR\ADR08-Cli-Concept.md
+		ADR\ADR05-Connected-API-Concept.md = ADR\ADR05-Connected-API-Concept.md
+		ADR\ADR06-Aggregation-Concept.md = ADR\ADR06-Aggregation-Concept.md
+		ADR\ADR07-Instruction-Parser.md = ADR\ADR07-Instruction-Parser.md
+		ADR\ADR04-Itemisation-Intelligence.md = ADR\ADR04-Itemisation-Intelligence.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Database", "Spendfulness.Database\Spendfulness.Database.csproj", "{80B41408-9A47-4AC6-8847-A37EF2EC327C}"

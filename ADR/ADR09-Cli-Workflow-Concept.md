@@ -173,6 +173,8 @@ public class CliWorkflowRun
 7. **Handle Errors** - Catch and convert exceptions to outcomes
 8. **Finished** - Mark run as complete (always executes via finally)
 
+This kind of validation is an important step. For example, you could try to recall `.RespondToAsk()` in one of the life cyle hooks such as `OnRunCompletezd` and if the state is not valid for that operation, an exception would be thrown. This helps avoid having runs represent any more than one command execution.
+
 ### 4. ClIWorkflowRunStateType - Command Execution States
 
 ```csharp

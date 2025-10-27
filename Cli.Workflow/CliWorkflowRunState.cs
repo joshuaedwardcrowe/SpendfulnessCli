@@ -55,7 +55,9 @@ public class CliWorkflowRunState
         }
     }
 
-    // TODO: CLI - Does this matter at all?
+    /// <summary>
+    /// Stops a CliWorkflowRun from being re-eexecuted for another command.
+    /// </summary>
     private static readonly List<CliWorkflowRunStateChange> PossibleStateChanges =
     [
         new(ClIWorkflowRunStateType.NotInitialized, ClIWorkflowRunStateType.Created),
