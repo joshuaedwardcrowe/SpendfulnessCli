@@ -5,29 +5,23 @@ namespace Cli.Instructions.Extraction;
 
 public class CliInstructionTokenExtractor
 {
+    private static readonly Dictionary<CliInstructionTokenType, (CliInstructionExceptionCode Code, string Message)> RequiredTokenExceptions = new()
+    {
+        [CliInstructionTokenType.Prefix] = (
+            CliInstructionExceptionCode.NoInstructionPrefix,
+            $"Instructions must contain a {CliInstructionConstants.DefaultNamePrefix}"),
+        [CliInstructionTokenType.Name] = (
+            CliInstructionExceptionCode.NoInstructionName,
+            "Instructions must have a name")
+    };
+
     public CliInstructionTokenExtraction Extract(
         CliInstructionTokenIndexCollection indexes, 
         string terminalInput)
     {
-        var prefixToken = ExtractRequiredToken(
-            indexes, 
-            terminalInput, 
-            CliInstructionTokenType.Prefix, 
-            CliInstructionExceptionCode.NoInstructionPrefix,
-            $"Instructions must contain a {CliInstructionConstants.DefaultNamePrefix}");
-        
-        var nameToken = ExtractRequiredToken(
-            indexes, 
-            terminalInput, 
-            CliInstructionTokenType.Name, 
-            CliInstructionExceptionCode.NoInstructionName,
-            "Instructions must have a name");
-        
-        var subNameToken = ExtractOptionalToken(
-            indexes, 
-            terminalInput, 
-            CliInstructionTokenType.SubName);
-        
+        var prefixToken = ExtractRequiredToken(indexes, terminalInput, CliInstructionTokenType.Prefix);
+        var nameToken = ExtractRequiredToken(indexes, terminalInput, CliInstructionTokenType.Name);
+        var subNameToken = ExtractOptionalToken(indexes, terminalInput, CliInstructionTokenType.SubName);
         var argumentTokens = ExtractArgumentTokens(indexes, terminalInput);
         
         return new CliInstructionTokenExtraction(prefixToken, nameToken, subNameToken, argumentTokens);
@@ -36,18 +30,17 @@ public class CliInstructionTokenExtractor
     private string ExtractRequiredToken(
         CliInstructionTokenIndexCollection indexes,
         string terminalInput,
-        CliInstructionTokenType tokenType,
-        CliInstructionExceptionCode exceptionCode,
-        string exceptionMessage)
+        CliInstructionTokenType tokenType)
     {
         var tokenIndex = indexes[tokenType];
         
         if (!tokenIndex.Found)
         {
-            throw new CliInstructionException(exceptionCode, exceptionMessage);
+            var exception = RequiredTokenExceptions[tokenType];
+            throw new CliInstructionException(exception.Code, exception.Message);
         }
 
-        return terminalInput[tokenIndex.StartIndex..tokenIndex.EndIndex];
+        return ExtractTokenContent(terminalInput, tokenIndex);
     }
 
     private string? ExtractOptionalToken(
@@ -62,6 +55,11 @@ public class CliInstructionTokenExtractor
             return null;
         }
 
+        return ExtractTokenContent(terminalInput, tokenIndex);
+    }
+
+    private static string ExtractTokenContent(string terminalInput, CliInstructionTokenIndex tokenIndex)
+    {
         return terminalInput[tokenIndex.StartIndex..tokenIndex.EndIndex];
     }
     
@@ -76,7 +74,7 @@ public class CliInstructionTokenExtractor
             return new Dictionary<string, string?>();
         }
         
-        var argumentInput = terminalInput[argumentIndex.StartIndex..argumentIndex.EndIndex];
+        var argumentInput = ExtractTokenContent(terminalInput, argumentIndex);
 
         var argumentTokens = argumentInput.Split(CliInstructionConstants.DefaultArgumentPrefix);
         
