@@ -5,58 +5,73 @@ namespace Cli.Instructions.Extraction;
 
 public class CliInstructionTokenExtractor
 {
-    public CliInstructionTokenExtraction Extract(CliInstructionTokenIndexes indexes, string terminalInput)
+    public CliInstructionTokenExtraction Extract(
+        Dictionary<CliInstructionTokenType, CliInstructionTokenIndex> indexes, 
+        string terminalInput)
     {
-        var prefixToken = ExtractPrefixToken(indexes, terminalInput);
-        var nameToken = ExtractNameToken(indexes, terminalInput);
-        var subNameToken = ExtractSubNameToken(indexes, terminalInput);
+        var prefixToken = ExtractToken(
+            indexes, 
+            terminalInput, 
+            CliInstructionTokenType.Prefix, 
+            CliInstructionExceptionCode.NoInstructionPrefix,
+            $"Instructions must contain a {CliInstructionConstants.DefaultNamePrefix}",
+            isRequired: true);
+        
+        var nameToken = ExtractToken(
+            indexes, 
+            terminalInput, 
+            CliInstructionTokenType.Name, 
+            CliInstructionExceptionCode.NoInstructionName,
+            "Instructions must have a name",
+            isRequired: true);
+        
+        var subNameToken = ExtractToken(
+            indexes, 
+            terminalInput, 
+            CliInstructionTokenType.SubName, 
+            CliInstructionExceptionCode.NoInstructionName,
+            null,
+            isRequired: false);
+        
         var argumentTokens = ExtractArgumentTokens(indexes, terminalInput);
         
-        return new CliInstructionTokenExtraction(prefixToken, nameToken, subNameToken, argumentTokens);
+        return new CliInstructionTokenExtraction(prefixToken!, nameToken!, subNameToken, argumentTokens);
     }
 
-    private string ExtractPrefixToken(CliInstructionTokenIndexes indexes, string terminalInput)
+    private string? ExtractToken(
+        Dictionary<CliInstructionTokenType, CliInstructionTokenIndex> indexes,
+        string terminalInput,
+        CliInstructionTokenType tokenType,
+        CliInstructionExceptionCode exceptionCode,
+        string? exceptionMessage,
+        bool isRequired)
     {
-        if (!indexes.PrefixTokenIndexed)
+        var tokenIndex = indexes[tokenType];
+        
+        if (!tokenIndex.Found)
         {
-            throw new CliInstructionException(
-                CliInstructionExceptionCode.NoInstructionPrefix,
-                $"Instructions must contain a {CliInstructionConstants.DefaultNamePrefix}");
-        }
-
-        return terminalInput[indexes.PrefixTokenStartIndex..indexes.PrefixTokenEndIndex];
-    }
-
-    private string ExtractNameToken(CliInstructionTokenIndexes indexes, string terminalInput)
-    {
-        if (!indexes.NameTokenIndexed)
-        {
-            throw new CliInstructionException(
-                CliInstructionExceptionCode.NoInstructionName,
-                $"Instructions must have a name");
-        }
-
-        return terminalInput[indexes.NameTokenStartIndex..indexes.NameTokenEndIndex];
-    }
-
-    private string? ExtractSubNameToken(CliInstructionTokenIndexes indexes, string terminalInput)
-    {
-        if (!indexes.SubNameTokenIndexed)
-        {
+            if (isRequired)
+            {
+                throw new CliInstructionException(exceptionCode, exceptionMessage!);
+            }
             return null;
         }
 
-        return terminalInput[indexes.SubNameStartIndex..indexes.SubNameEndIndex];
+        return terminalInput[tokenIndex.StartIndex..tokenIndex.EndIndex];
     }
     
-    private static Dictionary<string, string?> ExtractArgumentTokens(CliInstructionTokenIndexes indexes, string terminalInput)
+    private static Dictionary<string, string?> ExtractArgumentTokens(
+        Dictionary<CliInstructionTokenType, CliInstructionTokenIndex> indexes, 
+        string terminalInput)
     {
-        if (!indexes.ArgumentTokensIndexed)
+        var argumentIndex = indexes[CliInstructionTokenType.Arguments];
+        
+        if (!argumentIndex.Found)
         {
             return new Dictionary<string, string?>();
         }
         
-        var argumentInput = terminalInput[indexes.ArgumentTokensStartIndex..indexes.ArgumentTokensEndIndex];
+        var argumentInput = terminalInput[argumentIndex.StartIndex..argumentIndex.EndIndex];
 
         var argumentTokens = argumentInput.Split(CliInstructionConstants.DefaultArgumentPrefix);
         

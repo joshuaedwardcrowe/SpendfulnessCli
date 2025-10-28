@@ -20,14 +20,28 @@ public class CliInstructionTokenExtractorTests
     {
         var input = $"/command";
 
-        var indexes = new CliInstructionTokenIndexes
+        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
         {
-            PrefixTokenIndexed = true,
-            PrefixTokenStartIndex = 0,
-            PrefixTokenEndIndex = 1,
-            NameTokenIndexed = true,
-            NameTokenStartIndex = 1,
-            NameTokenEndIndex = 7,
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 0,
+                EndIndex = 1
+            },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 1,
+                EndIndex = 7
+            },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
+            {
+                Found = false
+            },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
+            {
+                Found = false
+            }
         };
         
         var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
@@ -40,14 +54,28 @@ public class CliInstructionTokenExtractorTests
     {
         var input = $"/command";
         
-        var indexes = new CliInstructionTokenIndexes
+        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
         {
-            PrefixTokenIndexed = true,
-            PrefixTokenStartIndex = 0,
-            PrefixTokenEndIndex = 1,
-            NameTokenIndexed = true,
-            NameTokenStartIndex = 1,
-            NameTokenEndIndex = input.Length,
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 0,
+                EndIndex = 1
+            },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 1,
+                EndIndex = input.Length
+            },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
+            {
+                Found = false
+            },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
+            {
+                Found = false
+            }
         };
         
         var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
@@ -60,17 +88,30 @@ public class CliInstructionTokenExtractorTests
     {
         var input = $"/command sub-command";
         
-        var indexes = new CliInstructionTokenIndexes
+        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
         {
-            PrefixTokenIndexed = true,
-            PrefixTokenStartIndex = 0,
-            PrefixTokenEndIndex = 1,
-            NameTokenIndexed = true,
-            NameTokenStartIndex = 1,
-            NameTokenEndIndex = 7,
-            SubNameTokenIndexed = true,
-            SubNameStartIndex = 9,
-            SubNameEndIndex = input.Length
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 0,
+                EndIndex = 1
+            },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 1,
+                EndIndex = 7
+            },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 9,
+                EndIndex = input.Length
+            },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
+            {
+                Found = false
+            }
         };
         
         var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
@@ -83,17 +124,30 @@ public class CliInstructionTokenExtractorTests
     {
         var input = $"/command --argumentOne hello world";
         
-        var indexes = new CliInstructionTokenIndexes
+        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
         {
-            PrefixTokenIndexed = true,
-            PrefixTokenStartIndex = 0,
-            PrefixTokenEndIndex = 1,
-            NameTokenIndexed = true,
-            NameTokenStartIndex = 1,
-            NameTokenEndIndex = 8,
-            ArgumentTokensIndexed = true,
-            ArgumentTokensStartIndex = 9,
-            ArgumentTokensEndIndex = input.Length,
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 0,
+                EndIndex = 1
+            },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 1,
+                EndIndex = 8
+            },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
+            {
+                Found = false
+            },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 9,
+                EndIndex = input.Length
+            }
         };
         
         var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
@@ -109,17 +163,30 @@ public class CliInstructionTokenExtractorTests
         
         var input = $"/command --{argumentName}";
         
-        var indexes = new CliInstructionTokenIndexes
+        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
         {
-            PrefixTokenIndexed = true,
-            PrefixTokenStartIndex = 0,
-            PrefixTokenEndIndex = 1,
-            NameTokenIndexed = true,
-            NameTokenStartIndex = 1,
-            NameTokenEndIndex = 7,
-            ArgumentTokensIndexed = true,
-            ArgumentTokensStartIndex = 9,
-            ArgumentTokensEndIndex = input.Length,
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 0,
+                EndIndex = 1
+            },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 1,
+                EndIndex = 7
+            },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
+            {
+                Found = false
+            },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 9,
+                EndIndex = input.Length
+            }
         };
         
         var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
@@ -138,17 +205,30 @@ public class CliInstructionTokenExtractorTests
         
         var input = $"/command --{argumentName} {argumentValue}";
         
-        var indexes = new CliInstructionTokenIndexes
+        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
         {
-            PrefixTokenIndexed = true,
-            PrefixTokenStartIndex = 0,
-            PrefixTokenEndIndex = 1,
-            NameTokenIndexed = true,
-            NameTokenStartIndex = 1,
-            NameTokenEndIndex = 7,
-            ArgumentTokensIndexed = true,
-            ArgumentTokensStartIndex = 9,
-            ArgumentTokensEndIndex = input.Length,
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 0,
+                EndIndex = 1
+            },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 1,
+                EndIndex = 7
+            },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
+            {
+                Found = false
+            },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 9,
+                EndIndex = input.Length
+            }
         };
         
         var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
@@ -169,17 +249,30 @@ public class CliInstructionTokenExtractorTests
         
         var input = $"/command --{argumentOneName} {argumentOneValue} --{argumentTwoName} {argumentTwoValue}";
         
-        var indexes = new CliInstructionTokenIndexes
+        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
         {
-            PrefixTokenIndexed = true,
-            PrefixTokenStartIndex = 0,
-            PrefixTokenEndIndex = 1,
-            NameTokenIndexed = true,
-            NameTokenStartIndex = 1,
-            NameTokenEndIndex = 7,
-            ArgumentTokensIndexed = true,
-            ArgumentTokensStartIndex = 9,
-            ArgumentTokensEndIndex = input.Length,
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 0,
+                EndIndex = 1
+            },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 1,
+                EndIndex = 7
+            },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
+            {
+                Found = false
+            },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 9,
+                EndIndex = input.Length
+            }
         };
         
         var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
@@ -205,17 +298,30 @@ public class CliInstructionTokenExtractorTests
         
         var input = $"/command --{argumentOneName} {argumentOneValue} --{argumentTwoName} {argumentTwoValue}";
         
-        var indexes = new CliInstructionTokenIndexes
+        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
         {
-            PrefixTokenIndexed = true,
-            PrefixTokenStartIndex = 0,
-            PrefixTokenEndIndex = 1,
-            NameTokenIndexed = true,
-            NameTokenStartIndex = 1,
-            NameTokenEndIndex = 7,
-            ArgumentTokensIndexed = true,
-            ArgumentTokensStartIndex = 9,
-            ArgumentTokensEndIndex = input.Length,
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 0,
+                EndIndex = 1
+            },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 1,
+                EndIndex = 7
+            },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
+            {
+                Found = false
+            },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 9,
+                EndIndex = input.Length
+            }
         };
         
         var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);
@@ -240,17 +346,30 @@ public class CliInstructionTokenExtractorTests
         
         var input = $"/command --{argumentOneName} --{argumentTwoName} {argumentTwoValue}";
         
-        var indexes = new CliInstructionTokenIndexes
+        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
         {
-            PrefixTokenIndexed = true,
-            PrefixTokenStartIndex = 0,
-            PrefixTokenEndIndex = 1,
-            NameTokenIndexed = true,
-            NameTokenStartIndex = 1,
-            NameTokenEndIndex = 7,
-            ArgumentTokensIndexed = true,
-            ArgumentTokensStartIndex = 9,
-            ArgumentTokensEndIndex = input.Length,
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 0,
+                EndIndex = 1
+            },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 1,
+                EndIndex = 7
+            },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
+            {
+                Found = false
+            },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
+            {
+                Found = true,
+                StartIndex = 9,
+                EndIndex = input.Length
+            }
         };
         
         var result = _legacyCliInstructionTokenExtractor.Extract(indexes, input);

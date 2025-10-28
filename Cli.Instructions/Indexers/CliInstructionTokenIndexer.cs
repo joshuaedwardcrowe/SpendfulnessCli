@@ -6,17 +6,17 @@ public class CliInstructionTokenIndexer
 {
     // TODO: Make the default characters below configurable.
     // (SO this needs to be a DI service)
-    public CliInstructionTokenIndexes Index(string terminalInput)
+    public Dictionary<CliInstructionTokenType, CliInstructionTokenIndex> Index(string terminalInput)
     {
         var characters = terminalInput.ToCharArray();
         if (characters.Length == 0)
         {
-            return new CliInstructionTokenIndexes
+            return new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
             {
-                PrefixTokenIndexed = false,
-                NameTokenIndexed = false,
-                SubNameTokenIndexed = false,
-                ArgumentTokensIndexed = false,
+                [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex { Found = false },
+                [CliInstructionTokenType.Name] = new CliInstructionTokenIndex { Found = false },
+                [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex { Found = false },
+                [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex { Found = false }
             };
         }
 
@@ -59,24 +59,32 @@ public class CliInstructionTokenIndexer
         // e.g. /spare-money help<here> --argumentOne hello world --argumentTwo 1
         var subCommandNameEndIndex = hasArgumentTokens ? firstArgumentIndex - 1 : terminalInput.Length;
         
-        // TODO: Dear god this is ugly.
-        return new CliInstructionTokenIndexes
+        return new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
         {
-            PrefixTokenIndexed = hasFirstPunctuationMark,
-            PrefixTokenStartIndex = firstPunctuationMarkIndex,
-            PrefixTokenEndIndex = afterPunctuationMarkIndex,
-            
-            NameTokenIndexed = hasCommandNameToken,
-            NameTokenStartIndex = afterPunctuationMarkIndex,
-            NameTokenEndIndex = commandNameTokenEndIndex,
-            
-            SubNameTokenIndexed = hasSubCommandNameToken,
-            SubNameStartIndex = subCommandNameStartIndex,
-            SubNameEndIndex = subCommandNameEndIndex,
-            
-            ArgumentTokensIndexed = hasArgumentTokens,
-            ArgumentTokensStartIndex = firstArgumentIndex,
-            ArgumentTokensEndIndex = terminalInput.Length
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
+            {
+                Found = hasFirstPunctuationMark,
+                StartIndex = firstPunctuationMarkIndex,
+                EndIndex = afterPunctuationMarkIndex
+            },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
+            {
+                Found = hasCommandNameToken,
+                StartIndex = afterPunctuationMarkIndex,
+                EndIndex = commandNameTokenEndIndex
+            },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
+            {
+                Found = hasSubCommandNameToken,
+                StartIndex = subCommandNameStartIndex,
+                EndIndex = subCommandNameEndIndex
+            },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
+            {
+                Found = hasArgumentTokens,
+                StartIndex = firstArgumentIndex,
+                EndIndex = terminalInput.Length
+            }
         };
     }
 }
