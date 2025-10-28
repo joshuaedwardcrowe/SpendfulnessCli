@@ -6,16 +6,6 @@ namespace Cli.Instructions.Extraction;
 
 public class CliInstructionTokenExtractor
 {
-    private static readonly Dictionary<CliInstructionTokenType, (CliInstructionExceptionCode Code, string Message)> RequiredTokenExceptions = new()
-    {
-        [CliInstructionTokenType.Prefix] = (
-            CliInstructionExceptionCode.NoInstructionPrefix,
-            $"Instructions must contain a {CliInstructionConstants.DefaultNamePrefix}"),
-        [CliInstructionTokenType.Name] = (
-            CliInstructionExceptionCode.NoInstructionName,
-            "Instructions must have a name")
-    };
-
     public CliInstructionTokenExtraction Extract(
         CliInstructionTokenIndexCollection indexes, 
         string terminalInput)
@@ -37,11 +27,26 @@ public class CliInstructionTokenExtractor
         
         if (!tokenIndex.Found)
         {
-            var exception = RequiredTokenExceptions[tokenType];
-            throw new CliInstructionException(exception.Code, exception.Message);
+            ThrowMissingTokenException(tokenType);
         }
 
         return terminalInput.ExtractTokenContent(tokenIndex);
+    }
+
+    private static void ThrowMissingTokenException(CliInstructionTokenType tokenType)
+    {
+        switch (tokenType)
+        {
+            case CliInstructionTokenType.Prefix:
+                throw new NoInstructionPrefixException(
+                    $"Instructions must contain a {CliInstructionConstants.DefaultNamePrefix}");
+            case CliInstructionTokenType.Name:
+                throw new NoInstructionNameException("Instructions must have a name");
+            default:
+                throw new CliInstructionException(
+                    CliInstructionExceptionCode.NoInstructionName,
+                    $"Missing required token: {tokenType}");
+        }
     }
 
     private string? ExtractOptionalToken(
