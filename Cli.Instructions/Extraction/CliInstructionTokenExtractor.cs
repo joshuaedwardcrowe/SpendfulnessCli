@@ -6,7 +6,7 @@ namespace Cli.Instructions.Extraction;
 public class CliInstructionTokenExtractor
 {
     public CliInstructionTokenExtraction Extract(
-        Dictionary<CliInstructionTokenType, CliInstructionTokenIndex> indexes, 
+        CliInstructionTokenIndexCollection indexes, 
         string terminalInput)
     {
         var prefixToken = ExtractRequiredToken(
@@ -34,7 +34,7 @@ public class CliInstructionTokenExtractor
     }
 
     private string ExtractRequiredToken(
-        Dictionary<CliInstructionTokenType, CliInstructionTokenIndex> indexes,
+        CliInstructionTokenIndexCollection indexes,
         string terminalInput,
         CliInstructionTokenType tokenType,
         CliInstructionExceptionCode exceptionCode,
@@ -51,7 +51,7 @@ public class CliInstructionTokenExtractor
     }
 
     private string? ExtractOptionalToken(
-        Dictionary<CliInstructionTokenType, CliInstructionTokenIndex> indexes,
+        CliInstructionTokenIndexCollection indexes,
         string terminalInput,
         CliInstructionTokenType tokenType)
     {
@@ -66,7 +66,7 @@ public class CliInstructionTokenExtractor
     }
     
     private static Dictionary<string, string?> ExtractArgumentTokens(
-        Dictionary<CliInstructionTokenType, CliInstructionTokenIndex> indexes, 
+        CliInstructionTokenIndexCollection indexes, 
         string terminalInput)
     {
         var argumentIndex = indexes[CliInstructionTokenType.Arguments];

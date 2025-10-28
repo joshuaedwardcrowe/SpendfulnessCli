@@ -6,85 +6,126 @@ public class CliInstructionTokenIndexer
 {
     // TODO: Make the default characters below configurable.
     // (SO this needs to be a DI service)
-    public Dictionary<CliInstructionTokenType, CliInstructionTokenIndex> Index(string terminalInput)
+    public CliInstructionTokenIndexCollection Index(string terminalInput)
     {
-        var characters = terminalInput.ToCharArray();
-        if (characters.Length == 0)
+        if (string.IsNullOrEmpty(terminalInput))
         {
-            return new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
-            {
-                [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex { Found = false },
-                [CliInstructionTokenType.Name] = new CliInstructionTokenIndex { Found = false },
-                [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex { Found = false },
-                [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex { Found = false }
-            };
+            return CreateEmptyCollection();
         }
 
-        // Constraint: Command must be prefixed with some kind of punctuation marl
+        var prefixIndex = IndexPrefixToken(terminalInput);
+        var nameIndex = IndexNameToken(terminalInput, prefixIndex);
+        var argumentsIndex = IndexArgumentsToken(terminalInput);
+        var subNameIndex = IndexSubNameToken(terminalInput, nameIndex.EndIndex, argumentsIndex);
+        
+        return new CliInstructionTokenIndexCollection
+        {
+            [CliInstructionTokenType.Prefix] = prefixIndex,
+            [CliInstructionTokenType.Name] = nameIndex,
+            [CliInstructionTokenType.SubName] = subNameIndex,
+            [CliInstructionTokenType.Arguments] = argumentsIndex
+        };
+    }
+
+    private static CliInstructionTokenIndexCollection CreateEmptyCollection()
+    {
+        return new CliInstructionTokenIndexCollection
+        {
+            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex { Found = false },
+            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex { Found = false },
+            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex { Found = false },
+            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex { Found = false }
+        };
+    }
+
+    private static CliInstructionTokenIndex IndexPrefixToken(string terminalInput)
+    {
+        // Constraint: Command must be prefixed with some kind of punctuation mark
         // Even though the current default is '/'
+        var characters = terminalInput.ToCharArray();
         var firstPunctuationMark = characters.FirstOrDefault(char.IsPunctuation);
         
         // e.g. <here>/spare-money help --argumentOne hello world --argumentTwo 1
         var firstPunctuationMarkIndex = terminalInput.IndexOf(firstPunctuationMark);
         var hasFirstPunctuationMark = firstPunctuationMarkIndex == 0;
         
+        return new CliInstructionTokenIndex
+        {
+            Found = hasFirstPunctuationMark,
+            StartIndex = firstPunctuationMarkIndex,
+            EndIndex = firstPunctuationMarkIndex + 1
+        };
+    }
+
+    private static CliInstructionTokenIndex IndexNameToken(string terminalInput, CliInstructionTokenIndex prefixIndex)
+    {
         // e.g. /<here>spare-money help --argumentOne hello world --argumentTwo 1
-        var afterPunctuationMarkIndex = firstPunctuationMarkIndex + 1;
- 
+        var afterPunctuationMarkIndex = prefixIndex.EndIndex;
+        
         var firstSpaceIndex = terminalInput.IndexOf(CliInstructionConstants.DefaultSpaceCharacter);
         var hasFirstSpace = firstSpaceIndex != -1;
         
-        // If command name is present, the first space should not be after the /
+        // If command name is present, the first space should not be immediately after the /
         var hasCommandNameToken = firstSpaceIndex != afterPunctuationMarkIndex;
         
         // e.g. /spare-money<here> help --argumentOne hello world --argumentTwo 1
         var commandNameTokenEndIndex = hasFirstSpace ? firstSpaceIndex : terminalInput.Length;
         
+        return new CliInstructionTokenIndex
+        {
+            Found = hasCommandNameToken,
+            StartIndex = afterPunctuationMarkIndex,
+            EndIndex = commandNameTokenEndIndex
+        };
+    }
+
+    private static CliInstructionTokenIndex IndexArgumentsToken(string terminalInput)
+    {
         // e.g. /spare-money help <here>--argumentOne hello world --argumentTwo 1
         var firstArgumentIndex = terminalInput.IndexOf(
             CliInstructionConstants.DefaultArgumentPrefix,
             StringComparison.Ordinal);
         
         var hasArgumentTokens = firstArgumentIndex != -1;
+        
+        return new CliInstructionTokenIndex
+        {
+            Found = hasArgumentTokens,
+            StartIndex = firstArgumentIndex,
+            EndIndex = terminalInput.Length
+        };
+    }
 
-        var beforeFirstArgumentIndex = firstArgumentIndex - 1;
+    private static CliInstructionTokenIndex IndexSubNameToken(
+        string terminalInput, 
+        int nameEndIndex, 
+        CliInstructionTokenIndex argumentsIndex)
+    {
+        var firstSpaceIndex = terminalInput.IndexOf(CliInstructionConstants.DefaultSpaceCharacter);
+        var hasFirstSpace = firstSpaceIndex != -1;
+        
+        if (!hasFirstSpace)
+        {
+            return new CliInstructionTokenIndex { Found = false };
+        }
+
+        var beforeFirstArgumentIndex = argumentsIndex.StartIndex - 1;
         var inputBetweenFirstSpaceAndFirstArgument = beforeFirstArgumentIndex != firstSpaceIndex;
         
         // The space between the first argument and command name has nothing in it - if there is a space at all
-        var hasSubCommandNameToken = hasFirstSpace && inputBetweenFirstSpaceAndFirstArgument;
+        var hasSubCommandNameToken = inputBetweenFirstSpaceAndFirstArgument;
         
         // e.g. /spare-money <here>help --argumentOne hello world --argumentTwo 1
         var subCommandNameStartIndex = firstSpaceIndex + 1;
         
         // e.g. /spare-money help<here> --argumentOne hello world --argumentTwo 1
-        var subCommandNameEndIndex = hasArgumentTokens ? firstArgumentIndex - 1 : terminalInput.Length;
+        var subCommandNameEndIndex = argumentsIndex.Found ? argumentsIndex.StartIndex - 1 : terminalInput.Length;
         
-        return new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
+        return new CliInstructionTokenIndex
         {
-            [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
-            {
-                Found = hasFirstPunctuationMark,
-                StartIndex = firstPunctuationMarkIndex,
-                EndIndex = afterPunctuationMarkIndex
-            },
-            [CliInstructionTokenType.Name] = new CliInstructionTokenIndex
-            {
-                Found = hasCommandNameToken,
-                StartIndex = afterPunctuationMarkIndex,
-                EndIndex = commandNameTokenEndIndex
-            },
-            [CliInstructionTokenType.SubName] = new CliInstructionTokenIndex
-            {
-                Found = hasSubCommandNameToken,
-                StartIndex = subCommandNameStartIndex,
-                EndIndex = subCommandNameEndIndex
-            },
-            [CliInstructionTokenType.Arguments] = new CliInstructionTokenIndex
-            {
-                Found = hasArgumentTokens,
-                StartIndex = firstArgumentIndex,
-                EndIndex = terminalInput.Length
-            }
+            Found = hasSubCommandNameToken,
+            StartIndex = subCommandNameStartIndex,
+            EndIndex = subCommandNameEndIndex
         };
     }
 }

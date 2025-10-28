@@ -20,7 +20,7 @@ public class CliInstructionTokenExtractorTests
     {
         var input = $"/command";
 
-        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
+        var indexes = new CliInstructionTokenIndexCollection
         {
             [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
             {
@@ -54,7 +54,7 @@ public class CliInstructionTokenExtractorTests
     {
         var input = $"/command";
         
-        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
+        var indexes = new CliInstructionTokenIndexCollection
         {
             [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
             {
@@ -88,7 +88,7 @@ public class CliInstructionTokenExtractorTests
     {
         var input = $"/command sub-command";
         
-        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
+        var indexes = new CliInstructionTokenIndexCollection
         {
             [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
             {
@@ -124,7 +124,7 @@ public class CliInstructionTokenExtractorTests
     {
         var input = $"/command --argumentOne hello world";
         
-        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
+        var indexes = new CliInstructionTokenIndexCollection
         {
             [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
             {
@@ -163,7 +163,7 @@ public class CliInstructionTokenExtractorTests
         
         var input = $"/command --{argumentName}";
         
-        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
+        var indexes = new CliInstructionTokenIndexCollection
         {
             [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
             {
@@ -205,7 +205,7 @@ public class CliInstructionTokenExtractorTests
         
         var input = $"/command --{argumentName} {argumentValue}";
         
-        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
+        var indexes = new CliInstructionTokenIndexCollection
         {
             [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
             {
@@ -249,7 +249,7 @@ public class CliInstructionTokenExtractorTests
         
         var input = $"/command --{argumentOneName} {argumentOneValue} --{argumentTwoName} {argumentTwoValue}";
         
-        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
+        var indexes = new CliInstructionTokenIndexCollection
         {
             [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
             {
@@ -298,7 +298,7 @@ public class CliInstructionTokenExtractorTests
         
         var input = $"/command --{argumentOneName} {argumentOneValue} --{argumentTwoName} {argumentTwoValue}";
         
-        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
+        var indexes = new CliInstructionTokenIndexCollection
         {
             [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
             {
@@ -346,7 +346,7 @@ public class CliInstructionTokenExtractorTests
         
         var input = $"/command --{argumentOneName} --{argumentTwoName} {argumentTwoValue}";
         
-        var indexes = new Dictionary<CliInstructionTokenType, CliInstructionTokenIndex>
+        var indexes = new CliInstructionTokenIndexCollection
         {
             [CliInstructionTokenType.Prefix] = new CliInstructionTokenIndex
             {
