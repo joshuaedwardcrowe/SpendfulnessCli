@@ -1,3 +1,5 @@
+using Cli.Instructions.Indexers;
+
 namespace Cli.Instructions.Extensions;
 
 public static class StringExtensions
@@ -7,4 +9,7 @@ public static class StringExtensions
             .ToCharArray()
             .Where(c => !char.IsWhiteSpace(c))
             .Any(char.IsLetter);
+
+    public static string ExtractTokenContent(this string terminalInput, CliInstructionTokenIndex tokenIndex)
+        => terminalInput[tokenIndex.StartIndex..tokenIndex.EndIndex];
 }

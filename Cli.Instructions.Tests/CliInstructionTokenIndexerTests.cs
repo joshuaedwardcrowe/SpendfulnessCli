@@ -21,10 +21,10 @@ public class CliInstructionTokenIndexerTests
         
         var result = _cliInstructionTokenIndexer.Index(input);
         
-        Assert.That(result.PrefixTokenIndexed, Is.False);
-        Assert.That(result.NameTokenIndexed, Is.False);
-        Assert.That(result.SubNameTokenIndexed, Is.False);
-        Assert.That(result.ArgumentTokensIndexed, Is.False);
+        Assert.That(result[CliInstructionTokenType.Prefix].Found, Is.False);
+        Assert.That(result[CliInstructionTokenType.Name].Found, Is.False);
+        Assert.That(result[CliInstructionTokenType.SubName].Found, Is.False);
+        Assert.That(result[CliInstructionTokenType.Arguments].Found, Is.False);
     }
     
     [TestCase("command")]
@@ -38,7 +38,7 @@ public class CliInstructionTokenIndexerTests
     {
         var result = _cliInstructionTokenIndexer.Index(input);
         
-        Assert.That(result.PrefixTokenIndexed, Is.False);
+        Assert.That(result[CliInstructionTokenType.Prefix].Found, Is.False);
     }
 
     [TestCase("/")]
@@ -53,9 +53,9 @@ public class CliInstructionTokenIndexerTests
     {
         var result = _cliInstructionTokenIndexer.Index(input);
         
-        Assert.That(result.PrefixTokenIndexed, Is.True);
-        Assert.That(result.PrefixTokenStartIndex, Is.EqualTo(0));
-        Assert.That(result.PrefixTokenEndIndex, Is.EqualTo(1));
+        Assert.That(result[CliInstructionTokenType.Prefix].Found, Is.True);
+        Assert.That(result[CliInstructionTokenType.Prefix].StartIndex, Is.EqualTo(0));
+        Assert.That(result[CliInstructionTokenType.Prefix].EndIndex, Is.EqualTo(1));
     }
 
     [TestCase("/ ")]
@@ -68,7 +68,7 @@ public class CliInstructionTokenIndexerTests
     {
         var result = _cliInstructionTokenIndexer.Index(input);
         
-        Assert.That(result.NameTokenIndexed, Is.False);
+        Assert.That(result[CliInstructionTokenType.Name].Found, Is.False);
     }
 
     [TestCase("/command-example", "command-example")]
@@ -81,9 +81,10 @@ public class CliInstructionTokenIndexerTests
     {
         var result = _cliInstructionTokenIndexer.Index(input);
         
-        Assert.That(result.NameTokenIndexed, Is.True);
+        Assert.That(result[CliInstructionTokenType.Name].Found, Is.True);
 
-        var match = input[result.NameTokenStartIndex..result.NameTokenEndIndex];
+        var tokenIndex = result[CliInstructionTokenType.Name];
+        var match = input[tokenIndex.StartIndex..tokenIndex.EndIndex];
         Assert.That(match, Is.EqualTo(expectedMatch));
     }
     
@@ -96,7 +97,7 @@ public class CliInstructionTokenIndexerTests
     {
         var result = _cliInstructionTokenIndexer.Index(input);
         
-        Assert.That(result.SubNameTokenIndexed, Is.False);
+        Assert.That(result[CliInstructionTokenType.SubName].Found, Is.False);
     }
     
     [TestCase("/command-example sub-command-example", "sub-command-example")]
@@ -108,9 +109,10 @@ public class CliInstructionTokenIndexerTests
     {
         var result = _cliInstructionTokenIndexer.Index(input);
         
-        Assert.That(result.SubNameTokenIndexed, Is.True);
+        Assert.That(result[CliInstructionTokenType.SubName].Found, Is.True);
 
-        var match = input[result.SubNameStartIndex..result.SubNameEndIndex];
+        var tokenIndex = result[CliInstructionTokenType.SubName];
+        var match = input[tokenIndex.StartIndex..tokenIndex.EndIndex];
         Assert.That(match, Is.EqualTo(expectedMatch));
     }
     
@@ -120,7 +122,7 @@ public class CliInstructionTokenIndexerTests
     {
         var result = _cliInstructionTokenIndexer.Index(input);
         
-        Assert.That(result.ArgumentTokensIndexed, Is.False);
+        Assert.That(result[CliInstructionTokenType.Arguments].Found, Is.False);
     }
     
     [TestCase("/command-example sub-command-example --argument-example", "--argument-example")]
@@ -133,9 +135,10 @@ public class CliInstructionTokenIndexerTests
     {
         var result = _cliInstructionTokenIndexer.Index(input);
         
-        Assert.That(result.ArgumentTokensIndexed, Is.True);
+        Assert.That(result[CliInstructionTokenType.Arguments].Found, Is.True);
 
-        var match = input[result.ArgumentTokensStartIndex..result.ArgumentTokensEndIndex];
+        var tokenIndex = result[CliInstructionTokenType.Arguments];
+        var match = input[tokenIndex.StartIndex..tokenIndex.EndIndex];
         Assert.That(match, Is.EqualTo(expectedMatch));
     }
 }

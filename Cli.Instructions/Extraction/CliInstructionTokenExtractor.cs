@@ -1,72 +1,88 @@
 using Cli.Instructions.Abstractions;
+using Cli.Instructions.Extensions;
 using Cli.Instructions.Indexers;
 
 namespace Cli.Instructions.Extraction;
 
 public class CliInstructionTokenExtractor
 {
-    public CliInstructionTokenExtraction Extract(CliInstructionTokenIndexes indexes, string terminalInput)
+    public CliInstructionTokenExtraction Extract(
+        CliInstructionTokenIndexCollection indexes, 
+        string terminalInput)
     {
-        var prefixToken = ExtractPrefixToken(indexes, terminalInput);
-        var nameToken = ExtractNameToken(indexes, terminalInput);
-        var subNameToken = ExtractSubNameToken(indexes, terminalInput);
+        var prefixToken = ExtractRequiredToken(indexes, terminalInput, CliInstructionTokenType.Prefix);
+        var nameToken = ExtractRequiredToken(indexes, terminalInput, CliInstructionTokenType.Name);
+        var subNameToken = ExtractOptionalToken(indexes, terminalInput, CliInstructionTokenType.SubName);
         var argumentTokens = ExtractArgumentTokens(indexes, terminalInput);
         
         return new CliInstructionTokenExtraction(prefixToken, nameToken, subNameToken, argumentTokens);
     }
 
-    private string ExtractPrefixToken(CliInstructionTokenIndexes indexes, string terminalInput)
+    private string ExtractRequiredToken(
+        CliInstructionTokenIndexCollection indexes,
+        string terminalInput,
+        CliInstructionTokenType tokenType)
     {
-        if (!indexes.PrefixTokenIndexed)
+        var tokenIndex = indexes[tokenType];
+        
+        if (!tokenIndex.Found)
         {
-            throw new CliInstructionException(
-                CliInstructionExceptionCode.NoInstructionPrefix,
-                $"Instructions must contain a {CliInstructionConstants.DefaultNamePrefix}");
+            ThrowMissingTokenException(tokenType);
         }
 
-        return terminalInput[indexes.PrefixTokenStartIndex..indexes.PrefixTokenEndIndex];
+        return terminalInput.ExtractTokenContent(tokenIndex);
     }
 
-    private string ExtractNameToken(CliInstructionTokenIndexes indexes, string terminalInput)
+    private static void ThrowMissingTokenException(CliInstructionTokenType tokenType)
     {
-        if (!indexes.NameTokenIndexed)
+        switch (tokenType)
         {
-            throw new CliInstructionException(
-                CliInstructionExceptionCode.NoInstructionName,
-                $"Instructions must have a name");
+            case CliInstructionTokenType.Prefix:
+                throw new NoInstructionPrefixException(
+                    $"Instructions must contain a {CliInstructionConstants.DefaultNamePrefix}");
+            case CliInstructionTokenType.Name:
+                throw new NoInstructionNameException("Instructions must have a name");
+            default:
+                throw new CliInstructionException(
+                    CliInstructionExceptionCode.NoInstructionName,
+                    $"Missing required token: {tokenType}");
         }
-
-        return terminalInput[indexes.NameTokenStartIndex..indexes.NameTokenEndIndex];
     }
 
-    private string? ExtractSubNameToken(CliInstructionTokenIndexes indexes, string terminalInput)
+    private string? ExtractOptionalToken(
+        CliInstructionTokenIndexCollection indexes,
+        string terminalInput,
+        CliInstructionTokenType tokenType)
     {
-        if (!indexes.SubNameTokenIndexed)
+        var tokenIndex = indexes[tokenType];
+        
+        if (!tokenIndex.Found)
         {
             return null;
         }
 
-        return terminalInput[indexes.SubNameStartIndex..indexes.SubNameEndIndex];
+        return terminalInput.ExtractTokenContent(tokenIndex);
     }
     
-    private static Dictionary<string, string?> ExtractArgumentTokens(CliInstructionTokenIndexes indexes, string terminalInput)
+    private static Dictionary<string, string?> ExtractArgumentTokens(
+        CliInstructionTokenIndexCollection indexes, 
+        string terminalInput)
     {
-        if (!indexes.ArgumentTokensIndexed)
+        var argumentIndex = indexes[CliInstructionTokenType.Arguments];
+        
+        if (!argumentIndex.Found)
         {
             return new Dictionary<string, string?>();
         }
         
-        var argumentInput = terminalInput[indexes.ArgumentTokensStartIndex..indexes.ArgumentTokensEndIndex];
+        var argumentInput = terminalInput.ExtractTokenContent(argumentIndex);
 
-        var argumentTokens = argumentInput.Split(CliInstructionConstants.DefaultArgumentPrefix);
-        
-        var validArgumentTokens = argumentTokens
+        return argumentInput
+            .Split(CliInstructionConstants.DefaultArgumentPrefix)
             .Where(i => !string.IsNullOrWhiteSpace(i))
-            .Select(i => i.Trim());
-        
-        var parsedArgumentTokens = validArgumentTokens.Select(ParseArgumentInput);
-        
-        return parsedArgumentTokens.ToDictionary(token => token.Key, token => token.Value);
+            .Select(i => i.Trim())
+            .Select(ParseArgumentInput)
+            .ToDictionary(token => token.Key, token => token.Value);
     }
     
     private static KeyValuePair<string, string?> ParseArgumentInput(string terminalArgumentInput)
