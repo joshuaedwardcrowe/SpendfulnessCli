@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SpendfulnessCli.Commands\SpendfulnessCli.Commands.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="ServiceCollectionExtensions 2.cs" />
+      <Compile Remove="CopyOnBudget\CopyOnBudgetCommandGenerator 2.cs" />
+      <Compile Remove="CopyOnBudget\CopyOnBudgetCliCommand 2.cs" />
+      <Compile Remove="CopyOnBudget\CopyOnBudgetCliCliCommandHandler 2.cs" />
+    </ItemGroup>
+
+</Project>

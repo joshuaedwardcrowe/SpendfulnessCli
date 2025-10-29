@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Ynab\Ynab.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Taxis\TaxiTransactionFactory 2.cs" />
+      <Compile Remove="Taxis\TaxiTransaction 2.cs" />
+    </ItemGroup>
+
+</Project>

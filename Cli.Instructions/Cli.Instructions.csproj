@@ -15,10 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Exceptions\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <InternalsVisibleTo Include="Cli.Instructions.Tests" />
     </ItemGroup>
 

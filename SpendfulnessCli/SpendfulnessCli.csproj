@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SpendfulnessCli.Abstractions\SpendfulnessCli.Abstractions.csproj" />
+      <ProjectReference Include="..\Cli\Cli.csproj" />
+      <ProjectReference Include="..\SpendfulnessCli.Commands.Organisation\SpendfulnessCli.Commands.Organisation.csproj" />
+      <ProjectReference Include="..\SpendfulnessCli.Commands.Personalisation\SpendfulnessCli.Commands.Personalisation.csproj" />
+      <ProjectReference Include="..\SpendfulnessCli.Commands.Reporting\SpendfulnessCli.Commands.Reporting.csproj" />
+      <ProjectReference Include="..\SpendfulnessCli.Commands\SpendfulnessCli.Commands.csproj" />
+      <ProjectReference Include="..\Ynab\Ynab.csproj" />
+    </ItemGroup>
+
+</Project>

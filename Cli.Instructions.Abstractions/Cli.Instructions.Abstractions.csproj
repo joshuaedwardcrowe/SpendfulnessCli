@@ -10,4 +10,9 @@
       <ProjectReference Include="..\Cli.Abstractions\Cli.Abstractions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="NoInstructionPrefixException 2.cs" />
+      <Compile Remove="NoInstructionNameException 2.cs" />
+    </ItemGroup>
+
 </Project>

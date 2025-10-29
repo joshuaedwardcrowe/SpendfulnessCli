@@ -1,7 +1,6 @@
-using Ynab.Factories;
 using Ynab.Responses.Transactions;
 
-namespace Ynab.Clients;
+namespace Ynab.Factories;
 
 // TODO: Write unit tests.
 public class DefaultTransactionFactory : ITransactionFactory

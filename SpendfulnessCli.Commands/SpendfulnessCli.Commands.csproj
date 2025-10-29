@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ConsoleTables" Version="2.6.2" />
+      <PackageReference Include="MediatR" Version="12.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Cli.Commands.Abstractions\Cli.Commands.Abstractions.csproj" />
+      <ProjectReference Include="..\Spendfulness.Database\Spendfulness.Database.csproj" />
+      <ProjectReference Include="..\SpendfulnessCli.CliTables\SpendfulnessCli.CliTables.csproj" />
+      <ProjectReference Include="..\Cli.Instructions\Cli.Instructions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Extensions\SettingsExtensions 2.cs" />
+      <Compile Remove="CommandActionType 2.cs" />
+      <Compile Remove="Builders\CommandHelpCliTableBuilder 2.cs" />
+      <Compile Remove="Aggregate\CommandHelpAggregate 2.cs" />
+    </ItemGroup>
+
+</Project>

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Spendfulness.Database.Accounts;
 using Spendfulness.Database.Commitments;
 using Spendfulness.Database.Settings;
 

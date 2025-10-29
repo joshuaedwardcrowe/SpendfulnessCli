@@ -10,7 +10,7 @@ namespace Cli;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCli<TCliApp>(this IServiceCollection serviceCollection) where TCliApp : OriginalCli
+    public static IServiceCollection AddCli<TCliApp>(this IServiceCollection serviceCollection) where TCliApp : CliApp
     {
         serviceCollection.AddCliInstructions();
         serviceCollection.AddCommandsFromAssembly(typeof(ExitCliCommand).Assembly);
@@ -21,7 +21,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddSingleton<CliIo>();
         serviceCollection.AddSingleton<CliCommandOutcomeIo>();
         
-        serviceCollection.AddSingleton<OriginalCli, TCliApp>();
+        serviceCollection.AddSingleton<CliApp, TCliApp>();
         
         return serviceCollection;
     }
