@@ -3,7 +3,7 @@ using Ynab;
 using Ynab.Factories;
 using Ynab.Responses.Transactions;
 
-namespace Cli.Spendfulness.Abstractions.Taxis;
+namespace Spendfulness.Cli.Abstractions.Taxis;
 
 // TODO: Write unit tests.
 public class TaxiTransactionFactory : ITransactionFactory

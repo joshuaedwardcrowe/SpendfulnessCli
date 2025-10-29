@@ -2,11 +2,11 @@
 
 using Cli;
 using Cli.Instructions.Extensions;
-using Cli.Spendfulness;
-using Cli.Spendfulness.Abstractions.Taxis;
 using Cli.Spendfulness.Commands.Extensions;
 using Cli.Spendfulness.Commands.Organisation;
 using Cli.Spendfulness.Commands.Personalisation;
+using Spendfulness.Cli;
+using Spendfulness.Cli.Abstractions.Taxis;
 using Cli.Ynab.Commands.Reporting;
 using Microsoft.Extensions.DependencyInjection;
 using Spendfulness.Database;

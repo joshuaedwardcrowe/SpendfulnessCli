@@ -1,8 +1,9 @@
+using Cli;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Workflow;
 using Spendfulness.Database;
 
-namespace Cli.Spendfulness;
+namespace Spendfulness.Cli;
 
 public class SpendfulnessCli : OriginalCli
 {

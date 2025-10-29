@@ -1,7 +1,7 @@
 using Ynab;
 using Ynab.Responses.Transactions;
 
-namespace Cli.Spendfulness.Abstractions.Taxis;
+namespace Spendfulness.Cli.Abstractions.Taxis;
 
 public class TaxiTransaction(TransactionResponse transactionResponse) : Transaction(transactionResponse)
 {
