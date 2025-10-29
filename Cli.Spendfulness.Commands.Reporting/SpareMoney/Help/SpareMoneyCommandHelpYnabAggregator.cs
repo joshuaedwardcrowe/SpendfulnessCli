@@ -1,6 +1,6 @@
-using Cli.Spendfulness.Aggregation.Aggregator.ListAggregators;
 using Cli.Spendfulness.Commands;
 using Cli.Spendfulness.Commands.Aggregate;
+using Spendfulness.Cli.Aggregation.Aggregator.ListAggregators;
 
 namespace Cli.Ynab.Commands.Reporting.SpareMoney.Help;
 

@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{528597EC-7
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.CliTables", "Cli.Spendfulness.CliTables\Cli.Spendfulness.CliTables.csproj", "{D6DDBC52-9946-434B-814E-536E8E4D49CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Cli.CliTables", "Spendfulness.Cli.CliTables\Spendfulness.Cli.CliTables.csproj", "{D6DDBC52-9946-434B-814E-536E8E4D49CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands", "Cli.Spendfulness.Commands\Cli.Spendfulness.Commands.csproj", "{A856A1D8-73AB-47EA-8D8C-F53880052A16}"
 EndProject
@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ynab.Tests", "Ynab.Tests\Ynab.Tests.csproj", "{603D8C36-71AF-423D-B27D-F78C3B09EA0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.CliTables.Tests", "Cli.Spendfulness.CliTables.Tests\Cli.Spendfulness.CliTables.Tests.csproj", "{E72E9E9F-C093-4924-AFF2-67E1E46F1039}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Cli.CliTables.Tests", "Spendfulness.Cli.CliTables.Tests\Spendfulness.Cli.CliTables.Tests.csproj", "{E72E9E9F-C093-4924-AFF2-67E1E46F1039}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADR", "ADR", "{B5381D3F-A87C-459E-BE0F-27B0AC6A1D56}"
 	ProjectSection(SolutionItems) = preProject
@@ -49,7 +49,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands.R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Cli.Sync", "Spendfulness.Cli.Sync\Spendfulness.Cli.Sync.csproj", "{E34D5843-983A-4548-9D68-CB479F2711EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Aggregation", "Cli.Spendfulness.Aggregation\Cli.Spendfulness.Aggregation.csproj", "{83E6F779-DD81-42CD-B9F6-6DA58BFAE9ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Cli.Aggregation", "Spendfulness.Cli.Aggregation\Spendfulness.Cli.Aggregation.csproj", "{83E6F779-DD81-42CD-B9F6-6DA58BFAE9ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Spendfulness.Commands.Organisation", "Cli.Spendfulness.Commands.Organisation\Cli.Spendfulness.Commands.Organisation.csproj", "{6A7CA104-3649-4C11-9F2E-FE77130475E8}"
 EndProject

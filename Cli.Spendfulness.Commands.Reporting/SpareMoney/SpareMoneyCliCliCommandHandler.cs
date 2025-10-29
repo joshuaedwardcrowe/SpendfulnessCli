@@ -1,8 +1,8 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Spendfulness.Aggregation.Aggregator;
-using Cli.Spendfulness.Aggregation.Aggregator.AmountAggregators;
-using Cli.Spendfulness.CliTables.ViewModelBuilders;
+using Spendfulness.Cli.Aggregation.Aggregator;
+using Spendfulness.Cli.Aggregation.Aggregator.AmountAggregators;
+using Spendfulness.Cli.CliTables.ViewModelBuilders;
 using Spendfulness.Database;
 using Ynab;
 using Ynab.Extensions;

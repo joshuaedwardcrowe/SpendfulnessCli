@@ -1,4 +1,4 @@
-using Cli.Spendfulness.CliTables.ViewModelBuilders;
+using Spendfulness.Cli.CliTables.ViewModelBuilders;
 using Cli.Spendfulness.Commands.Aggregate;
 
 namespace Cli.Spendfulness.Commands.Builders;

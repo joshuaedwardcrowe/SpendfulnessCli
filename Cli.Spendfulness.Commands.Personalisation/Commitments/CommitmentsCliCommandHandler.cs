@@ -1,7 +1,7 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Spendfulness.Aggregation.Aggregator;
-using Cli.Spendfulness.CliTables.ViewModelBuilders;
+using Spendfulness.Cli.Aggregation.Aggregator;
+using Spendfulness.Cli.CliTables.ViewModelBuilders;
 using Spendfulness.Database;
 using Spendfulness.Database.Commitments;
 using Spendfulness.Database.Users;
