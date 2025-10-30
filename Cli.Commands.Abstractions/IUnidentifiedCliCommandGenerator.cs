@@ -19,7 +19,7 @@ public class CliNextCommmandDefinition
     public CliNextCommmandDefinition Next<TNextCommand>() where TNextCommand : CliCommand
     {
         var nextCommandName = typeof(TNextCommand)
-            .GetNameFromType()
+            .GetCommandName()
             .ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
 
         _nextCommands.Add(nextCommandName);

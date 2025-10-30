@@ -7,7 +7,7 @@ public abstract class NoCliCommandHandler<TCommand> : ICliCommandHandler<TComman
 {
     public Task<CliCommandOutcome> Handle(TCommand request, CancellationToken cancellationToken)
     {
-        var outcome = new CliCommandOutputOutcome($"No functionality for {request.GetName()} base command");
+        var outcome = new CliCommandOutputOutcome($"No functionality for {request.GetCommandName()} base command");
         return Task.FromResult<CliCommandOutcome>(outcome);
     }
 }
