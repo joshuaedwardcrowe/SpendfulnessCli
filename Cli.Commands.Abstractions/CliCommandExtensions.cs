@@ -8,4 +8,10 @@ public static class CliCommandExtensions
         var commandType = typeof(TCliCommand);
         return commandType.Name.Replace(commandSuffix, string.Empty);
     }
+
+    public static string GetNameFromType<TCliCommandType>(this TCliCommandType commandType) where TCliCommandType : Type
+    {
+        var commandSuffix = nameof(CliCommand);
+        return commandType.Name.Replace(commandSuffix, string.Empty);
+    }
 }

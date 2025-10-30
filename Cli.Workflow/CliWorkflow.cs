@@ -1,4 +1,5 @@
 using Cli.Commands.Abstractions.Properties;
+using Cli.Instructions.Abstractions;
 using Cli.Instructions.Parsers;
 using Cli.Workflow.Abstractions;
 using MediatR;
@@ -57,12 +58,13 @@ public class CliWorkflow
     private CliWorkflowRun CreateNewRun()
     {
         var state = new CliWorkflowRunState();
+        var instructions = new List<CliInstruction>();
         var properties = new Dictionary<string, CliCommandProperty>();
         
         var instructionParser = _serviceProvider.GetRequiredService<CliInstructionParser>();
         var commandProvider = _serviceProvider.GetRequiredService<CliWorkflowCommandProvider>();
         var mediator = _serviceProvider.GetRequiredService<IMediator>();
         
-        return new CliWorkflowRun(state, properties, instructionParser, commandProvider, mediator);
+        return new CliWorkflowRun(state, instructions, properties, instructionParser, commandProvider, mediator);
     }
 }

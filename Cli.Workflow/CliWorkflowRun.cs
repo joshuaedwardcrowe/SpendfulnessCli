@@ -19,7 +19,7 @@ public class CliWorkflowRun
     public readonly Dictionary<string, CliCommandProperty> Properties;
     
     private readonly CliInstructionParser _cliInstructionParser;
-    private readonly CliWorkflowCommandProvider _workflowCommandGeneratorProvider;
+    private readonly CliWorkflowCommandProvider _workflowCommandProvider;
     private readonly IMediator _mediator;
 
     public CliWorkflowRun(
@@ -27,7 +27,7 @@ public class CliWorkflowRun
         List<CliInstruction> instructions,
         Dictionary<string, CliCommandProperty> properties,
         CliInstructionParser cliInstructionParser,
-        CliWorkflowCommandProvider workflowCommandGeneratorProvider,
+        CliWorkflowCommandProvider workflowCommandProvider,
         IMediator mediator)
     {
         State = state;
@@ -35,7 +35,7 @@ public class CliWorkflowRun
         Properties = properties;
 
         _cliInstructionParser = cliInstructionParser;
-        _workflowCommandGeneratorProvider = workflowCommandGeneratorProvider;
+        _workflowCommandProvider = workflowCommandProvider;
         _mediator = mediator;
     }
 
@@ -62,9 +62,7 @@ public class CliWorkflowRun
         {
             State.ChangeTo(ClIWorkflowRunStateType.Running);
             
-            var instruction = _cliInstructionParser.Parse(ask!);
-            
-            var command = PrepareCommand(instruction);
+            var command = AskToCommand(ask!);
             
             return await ExecuteCommand(command);
         }
@@ -91,11 +89,9 @@ public class CliWorkflowRun
         }
         finally
         {
-            var instruction = _cliInstructionParser.Parse(ask!);
-            var commandGenerator = _workflowCommandGeneratorProvider.Provide(instruction);
-            var command = commandGenerator.Generate(instruction);
+            var command = AskToCommand(ask!);
             
-            // TODO: Not neccessarily a dictator of continuation.
+            // TODO: Not necessarily a dictator of continuation.
             var nextState = command.IsContinuous
                 ? ClIWorkflowRunStateType.NeedsToContinue
                 : ClIWorkflowRunStateType.Finished;
@@ -104,21 +100,28 @@ public class CliWorkflowRun
         }
     }
 
-    public CliCommand PrepareCommand(CliInstruction nextInstruction)
+    private CliCommand AskToCommand(string ask)
     {
-        // TODO: If re-running, get the old generator. If not re-running, get a new one.
-        var instructionToGenerateCommandWith = State.Is(ClIWorkflowRunStateType.NeedsToContinue)
-            ? Instructions.Last()
-            : nextInstruction;
+        var nextInstruction = _cliInstructionParser.Parse(ask);
         
-        var commandGenerator = _workflowCommandGeneratorProvider.Provide(instructionToGenerateCommandWith);
+        var priorInstruction = Instructions.LastOrDefault();
         
-        var command = commandGenerator.Generate(nextInstruction);
+        var onSameInstruction = nextInstruction.Name == priorInstruction?.Name;
+        
+        // If the next instruction is different from the last,
+        // It's a new instruction.
+        if (!onSameInstruction)
+        {
+            Instructions.Add(nextInstruction);
+        }
+        
+        var ignorePriorInstruction = priorInstruction == null || onSameInstruction;
 
-        // Attach already existing properties to newly generate command.
-        command.Properties = Properties;
+        var command = ignorePriorInstruction
+            ? _workflowCommandProvider.Provide(nextInstruction)
+            : _workflowCommandProvider.Provide(priorInstruction!, nextInstruction);
         
-        return command;
+        return command with { Properties = Properties };
     }
 
     private async Task<CliCommandOutcome> ExecuteCommand<TCliCommand>(TCliCommand command) where TCliCommand : CliCommand

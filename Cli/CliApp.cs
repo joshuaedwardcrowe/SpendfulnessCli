@@ -31,7 +31,7 @@ public abstract class CliApp
             
             var runTask =  run.RespondToAsk(ask);
             
-            OnRunStarted(run, ask);
+            OnRunStarted(run, ask!);
 
             var outcome = await runTask;
             

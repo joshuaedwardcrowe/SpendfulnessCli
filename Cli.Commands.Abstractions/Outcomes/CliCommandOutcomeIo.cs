@@ -16,13 +16,11 @@ public class CliCommandOutcomeIo : CliIo
             case CliCommandOutputOutcome outputOutcome:
                 Say(outputOutcome);
                 break;
-            case CliCommandNotFoundOutcome nothingOutcome:
-                Say(nothingOutcome);
+            case CliCommandPropertiesOutcome:
+            case CliCommandNothingOutcome:
                 break;
             case CliCommandExceptionOutcome exceptionOutcome:
                 Say(exceptionOutcome);
-                break;
-            case CliCommandNothingOutcome:
                 break;
             default:
                 throw new UnknownOutcomeException(
