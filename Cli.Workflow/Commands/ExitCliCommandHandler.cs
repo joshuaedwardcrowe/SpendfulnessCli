@@ -3,20 +3,11 @@ using Cli.Commands.Abstractions.Outcomes;
 
 namespace Cli.Workflow.Commands;
 
-public class ExitCliCommandHandler : CliCommandHandler, ICliCommandHandler<ExitCliCommand>
+public class ExitCliCommandHandler(CliWorkflow cliWorkflow) : CliCommandHandler, ICliCommandHandler<ExitCliCommand>
 {
-    private readonly CliWorkflow _cliWorkflow;
-
-    public ExitCliCommandHandler(CliWorkflow cliWorkflow)
+    public Task<CliCommandOutcome> Handle(ExitCliCommand command, CancellationToken cancellationToken)
     {
-        _cliWorkflow = cliWorkflow;
-    }
-
-    public Task<CliCommandOutcome> Handle(ExitCliCommand request, CancellationToken cancellationToken)
-    {
-        _cliWorkflow.Stop();
-        
-        var nothing = new CliCommandNothingOutcome();
-        return Task.FromResult<CliCommandOutcome>(nothing);
+        cliWorkflow.Stop();
+        return Task.FromResult<CliCommandOutcome>(new CliCommandNothingOutcome());
     }
 }

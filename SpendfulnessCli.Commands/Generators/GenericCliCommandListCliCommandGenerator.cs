@@ -5,8 +5,5 @@ namespace SpendfulnessCli.Commands.Generators;
 
 public class GenericCliCommandListCliCommandGenerator : ICliCommandGenerator<CommandListCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction)
-    {
-        return new CommandListCliCommand();
-    }
+    public CliCommand Generate(CliInstruction instruction) => new CommandListCliCommand();
 }

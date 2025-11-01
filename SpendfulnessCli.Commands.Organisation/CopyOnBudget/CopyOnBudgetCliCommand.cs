@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions;
 
 namespace SpendfulnessCli.Commands.Organisation.CopyOnBudget;
 
-public class CopyOnBudgetCliCommand(Guid accountId) : ICliCommand
+public record CopyOnBudgetCliCommand(Guid accountId) : CliCommand
 {
     public static class ArgumentNames
     {

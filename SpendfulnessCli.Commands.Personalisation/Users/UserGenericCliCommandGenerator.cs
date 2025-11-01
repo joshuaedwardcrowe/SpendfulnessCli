@@ -9,7 +9,7 @@ namespace SpendfulnessCli.Commands.Personalisation.Users;
 
 public class UserGenericCliCommandGenerator : ICliCommandGenerator<UserCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction) 
+    public CliCommand Generate(CliInstruction instruction) 
         => instruction.SubInstructionName switch
         {
             UserCliCommand.SubCommandNames.Create => GenerateCreateCommand(instruction.Arguments),

@@ -3,16 +3,22 @@ using MediatR;
 
 namespace Cli.Commands.Abstractions;
 
-public interface ICliCommand : IRequest<CliCommandOutcome>
+/// <summary>
+/// A command that can be executed via the CLI.
+/// For example, "List all transactions for payee X".
+/// </summary>
+public record CliCommand : IRequest<CliCommandOutcome>
 {
-}
-
-public static class CliCommand
-{
-    public static string GetName<TCliCommand>(this TCliCommand command) where TCliCommand : ICliCommand
+    /// <summary>
+    /// Get the name of the command.
+    /// (without the suffix)
+    /// </summary>
+    /// <param name="command"></param>
+    /// <typeparam name="TCliCommand"></typeparam>
+    /// <returns></returns>
+    public string GetCommandName()
     {
         var commandSuffix = nameof(CliCommand);
-        var commandType = typeof(TCliCommand);
-        return commandType.Name.Replace(commandSuffix, string.Empty);
+        return GetType().Name.Replace(commandSuffix, string.Empty);
     }
 }

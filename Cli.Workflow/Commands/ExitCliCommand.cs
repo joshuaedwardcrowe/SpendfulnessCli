@@ -2,6 +2,6 @@
 
 namespace Cli.Workflow.Commands;
 
-public class ExitCliCommand : ICliCommand
+public record ExitCliCommand : CliCommand
 {
 }

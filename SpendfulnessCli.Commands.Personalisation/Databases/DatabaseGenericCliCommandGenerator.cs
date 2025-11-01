@@ -6,7 +6,7 @@ namespace SpendfulnessCli.Commands.Personalisation.Databases;
 
 public class DatabaseGenericCliCommandGenerator : ICliCommandGenerator<DatabaseCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction) =>
+    public CliCommand Generate(CliInstruction instruction) =>
         instruction.SubInstructionName switch
         {
             DatabaseCliCommand.SubCommandNames.Create => new DatabaseCreateCliCommand(),

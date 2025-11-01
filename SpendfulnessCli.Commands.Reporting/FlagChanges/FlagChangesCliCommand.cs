@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions;
 
 namespace SpendfulnessCli.Commands.Reporting.FlagChanges;
 
-public class FlagChangesCliCommand : ICliCommand
+public record FlagChangesCliCommand : CliCommand
 {
     public static class ArgumentNames
     {

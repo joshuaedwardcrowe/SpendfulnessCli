@@ -6,7 +6,7 @@ namespace SpendfulnessCli.Commands.Reporting.FlagChanges;
 
 public class FlagChangesCliCommandGenerator : ICliCommandGenerator<FlagChangesCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction)
+    public CliCommand Generate(CliInstruction instruction)
     {
         // TODO: I dont like that this isnt more generic!
         var from = instruction

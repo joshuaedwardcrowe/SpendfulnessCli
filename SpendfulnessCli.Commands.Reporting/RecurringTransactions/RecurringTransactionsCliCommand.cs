@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions;
 
 namespace SpendfulnessCli.Commands.Reporting.RecurringTransactions;
 
-public class RecurringTransactionsCliCommand : ICliCommand
+public record RecurringTransactionsCliCommand : CliCommand
 {
     public static class ArgumentNames
     {

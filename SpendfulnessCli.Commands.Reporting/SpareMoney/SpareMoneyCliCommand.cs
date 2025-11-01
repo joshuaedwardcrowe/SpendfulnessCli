@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions;
 
 namespace SpendfulnessCli.Commands.Reporting.SpareMoney;
 
-public class SpareMoneyCliCommand : ICliCommand
+public record SpareMoneyCliCommand : CliCommand
 {
     public static class SubCommandNames
     {

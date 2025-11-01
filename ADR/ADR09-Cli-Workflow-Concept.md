@@ -239,7 +239,7 @@ public class CliWorkflowRunState
 ```csharp
 public class CliWorkflowCommandProvider(IServiceProvider serviceProvider)
 {
-    public ICliCommand GetCommand(CliInstruction instruction)
+    public CliCommand GetCommand(CliInstruction instruction)
     {
         if (string.IsNullOrEmpty(instruction.Name))
         {
@@ -262,7 +262,7 @@ public class CliWorkflowCommandProvider(IServiceProvider serviceProvider)
 **Command Generation Pattern**:
 1. Instruction name (e.g., "spare-money") acts as key
 2. Service provider returns registered `IGenericCommandGenerator`
-3. Generator creates `ICliCommand` from instruction
+3. Generator creates `CliCommand` from instruction
 4. Command is sent to MediatR for handling
 
 This pattern enables:

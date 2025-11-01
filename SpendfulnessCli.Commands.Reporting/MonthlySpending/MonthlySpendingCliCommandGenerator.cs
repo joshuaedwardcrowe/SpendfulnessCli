@@ -7,7 +7,7 @@ namespace SpendfulnessCli.Commands.Reporting.MonthlySpending;
 // TODO: Write unit tests.
 public class MonthlySpendingCliCommandGenerator : ICliCommandGenerator<MonthlySpendingCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction)
+    public CliCommand Generate(CliInstruction instruction)
     {
         var categoryIdArgument = instruction
             .Arguments

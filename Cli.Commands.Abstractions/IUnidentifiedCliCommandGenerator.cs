@@ -4,5 +4,5 @@ namespace Cli.Commands.Abstractions;
 
 public interface IUnidentifiedCliCommandGenerator
 {
-    ICliCommand Generate(CliInstruction instruction);
+    CliCommand Generate(CliInstruction instruction);
 }

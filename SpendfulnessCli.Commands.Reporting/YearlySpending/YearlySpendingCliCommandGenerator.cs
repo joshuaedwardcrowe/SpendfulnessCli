@@ -5,5 +5,5 @@ namespace SpendfulnessCli.Commands.Reporting.YearlySpending;
 
 public class YearlySpendingCliCommandGenerator : ICliCommandGenerator<YearlySpendingCliCommand>
 { 
-    public ICliCommand Generate(CliInstruction instruction) => new YearlySpendingCliCommand();
+    public CliCommand Generate(CliInstruction instruction) => new YearlySpendingCliCommand();
 }

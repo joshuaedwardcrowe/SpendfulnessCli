@@ -6,7 +6,7 @@ namespace SpendfulnessCli.Commands.Reporting.RecurringTransactions;
 
 public class RecurringTransactionsGenericCliCommandGenerator : ICliCommandGenerator<RecurringTransactionsCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction)
+    public CliCommand Generate(CliInstruction instruction)
     {
         var fromArgument = instruction
             .Arguments

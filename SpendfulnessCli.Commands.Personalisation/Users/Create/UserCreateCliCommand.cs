@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions;
 
 namespace SpendfulnessCli.Commands.Personalisation.Users.Create;
 
-public class UserCreateCliCommand : ICliCommand
+public record UserCreateCliCommand : CliCommand
 {
     public static class ArugmentNames
     {

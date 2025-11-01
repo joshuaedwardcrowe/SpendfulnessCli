@@ -8,7 +8,7 @@ namespace SpendfulnessCli.Commands.Personalisation.Settings;
 
 public class SettingsGenericCliCommandGenerator : ICliCommandGenerator<SettingsCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction)
+    public CliCommand Generate(CliInstruction instruction)
         => instruction.SubInstructionName switch
         {
             SettingsCliCommand.SubCommandNames.Create => GenerateCreateCommand(instruction.Arguments),

@@ -5,5 +5,5 @@ namespace Cli.Workflow.Commands;
 
 public class ExitCliCommandGenerator : ICliCommandGenerator<ExitCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction) => new ExitCliCommand();
+    public CliCommand Generate(CliInstruction instruction) => new ExitCliCommand();
 }

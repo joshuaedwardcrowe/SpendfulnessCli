@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions;
 
 namespace SpendfulnessCli.Commands.Reporting.MonthlySpending;
 
-public class MonthlySpendingCliCommand : ICliCommand
+public record MonthlySpendingCliCommand : CliCommand
 {
     public static class ArgumentNames
     {

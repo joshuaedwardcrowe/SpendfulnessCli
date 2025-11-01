@@ -6,7 +6,7 @@ namespace SpendfulnessCli.Commands.Personalisation.Commitments;
 
 public class CommitmentsGenericCliCommandGenerator : ICliCommandGenerator<CommitmentsCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction) =>
+    public CliCommand Generate(CliInstruction instruction) =>
         instruction.SubInstructionName switch
         {
             CommitmentsCliCommand.SubCommandNames.Find => new CommitmentFindCliCommand(),

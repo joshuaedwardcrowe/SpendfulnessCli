@@ -2,6 +2,6 @@ using Cli.Commands.Abstractions;
 
 namespace SpendfulnessCli.Commands.Reporting.AverageYearlyPay;
 
-public class AverageYearlyPayCliCommand : ICliCommand
+public record AverageYearlyPayCliCommand : CliCommand
 {
 }

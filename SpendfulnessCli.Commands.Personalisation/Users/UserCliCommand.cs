@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions;
 
 namespace SpendfulnessCli.Commands.Personalisation.Users;
 
-public class UserCliCommand : ICliCommand
+public record UserCliCommand : CliCommand
 {
     public static class SubCommandNames
     {

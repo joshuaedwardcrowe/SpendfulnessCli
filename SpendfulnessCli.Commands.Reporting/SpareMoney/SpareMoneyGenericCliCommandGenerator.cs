@@ -7,7 +7,7 @@ namespace SpendfulnessCli.Commands.Reporting.SpareMoney;
 
 public class SpareMoneyGenericCliCommandGenerator : ICliCommandGenerator<SpareMoneyCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction) =>
+    public CliCommand Generate(CliInstruction instruction) =>
         instruction.SubInstructionName switch
         {
             SpareMoneyCliCommand.SubCommandNames.Help => new SpareMoneyHelpCliCommand(),

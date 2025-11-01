@@ -7,7 +7,7 @@ namespace SpendfulnessCli.Commands.Personalisation.Accounts;
 
 public class AccountsCliCommandGenerator : ICliCommandGenerator<AccountsCliCommand>
 {
-    public ICliCommand Generate(CliInstruction instruction)
+    public CliCommand Generate(CliInstruction instruction)
         => instruction.SubInstructionName switch
         {
             AccountsCliCommand.SubCommandNames.Identify => GenerateIdentifyCommand(instruction.Arguments),

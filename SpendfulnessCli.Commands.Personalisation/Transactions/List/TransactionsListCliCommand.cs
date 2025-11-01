@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions;
 
 namespace SpendfulnessCli.Commands.Personalisation.Transactions.List;
 
-public class TransactionsListCliCommand : ICliCommand
+public record TransactionsListCliCommand : CliCommand
 {
     public static class ArgumentNames
     {

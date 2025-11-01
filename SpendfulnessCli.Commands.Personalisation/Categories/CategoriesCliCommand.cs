@@ -2,6 +2,6 @@ using Cli.Commands.Abstractions;
 
 namespace SpendfulnessCli.Commands.Personalisation.Categories;
 
-public class CategoriesCliCommand : ICliCommand
+public record CategoriesCliCommand : CliCommand
 {
 }

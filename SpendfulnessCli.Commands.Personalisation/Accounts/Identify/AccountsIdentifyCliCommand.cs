@@ -4,7 +4,7 @@ namespace SpendfulnessCli.Commands.Personalisation.Accounts.Identify;
 
 
 // TODO: Rename me to 'Attribute'
-public record AccountsIdentifyCliCommand(string YnabAccountName, string? CustomAccountTypeName, decimal? InterestRate) : ICliCommand
+public record AccountsIdentifyCliCommand(string YnabAccountName, string? CustomAccountTypeName, decimal? InterestRate) : CliCommand
 {
     public static class ArgumentNames
     {
