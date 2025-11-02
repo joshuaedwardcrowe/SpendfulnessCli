@@ -1,6 +1,7 @@
 using Cli;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Workflow;
+using Microsoft.EntityFrameworkCore;
 using Spendfulness.Database;
 
 namespace SpendfulnessCli;
@@ -48,7 +49,9 @@ public class SpendfulnessCliApp : CliApp
         Io.Say($"Timeline: {timeline} in {run.State.Stopwatch.Elapsed.Seconds}s");
         
         // Using synchronous because you cant run commands in parallel.
-        var changes = _spendfulnessDbContext.ChangeTracker.Entries();
+        var beingTracked = _spendfulnessDbContext.ChangeTracker.Entries();
+
+        var changes = beingTracked.Where(x => x.State != EntityState.Unchanged);
         
         _spendfulnessDbContext.SaveChanges();
         Io.Say($"Saved {changes.Count()} changes.");
