@@ -63,7 +63,7 @@ Custom factories can be created for specialized transaction types. Example with 
 ```csharp
 public class TaxiTransactionFactory : ITransactionFactory
 {
-    private Regex _taxiRegex = new Regex(@"(?i)\b(.+?)\s+to\s+(.+?)\b", RegexOptions.IgnoreCase);
+    private Regex _taxiRegex = new Regex(@"\b(.+?)\s+to\s+(.+?)\b", RegexOptions.IgnoreCase);
 
     public bool CanWorkWith(TransactionResponse transactionResponse)
         => transactionResponse.Memo != null && _taxiRegex.IsMatch(transactionResponse.Memo);
@@ -151,8 +151,10 @@ All clients receive the same collection of factories via constructor injection, 
 
 ### Null Handling
 - Currently, the factory collection is assumed to always contain at least the default factory
-- A null check is recommended in production code (warning CS8602 exists)
+- The code uses `FirstOrDefault()` without null checking, relying on the default factory always being present
+- A null check is recommended in production code (warning CS8602 exists in TransactionClient.cs:49)
 - Empty factory collections would cause runtime exceptions
+- Consider adding defensive null checks: `var factory = _transactionFactories.FirstOrDefault(s => s.CanWorkWith(transactionResponse)) ?? throw new InvalidOperationException("No factory found");`
 
 ## Questions & Answers
 
