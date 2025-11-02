@@ -37,7 +37,7 @@ public class SpendfulnessCliApp : CliApp
     {
         Io.Pause();
         
-        Io.Say($"Command outcome was: {outcome.Kind}");
+        Io.Say($"Command outcome was: {outcome.GetType().Name}");
 
         var states = run.State.Changes
             .Select(change => change.MovedTo.ToString())

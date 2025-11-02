@@ -26,7 +26,7 @@ public class CliCommandOutcomeIo : CliIo
                 break;
             default:
                 throw new UnknownOutcomeException(
-                    $"{outcome.Kind} outcomes not supported");
+                    $"{outcome.GetType().Name} outcomes not supported");
         }
     }
     public void Say(CliCommandTableOutcome tableOutcome)

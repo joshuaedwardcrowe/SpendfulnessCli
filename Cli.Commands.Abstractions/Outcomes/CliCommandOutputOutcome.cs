@@ -1,7 +1,6 @@
 namespace Cli.Commands.Abstractions.Outcomes;
 
-public class CliCommandOutputOutcome(string output) 
-    : CliCommandOutcome(CliWorkflowRunOutcomeKind.Output)
+public class CliCommandOutputOutcome(string output) : CliCommandOutcome
 {
     public string Output = output;
 }

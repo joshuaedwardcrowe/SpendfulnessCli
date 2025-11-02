@@ -1,5 +1,5 @@
 namespace Cli.Commands.Abstractions.Outcomes;
 
-public class CliCommandNothingOutcome() : CliCommandOutcome(CliWorkflowRunOutcomeKind.Nothing)
+public class CliCommandNothingOutcome : CliCommandOutcome
 {
 }
