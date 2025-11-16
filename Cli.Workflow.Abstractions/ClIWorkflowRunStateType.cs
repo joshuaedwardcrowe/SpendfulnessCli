@@ -7,7 +7,7 @@ public enum ClIWorkflowRunStateType
     Created,
     Running,
     // TODO: There might be a better name
-    NeedsToContinue,
+    CanContinue,
     InvalidAsk,
     Exceptional,
     Finished,

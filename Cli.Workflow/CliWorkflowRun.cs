@@ -43,7 +43,7 @@ public class CliWorkflowRun
     
     public async Task<CliCommandOutcome> RespondToAsk(string? ask)
     {
-        var needsToContinue = State.Is(ClIWorkflowRunStateType.NeedsToContinue);
+        var needsToContinue = State.Is(ClIWorkflowRunStateType.CanContinue);
         
         if (!needsToContinue)
         {
@@ -93,7 +93,7 @@ public class CliWorkflowRun
             
             // TODO: Not necessarily a dictator of continuation.
             var nextState = command.IsContinuous
-                ? ClIWorkflowRunStateType.NeedsToContinue
+                ? ClIWorkflowRunStateType.CanContinue
                 : ClIWorkflowRunStateType.Finished;
                         
             State.ChangeTo(nextState);

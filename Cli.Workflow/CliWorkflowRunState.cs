@@ -70,8 +70,8 @@ public class CliWorkflowRunState
         new(ClIWorkflowRunStateType.Created, ClIWorkflowRunStateType.Running),
         
         // This exists to handle multi-turn commands.
-        new(ClIWorkflowRunStateType.Running, ClIWorkflowRunStateType.NeedsToContinue),
-        new(ClIWorkflowRunStateType.NeedsToContinue, ClIWorkflowRunStateType.Running),
+        new(ClIWorkflowRunStateType.Running, ClIWorkflowRunStateType.CanContinue),
+        new(ClIWorkflowRunStateType.CanContinue, ClIWorkflowRunStateType.Running),
         
         new(ClIWorkflowRunStateType.Running, ClIWorkflowRunStateType.InvalidAsk),
         new(ClIWorkflowRunStateType.InvalidAsk, ClIWorkflowRunStateType.Finished),
