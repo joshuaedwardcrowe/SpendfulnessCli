@@ -1,11 +1,8 @@
 using Cli.Instructions.Parsers;
 using Cli.Workflow.Abstractions;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
-using static NUnit.Framework.Assert;
 
 namespace Cli.Workflow.Tests;
 
@@ -25,7 +22,7 @@ public class CliWorkflowTests
     [Test]
     public void CreatedWithStartedStatus()
     {
-        That(_classUnderTest.Status, Is.EqualTo(CliWorkflowStatus.Started));
+        Assert.That(_classUnderTest.Status, Is.EqualTo(CliWorkflowStatus.Started));
     }
     
     [Test]
@@ -48,7 +45,7 @@ public class CliWorkflowTests
         var run = _classUnderTest.CreateRun();
         
         // Assert
-        That(run, Is.Not.Null);
-        That(_classUnderTest.Runs, Has.Member(run));
+        Assert.That(run, Is.Not.Null);
+        Assert.That(_classUnderTest.Runs, Has.Member(run));
     }
 }

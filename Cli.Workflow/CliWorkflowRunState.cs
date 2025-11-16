@@ -3,7 +3,6 @@ using Cli.Workflow.Abstractions;
 
 namespace Cli.Workflow;
 
-// TODO: Make sure the stopwatch is unit tested.
 public class CliWorkflowRunState
 {
     public readonly Stopwatch Stopwatch = new Stopwatch();
