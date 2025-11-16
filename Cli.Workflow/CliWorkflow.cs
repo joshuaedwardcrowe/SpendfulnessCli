@@ -31,9 +31,9 @@ public class CliWorkflow
         // TODO: CLI - Store this somewhere?
         var state = new CliWorkflowRunState();
         
-        var instructionParser = _serviceProvider.GetRequiredService<CliInstructionParser>();
+        var instructionParser = _serviceProvider.GetRequiredService<ICliInstructionParser>();
         
-        var commandProvider = _serviceProvider.GetRequiredService<CliWorkflowCommandProvider>();
+        var commandProvider = _serviceProvider.GetRequiredService<ICliWorkflowCommandProvider>();
         
         var mediator = _serviceProvider.GetRequiredService<IMediator>();
         

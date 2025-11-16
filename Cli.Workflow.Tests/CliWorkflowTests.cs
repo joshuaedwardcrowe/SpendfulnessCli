@@ -1,0 +1,54 @@
+using Cli.Instructions.Parsers;
+using Cli.Workflow.Abstractions;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using static NUnit.Framework.Assert;
+
+namespace Cli.Workflow.Tests;
+
+[TestFixture]
+public class CliWorkflowTests
+{
+    private Mock<IServiceProvider> _serviceProviderMock;
+    private CliWorkflow _classUnderTest;
+
+    [SetUp]
+    public void SetUp()
+    {
+        _serviceProviderMock = new Mock<IServiceProvider>();
+        _classUnderTest = new CliWorkflow(_serviceProviderMock.Object);
+    }
+
+    [Test]
+    public void CreatedWithStartedStatus()
+    {
+        That(_classUnderTest.Status, Is.EqualTo(CliWorkflowStatus.Started));
+    }
+    
+    [Test]
+    public void CreatesNewRun()
+    {
+        // Arrange
+        _serviceProviderMock
+            .Setup(sp => sp.GetService(typeof(ICliInstructionParser)))
+            .Returns(new Mock<ICliInstructionParser>().Object);
+        
+        _serviceProviderMock
+            .Setup(sp =>  sp.GetService(typeof(ICliWorkflowCommandProvider)))
+            .Returns(new Mock<ICliWorkflowCommandProvider>().Object);
+        
+        _serviceProviderMock
+            .Setup(sp => sp.GetService(typeof(IMediator)))
+            .Returns(new Mock<IMediator>().Object);
+        
+        // Act
+        var run = _classUnderTest.CreateRun();
+        
+        // Assert
+        That(run, Is.Not.Null);
+        That(_classUnderTest.Runs, Has.Member(run));
+    }
+}

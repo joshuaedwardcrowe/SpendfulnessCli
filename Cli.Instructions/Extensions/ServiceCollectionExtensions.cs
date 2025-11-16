@@ -18,5 +18,5 @@ public static class ServiceCollectionExtensions
             .AddSingleton<ICliInstructionArgumentBuilder, BoolCliInstructionArgumentBuilder>()
             .AddSingleton<CliInstructionTokenIndexer>()
             .AddSingleton<CliInstructionTokenExtractor>()
-            .AddSingleton<CliInstructionParser>();
+            .AddSingleton<ICliInstructionParser, CliInstructionParser>();
 }

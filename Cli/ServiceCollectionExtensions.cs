@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddCliInstructions();
         serviceCollection.AddCommandsFromAssembly(typeof(ExitCliCommand).Assembly);
         
-        serviceCollection.AddSingleton<CliWorkflowCommandProvider>();
+        serviceCollection.AddSingleton<ICliWorkflowCommandProvider, CliWorkflowCommandProvider>();
         serviceCollection.AddSingleton<CliWorkflow>();
 
         serviceCollection.AddSingleton<CliIo>();
