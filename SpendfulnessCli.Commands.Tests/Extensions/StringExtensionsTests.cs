@@ -18,7 +18,7 @@ public class StringExtensionsTests
     [TestCase("RecurringTransactions", "rt")]
     public void GivenString_WhenToLowerTitleCaseCharacters_ReturnsCharacters(string input, string expected)
     {
-        var result = "".ToLowerTitleCharacters();
+        var result = input.ToLowerTitleCharacters();
         
         Assert.That(result, Is.EqualTo(expected));
     }
