@@ -5,7 +5,7 @@ namespace SpendfulnessCli.Commands.Reporting;
 
 public static class InstructionArgumentExtensions
 {
-    public static TypedCliInstructionArgument<decimal>? OfCurrencyType(
+    public static ValuedCliInstructionArgument<decimal>? OfCurrencyType(
         this List<CliInstructionArgument> arguments, string argumentName)
     {
         var minusIntArgument = arguments.OfType<int>(argumentName);
@@ -14,7 +14,7 @@ public static class InstructionArgumentExtensions
             return arguments.OfType<decimal>(argumentName);
         }
 
-        return new TypedCliInstructionArgument<decimal>(
+        return new ValuedCliInstructionArgument<decimal>(
             minusIntArgument.ArgumentName,
             minusIntArgument.ArgumentValue);
     }

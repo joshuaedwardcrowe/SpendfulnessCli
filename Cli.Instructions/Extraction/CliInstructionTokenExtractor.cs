@@ -10,43 +10,12 @@ public class CliInstructionTokenExtractor
         CliInstructionTokenIndexCollection indexes, 
         string terminalInput)
     {
-        var prefixToken = ExtractRequiredToken(indexes, terminalInput, CliInstructionTokenType.Prefix);
-        var nameToken = ExtractRequiredToken(indexes, terminalInput, CliInstructionTokenType.Name);
+        var prefixToken = ExtractOptionalToken(indexes, terminalInput, CliInstructionTokenType.Prefix);
+        var nameToken = ExtractOptionalToken(indexes, terminalInput, CliInstructionTokenType.Name);
         var subNameToken = ExtractOptionalToken(indexes, terminalInput, CliInstructionTokenType.SubName);
         var argumentTokens = ExtractArgumentTokens(indexes, terminalInput);
         
         return new CliInstructionTokenExtraction(prefixToken, nameToken, subNameToken, argumentTokens);
-    }
-
-    private string ExtractRequiredToken(
-        CliInstructionTokenIndexCollection indexes,
-        string terminalInput,
-        CliInstructionTokenType tokenType)
-    {
-        var tokenIndex = indexes[tokenType];
-        
-        if (!tokenIndex.Found)
-        {
-            ThrowMissingTokenException(tokenType);
-        }
-
-        return terminalInput.ExtractTokenContent(tokenIndex);
-    }
-
-    private static void ThrowMissingTokenException(CliInstructionTokenType tokenType)
-    {
-        switch (tokenType)
-        {
-            case CliInstructionTokenType.Prefix:
-                throw new NoInstructionPrefixException(
-                    $"Instructions must contain a {CliInstructionConstants.DefaultNamePrefix}");
-            case CliInstructionTokenType.Name:
-                throw new NoInstructionNameException("Instructions must have a name");
-            default:
-                throw new CliInstructionException(
-                    CliInstructionExceptionCode.NoInstructionName,
-                    $"Missing required token: {tokenType}");
-        }
     }
 
     private string? ExtractOptionalToken(

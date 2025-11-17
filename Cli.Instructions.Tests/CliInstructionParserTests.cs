@@ -64,7 +64,7 @@ public class CliInstructionParserTests
         var result = _parser.Parse("/command --argument-one hello world");
 
         var argument = result.Arguments
-            .OfType<TypedCliInstructionArgument<string>>()
+            .OfType<ValuedCliInstructionArgument<string>>()
             .FirstOrDefault();
         
         Assert.That(argument, Is.Not.Null);
@@ -77,7 +77,7 @@ public class CliInstructionParserTests
         var result = _parser.Parse("/name --argument-one 1");
 
         var argument = result.Arguments
-            .OfType<TypedCliInstructionArgument<int>>()
+            .OfType<ValuedCliInstructionArgument<int>>()
             .FirstOrDefault();
         
         Assert.That(argument, Is.Not.Null);

@@ -11,6 +11,6 @@ public class GuidCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBui
     {
         var validArgumentValue = GetValidValue(argumentName, argumentValue);
         var parsedArgumentValue = Guid.Parse(validArgumentValue);
-        return new TypedCliInstructionArgument<Guid>(argumentName, parsedArgumentValue);
+        return new ValuedCliInstructionArgument<Guid>(argumentName, parsedArgumentValue);
     }
 }

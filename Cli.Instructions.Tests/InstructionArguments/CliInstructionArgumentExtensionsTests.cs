@@ -17,11 +17,11 @@ public class CliInstructionArgumentExtensionsTests
         
         _arguments =
         [
-            new TypedCliInstructionArgument<string>("argumentOne", "hello"),
-            new TypedCliInstructionArgument<int>("argumentTwo", 12345),
-            new TypedCliInstructionArgument<bool>("argumentThree", true),
-            new TypedCliInstructionArgument<decimal>("argumentFour", 12.0m),
-            new TypedCliInstructionArgument<DateOnly>("argumentFive", DateOnly.FromDateTime(dateOnly))
+            new ValuedCliInstructionArgument<string>("argumentOne", "hello"),
+            new ValuedCliInstructionArgument<int>("argumentTwo", 12345),
+            new ValuedCliInstructionArgument<bool>("argumentThree", true),
+            new ValuedCliInstructionArgument<decimal>("argumentFour", 12.0m),
+            new ValuedCliInstructionArgument<DateOnly>("argumentFive", DateOnly.FromDateTime(dateOnly))
         ];
     }
     

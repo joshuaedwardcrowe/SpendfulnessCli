@@ -13,6 +13,6 @@ public class DateOnlyCliInstructionArgumentBuilder : NoDefaultInstructionArgumen
         var argumentDate = DateTime.Parse(validArgumentValue);
         var argumentDateOnly = DateOnly.FromDateTime(argumentDate);
 
-        return new TypedCliInstructionArgument<DateOnly>(argumentName, argumentDateOnly);
+        return new ValuedCliInstructionArgument<DateOnly>(argumentName, argumentDateOnly);
     }
 }

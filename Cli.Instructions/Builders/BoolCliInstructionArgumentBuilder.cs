@@ -3,6 +3,7 @@ using Cli.Instructions.Arguments;
 
 namespace Cli.Instructions.Builders;
 
+// TODO: Write unit tests.
 public class BoolCliInstructionArgumentBuilder : ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue) => true;
@@ -11,9 +12,9 @@ public class BoolCliInstructionArgumentBuilder : ICliInstructionArgumentBuilder
     {
         if (bool.TryParse(argumentValue, out var argumentBool))
         {
-            return new TypedCliInstructionArgument<bool>(argumentName, argumentBool);
+            return new ValuedCliInstructionArgument<bool>(argumentName, argumentBool);
         }
         
-        return new TypedCliInstructionArgument<bool>(argumentName, true);
+        return new ValuedCliInstructionArgument<bool>(argumentName, true);
     }
 }

@@ -11,6 +11,6 @@ public class IntCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBuil
     {
         var validArgumentValue = GetValidValue(argumentName, argumentValue);
         var parsedArgumentValue = int.Parse(validArgumentValue);
-        return new TypedCliInstructionArgument<int>(argumentName, parsedArgumentValue);
+        return new ValuedCliInstructionArgument<int>(argumentName, parsedArgumentValue);
     }
 }

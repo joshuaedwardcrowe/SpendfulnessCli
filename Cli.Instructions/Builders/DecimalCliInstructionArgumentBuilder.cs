@@ -11,6 +11,6 @@ public class DecimalCliInstructionArgumentBuilder : NoDefaultInstructionArgument
     {
         var validArgumentValue = GetValidValue(argumentName, argumentValue);
         var parsedArgumentValue = decimal.Parse(validArgumentValue);
-        return new TypedCliInstructionArgument<decimal>(argumentName, parsedArgumentValue);
+        return new ValuedCliInstructionArgument<decimal>(argumentName, parsedArgumentValue);
     }
 }

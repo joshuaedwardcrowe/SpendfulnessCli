@@ -4,15 +4,15 @@ namespace Cli.Instructions.Arguments;
 
 public static class CliInstructionArgumentExtensions
 {
-    public static TypedCliInstructionArgument<TArgumentType>? OfType<TArgumentType>(
+    public static ValuedCliInstructionArgument<TArgumentType>? OfType<TArgumentType>(
         this IEnumerable<CliInstructionArgument> arguments, string argumentName)
         where TArgumentType : notnull
             => arguments
                 .Where(argument => argument.ArgumentName == argumentName)
-                .OfType<TypedCliInstructionArgument<TArgumentType>>()
+                .OfType<ValuedCliInstructionArgument<TArgumentType>>()
                 .FirstOrDefault();
     
-    public static TypedCliInstructionArgument<TArgumentType> OfRequiredType<TArgumentType>(
+    public static ValuedCliInstructionArgument<TArgumentType> OfRequiredType<TArgumentType>(
         this IEnumerable<CliInstructionArgument> arguments, string argumentName)
         where TArgumentType : notnull
     {
@@ -27,18 +27,18 @@ public static class CliInstructionArgumentExtensions
         return argument;
     }
 
-    public static TypedCliInstructionArgument<string> OfRequiredStringFrom<TPossibleArgumentType>(
+    public static ValuedCliInstructionArgument<string> OfRequiredStringFrom<TPossibleArgumentType>(
         this IEnumerable<CliInstructionArgument> arguments, string argumentName)
         where TPossibleArgumentType : notnull
     {
         var possibleArgument = OfRequiredType<TPossibleArgumentType>(arguments, argumentName);
         var stringifiedArgumentValue = possibleArgument.ArgumentValue.ToString();
-        return new TypedCliInstructionArgument<string>(argumentName, stringifiedArgumentValue!);
+        return new ValuedCliInstructionArgument<string>(argumentName, stringifiedArgumentValue!);
     }
 
     // Works around the constraint that argument passing has to be one or the other, but we can 
     // work out which one it is.
-    public static TypedCliInstructionArgument<string> OfRequiredStringFrom<TPossibleArgumentTypeOne, TPossibleArgumentTypeTwo>(
+    public static ValuedCliInstructionArgument<string> OfRequiredStringFrom<TPossibleArgumentTypeOne, TPossibleArgumentTypeTwo>(
         this List<CliInstructionArgument> arguments, string argumentName) 
         where TPossibleArgumentTypeOne : notnull
         where TPossibleArgumentTypeTwo : notnull
@@ -47,14 +47,14 @@ public static class CliInstructionArgumentExtensions
         if (possibleArgumentOne is not null)
         {
             var stringifiedArgumentValue = possibleArgumentOne.ArgumentValue.ToString();
-            return new TypedCliInstructionArgument<string>(argumentName, stringifiedArgumentValue!);
+            return new ValuedCliInstructionArgument<string>(argumentName, stringifiedArgumentValue!);
         }
         
         var possibleArgumentTwo = OfType<TPossibleArgumentTypeTwo>(arguments, argumentName);
         if (possibleArgumentTwo is not null)
         {
             var stringifiedArgumentValue = possibleArgumentTwo.ArgumentValue.ToString();
-            return new TypedCliInstructionArgument<string>(argumentName, stringifiedArgumentValue!);
+            return new ValuedCliInstructionArgument<string>(argumentName, stringifiedArgumentValue!);
         }
         
         throw new CliInstructionException(CliInstructionExceptionCode.ArgumentIsRequired,

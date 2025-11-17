@@ -16,6 +16,6 @@ public class StringCliInstructionArgumentBuilder : NoDefaultInstructionArgumentB
     public CliInstructionArgument Create(string argumentName, string? argumentValue)
     {
         var validArgumentValue = GetValidValue(argumentName, argumentValue);
-        return new TypedCliInstructionArgument<string>(argumentName, validArgumentValue);
+        return new ValuedCliInstructionArgument<string>(argumentName, validArgumentValue);
     }
 }
