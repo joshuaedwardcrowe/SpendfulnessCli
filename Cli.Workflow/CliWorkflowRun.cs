@@ -45,19 +45,26 @@ public class CliWorkflowRun
         }
         
         var instruction = _cliInstructionParser.Parse(ask!);
-        if (!_cliInstructionValidator.IsValidInstruction(instruction))
+        
+        if (_cliInstructionValidator.IsValidInstruction(instruction))
+        {
+            State.ChangeTo(ClIWorkflowRunStateStatus.Running, instruction);
+        }
+        else
         {
             State.ChangeTo(ClIWorkflowRunStateStatus.InvalidAsk);
             return new CliCommandNothingOutcome();
         }
-        
+
         try
         {
-            State.ChangeTo(ClIWorkflowRunStateStatus.Running);
-
             var command = _workflowCommandProvider.GetCommand(instruction);
 
-            return await _mediator.Send(command);
+            var outcome = await _mediator.Send(command);
+            
+            State.ChangeTo(ClIWorkflowRunStateStatus.AchievedOutcome, outcome);
+            
+            return outcome;
         }
         catch (NoCommandGeneratorException)
         {

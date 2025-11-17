@@ -10,37 +10,42 @@ public class CliWorkflowRunStateInvalidStateChangeTests : CliWorkflowRunStateTes
         yield return new TestCaseData(
             Enumerable.Empty<ClIWorkflowRunStateStatus>(),
             ClIWorkflowRunStateStatus.Created
-        ).SetName("State cannot be Created when already Created");
+        ).SetName("GivenStateIsCreated_WhenChangedToCreated_CannotBeChanged");
         
         yield return new TestCaseData(
             new [] { ClIWorkflowRunStateStatus.Running },
             ClIWorkflowRunStateStatus.Running
-        ).SetName("State cannot be Running when already Running");
+        ).SetName("GivenStateIsRunning_WhenChangedToRunning_CannotBeChanged");
         
         yield return new TestCaseData(
-            new [] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.InvalidAsk},
+            new [] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.InvalidAsk },
             ClIWorkflowRunStateStatus.InvalidAsk
-        ).SetName("State cannot be InvalidAsk when already InvalidAsk");
+        ).SetName("GivenStateIsInvalidAsk_WhenChangedToInvalidAsk_CannotBeChanged");
         
         yield return new TestCaseData(
             Enumerable.Empty<ClIWorkflowRunStateStatus>(),
             ClIWorkflowRunStateStatus.Exceptional
-        ).SetName("State cannot be Exceptional when not NotInitialized");
+        ).SetName("GivenStateIsCreated_WhenChangedToExceptional_CannotBeChanged");
+        
+        yield return new TestCaseData(
+            Enumerable.Empty<ClIWorkflowRunStateStatus>(),
+            ClIWorkflowRunStateStatus.Finished
+        ).SetName("GivenStateIsCreated_WhenChangedToFinished_CannotBeChanged");
         
         yield return new TestCaseData(
             new [] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.Exceptional },
             ClIWorkflowRunStateStatus.Exceptional
-        ).SetName("State cannot be InvalidAsk when already Exceptional");
+        ).SetName("GivenStateIsExceptional_WhenChangedToExceptional_CannotBeChanged");
         
         yield return new TestCaseData(
-            Enumerable.Empty<ClIWorkflowRunStateStatus>(),
-            ClIWorkflowRunStateStatus.Finished
-        ).SetName("State cannot be Finished when not NotInitialized");
+            new [] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.AchievedOutcome },
+            ClIWorkflowRunStateStatus.AchievedOutcome
+        ).SetName("GivenStateIsAchievedOutcome_WhenChangedToAchievedOutcome_CannotBeChanged");
         
         yield return new TestCaseData(
-            new [] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.Finished },
+            new [] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.AchievedOutcome, ClIWorkflowRunStateStatus.Finished },
             ClIWorkflowRunStateStatus.Finished
-        ).SetName("State cannot be Finished when already Finished");
+        ).SetName("GivenStateIsFinished_WhenChangedToFinished_CannotBeChanged");
     }
     
     [TestCaseSource(nameof(InvalidStateChanges))]

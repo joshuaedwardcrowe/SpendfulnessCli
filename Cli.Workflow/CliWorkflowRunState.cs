@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using Cli.Commands.Abstractions.Outcomes;
+using Cli.Instructions.Abstractions;
 using Cli.Workflow.Abstractions;
 
 namespace Cli.Workflow;
@@ -7,18 +9,47 @@ public class CliWorkflowRunState
 {
     public readonly Stopwatch Stopwatch = new Stopwatch();
     public readonly List<CliWorkflowRunStateChange> Changes = [];
-
-    // TODO: Find a way to STORE THINGS in state.
-    public void ChangeTo(ClIWorkflowRunStateStatus stateStatusToChangeTo)
+    
+    public void ChangeTo(ClIWorkflowRunStateStatus statusToChangeTo)
     {
-        var priorState = CanChangeTo(stateStatusToChangeTo);
+        var priorState = CanChangeTo(statusToChangeTo);
         
-        UpdateStopwatch(stateStatusToChangeTo);
+        UpdateStopwatch(statusToChangeTo);
 
         var stateChange = new CliWorkflowRunStateChange(
             Stopwatch.Elapsed,
             priorState, 
-            stateStatusToChangeTo);
+            statusToChangeTo);
+        
+        Changes.Add(stateChange);
+    }
+
+    public void ChangeTo(ClIWorkflowRunStateStatus statusToChangeTo, CliInstruction instruction)
+    {
+        var priorState = CanChangeTo(statusToChangeTo);
+        
+        UpdateStopwatch(statusToChangeTo);
+        
+        var stateChange = new InstructionCliWorkflowRunStateChange(
+            Stopwatch.Elapsed,
+            priorState, 
+            statusToChangeTo,
+            instruction);
+        
+        Changes.Add(stateChange);
+    }
+    
+    public void ChangeTo(ClIWorkflowRunStateStatus statusToChangeTo, CliCommandOutcome outcome)
+    {
+        var priorState = CanChangeTo(statusToChangeTo);
+        
+        UpdateStopwatch(statusToChangeTo);
+        
+        var stateChange = new OutcomeCliWorkflowRunStateChange(
+            Stopwatch.Elapsed,
+            priorState, 
+            statusToChangeTo,
+            outcome);
         
         Changes.Add(stateChange);
     }
@@ -60,8 +91,8 @@ public class CliWorkflowRunState
     /// </summary>
     private static readonly List<PossibleCliWorkflowRunStateChange> PossibleStateChanges =
     [
-        new(ClIWorkflowRunStateStatus.Created, ClIWorkflowRunStateStatus.Running),
         new(ClIWorkflowRunStateStatus.Created, ClIWorkflowRunStateStatus.InvalidAsk),
+        new(ClIWorkflowRunStateStatus.Created, ClIWorkflowRunStateStatus.Running),
         
         new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.InvalidAsk),
         new(ClIWorkflowRunStateStatus.InvalidAsk, ClIWorkflowRunStateStatus.Finished),
@@ -69,6 +100,7 @@ public class CliWorkflowRunState
         new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.Exceptional),
         new(ClIWorkflowRunStateStatus.Exceptional, ClIWorkflowRunStateStatus.Finished),
         
-        new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.Finished)
+        new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.AchievedOutcome),
+        new(ClIWorkflowRunStateStatus.AchievedOutcome, ClIWorkflowRunStateStatus.Finished),
     ];
 }

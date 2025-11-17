@@ -8,40 +8,47 @@ public class CliWorkflowRunStateValidStateChangeTests : CliWorkflowRunStateTests
 {
     public static IEnumerable<TestCaseData> ValidStateChanges()
     {
+        // Instruction does not validate, or empty ask.
+        yield return new TestCaseData(
+            Array.Empty<ClIWorkflowRunStateStatus>(),
+            ClIWorkflowRunStateStatus.InvalidAsk
+        ).SetName("GivenStateIsCreated_WhenChangeToInvalidAsk_CanBeChanged");
+        
+        // Is valid instruction
         yield return new TestCaseData(
             Array.Empty<ClIWorkflowRunStateStatus>(),
             ClIWorkflowRunStateStatus.Running
-        ).SetName("State can be changed from Created to Running");
+        ).SetName("GivenStateIsCreated_WhenChangeToRunning_CanBeChanged");
         
-        yield return new TestCaseData(
-            Array.Empty<ClIWorkflowRunStateStatus>(),
-            ClIWorkflowRunStateStatus.InvalidAsk
-        ).SetName("State can be changed from Created to InvalidAsk");
-        
+        // NoCommandGeneratorException
         yield return new TestCaseData(
             new[] { ClIWorkflowRunStateStatus.Running },
             ClIWorkflowRunStateStatus.InvalidAsk
-        ).SetName("State can be changed from Running to InvalidAsk");
+        ).SetName("GivenStateIsRunning_WhenChangeToInvalidAsk_CanBeChanged");
         
+        // Command handler responds to mediator
         yield return new TestCaseData(
-            new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.InvalidAsk },
-            ClIWorkflowRunStateStatus.Finished
-        ).SetName("State can be changed from InvalidAsk to Finished");
+            new[] { ClIWorkflowRunStateStatus.Running },
+            ClIWorkflowRunStateStatus.AchievedOutcome
+        ).SetName("GivenStateIsRunning_WhenChangeToAchievedOutcome_CanBeChanged");
         
+        // try/catch returns outcome achieved
+        yield return new TestCaseData(
+            new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.AchievedOutcome },
+            ClIWorkflowRunStateStatus.Finished
+        ).SetName("GivenStateIsAchievedOutcome_WhenChangeToFinished_CanBeChanged");
+        
+        // Command handler failed.
         yield return new TestCaseData(
             new[] { ClIWorkflowRunStateStatus.Running },
             ClIWorkflowRunStateStatus.Exceptional
-        ).SetName("State can be changed from Running to Exceptional");
+        ).SetName("GivenStateIsRunning_WhenChangeToExceptional_CanBeChanged");
         
+        // Exception handler finished.
         yield return new TestCaseData(
             new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.Exceptional },
             ClIWorkflowRunStateStatus.Finished
-        ).SetName("State can be changed from Exceptional to Finished");
-        
-        yield return new TestCaseData(
-            new[] { ClIWorkflowRunStateStatus.Running },
-            ClIWorkflowRunStateStatus.Finished
-        ).SetName("State can be changed from Running to Finished");
+        ).SetName("GivenStateIsExceptional_WhenChangeToFinished_CanBeChanged");
     }
     
     [TestCaseSource(nameof(ValidStateChanges))]
