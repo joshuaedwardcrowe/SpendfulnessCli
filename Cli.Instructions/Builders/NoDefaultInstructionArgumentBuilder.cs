@@ -1,6 +1,7 @@
 namespace Cli.Instructions.Builders;
 
-public abstract class NoDefaultInstructionArgumentBuilder
+// TODO: Write unit tests.
+internal abstract class NoDefaultInstructionArgumentBuilder
 {
     protected TValueType GetValidValue<TValueType>(string argumentName, TValueType? argumentValue) where TValueType : notnull
     {

@@ -4,7 +4,7 @@ using Cli.Instructions.Arguments;
 namespace Cli.Instructions.Builders;
 
 // TODO: Write unit tests.
-public class BoolCliInstructionArgumentBuilder : ICliInstructionArgumentBuilder
+internal class BoolCliInstructionArgumentBuilder : ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue) => true;
 

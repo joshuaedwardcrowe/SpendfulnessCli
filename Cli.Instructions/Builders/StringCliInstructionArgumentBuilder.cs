@@ -4,7 +4,8 @@ using Cli.Instructions.Extensions;
 
 namespace Cli.Instructions.Builders;
 
-public class StringCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, ICliInstructionArgumentBuilder
+// TODO: Write unit tests.
+internal class StringCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue)
     {
