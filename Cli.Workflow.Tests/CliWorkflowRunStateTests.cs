@@ -4,13 +4,13 @@ namespace Cli.Workflow.Tests;
 
 public abstract class CliWorkflowRunStateTests
 {
-    protected static CliWorkflowRunState GetPreparedState(IEnumerable<ClIWorkflowRunStateStatus> priorStates)
+    protected static CliWorkflowRunState GetPreparedState(IEnumerable<ClIWorkflowRunStateStatus> priorStatuses)
     {
         var state = new CliWorkflowRunState();
         
-        foreach (var priorState in priorStates)
+        foreach (var priorStatus in priorStatuses)
         {
-            state.ChangeTo(priorState);
+            state.ChangeTo(priorStatus);
         }
 
         return state;

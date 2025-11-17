@@ -1,0 +1,54 @@
+using Cli.Commands.Abstractions.Outcomes;
+using Cli.Workflow.Abstractions;
+using NUnit.Framework;
+
+namespace Cli.Workflow.Tests;
+
+[TestFixture]
+public class OutcomeCliWorkflowStateChangeTests : CliWorkflowRunStateTests
+{
+    [Test]
+    public void GivenOutcomeInWrongState_WhenChangeTo_CannotChangeState()
+    {
+        // Arrange
+        var priorStatuses = new[]
+        {
+            ClIWorkflowRunStateStatus.Running,
+            ClIWorkflowRunStateStatus.Exceptional,
+            ClIWorkflowRunStateStatus.Finished
+        };
+
+        var state = GetPreparedState(priorStatuses);
+
+        var outcome = new CliCommandNothingOutcome();
+        
+        // Act & Assert
+        Assert.Throws<ImpossibleStateChangeException>(() => state.ChangeTo(ClIWorkflowRunStateStatus.AchievedOutcome, outcome));
+    }
+
+    [Test]
+    public void GivenOutcomeInCorrectState_WhenChangeTo_CanChangeState()
+    {
+        // Arrange
+        var priorStatuses = new[]
+        {
+            ClIWorkflowRunStateStatus.Running
+        };
+
+        var state = GetPreparedState(priorStatuses);
+
+        var outcome = new CliCommandNothingOutcome();
+        
+        // Act
+        state.ChangeTo(ClIWorkflowRunStateStatus.AchievedOutcome, outcome);
+        
+        // Assert
+        var lastChange = state.Changes.Last();
+        
+        Assert.That(lastChange, Is.InstanceOf<OutcomeCliWorkflowRunStateChange>());
+        
+        var outcomeStateChange = (OutcomeCliWorkflowRunStateChange)lastChange;
+        
+        Assert.That(outcomeStateChange.Outcome, Is.EqualTo(outcome));
+    }
+}
