@@ -29,24 +29,24 @@ public class ValidCliWorkflowRunStateChangeTests : CliWorkflowRunStateTests
         // Command handler responds to mediator
         yield return new TestCaseData(
             new[] { ClIWorkflowRunStateStatus.Running },
-            ClIWorkflowRunStateStatus.AchievedOutcome
+            ClIWorkflowRunStateStatus.ReachedFinalOutcome
         ).SetName("GivenStateIsRunning_WhenChangeToAchievedOutcome_CanBeChanged");
         
         // Command handler returns aggregate outcome, which cna be reused
         yield return new TestCaseData(
             new[] { ClIWorkflowRunStateStatus.Running },
-            ClIWorkflowRunStateStatus.CanReuseOutcome
+            ClIWorkflowRunStateStatus.ReachedReusableOutcome
         ).SetName("GivenStateIsRunning_WhenChangeToCanReuseOutcome_CanBeChanged");
         
         // try/catch returns outcome achieved
         yield return new TestCaseData(
-            new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.AchievedOutcome },
+            new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedFinalOutcome },
             ClIWorkflowRunStateStatus.Finished
         ).SetName("GivenStateIsAchievedOutcome_WhenChangeToFinished_CanBeChanged");
         
         // try/catch returns outcome can be reused
         yield return new TestCaseData(
-            new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.CanReuseOutcome },
+            new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedReusableOutcome },
             ClIWorkflowRunStateStatus.Finished
         ).SetName("GivenStateIsCanReuseOutcome_WhenChangeToFinished_CanBeChanged");
         

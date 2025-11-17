@@ -49,7 +49,7 @@ public class CliWorkflowTests
             .Returns(new Mock<IMediator>().Object);
         
         // Act
-        var run = _classUnderTest.CreateRun();
+        var run = _classUnderTest.NextRun();
         
         // Assert
         Assert.That(run, Is.Not.Null);

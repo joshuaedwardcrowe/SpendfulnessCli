@@ -23,7 +23,7 @@ public class OutcomeCliWorkflowStateChangeTests : CliWorkflowRunStateTests
         var outcome = new CliCommandNothingOutcome();
         
         // Act & Assert
-        Assert.Throws<ImpossibleStateChangeException>(() => state.ChangeTo(ClIWorkflowRunStateStatus.AchievedOutcome, outcome));
+        Assert.Throws<ImpossibleStateChangeException>(() => state.ChangeTo(ClIWorkflowRunStateStatus.ReachedFinalOutcome, outcome));
     }
 
     [Test]
@@ -40,7 +40,7 @@ public class OutcomeCliWorkflowStateChangeTests : CliWorkflowRunStateTests
         var outcome = new CliCommandNothingOutcome();
         
         // Act
-        state.ChangeTo(ClIWorkflowRunStateStatus.AchievedOutcome, outcome);
+        state.ChangeTo(ClIWorkflowRunStateStatus.ReachedFinalOutcome, outcome);
         
         // Assert
         var lastChange = state.Changes.Last();

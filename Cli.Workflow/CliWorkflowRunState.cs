@@ -9,6 +9,11 @@ public class CliWorkflowRunState
 {
     public readonly Stopwatch Stopwatch = new Stopwatch();
     public readonly List<CliWorkflowRunStateChange> Changes = [];
+
+    public bool Was(ClIWorkflowRunStateStatus changedTo)
+    {
+        return Changes.Any(x => x.To == changedTo);
+    }
     
     public void ChangeTo(ClIWorkflowRunStateStatus statusToChangeTo)
     {
@@ -100,10 +105,10 @@ public class CliWorkflowRunState
         new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.Exceptional),
         new(ClIWorkflowRunStateStatus.Exceptional, ClIWorkflowRunStateStatus.Finished),
         
-        new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.AchievedOutcome),
-        new(ClIWorkflowRunStateStatus.AchievedOutcome, ClIWorkflowRunStateStatus.Finished),
+        new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedFinalOutcome),
+        new(ClIWorkflowRunStateStatus.ReachedFinalOutcome, ClIWorkflowRunStateStatus.Finished),
         
-        new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.CanReuseOutcome),
-        new(ClIWorkflowRunStateStatus.CanReuseOutcome, ClIWorkflowRunStateStatus.Finished)
+        new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedReusableOutcome),
+        new(ClIWorkflowRunStateStatus.ReachedReusableOutcome, ClIWorkflowRunStateStatus.Finished)
     ];
 }

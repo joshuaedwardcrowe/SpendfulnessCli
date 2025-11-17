@@ -54,6 +54,8 @@ public class CliWorkflowRun
             State.ChangeTo(ClIWorkflowRunStateStatus.InvalidAsk);
             return new CliCommandNothingOutcome();
         }
+        
+        // TODO: In the situation this is being re run, wht now?
 
         try
         {
@@ -62,8 +64,8 @@ public class CliWorkflowRun
             var outcome = await _mediator.Send(command);
 
             var nextState = outcome.Kind == CliCommandOutcomeKind.Aggregate
-                ? ClIWorkflowRunStateStatus.CanReuseOutcome
-                : ClIWorkflowRunStateStatus.AchievedOutcome;
+                ? ClIWorkflowRunStateStatus.ReachedReusableOutcome
+                : ClIWorkflowRunStateStatus.ReachedFinalOutcome;
             
             State.ChangeTo(nextState, outcome);
 

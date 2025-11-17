@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cli.Workflow;
 
-// TODO: Write unit tests.
 /// <summary>
 /// State machine of a command line interface.
 /// </summary>
@@ -25,12 +24,31 @@ public class CliWorkflow
     }
 
     /// <summary>
-    /// Create a new run, a sub-state machine of an individual execution.
+    /// Get the next run, a sub-state machine of an individual execution.
     /// </summary>
     /// <returns>A sub-state mchine of an individual execution.</returns>
-    public CliWorkflowRun CreateRun()
+    public CliWorkflowRun NextRun()
     {
-        // TODO: CLI - Store this somewhere?
+        var lastReusableRun = Runs.LastOrDefault(run => run.State.Was(ClIWorkflowRunStateStatus.ReachedReusableOutcome));
+        
+        if (lastReusableRun != null)
+        {
+            return lastReusableRun;
+        }
+        
+        return CreateNewRun();
+    }
+
+    /// <summary>
+    /// Close the state machine.
+    /// </summary>
+    public void Stop()
+    {
+        Status = CliWorkflowStatus.Stopped;
+    }
+    
+    private CliWorkflowRun CreateNewRun()
+    {
         var state = new CliWorkflowRunState();
         
         var instructionParser = _serviceProvider.GetRequiredService<ICliInstructionParser>();
@@ -51,13 +69,5 @@ public class CliWorkflow
         Runs.Add(run);
 
         return run;
-    }
-
-    /// <summary>
-    /// Close the state machine.
-    /// </summary>
-    public void Stop()
-    {
-        Status = CliWorkflowStatus.Stopped;
     }
 }
