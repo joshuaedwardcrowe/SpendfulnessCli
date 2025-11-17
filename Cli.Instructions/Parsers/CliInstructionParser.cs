@@ -11,7 +11,7 @@ public class CliInstructionParser : ICliInstructionParser
     private readonly CliInstructionTokenExtractor _cliInstructionTokenExtractor;
     private readonly IEnumerable<ICliInstructionArgumentBuilder> _instructionArgumentBuilders;
 
-    public CliInstructionParser(
+    internal CliInstructionParser(
         CliInstructionTokenIndexer cliInstructionTokenIndexer,
         CliInstructionTokenExtractor cliInstructionTokenExtractor,
         IEnumerable<ICliInstructionArgumentBuilder> instructionArgumentBuilders)
@@ -21,7 +21,6 @@ public class CliInstructionParser : ICliInstructionParser
         _instructionArgumentBuilders = instructionArgumentBuilders;
     }
 
-    // TODO: Simplify with enums + dictinaries.
     public CliInstruction Parse(string terminalInput)
     {
         var indexes = _cliInstructionTokenIndexer.Index(terminalInput);

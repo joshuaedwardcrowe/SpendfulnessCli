@@ -3,6 +3,7 @@ using Cli.Commands.Abstractions.Exceptions;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Parsers;
+using Cli.Instructions.Validators;
 using Cli.Workflow.Abstractions;
 using MediatR;
 using Moq;
@@ -15,6 +16,7 @@ public class CliWorkflowRunTests
 {
     private CliWorkflowRunState _cliWorkflowRunState;
     private Mock<ICliInstructionParser> _cliInstructionParser;
+    private Mock<ICliInstructionValidator> _cliInstructionValidator;
     private Mock<ICliWorkflowCommandProvider> _cliWorkflowCommandProvider;
     private Mock<IMediator> _mediator;
     private CliWorkflowRun _classUnderTest;
@@ -25,12 +27,14 @@ public class CliWorkflowRunTests
         // Arrange
         _cliWorkflowRunState = new CliWorkflowRunState();
         _cliInstructionParser = new Mock<ICliInstructionParser>();
+        _cliInstructionValidator = new Mock<ICliInstructionValidator>();
         _cliWorkflowCommandProvider = new Mock<ICliWorkflowCommandProvider>();
         _mediator = new Mock<IMediator>();
         
         _classUnderTest = new CliWorkflowRun(
             _cliWorkflowRunState,
             _cliInstructionParser.Object,
+            _cliInstructionValidator.Object,
             _cliWorkflowCommandProvider.Object,
             _mediator.Object
             );
@@ -68,15 +72,14 @@ public class CliWorkflowRunTests
     }
     
     [Test]
-    [Ignore("This business requirement should be based on a new command validator model")]
     public async Task GivenInstructionParserFails_WhenRespondToAsk_StateChangeBeforeFinishIsInvalidAsk()
     {
         // Arrange
         var ask = "some valid ask";
-        
-        _cliInstructionParser
-            .Setup(parser => parser.Parse(It.IsAny<string>()))
-            .Throws<NoInstructionException>();
+
+        _cliInstructionValidator
+            .Setup(civ => civ.IsValidInstruction(It.IsAny<CliInstruction>()))
+            .Returns(false);
         
         // Act
         _ = await _classUnderTest.RespondToAsk(ask);
@@ -84,9 +87,7 @@ public class CliWorkflowRunTests
         // Assert
         var expectedStateChangeTypes = new[]
         {
-            ClIWorkflowRunStateType.Running,
             ClIWorkflowRunStateType.InvalidAsk,
-            ClIWorkflowRunStateType.Finished
         };
         
         var stateChangeTypes = _cliWorkflowRunState
@@ -105,6 +106,10 @@ public class CliWorkflowRunTests
         _cliInstructionParser
             .Setup(parser => parser.Parse(It.IsAny<string>()))
             .Returns(new CliInstruction("prefix", "name", null, []));
+        
+        _cliInstructionValidator
+            .Setup(civ => civ.IsValidInstruction(It.IsAny<CliInstruction>()))
+            .Returns(true);
         
         _cliWorkflowCommandProvider
             .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>()))
@@ -137,6 +142,10 @@ public class CliWorkflowRunTests
         _cliInstructionParser
             .Setup(parser => parser.Parse(It.IsAny<string>()))
             .Returns(new CliInstruction("prefix", "name", null, []));
+        
+        _cliInstructionValidator
+            .Setup(civ => civ.IsValidInstruction(It.IsAny<CliInstruction>()))
+            .Returns(true);
         
         _cliWorkflowCommandProvider
             .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>()))

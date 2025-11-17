@@ -1,4 +1,5 @@
 using Cli.Instructions.Parsers;
+using Cli.Instructions.Validators;
 using Cli.Workflow.Abstractions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,12 +33,19 @@ public class CliWorkflow
         var state = new CliWorkflowRunState();
         
         var instructionParser = _serviceProvider.GetRequiredService<ICliInstructionParser>();
+
+        var instructionValidator = _serviceProvider.GetRequiredService<ICliInstructionValidator>();
         
         var commandProvider = _serviceProvider.GetRequiredService<ICliWorkflowCommandProvider>();
         
         var mediator = _serviceProvider.GetRequiredService<IMediator>();
         
-        var run = new CliWorkflowRun(state, instructionParser, commandProvider, mediator);
+        var run = new CliWorkflowRun(
+            state,
+            instructionParser,
+            instructionValidator,
+            commandProvider,
+            mediator);
         
         Runs.Add(run);
 
