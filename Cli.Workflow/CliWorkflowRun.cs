@@ -62,6 +62,12 @@ public class CliWorkflowRun
 
             var outcome = await _mediator.Send(command);
             
+            // TODO: Even if I can attach the outcome...
+            // It doesnt mean I have access to the data used to drive that outcome.
+            // Should those commands surface that data?
+            // Should a command return an aggregator outcome? - this feels reasonable. it can be used to not break everhything,
+            // Should outcomes always return their aggregator? -- this feels dirty.
+            // Decisions... decsisions....
             State.ChangeTo(ClIWorkflowRunStateStatus.AchievedOutcome, outcome);
             
             return outcome;

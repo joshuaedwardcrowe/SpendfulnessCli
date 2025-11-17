@@ -22,11 +22,11 @@ public class MonthlySpendingCliCommandHandler: CliCommandHandler, ICliCommandHan
     {
         var aggregator = await PrepareAggregator(cliCommand);
 
-        var viewModel = new TransactionMonthChangeCliTableBuilder()
-            .WithAggregator(aggregator)
-            .Build();
+        // var viewModel = new TransactionMonthChangeCliTableBuilder()
+        //     .WithAggregator(aggregator)
+        //     .Build();
         
-        return Compile(viewModel);
+        return Compile(aggregator);
     }
 
     private async Task<ListYnabAggregator<TransactionMonthTotalAggregate>> PrepareAggregator(MonthlySpendingCliCommand cliCommand)

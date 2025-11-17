@@ -23,6 +23,9 @@ public abstract class CliCommandHandler
         
         return new CliCommandTableOutcome(table);
     }
+    
+    protected static CliCommandAggregatorOutcome<TAggregate> Compile<TAggregate>(CliAggregator<TAggregate> aggregator)
+        => new(aggregator);
 
     protected static CliCommandOutputOutcome Compile(string message) => new(message);
 }
