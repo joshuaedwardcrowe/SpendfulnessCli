@@ -1,6 +1,4 @@
-using Cli.Instructions.Abstractions;
-
-namespace Cli.Instructions.Validators;
+namespace Cli.Instructions.Abstractions.Validators;
 
 public interface ICliInstructionValidator
 {
