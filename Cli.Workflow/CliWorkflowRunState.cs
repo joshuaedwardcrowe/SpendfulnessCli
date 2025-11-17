@@ -16,6 +16,7 @@ public class CliWorkflowRunState
         UpdateStopwatch(stateTypeToChangeTo);
 
         var stateChange = new CliWorkflowRunStateChange(
+            Stopwatch.Elapsed,
             priorState, 
             stateTypeToChangeTo);
         
@@ -25,7 +26,7 @@ public class CliWorkflowRunState
     private ClIWorkflowRunStateType CanChangeTo(ClIWorkflowRunStateType stateTypeToChangeTo)
     {
         var mostRecentState = Changes.LastOrDefault();
-        var priorState = mostRecentState?.MovedTo ?? ClIWorkflowRunStateType.Created;
+        var priorState = mostRecentState?.To ?? ClIWorkflowRunStateType.Created;
         
         // Can chnge from most recently changed to, to new state to change to.
         var possibleStateChange = PossibleStateChanges

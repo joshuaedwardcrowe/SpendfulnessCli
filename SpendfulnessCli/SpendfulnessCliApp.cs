@@ -41,7 +41,7 @@ public class SpendfulnessCliApp : CliApp
         Io.Say($"Command outcome was: {outcome.GetType().Name}");
 
         var states = run.State.Changes
-            .Select(change => change.MovedTo.ToString())
+            .Select(change => change.To.ToString())
             .ToList();
         
         var timeline = string.Join(", ", states);

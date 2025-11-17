@@ -4,14 +4,17 @@ namespace Cli.Workflow;
 
 public class CliWorkflowRunStateChange
 {
-    public readonly ClIWorkflowRunStateType StartedAt;
-    public readonly ClIWorkflowRunStateType MovedTo;
+    public readonly TimeSpan At;
+    public readonly ClIWorkflowRunStateType From;
+    public readonly ClIWorkflowRunStateType To;
     
     public CliWorkflowRunStateChange(
-        ClIWorkflowRunStateType startedAt,
-        ClIWorkflowRunStateType movedTo)
+        TimeSpan at,
+        ClIWorkflowRunStateType from,
+        ClIWorkflowRunStateType to)
     {
-        StartedAt = startedAt;
-        MovedTo = movedTo;
+        At = at;
+        From = from;
+        To = to;
     }
 }

@@ -69,7 +69,7 @@ public class CliWorkflowRunTests
             .LastOrDefault();
         
         Assert.That(lastStateChange, Is.Not.Null);
-        Assert.That(lastStateChange.MovedTo, Is.EqualTo(ClIWorkflowRunStateType.InvalidAsk));
+        Assert.That(lastStateChange.To, Is.EqualTo(ClIWorkflowRunStateType.InvalidAsk));
     }
     
     [Test]
@@ -93,7 +93,7 @@ public class CliWorkflowRunTests
         
         var stateChangeTypes = _cliWorkflowRunState
             .Changes
-            .Select(x => x.MovedTo);
+            .Select(x => x.To);
 
         Assert.That(expectedStateChangeTypes, Is.EqualTo(stateChangeTypes).AsCollection);
     }
@@ -129,7 +129,7 @@ public class CliWorkflowRunTests
         
         var stateChangeTypes = _cliWorkflowRunState
             .Changes
-            .Select(x => x.MovedTo);
+            .Select(x => x.To);
 
         Assert.That(expectedStateChangeTypes, Is.EqualTo(stateChangeTypes).AsCollection);
     }
@@ -169,7 +169,7 @@ public class CliWorkflowRunTests
         
         var stateChangeTypes = _cliWorkflowRunState
             .Changes
-            .Select(x => x.MovedTo);
+            .Select(x => x.To);
 
         Assert.That(expectedStateChangeTypes, Is.EqualTo(stateChangeTypes).AsCollection);
     }

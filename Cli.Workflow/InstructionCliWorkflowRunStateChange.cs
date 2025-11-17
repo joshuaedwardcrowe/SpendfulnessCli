@@ -4,10 +4,11 @@ using Cli.Workflow.Abstractions;
 namespace Cli.Workflow;
 
 public class InstructionCliWorkflowRunStateChange(
-    ClIWorkflowRunStateType startedAt,
-    ClIWorkflowRunStateType movedTo,
+    TimeSpan at,
+    ClIWorkflowRunStateType from,
+    ClIWorkflowRunStateType to,
     CliInstruction instruction)
-    : CliWorkflowRunStateChange(startedAt, movedTo)
+    : CliWorkflowRunStateChange(at, from, to)
 {
     public readonly CliInstruction Instruction = instruction;
 }
