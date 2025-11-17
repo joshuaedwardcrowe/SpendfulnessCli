@@ -14,9 +14,6 @@ public class CliCommandOutcomeIo : CliIo
             case CliCommandOutputOutcome outputOutcome:
                 Say(outputOutcome);
                 break;
-            case CliCommandNotFoundOutcome nothingOutcome:
-                Say(nothingOutcome);
-                break;
             case CliCommandExceptionOutcome exceptionOutcome:
                 Say(exceptionOutcome);
                 break;

@@ -1,5 +1,5 @@
 namespace Cli.Commands.Abstractions.Outcomes;
 
-public class CliCommandNothingOutcome : CliCommandOutcome
+public class CliCommandNothingOutcome() : CliCommandOutcome(CliCommandOutcomeKind.Nothing)
 {
 }
