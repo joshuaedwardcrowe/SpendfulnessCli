@@ -27,7 +27,7 @@ public class AccountsIdentifyCliCommandHandler : CliCommandHandler, ICliCommandH
         _userRepository = userRepository;
     }
 
-    public async Task<CliCommandOutcome> Handle(AccountsIdentifyCliCommand command, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(AccountsIdentifyCliCommand command, CancellationToken cancellationToken)
     {
         var attribute = await _customAccountAttributeRepository.Get(command.YnabAccountName, cancellationToken);
         
@@ -43,7 +43,7 @@ public class AccountsIdentifyCliCommandHandler : CliCommandHandler, ICliCommandH
         var accountAttributeChanges = await Task.WhenAll(strategyTasks);
         
         // TODO: Create CliTable for AccountAttributeChange.
-        return Compile($"Made {accountAttributeChanges.Length} Changes");
+        return OutcomeAs($"Made {accountAttributeChanges.Length} Changes");
     }
 
     private async Task<CustomAccountAttributes> CreateCustomAccountAttribute(AccountsIdentifyCliCommand command, CancellationToken cancellationToken)

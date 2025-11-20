@@ -6,10 +6,17 @@ namespace Cli.Commands.Abstractions;
 
 public abstract class CliCommandHandler
 {
-    protected static CliCommandTableOutcome Compile(CliTable cliTable)
+    protected static CliCommandOutcome[] OutcomeAs(CliTable cliTable)
     {
-        return new CliCommandTableOutcome(cliTable);
+        var outcome = new CliCommandTableOutcome(cliTable);
+
+        return [outcome];
     }
 
-    protected static CliCommandOutputOutcome Compile(string message) => new(message);
+    protected static CliCommandOutcome[] OutcomeAs(string message)
+    {
+        var outcome = new CliCommandOutputOutcome(message);
+
+        return [outcome];
+    }
 }

@@ -6,6 +6,14 @@ namespace Cli.Commands.Abstractions.Outcomes;
 
 public class CliCommandOutcomeIo : CliIo
 {
+    public void Say(CliCommandOutcome[] outcomes)
+    {
+        foreach (var outcome in outcomes)
+        {
+            Say(outcome);
+        }
+    }
+    
     public void Say(CliCommandOutcome outcome)
     {
         switch (outcome)

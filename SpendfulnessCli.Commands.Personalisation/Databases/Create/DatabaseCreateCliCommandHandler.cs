@@ -13,10 +13,10 @@ public class DatabaseCreateCliCommandHandler : CliCommandHandler, ICliCommandHan
         _dbContext = dbContext;
     }
 
-    public async Task<CliCommandOutcome> Handle(DatabaseCreateCliCommand request, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(DatabaseCreateCliCommand request, CancellationToken cancellationToken)
     {
         await _dbContext.Database.EnsureCreatedAsync(cancellationToken);
 
-        return Compile("Database exists");
+        return OutcomeAs("Database exists");
     }
 }

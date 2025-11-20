@@ -17,7 +17,7 @@ public class CategoriesCliCommandHandler: CliCommandHandler, ICliCommandHandler<
         _categoryCliTableBuilder = categoryCliTableBuilder;
     }
 
-    public async Task<CliCommandOutcome> Handle(CategoriesCliCommand request, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(CategoriesCliCommand request, CancellationToken cancellationToken)
     {
         var budget = await _spendfulnessBudgetClient.GetDefaultBudget();
         
@@ -29,6 +29,6 @@ public class CategoriesCliCommandHandler: CliCommandHandler, ICliCommandHandler<
             .WithAggregator(aggregator)
             .Build();
         
-        return Compile(viewModel);
+        return OutcomeAs(viewModel);
     }
 }

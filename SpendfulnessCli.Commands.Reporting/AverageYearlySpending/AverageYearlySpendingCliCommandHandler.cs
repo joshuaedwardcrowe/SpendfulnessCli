@@ -10,7 +10,7 @@ namespace SpendfulnessCli.Commands.Reporting.AverageYearlySpending;
 public class AverageYearlySpendingCliCommandHandler(SpendfulnessBudgetClient spendfulnessBudgetClient)
     : CliCommandHandler, ICliCommandHandler<AverageYearlySpendingCliCommand>
 {
-    public async Task<CliCommandOutcome> Handle(AverageYearlySpendingCliCommand request, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(AverageYearlySpendingCliCommand request, CancellationToken cancellationToken)
     {
         var budget =  await spendfulnessBudgetClient.GetDefaultBudget();
         
@@ -24,6 +24,6 @@ public class AverageYearlySpendingCliCommandHandler(SpendfulnessBudgetClient spe
             .WithAggregator(aggregator)
             .Build();
         
-        return Compile(viewModel);
+        return OutcomeAs(viewModel);
     }
 }

@@ -5,6 +5,6 @@ namespace Cli.Commands.Abstractions;
 
 // TODO: I wonder if I could add an ICliCommandValidator.
 
-public interface ICliCommandHandler<in TCommand> : IRequestHandler<TCommand, CliCommandOutcome> where TCommand : CliCommand
+public interface ICliCommandHandler<in TCommand> : IRequestHandler<TCommand, CliCommandOutcome[]> where TCommand : CliCommand
 {
 }

@@ -33,11 +33,11 @@ public abstract class CliApp
             
             OnRunStarted(run, ask);
 
-            var outcome = await runTask;
+            var outcomes = await runTask;
             
-            Io.Say(outcome);
+            Io.Say(outcomes);
             
-            OnRunComplete(run, outcome);
+            OnRunComplete(run, outcomes);
         }
         
         OnSessionEnd(_workflow.Runs);
@@ -55,7 +55,7 @@ public abstract class CliApp
     {
     }
 
-    protected virtual void OnRunComplete(CliWorkflowRun run, CliCommandOutcome outcome)
+    protected virtual void OnRunComplete(CliWorkflowRun run, CliCommandOutcome[] outcomes)
     {
     }
     

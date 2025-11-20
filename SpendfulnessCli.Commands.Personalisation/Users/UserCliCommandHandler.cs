@@ -5,7 +5,7 @@ namespace SpendfulnessCli.Commands.Personalisation.Users;
 
 public class UserCliCommandHandler : ICliCommandHandler<UserCliCommand>
 {
-    public Task<CliCommandOutcome> Handle(UserCliCommand request, CancellationToken cancellationToken)
+    public Task<CliCommandOutcome[]> Handle(UserCliCommand request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

@@ -5,9 +5,11 @@ namespace Cli.Workflow.Commands;
 
 public class ExitCliCommandHandler(CliWorkflow cliWorkflow) : CliCommandHandler, ICliCommandHandler<ExitCliCommand>
 {
-    public Task<CliCommandOutcome> Handle(ExitCliCommand command, CancellationToken cancellationToken)
+    public Task<CliCommandOutcome[]> Handle(ExitCliCommand command, CancellationToken cancellationToken)
     {
         cliWorkflow.Stop();
-        return Task.FromResult<CliCommandOutcome>(new CliCommandNothingOutcome());
+        
+        var outcome = new CliCommandOutputOutcome("Exiting CLI workflow.");
+        return Task.FromResult<CliCommandOutcome[]>([outcome]);
     }
 }

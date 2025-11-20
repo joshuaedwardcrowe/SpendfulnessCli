@@ -18,7 +18,7 @@ public class MonthlySpendingCliCommandHandler: CliCommandHandler, ICliCommandHan
         _spendfulnessBudgetClient = spendfulnessBudgetClient;
     }
 
-    public async Task<CliCommandOutcome> Handle(MonthlySpendingCliCommand cliCommand, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(MonthlySpendingCliCommand cliCommand, CancellationToken cancellationToken)
     {
         var aggregator = await PrepareAggregator(cliCommand);
 
@@ -26,7 +26,7 @@ public class MonthlySpendingCliCommandHandler: CliCommandHandler, ICliCommandHan
             .WithAggregator(aggregator)
             .Build();
         
-        return Compile(viewModel);
+        return OutcomeAs(viewModel);
     }
 
     private async Task<ListYnabAggregator<TransactionMonthTotalAggregate>> PrepareAggregator(MonthlySpendingCliCommand cliCommand)

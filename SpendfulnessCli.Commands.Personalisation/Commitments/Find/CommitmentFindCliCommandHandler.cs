@@ -5,9 +5,9 @@ namespace SpendfulnessCli.Commands.Personalisation.Commitments.Find;
 
 public class CommitmentFindCliCommandHandler : CliCommandHandler, ICliCommandHandler<CommitmentFindCliCommand>
 {
-    public async Task<CliCommandOutcome> Handle(CommitmentFindCliCommand request, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(CommitmentFindCliCommand request, CancellationToken cancellationToken)
     {
         await Task.Delay(0, cancellationToken);
-        return Compile("This is a message");
+        return OutcomeAs("This is a message");
     }
 }

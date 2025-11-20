@@ -14,13 +14,13 @@ public class UserSwitchCliCommandHandler : CliCommandHandler, ICliCommandHandler
         _dbContext = dbContext;
     }
 
-    public async Task<CliCommandOutcome> Handle(UserSwitchCliCommand cliCommand, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(UserSwitchCliCommand cliCommand, CancellationToken cancellationToken)
     {
         var currentActiveUser = await _dbContext.Users.FirstAsync(u => u.Active, cancellationToken);
 
         if (currentActiveUser.Name == cliCommand.UserName)
         {
-            return Compile($"User {cliCommand.UserName} already active.");
+            return OutcomeAs($"User {cliCommand.UserName} already active.");
         }
         
         var switchingToUser = await _dbContext.Users
@@ -28,7 +28,7 @@ public class UserSwitchCliCommandHandler : CliCommandHandler, ICliCommandHandler
         
         if (switchingToUser == null)
         {
-            return Compile($"User {cliCommand.UserName} does not exist.");
+            return OutcomeAs($"User {cliCommand.UserName} does not exist.");
         }
         
         currentActiveUser.Active = false;
@@ -38,6 +38,6 @@ public class UserSwitchCliCommandHandler : CliCommandHandler, ICliCommandHandler
         _dbContext.Users.Update(switchingToUser);
         await _dbContext.SaveChangesAsync(cancellationToken);
         
-        return Compile($"User {cliCommand.UserName} active.");
+        return OutcomeAs($"User {cliCommand.UserName} active.");
     }
 }

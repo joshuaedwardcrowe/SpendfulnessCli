@@ -14,7 +14,7 @@ namespace SpendfulnessCli.Commands.Reporting.SpareMoney;
 public class SpareMoneyCliCliCommandHandler(SpendfulnessBudgetClient spendfulnessBudgetClient)
     : CliCommandHandler, ICliCommandHandler<SpareMoneyCliCommand>
 {
-    public async Task<CliCommandOutcome> Handle(SpareMoneyCliCommand cliCommand, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(SpareMoneyCliCommand cliCommand, CancellationToken cancellationToken)
     {
         var aggregator = await PrepareAggregator(cliCommand);
         
@@ -31,7 +31,7 @@ public class SpareMoneyCliCliCommandHandler(SpendfulnessBudgetClient spendfulnes
         var viewModel = viewModelBuilder.Build();
         viewModel.Columns = ["Spare Money"];
 
-        return Compile(viewModel);
+        return OutcomeAs(viewModel);
     }
 
     private async Task<YnabAggregator<decimal>> PrepareAggregator(SpareMoneyCliCommand cliCommand)

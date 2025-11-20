@@ -36,12 +36,12 @@ public class CliWorkflowRun
 
     private bool IsEmptyAsk(string? ask) => !string.IsNullOrEmpty(ask);
     
-    public async ValueTask<CliCommandOutcome> RespondToAsk(string? ask)
+    public async ValueTask<CliCommandOutcome[]> RespondToAsk(string? ask)
     {
         if (!IsEmptyAsk(ask))
         {
             State.ChangeTo(ClIWorkflowRunStateStatus.InvalidAsk);
-            return new CliCommandNothingOutcome();
+            return [new CliCommandNothingOutcome()];
         }
         
         var instruction = _cliInstructionParser.Parse(ask!);
@@ -53,32 +53,40 @@ public class CliWorkflowRun
         else
         {
             State.ChangeTo(ClIWorkflowRunStateStatus.InvalidAsk);
-            return new CliCommandNothingOutcome();
+            return [new CliCommandNothingOutcome()];
         }
 
         try
         {
             var command = _workflowCommandProvider.GetCommand(instruction);
 
-            var outcome = await _mediator.Send(command);
+            var outcomes = await _mediator.Send(command);
             
-            State.ChangeTo(ClIWorkflowRunStateStatus.AchievedOutcome, outcome);
+            UpdateStateAfterOutcome(outcomes);
             
-            return outcome;
+            return outcomes;
         }
         catch (NoCommandGeneratorException)
         {
             State.ChangeTo(ClIWorkflowRunStateStatus.InvalidAsk);
-            return new CliCommandNothingOutcome();
+            return [new CliCommandNothingOutcome()];
         }
         catch (Exception exception)
         {
             State.ChangeTo(ClIWorkflowRunStateStatus.Exceptional);
-            return new CliCommandExceptionOutcome(exception);
+            return [new CliCommandExceptionOutcome(exception)];
         }
         finally
         {
             State.ChangeTo(ClIWorkflowRunStateStatus.Finished);
+        }
+    }
+
+    private void UpdateStateAfterOutcome(CliCommandOutcome[] outcomes)
+    {
+        foreach (var outcome in outcomes)
+        {
+            State.ChangeTo(ClIWorkflowRunStateStatus.AchievedOutcome, outcome);
         }
     }
 }

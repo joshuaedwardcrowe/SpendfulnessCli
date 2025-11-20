@@ -8,7 +8,7 @@ namespace SpendfulnessCli.Commands.Organisation.CopyOnBudget;
 
 public class CopyOnBudgetCliCommandHandler(SpendfulnessBudgetClient budgetClient) : CliCommandHandler, ICliCommandHandler<CopyOnBudgetCliCommand>
 {
-    public async Task<CliCommandOutcome> Handle(CopyOnBudgetCliCommand cliCommand, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(CopyOnBudgetCliCommand cliCommand, CancellationToken cancellationToken)
     {
         var budget = await budgetClient.GetDefaultBudget();
 
@@ -34,6 +34,6 @@ public class CopyOnBudgetCliCommandHandler(SpendfulnessBudgetClient budgetClient
         
         await budget.MoveAccountTransactions(originalAccount, createdAccount);
 
-        return Compile($"Copied Account: {originalAccount.Name} On Budget");
+        return OutcomeAs($"Copied Account: {originalAccount.Name} On Budget");
     }
 }

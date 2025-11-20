@@ -4,20 +4,18 @@ using SpendfulnessCli.Commands.Builders;
 
 namespace SpendfulnessCli.Commands.Reporting.SpareMoney.Help;
 
-public class SpareMoneyHelpCliCliCommandHandler(CommandHelpCliTableBuilder commandHelpCliTableBuilder)
+public class SpareMoneyHelpCliCliCommandHandler(CommandHelpCliTableBuilder cliTableBuilder)
     : CliCommandHandler, ICliCommandHandler<SpareMoneyHelpCliCommand>
 {
-    public Task<CliCommandOutcome> Handle(SpareMoneyHelpCliCommand request, CancellationToken cancellationToken)
+    public Task<CliCommandOutcome[]> Handle(SpareMoneyHelpCliCommand request, CancellationToken cancellationToken)
     {
         var aggregator = new SpareMoneyCommandHelpYnabAggregator();
         
-        var viewModel = commandHelpCliTableBuilder
+        var table = cliTableBuilder
             .WithAggregator(aggregator)
             .WithRowCount(false)
             .Build();
         
-        var compilation = Compile(viewModel);
-
-        return Task.FromResult<CliCommandOutcome>(compilation);
+        return Task.FromResult(OutcomeAs(table));
     }
 }
