@@ -86,7 +86,7 @@ public class CliWorkflowRun
     {
         foreach (var outcome in outcomes)
         {
-            State.ChangeTo(ClIWorkflowRunStateStatus.AchievedOutcome, outcome);
+            State.ChangeTo(ClIWorkflowRunStateStatus.ReachedFinalOutcome, outcome);
         }
     }
 }

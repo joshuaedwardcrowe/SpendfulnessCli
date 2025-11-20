@@ -26,17 +26,35 @@ public class ValidCliWorkflowRunStateChangeTests : CliWorkflowRunStateTests
             ClIWorkflowRunStateStatus.InvalidAsk
         ).SetName("GivenStateIsRunning_WhenChangeToInvalidAsk_CanBeChanged");
         
-        // Command handler responds to mediator
+        // Command handler responds to mediator with reusable outcome
         yield return new TestCaseData(
             new[] { ClIWorkflowRunStateStatus.Running },
-            ClIWorkflowRunStateStatus.AchievedOutcome
-        ).SetName("GivenStateIsRunning_WhenChangeToAchievedOutcome_CanBeChanged");
+            ClIWorkflowRunStateStatus.ReachedReusableOutcome
+        ).SetName("GivenStateIsRunning_WhenChangeToReachedReusableOutcome_CanBeChanged");
         
-        // try/catch returns outcome achieved
+        // Command handler responds to to mediator with a reusable outcome on second execute
         yield return new TestCaseData(
-            new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.AchievedOutcome },
+            new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedReusableOutcome },
+            ClIWorkflowRunStateStatus.ReachedReusableOutcome
+        ).SetName("GivenStateIsReachedResuabeOutcome_WhenChangeToReachedReusableOutcome_CanBeChanged");
+        
+        // Command handler respond to mediator with a final outcoem on second execute
+        yield return new TestCaseData(
+            new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedReusableOutcome },
+            ClIWorkflowRunStateStatus.ReachedFinalOutcome
+        ).SetName("GivenStateIsReachedResuabeOutcome_WhenChangeToReachedReusableOutcome_CanBeChanged");
+        
+        // Command handler responds to mediator with final outcome
+        yield return new TestCaseData(
+            new[] { ClIWorkflowRunStateStatus.Running },
+            ClIWorkflowRunStateStatus.ReachedFinalOutcome
+        ).SetName("GivenStateIsRunning_WhenChangeToReachedFinalOutcome_CanBeChanged");
+        
+        // try/catch returns final outcome achieved
+        yield return new TestCaseData(
+            new[] { ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedFinalOutcome },
             ClIWorkflowRunStateStatus.Finished
-        ).SetName("GivenStateIsAchievedOutcome_WhenChangeToFinished_CanBeChanged");
+        ).SetName("GivenStateIsReachedFinalOutcome_WhenChangeToFinished_CanBeChanged");
         
         // Command handler failed.
         yield return new TestCaseData(
