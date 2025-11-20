@@ -56,6 +56,6 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddCommandProperties(this IServiceCollection serviceCollection)
     {
         return serviceCollection
-            .AddSingleton<ICliCommandPropertyFactory, OutputCliCommandPropertyFactory>();
+            .AddSingleton<ICliCommandPropertyFactory, MessageCliCommandPropertyFactory>();
     }
 }
