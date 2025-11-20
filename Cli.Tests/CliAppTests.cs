@@ -55,7 +55,7 @@ public class CliAppTests
     {
         // Arrange
         _mockCliWorkflow
-            .Setup(w => w.CreateRun())
+            .Setup(w => w.NextRun())
             .Returns(_workflowRun);
 
         _mockCliIo
@@ -83,7 +83,7 @@ public class CliAppTests
         await _classUnderTest.Run(); // Starts a while loop, awaiting lets it run once.
         
         // Assert
-        _mockCliWorkflow.Verify(w => w.CreateRun(), Times.Once);
+        _mockCliWorkflow.Verify(w => w.NextRun(), Times.Once);
         _mockCliIo.Verify(io => io.Say(It.IsAny<CliCommandOutcome[]>()), Times.Once);
     }
     

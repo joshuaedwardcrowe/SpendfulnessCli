@@ -21,13 +21,13 @@ public class CliWorkflowTests
     }
 
     [Test]
-    public void CreatedWithStartedStatus()
+    public void GivenCreated_WhenConstructor_HasStartedStatus()
     {
         Assert.That(_classUnderTest.Status, Is.EqualTo(CliWorkflowStatus.Started));
     }
     
     [Test]
-    public void CreatesNewRun()
+    public void GivenCreated_WhenNextRun_CreatesNewRun()
     {
         // Arrange
         _serviceProviderMock
@@ -47,11 +47,35 @@ public class CliWorkflowTests
             .Returns(new Mock<IMediator>().Object);
         
         // Act
-        var run = _classUnderTest.CreateRun();
+        var run = _classUnderTest.NextRun();
         
         // Assert
         Assert.That(run, Is.Not.Null);
         Assert.That(_classUnderTest.Runs, Has.Member(run));
+    }
+    
+    [Test]
+    public void GivenPriorRunAchievedReusableOutcome_WhenNextRun_GetsThatRun()
+    {
+        // Arrange
+        var reusableRunState = new CliWorkflowRunState();
+        reusableRunState.ChangeTo(ClIWorkflowRunStateStatus.Running);
+        reusableRunState.ChangeTo(ClIWorkflowRunStateStatus.ReachedReusableOutcome);
+        
+        var reusableRun = new CliWorkflowRun(
+            reusableRunState,
+            new Mock<ICliInstructionParser>().Object,
+            new Mock<ICliInstructionValidator>().Object,
+            new Mock<ICliWorkflowCommandProvider>().Object,
+            new Mock<IMediator>().Object);
+        
+        _classUnderTest.Runs.Add(reusableRun);
+        
+        // Act
+        var nextRun = _classUnderTest.NextRun();
+        
+        // Assert
+        Assert.That(nextRun, Is.EqualTo(reusableRun));
     }
     
     [Test]

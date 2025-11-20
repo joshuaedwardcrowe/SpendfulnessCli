@@ -23,7 +23,7 @@ public abstract class CliApp
         
         while (_workflow.Status != CliWorkflowStatus.Stopped)
         {
-            var run = _workflow.CreateRun();
+            var run = _workflow.NextRun();
             
             OnRunCreated(run);
             

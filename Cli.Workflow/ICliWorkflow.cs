@@ -8,7 +8,7 @@ public interface ICliWorkflow
     
     List<CliWorkflowRun> Runs { get; set; }
     
-    CliWorkflowRun CreateRun();
+    CliWorkflowRun NextRun();
 
     void Stop();
 }

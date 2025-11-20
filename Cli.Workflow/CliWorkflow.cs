@@ -21,9 +21,24 @@ public class CliWorkflow(IServiceProvider serviceProvider) : ICliWorkflow
     /// Create a new run, a sub-state machine of an individual execution.
     /// </summary>
     /// <returns>A sub-state mchine of an individual execution.</returns>
-    public CliWorkflowRun CreateRun()
+    public CliWorkflowRun NextRun()
     {
-        // TODO: CLI - Store this somewhere?
+        var lastRunToAchieveReusableOutcome = Runs.LastOrDefault(run =>
+            run.State.WasChangedTo(ClIWorkflowRunStateStatus.ReachedReusableOutcome));
+
+        return lastRunToAchieveReusableOutcome ?? CreateNewRun();
+    }
+
+    /// <summary>
+    /// Close the state machine.
+    /// </summary>
+    public void Stop()
+    {
+        Status = CliWorkflowStatus.Stopped;
+    }
+    
+    private CliWorkflowRun CreateNewRun()
+    {
         var state = new CliWorkflowRunState();
         
         var instructionParser = serviceProvider.GetRequiredService<ICliInstructionParser>();
@@ -44,13 +59,5 @@ public class CliWorkflow(IServiceProvider serviceProvider) : ICliWorkflow
         Runs.Add(run);
 
         return run;
-    }
-
-    /// <summary>
-    /// Close the state machine.
-    /// </summary>
-    public void Stop()
-    {
-        Status = CliWorkflowStatus.Stopped;
     }
 }
