@@ -240,7 +240,7 @@ public class CliWorkflowRunTests
         
         var instruction = new CliInstruction("/", "some-valid-ask", null, []);
 
-        var aggregator = new TestAggregator();
+        var aggregator = new TestListAggregator();
         var outcome = new CliCommandAggregatorOutcome<IEnumerable<TestAggregate>>(aggregator);
         
         _cliInstructionParser
@@ -282,9 +282,9 @@ public class CliWorkflowRunTests
 
     public record TestAggregate(string Name);
 
-    public class TestAggregator : CliAggregator<IEnumerable<TestAggregate>>
+    public class TestListAggregator : CliListAggregator<TestAggregate>
     {
-        public override IEnumerable<TestAggregate> Aggregate()
+        protected override IEnumerable<TestAggregate> ListAggregate()
         {
             throw new NotImplementedException();
         }

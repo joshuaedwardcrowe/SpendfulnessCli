@@ -1,3 +1,4 @@
+using System.Collections;
 using SpendfulnessCli.CliTables.Formatters;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
@@ -13,9 +14,10 @@ public class AmountCliTableBuilder : CliTableBuilder<decimal>
         return this;
     }
     
-    protected override List<List<object>> BuildRows(decimal aggregates)
+    protected override List<List<object>> BuildRows(IEnumerable<decimal> aggregates)
     {
-        var amount = aggregates - (_minus ?? 0);
+        var sum = aggregates.Sum();
+        var amount = sum - (_minus ?? 0);
         var displayable = CurrencyDisplayFormatter.Format(amount);
     
         return

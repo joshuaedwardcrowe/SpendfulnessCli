@@ -3,6 +3,7 @@ using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
 using Spendfulness.Database;
 using SpendfulnessCli.Aggregation.Aggregates;
+using SpendfulnessCli.Aggregation.Aggregator;
 using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
 using Ynab.Extensions;
@@ -24,13 +25,13 @@ public class AverageYearlyPayCliCommandHandler(SpendfulnessBudgetClient budgetCl
         return OutcomeAs(viewModel);
     }
 
-    private async Task<ListYnabAggregator<TransactionYearAverageAggregate>> PrepareAggregator()
+    private async Task<YnabListAggregator<TransactionYearAverageAggregate>> PrepareAggregator()
     {
         var budget =  await budgetClient.GetDefaultBudget();
         
         var transactions = await budget.GetTransactions();
         
-        var aggregator = new TransactionAveragePerYearYnabAggregator(transactions);
+        var aggregator = new TransactionAveragePerYearYnabListAggregator(transactions);
 
         aggregator
             .BeforeAggregation(t => t.FilterToInflow())

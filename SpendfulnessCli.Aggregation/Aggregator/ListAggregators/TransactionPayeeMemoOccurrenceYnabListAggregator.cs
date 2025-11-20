@@ -5,10 +5,10 @@ using SpendfulnessCli.Aggregation.Aggregates;
 
 namespace SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 
-public class TransactionPayeeMemoOccurrenceYnabAggregator(IEnumerable<Transaction> transactions)
-    : ListYnabAggregator<TransactionPayeeMemoOccurrenceAggregate>(transactions)
+public class TransactionPayeeMemoOccurrenceYnabListAggregator(IEnumerable<Transaction> transactions)
+    : YnabListAggregator<TransactionPayeeMemoOccurrenceAggregate>(transactions)
 {
-    protected override IEnumerable<TransactionPayeeMemoOccurrenceAggregate> ListAggregate() =>
+    protected override IEnumerable<TransactionPayeeMemoOccurrenceAggregate> GenerateAggregate() =>
         Transactions
             .FilterToSpending()
             .GroupByPayeeName()

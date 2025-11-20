@@ -41,14 +41,14 @@ public class SpareMoneyCliCliCommandHandler(SpendfulnessBudgetClient spendfulnes
         ];
     }
 
-    private async Task<YnabAggregator<decimal>> PrepareAggregator(SpareMoneyCliCommand cliCommand)
+    private async Task<YnabListAggregator<decimal>> PrepareAggregator(SpareMoneyCliCommand cliCommand)
     {
         var budget = await spendfulnessBudgetClient.GetDefaultBudget();
         
         var accounts = await budget.GetAccounts();
         var categoryGroups = await budget.GetCategoryGroups();
 
-        var aggregator = new CategoryDeductedAmountYnabAggregator(accounts, categoryGroups)
+        var aggregator = new CategoryDeductedAmountYnabListAggregator(accounts, categoryGroups)
             .BeforeAggregation(a => a.FilterToTypes(AccountType.Checking, AccountType.Savings))
             .BeforeAggregation(FilterToCriticalCategoryGroups);
 

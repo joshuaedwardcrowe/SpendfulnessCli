@@ -3,7 +3,7 @@ using Ynab;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
-public class TransactionsCliTableBuilder : CliTableBuilder<IEnumerable<Transaction>>
+public class TransactionsCliTableBuilder : CliTableBuilder<Transaction>
 {
     protected override List<string> BuildColumnNames(IEnumerable<Transaction> evaluation)
         => TransactionVIewModel.GetColumnNames();

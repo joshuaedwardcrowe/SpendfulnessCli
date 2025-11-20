@@ -6,7 +6,7 @@ using Ynab.Sanitisers;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
-public class CommitmentsCliTableBuilder : CliTableBuilder<IEnumerable<Commitment>>
+public class CommitmentsCliTableBuilder : CliTableBuilder<Commitment>
 {
     protected override List<string> BuildColumnNames(IEnumerable<Commitment> evaluation)
         => [

@@ -18,7 +18,7 @@ public class FlagChangesCliCliCommandHandler(SpendfulnessBudgetClient spendfulne
         var categoryGroups = await budget.GetCategoryGroups();
         var transactions = await budget.GetTransactions();
 
-        var aggregator = new TransactionMonthFlaggedYnabAggregator(categoryGroups, transactions);
+        var aggregator = new TransactionMonthFlaggedYnabListAggregator(categoryGroups, transactions);
             
         if (cliCommand.From.HasValue)
         {

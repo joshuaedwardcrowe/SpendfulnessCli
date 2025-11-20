@@ -1,11 +1,12 @@
+using SpendfulnessCli.Aggregation.Aggregator;
 using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 using SpendfulnessCli.Commands.Aggregate;
 
 namespace SpendfulnessCli.Commands.Reporting.SpareMoney.Help;
 
-public class SpareMoneyCommandHelpYnabAggregator : ListYnabAggregator<CommandHelpAggregate>
+public class SpareMoneyCommandHelpYnabListAggregator : YnabListAggregator<CommandHelpAggregate>
 {
-    protected override IEnumerable<CommandHelpAggregate> ListAggregate()
+    protected override IEnumerable<CommandHelpAggregate> GenerateAggregate()
         => [
             new(
                 "/spare-money",

@@ -5,10 +5,10 @@ using Ynab.Extensions;
 
 namespace SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 
-public class TransactionAverageAcrossYearYnabAggregator(IEnumerable<Transaction> transactions)
-    : ListYnabAggregator<TransactionYearAverageAggregate>(transactions)
+public class TransactionAverageAcrossYearYnabListAggregator(IEnumerable<Transaction> transactions)
+    : YnabListAggregator<TransactionYearAverageAggregate>(transactions)
 {
-    protected override IEnumerable<TransactionYearAverageAggregate> ListAggregate()
+    protected override IEnumerable<TransactionYearAverageAggregate> GenerateAggregate()
     {
         var transactionsGroupedByYear = Transactions.GroupByYear().ToList();
         
