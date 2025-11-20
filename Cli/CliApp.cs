@@ -52,7 +52,7 @@ public abstract class CliApp
     {
     }
 
-    protected virtual void OnRunStarted(CliWorkflowRun run, string ask)
+    protected virtual void OnRunStarted(CliWorkflowRun run, string? ask)
     {
     }
 

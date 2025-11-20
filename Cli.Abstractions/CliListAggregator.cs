@@ -4,10 +4,6 @@ public abstract class CliListAggregator<TAggregation> : CliAggregator<IEnumerabl
 {
     private readonly List<Func<IEnumerable<TAggregation>, IEnumerable<TAggregation>>> _aggregationOperationFunctions = [];
 
-    protected CliListAggregator()
-    {
-    }
-
     public override IEnumerable<TAggregation> Aggregate()
     {
         var specificAggregation = ListAggregate();

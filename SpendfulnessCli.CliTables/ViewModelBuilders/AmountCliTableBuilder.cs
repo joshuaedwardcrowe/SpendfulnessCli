@@ -1,4 +1,3 @@
-using System.Collections;
 using SpendfulnessCli.CliTables.Formatters;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;

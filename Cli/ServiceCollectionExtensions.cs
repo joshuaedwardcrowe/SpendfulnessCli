@@ -1,7 +1,6 @@
 using Cli.Commands.Abstractions.Extensions;
 using Cli.Commands.Abstractions.Io;
 using Cli.Commands.Abstractions.Io.Outcomes;
-using Cli.Commands.Abstractions.Outcomes;
 using Cli.Instructions.Extensions;
 using Cli.Workflow;
 using Cli.Workflow.Commands;

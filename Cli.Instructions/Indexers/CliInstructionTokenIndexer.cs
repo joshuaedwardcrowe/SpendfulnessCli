@@ -16,7 +16,7 @@ public class CliInstructionTokenIndexer
         var prefixIndex = IndexPrefixToken(terminalInput);
         var nameIndex = IndexNameToken(terminalInput, prefixIndex.EndIndex);
         var argumentsIndex = IndexArgumentsToken(terminalInput);
-        var subNameIndex = IndexSubNameToken(terminalInput, nameIndex.EndIndex, argumentsIndex);
+        var subNameIndex = IndexSubNameToken(terminalInput, argumentsIndex);
         
         return new CliInstructionTokenIndexCollection
         {
@@ -96,7 +96,6 @@ public class CliInstructionTokenIndexer
 
     private static CliInstructionTokenIndex IndexSubNameToken(
         string terminalInput, 
-        int nameEndIndex, 
         CliInstructionTokenIndex argumentsIndex)
     {
         var firstSpaceIndex = terminalInput.IndexOf(CliInstructionConstants.DefaultSpaceCharacter);

@@ -43,11 +43,9 @@ public class TransactionClient : YnabApiClient
     }
 
     private Transaction CreateTransaction(TransactionResponse transactionResponse)
-    {
-        var factory = _transactionFactories.FirstOrDefault(s => s.CanWorkWith(transactionResponse));
-        
-        return factory.Create(transactionResponse);
-    }
+        => _transactionFactories
+            .First(s => s.CanWorkWith(transactionResponse))
+            .Create(transactionResponse);
     
     protected override HttpClient GetHttpClient() => _httpClientBuilder.Build(_ynabBudgetApiPath,  YnabApiPath.Transactions);
 }

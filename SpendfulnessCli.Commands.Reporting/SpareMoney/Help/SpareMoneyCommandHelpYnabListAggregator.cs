@@ -1,5 +1,4 @@
 using SpendfulnessCli.Aggregation.Aggregator;
-using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 using SpendfulnessCli.Commands.Aggregate;
 
 namespace SpendfulnessCli.Commands.Reporting.SpareMoney.Help;

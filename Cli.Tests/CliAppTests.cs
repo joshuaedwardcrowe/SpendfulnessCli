@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace Cli.Tests;
 
+[TestFixture]
 public class CliAppTests
 {
     private CliWorkflowRunState _workflowRunState;
@@ -89,11 +90,6 @@ public class CliAppTests
         _mockCliWorkflow.Verify(w => w.NextRun(), Times.Once);
         _mockCliIo.Verify(io => io.Say(It.IsAny<CliCommandOutcome[]>()), Times.Once);
     }
-    
-    public class TestCliApp : CliApp
-    {
-        public TestCliApp(ICliWorkflow workflow, ICliCommandOutcomeIo io) : base(workflow, io)
-        {
-        }
-    }
+
+    private class TestCliApp(ICliWorkflow workflow, ICliCommandOutcomeIo io) : CliApp(workflow, io);
 }

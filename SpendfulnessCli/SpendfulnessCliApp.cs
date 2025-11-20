@@ -30,7 +30,7 @@ public class SpendfulnessCliApp : CliApp
         Io.Pause();
     }
 
-    protected override void OnRunStarted(CliWorkflowRun workflowRun, string ask)
+    protected override void OnRunStarted(CliWorkflowRun workflowRun, string? ask)
     {
         Io.Say($"Executing command: {ask}");
         Io.Pause();

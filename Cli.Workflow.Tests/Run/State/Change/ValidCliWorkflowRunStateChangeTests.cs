@@ -87,7 +87,7 @@ public class ValidCliWorkflowRunStateChangeTests : CliWorkflowRunStateTests
         var stateChange = state.Changes.Last();
         
         Assert.That(stateChange, Is.Not.Null);
-        Assert.That(stateChange!.From, Is.EqualTo(priorStateChange));
+        Assert.That(stateChange.From, Is.EqualTo(priorStateChange));
         Assert.That(stateChange.To, Is.EqualTo(stateToChangeTo));
     }
 }

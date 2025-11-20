@@ -1,4 +1,3 @@
-using System.Collections;
 using Cli.Abstractions;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
