@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ConsoleTables" Version="2.6.2" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Cli.Abstractions\Cli.Abstractions.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Aggregation\SpendfulnessCli.Aggregation.csproj" />
       <ProjectReference Include="..\Spendfulness.Database\Spendfulness.Database.csproj" />

@@ -1,8 +1,8 @@
-using ConsoleTables;
+using Cli.Abstractions;
 
 namespace Cli.Commands.Abstractions.Outcomes;
 
-public class CliCommandTableOutcome(ConsoleTable table) : CliCommandOutcome
+public class CliCommandTableOutcome(CliTable table) : CliCommandOutcome
 {
-    public ConsoleTable Table = table;
+    public CliTable Table = table;
 }
