@@ -16,7 +16,7 @@ public static class SyncSetup
         
         // Sync-related
         serviceCollection
-            .AddHostedService<DatabaseSynchroniser>();  // Ensure db is created with testing settings..
+            .AddHostedService<YnabCalibrationSynchroniser>();  // Ensure db is created with testing settings..
         // .AddHostedService<CommitmentSynchroniser>()
         // .AddHostedService<DerivableSpendingSampleSynchroniser>();
         // .AddHostedService<PossibleSpendingSampleSynchroniser>();

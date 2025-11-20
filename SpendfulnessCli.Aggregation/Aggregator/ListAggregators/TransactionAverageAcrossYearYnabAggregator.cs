@@ -1,4 +1,4 @@
-using SpendfulnessCli.Aggregation.Calculators;
+using SpendfulnessCli.Abstractions.Calculators;
 using SpendfulnessCli.Aggregation.Aggregates;
 using Ynab;
 using Ynab.Extensions;

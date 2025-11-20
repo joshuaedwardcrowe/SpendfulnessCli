@@ -1,4 +1,4 @@
-namespace SpendfulnessCli.Aggregation.Calculators;
+namespace SpendfulnessCli.Abstractions.Calculators;
 
 public static class PercentageCalculator
 {

@@ -8,11 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="CsvHelper" Version="33.1.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Spendfulness.Database\Spendfulness.Database.csproj" />
+      <ProjectReference Include="..\SpendfulnessCli.Abstractions\SpendfulnessCli.Abstractions.csproj" />
       <ProjectReference Include="..\Ynab\Ynab.csproj" />
     </ItemGroup>
 
