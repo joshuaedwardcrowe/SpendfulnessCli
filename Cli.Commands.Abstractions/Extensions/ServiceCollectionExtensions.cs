@@ -1,6 +1,5 @@
 using System.Reflection;
 using Cli.Commands.Abstractions.Generators;
-using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -51,11 +50,5 @@ public static class ServiceCollectionExtensions
         }
         
         return serviceCollection;
-    }
-
-    private static IServiceCollection AddCommandProperties(this IServiceCollection serviceCollection)
-    {
-        return serviceCollection
-            .AddSingleton<ICliCommandPropertyFactory, MessageCliCommandPropertyFactory>();
     }
 }

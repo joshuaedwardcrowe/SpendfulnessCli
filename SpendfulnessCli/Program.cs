@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Spendfulness.Database;
 using SpendfulnessCli;
 using SpendfulnessCli.Abstractions.Taxis;
+using SpendfulnessCli.Aggregation.Extensions;
 using SpendfulnessCli.Commands.Reporting;
 using Ynab.Extensions;
 
@@ -18,6 +19,7 @@ var serviceProvider = new ServiceCollection()
     .AddYnab() // Speak to the YNAB API
     .AddYnabTransactionFactory<TaxiTransactionFactory>()
     .AddSpendfulnessDb() // Store data in an SQLite databaase.
+    .AddAggregatorCommandProperties() // Add command properties for aggregators
     .AddCommands() // Convert them into MediatR requests
     .AddReportingCommands() // Commands that work with YNAB data
     .AddOrganisationCommands() // Commands that help organise the data

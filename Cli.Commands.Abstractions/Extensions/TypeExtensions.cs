@@ -40,4 +40,17 @@ public static class TypeExtensions
         
         return commandNameField;
     }
+    
+    public static Type? GetSuperclassGenericOf(this Type current, Type genericType)
+    {
+        for (var currentType = current.BaseType; currentType != null; currentType = currentType.BaseType)
+        {
+            if (currentType.IsGenericType && currentType.GetGenericTypeDefinition() == genericType)
+            {
+                return currentType;
+            }
+        }
+
+        return null;
+    }
 }
