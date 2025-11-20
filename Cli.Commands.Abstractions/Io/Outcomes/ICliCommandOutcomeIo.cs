@@ -1,6 +1,6 @@
-using Cli.Commands.Abstractions.Io;
+using Cli.Commands.Abstractions.Outcomes;
 
-namespace Cli.Commands.Abstractions.Outcomes;
+namespace Cli.Commands.Abstractions.Io.Outcomes;
 
 public interface ICliCommandOutcomeIo : ICliIo
 {

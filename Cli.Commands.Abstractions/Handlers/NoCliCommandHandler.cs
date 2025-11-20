@@ -1,6 +1,7 @@
 using Cli.Commands.Abstractions.Outcomes;
+using Cli.Commands.Abstractions.Outcomes.Final;
 
-namespace Cli.Commands.Abstractions;
+namespace Cli.Commands.Abstractions.Handlers;
 
 // TODO: Add unit tests.
 public abstract class NoCliCommandHandler<TCommand> : ICliCommandHandler<TCommand> where TCommand : CliCommand

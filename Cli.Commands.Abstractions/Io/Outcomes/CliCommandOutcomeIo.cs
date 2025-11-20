@@ -1,8 +1,7 @@
+using Cli.Commands.Abstractions.Outcomes;
+using Cli.Commands.Abstractions.Outcomes.Final;
 
-using Cli.Commands.Abstractions.Exceptions;
-using Cli.Commands.Abstractions.Io;
-
-namespace Cli.Commands.Abstractions.Outcomes;
+namespace Cli.Commands.Abstractions.Io.Outcomes;
 
 public class CliCommandOutcomeIo : CliIo, ICliCommandOutcomeIo
 {

@@ -9,13 +9,6 @@ namespace Cli.Commands.Abstractions;
 /// </summary>
 public record CliCommand : IRequest<CliCommandOutcome[]>
 {
-    /// <summary>
-    /// Get the name of the command.
-    /// (without the suffix)
-    /// </summary>
-    /// <param name="command"></param>
-    /// <typeparam name="TCliCommand"></typeparam>
-    /// <returns></returns>
     public string GetCommandName()
     {
         var commandSuffix = nameof(CliCommand);

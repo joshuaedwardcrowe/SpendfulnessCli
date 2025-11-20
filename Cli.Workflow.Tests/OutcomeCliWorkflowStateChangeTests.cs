@@ -1,4 +1,5 @@
 using Cli.Commands.Abstractions.Outcomes;
+using Cli.Commands.Abstractions.Outcomes.Final;
 using Cli.Workflow.Abstractions;
 using NUnit.Framework;
 

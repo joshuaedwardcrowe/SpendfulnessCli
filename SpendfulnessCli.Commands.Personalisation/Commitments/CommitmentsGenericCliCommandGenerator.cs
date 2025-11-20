@@ -1,4 +1,5 @@
 using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Generators;
 using Cli.Instructions.Abstractions;
 using SpendfulnessCli.Commands.Personalisation.Commitments.Find;
 

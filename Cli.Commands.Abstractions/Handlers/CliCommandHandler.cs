@@ -1,8 +1,8 @@
 using Cli.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
-using ConsoleTables;
+using Cli.Commands.Abstractions.Outcomes.Final;
 
-namespace Cli.Commands.Abstractions;
+namespace Cli.Commands.Abstractions.Handlers;
 
 public abstract class CliCommandHandler
 {

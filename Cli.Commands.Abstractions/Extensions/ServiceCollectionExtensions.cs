@@ -1,4 +1,5 @@
 using System.Reflection;
+using Cli.Commands.Abstractions.Generators;
 using Cli.Instructions.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 

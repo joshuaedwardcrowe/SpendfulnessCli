@@ -1,7 +1,7 @@
 using Cli.Commands.Abstractions.Outcomes;
 using MediatR;
 
-namespace Cli.Commands.Abstractions;
+namespace Cli.Commands.Abstractions.Handlers;
 
 // TODO: I wonder if I could add an ICliCommandValidator.
 

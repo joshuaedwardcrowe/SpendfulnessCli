@@ -2,6 +2,8 @@ using Cli.Abstractions;
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Exceptions;
 using Cli.Commands.Abstractions.Outcomes;
+using Cli.Commands.Abstractions.Outcomes.Final;
+using Cli.Commands.Abstractions.Outcomes.Reusable;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Abstractions.Validators;
 using Cli.Instructions.Parsers;

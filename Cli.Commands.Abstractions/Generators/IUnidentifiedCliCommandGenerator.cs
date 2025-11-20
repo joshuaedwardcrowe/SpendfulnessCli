@@ -1,6 +1,6 @@
 using Cli.Instructions.Abstractions;
 
-namespace Cli.Commands.Abstractions;
+namespace Cli.Commands.Abstractions.Generators;
 
 public interface IUnidentifiedCliCommandGenerator
 {

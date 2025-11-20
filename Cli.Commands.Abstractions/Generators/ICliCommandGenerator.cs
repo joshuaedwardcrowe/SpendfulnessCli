@@ -1,4 +1,4 @@
-namespace Cli.Commands.Abstractions;
+namespace Cli.Commands.Abstractions.Generators;
 
 // ReSharper disable once UnusedTypeParameter
 public interface ICliCommandGenerator<TCommand> : IUnidentifiedCliCommandGenerator where TCommand : CliCommand

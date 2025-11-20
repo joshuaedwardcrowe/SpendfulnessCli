@@ -1,4 +1,5 @@
 using System.Reflection;
+using Cli.Commands.Abstractions.Generators;
 
 namespace Cli.Commands.Abstractions.Extensions;
 
