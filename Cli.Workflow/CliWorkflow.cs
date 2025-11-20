@@ -11,18 +11,11 @@ namespace Cli.Workflow;
 /// <summary>
 /// State machine of a command line interface.
 /// </summary>
-public class CliWorkflow
+public class CliWorkflow(IServiceProvider serviceProvider) : ICliWorkflow
 {
-    public List<CliWorkflowRun> Runs = [];
-    
-    private readonly IServiceProvider _serviceProvider;
-    
-    public CliWorkflowStatus Status = CliWorkflowStatus.Started;
+    public List<CliWorkflowRun> Runs { get; set; } = [];
+    public CliWorkflowStatus Status { get; set; } = CliWorkflowStatus.Started;
 
-    public CliWorkflow(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
 
     /// <summary>
     /// Create a new run, a sub-state machine of an individual execution.
@@ -33,13 +26,13 @@ public class CliWorkflow
         // TODO: CLI - Store this somewhere?
         var state = new CliWorkflowRunState();
         
-        var instructionParser = _serviceProvider.GetRequiredService<ICliInstructionParser>();
+        var instructionParser = serviceProvider.GetRequiredService<ICliInstructionParser>();
 
-        var instructionValidator = _serviceProvider.GetRequiredService<ICliInstructionValidator>();
+        var instructionValidator = serviceProvider.GetRequiredService<ICliInstructionValidator>();
         
-        var commandProvider = _serviceProvider.GetRequiredService<ICliWorkflowCommandProvider>();
+        var commandProvider = serviceProvider.GetRequiredService<ICliWorkflowCommandProvider>();
         
-        var mediator = _serviceProvider.GetRequiredService<IMediator>();
+        var mediator = serviceProvider.GetRequiredService<IMediator>();
         
         var run = new CliWorkflowRun(
             state,

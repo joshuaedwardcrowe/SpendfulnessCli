@@ -4,7 +4,7 @@ using Cli.Commands.Abstractions.Io;
 
 namespace Cli.Commands.Abstractions.Outcomes;
 
-public class CliCommandOutcomeIo : CliIo
+public class CliCommandOutcomeIo : CliIo, ICliCommandOutcomeIo
 {
     public void Say(CliCommandOutcome[] outcomes)
     {
@@ -30,11 +30,6 @@ public class CliCommandOutcomeIo : CliIo
             case CliCommandExceptionOutcome exceptionOutcome:
                 Say(exceptionOutcome);
                 break;
-            case CliCommandNothingOutcome:
-                break;
-            default:
-                throw new UnknownOutcomeException(
-                    $"{outcome.GetType().Name} outcomes not supported");
         }
     }
     public void Say(CliCommandTableOutcome tableOutcome)

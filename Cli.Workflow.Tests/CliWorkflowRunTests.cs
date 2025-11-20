@@ -1,3 +1,4 @@
+using Cli.Abstractions;
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Exceptions;
 using Cli.Commands.Abstractions.Outcomes;
@@ -48,10 +49,12 @@ public class CliWorkflowRunTests
         var ask = string.Empty;
         
         // Act
-        var outcome = await _classUnderTest.RespondToAsk(ask);
+        var outcomes = await _classUnderTest.RespondToAsk(ask);
         
         // Assert
-        Assert.That(outcome, Is.InstanceOf<CliCommandNothingOutcome>());
+        var firstOutcome = outcomes.FirstOrDefault();
+        
+        Assert.That(firstOutcome, Is.InstanceOf<CliCommandNothingOutcome>());
     }
     
     [Test]
@@ -126,10 +129,11 @@ public class CliWorkflowRunTests
             ClIWorkflowRunStateStatus.InvalidAsk,
             ClIWorkflowRunStateStatus.Finished
         };
-        
+
         var stateChangeTypes = _cliWorkflowRunState
             .Changes
-            .Select(x => x.To);
+            .Select(x => x.To)
+            .ToList();
 
         Assert.That(expectedStateChangeTypes, Is.EqualTo(stateChangeTypes).AsCollection);
     }
@@ -138,11 +142,13 @@ public class CliWorkflowRunTests
     public async Task GivenCommandExecutionFails_WhenRespondToAsk_StateChangeBeforeFinishIsExceptional()
     {
         // Arrange
-        var ask = "some valid ask";
+        var ask = "/some-valid-ask";
+        
+        var instruction = new CliInstruction("/", "some-valid-ask", null, []);
         
         _cliInstructionParser
             .Setup(parser => parser.Parse(It.IsAny<string>()))
-            .Returns(new CliInstruction("prefix", "name", null, []));
+            .Returns(instruction);
         
         _cliInstructionValidator
             .Setup(civ => civ.IsValidInstruction(It.IsAny<CliInstruction>()))
@@ -173,5 +179,110 @@ public class CliWorkflowRunTests
 
         Assert.That(expectedStateChangeTypes, Is.EqualTo(stateChangeTypes).AsCollection);
     }
-}
 
+    [Test]
+    public async Task GivenValidAskWithFinalOutcome_WhenRespondToAsk_StateChangesToFinished()
+    {
+        // Arrange
+        var ask = "some valid ask";
+        
+        var instruction = new CliInstruction("/", "some-valid-ask", null, []);
+
+        var outcome = new CliCommandNothingOutcome();
+        
+        _cliInstructionParser
+            .Setup(parser => parser.Parse(It.IsAny<string>()))
+            .Returns(instruction);
+        
+        _cliInstructionValidator
+            .Setup(civ => civ.IsValidInstruction(It.IsAny<CliInstruction>()))
+            .Returns(true);
+        
+        _cliWorkflowCommandProvider
+            .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>()))
+            .Returns(new CliCommand());
+
+        _mediator
+            .Setup(mediator => mediator.Send(It.IsAny<CliCommand>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([outcome]);
+        
+        // Act
+        var resultingOutcomes = await _classUnderTest.RespondToAsk(ask);
+        
+        // Assert
+        var expectedStateChangeTypes = new[]
+        {
+            ClIWorkflowRunStateStatus.Running,
+            ClIWorkflowRunStateStatus.ReachedFinalOutcome,
+            ClIWorkflowRunStateStatus.Finished
+        };
+        
+        var stateChangeTypes = _cliWorkflowRunState
+            .Changes
+            .Select(x => x.To);
+
+        Assert.That(expectedStateChangeTypes, Is.EqualTo(stateChangeTypes).AsCollection);
+        Assert.That(resultingOutcomes.Length, Is.EqualTo(1));
+        
+        var resultingOutcome = resultingOutcomes[0];
+        Assert.That(resultingOutcome, Is.EqualTo(outcome));
+    }
+    
+    [Test]
+    public async Task GivenValidAskWithReusableOutcome_WhenRespondToAsk_StateChangesToReachedReusableOutcome()
+    {
+        // Arrange
+        var ask = "some valid ask";
+        
+        var instruction = new CliInstruction("/", "some-valid-ask", null, []);
+
+        var aggregator = new TestAggregator();
+        var outcome = new CliCommandAggregatorOutcome<IEnumerable<TestAggregate>>(aggregator);
+        
+        _cliInstructionParser
+            .Setup(parser => parser.Parse(It.IsAny<string>()))
+            .Returns(instruction);
+        
+        _cliInstructionValidator
+            .Setup(civ => civ.IsValidInstruction(It.IsAny<CliInstruction>()))
+            .Returns(true);
+        
+        _cliWorkflowCommandProvider
+            .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>()))
+            .Returns(new CliCommand());
+
+        _mediator
+            .Setup(mediator => mediator.Send(It.IsAny<CliCommand>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([outcome]);
+        
+        // Act
+        var resultingOutcomes = await _classUnderTest.RespondToAsk(ask);
+        
+        // Assert
+        var expectedStateChangeTypes = new[]
+        {
+            ClIWorkflowRunStateStatus.Running,
+            ClIWorkflowRunStateStatus.ReachedReusableOutcome,
+        };
+        
+        var stateChangeTypes = _cliWorkflowRunState
+            .Changes
+            .Select(x => x.To);
+
+        Assert.That(expectedStateChangeTypes, Is.EqualTo(stateChangeTypes).AsCollection);
+        Assert.That(resultingOutcomes.Length, Is.EqualTo(1));
+        
+        var resultingOutcome = resultingOutcomes[0];
+        Assert.That(resultingOutcome, Is.EqualTo(outcome));
+    }
+
+    public record TestAggregate(string Name);
+
+    public class TestAggregator : CliAggregator<IEnumerable<TestAggregate>>
+    {
+        public override IEnumerable<TestAggregate> Aggregate()
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

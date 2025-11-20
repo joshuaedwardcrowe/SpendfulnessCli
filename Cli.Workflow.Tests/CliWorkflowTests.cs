@@ -1,7 +1,5 @@
-using System.Diagnostics;
 using Cli.Instructions.Abstractions.Validators;
 using Cli.Instructions.Parsers;
-using Cli.Instructions.Validators;
 using Cli.Workflow.Abstractions;
 using MediatR;
 using Moq;
@@ -54,5 +52,15 @@ public class CliWorkflowTests
         // Assert
         Assert.That(run, Is.Not.Null);
         Assert.That(_classUnderTest.Runs, Has.Member(run));
+    }
+    
+    [Test]
+    public void GivenRunning_WhenStop_ThenWorkflowStopsRunning()
+    {
+        // Act
+        _classUnderTest.Stop();
+        
+        // Assert
+        Assert.That(_classUnderTest.Status, Is.EqualTo(CliWorkflowStatus.Stopped));
     }
 }

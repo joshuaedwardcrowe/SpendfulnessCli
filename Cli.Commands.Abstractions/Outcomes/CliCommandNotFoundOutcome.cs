@@ -1,5 +1,5 @@
 namespace Cli.Commands.Abstractions.Outcomes;
 
-public class CliCommandNotFoundOutcome() : CliCommandOutcome
+public class CliCommandNotFoundOutcome() : CliCommandOutcome(CliCommandOutcomeKind.Final)
 {
 }

@@ -21,12 +21,15 @@ public class MonthlySpendingCliCommandHandler: CliCommandHandler, ICliCommandHan
     public async Task<CliCommandOutcome[]> Handle(MonthlySpendingCliCommand cliCommand, CancellationToken cancellationToken)
     {
         var aggregator = await PrepareAggregator(cliCommand);
-
-        var viewModel = new TransactionMonthChangeCliTableBuilder()
+        
+        var table = new TransactionMonthChangeCliTableBuilder()
             .WithAggregator(aggregator)
             .Build();
         
-        return OutcomeAs(viewModel);
+        return [
+            new CliCommandTableOutcome(table),
+            new CliCommandAggregatorOutcome<IEnumerable<TransactionMonthTotalAggregate>>(aggregator)
+        ];
     }
 
     private async Task<ListYnabAggregator<TransactionMonthTotalAggregate>> PrepareAggregator(MonthlySpendingCliCommand cliCommand)

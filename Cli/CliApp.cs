@@ -5,13 +5,12 @@ using Cli.Workflow.Abstractions;
 namespace Cli;
 
 // TODO: Rename to something clever?
-// TODO: Write unit tests.
 public abstract class CliApp
 {
-    private readonly CliWorkflow _workflow;
-    protected readonly CliCommandOutcomeIo Io;
+    private readonly ICliWorkflow _workflow;
+    protected readonly ICliCommandOutcomeIo Io;
 
-    protected CliApp(CliWorkflow workflow, CliCommandOutcomeIo io)
+    protected CliApp(ICliWorkflow workflow, ICliCommandOutcomeIo io)
     {
         _workflow = workflow;
         Io = io;

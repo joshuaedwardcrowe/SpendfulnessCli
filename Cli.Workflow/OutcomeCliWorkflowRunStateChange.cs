@@ -7,8 +7,8 @@ public class OutcomeCliWorkflowRunStateChange(
     TimeSpan at,
     ClIWorkflowRunStateStatus from,
     ClIWorkflowRunStateStatus to,
-    CliCommandOutcome outcome)
+    CliCommandOutcome[] outcomes)
     : CliWorkflowRunStateChange(at, from, to)
 {
-    public readonly CliCommandOutcome Outcome = outcome;
+    public readonly CliCommandOutcome[] Outcomes = outcomes;
 }

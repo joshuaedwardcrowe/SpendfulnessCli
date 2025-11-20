@@ -1,6 +1,6 @@
 namespace Cli.Commands.Abstractions.Io;
 
-public class CliIo
+public class CliIo : ICliIo
 {
     public string? Ask()
         => Console.ReadLine();

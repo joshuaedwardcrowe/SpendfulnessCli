@@ -10,6 +10,11 @@ public class CliWorkflowRunState
     public readonly Stopwatch Stopwatch = new Stopwatch();
     public readonly List<CliWorkflowRunStateChange> Changes = [];
     
+    public bool WasChangedTo(ClIWorkflowRunStateStatus status)
+    {
+        return Changes.Any(change => change.To == status);
+    }
+    
     public void ChangeTo(ClIWorkflowRunStateStatus statusToChangeTo)
     {
         var priorState = CanChangeTo(statusToChangeTo);
@@ -39,7 +44,7 @@ public class CliWorkflowRunState
         Changes.Add(stateChange);
     }
     
-    public void ChangeTo(ClIWorkflowRunStateStatus statusToChangeTo, CliCommandOutcome outcome)
+    public void ChangeTo(ClIWorkflowRunStateStatus statusToChangeTo, CliCommandOutcome[] outcomes)
     {
         var priorState = CanChangeTo(statusToChangeTo);
         
@@ -49,7 +54,7 @@ public class CliWorkflowRunState
             Stopwatch.Elapsed,
             priorState, 
             statusToChangeTo,
-            outcome);
+            outcomes);
         
         Changes.Add(stateChange);
     }
@@ -100,7 +105,11 @@ public class CliWorkflowRunState
         new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.Exceptional),
         new(ClIWorkflowRunStateStatus.Exceptional, ClIWorkflowRunStateStatus.Finished),
         
-        new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.AchievedOutcome),
-        new(ClIWorkflowRunStateStatus.AchievedOutcome, ClIWorkflowRunStateStatus.Finished),
+        new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedReusableOutcome),
+        new(ClIWorkflowRunStateStatus.ReachedReusableOutcome, ClIWorkflowRunStateStatus.ReachedReusableOutcome),
+        new(ClIWorkflowRunStateStatus.ReachedReusableOutcome, ClIWorkflowRunStateStatus.ReachedFinalOutcome),
+        
+        new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedFinalOutcome),
+        new(ClIWorkflowRunStateStatus.ReachedFinalOutcome, ClIWorkflowRunStateStatus.Finished),
     ];
 }
