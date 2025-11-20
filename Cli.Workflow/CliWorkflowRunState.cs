@@ -106,8 +106,7 @@ public class CliWorkflowRunState
         new(ClIWorkflowRunStateStatus.Exceptional, ClIWorkflowRunStateStatus.Finished),
         
         new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedReusableOutcome),
-        new(ClIWorkflowRunStateStatus.ReachedReusableOutcome, ClIWorkflowRunStateStatus.ReachedReusableOutcome),
-        new(ClIWorkflowRunStateStatus.ReachedReusableOutcome, ClIWorkflowRunStateStatus.ReachedFinalOutcome),
+        new(ClIWorkflowRunStateStatus.ReachedReusableOutcome, ClIWorkflowRunStateStatus.Running),
         
         new(ClIWorkflowRunStateStatus.Running, ClIWorkflowRunStateStatus.ReachedFinalOutcome),
         new(ClIWorkflowRunStateStatus.ReachedFinalOutcome, ClIWorkflowRunStateStatus.Finished),
