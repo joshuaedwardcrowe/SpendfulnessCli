@@ -7,10 +7,10 @@ using Ynab.Extensions;
 
 namespace SpendfulnessCli.Aggregation.Aggregator;
 
-public class TransactionMonthFlaggedYnabAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
-    : ListYnabAggregator<TransactionMonthFlaggedAggregate>(categoryGroups, transactions)
+public class TransactionMonthFlaggedYnabListAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
+    : YnabListAggregator<TransactionMonthFlaggedAggregate>(categoryGroups, transactions)
 {
-    protected override IEnumerable<TransactionMonthFlaggedAggregate> ListAggregate()
+    protected override IEnumerable<TransactionMonthFlaggedAggregate> GenerateAggregate()
     {
         var spendingCategoryIds = CategoryGroups
             .FilterToSpendingCategories()

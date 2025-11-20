@@ -3,7 +3,7 @@ using SpendfulnessCli.CliTables.Formatters;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
-public class CategoryYearAverageCliTableBuilder : CliTableBuilder<IEnumerable<CategoryYearAverageAggregate>>
+public class CategoryYearAverageCliTableBuilder : CliTableBuilder<CategoryYearAverageAggregate>
 {
     protected override List<string> BuildColumnNames(IEnumerable<CategoryYearAverageAggregate> evaluation)
     {

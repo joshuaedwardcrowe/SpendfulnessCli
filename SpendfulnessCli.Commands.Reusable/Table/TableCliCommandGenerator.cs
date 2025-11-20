@@ -12,7 +12,7 @@ public class TableCliCommandGenerator : ICliCommandGenerator<TableCliCommand>
     public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
     {
         var monthlySpendingAggregatorProperty = properties
-            .OfType<AggregatorCliCommandProperty<IEnumerable<TransactionMonthTotalAggregate>>>()
+            .OfType<ListAggregatorCliCommandProperty<TransactionMonthTotalAggregate>>()
             .FirstOrDefault();
 
         if (monthlySpendingAggregatorProperty != null)

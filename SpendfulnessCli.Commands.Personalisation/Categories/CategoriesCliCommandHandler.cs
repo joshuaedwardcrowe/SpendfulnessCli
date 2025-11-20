@@ -24,7 +24,7 @@ public class CategoriesCliCommandHandler: CliCommandHandler, ICliCommandHandler<
         
         var categoryGroups = await budget.GetCategoryGroups();
         
-        var aggregator = new CategoryYnabAggregator(categoryGroups);
+        var aggregator = new CategoryYnabListAggregator(categoryGroups);
 
         var viewModel = _categoryCliTableBuilder
             .WithAggregator(aggregator)

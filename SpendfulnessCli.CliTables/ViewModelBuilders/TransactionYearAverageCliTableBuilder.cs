@@ -4,7 +4,7 @@ using SpendfulnessCli.CliTables.ViewModels;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
-public class TransactionYearAverageCliTableBuilder : CliTableBuilder<IEnumerable<TransactionYearAverageAggregate>>
+public class TransactionYearAverageCliTableBuilder : CliTableBuilder<TransactionYearAverageAggregate>
 {
     protected override List<string> BuildColumnNames(IEnumerable<TransactionYearAverageAggregate> evaluation)
         => TransactionYearAverageViewModel.GetColumnNames();

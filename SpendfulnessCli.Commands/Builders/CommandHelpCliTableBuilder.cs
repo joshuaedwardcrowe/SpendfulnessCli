@@ -3,7 +3,7 @@ using SpendfulnessCli.Commands.Aggregate;
 
 namespace SpendfulnessCli.Commands.Builders;
 
-public class CommandHelpCliTableBuilder : CliTableBuilder<IEnumerable<CommandHelpAggregate>>
+public class CommandHelpCliTableBuilder : CliTableBuilder<CommandHelpAggregate>
 {
     protected override List<string> BuildColumnNames(IEnumerable<CommandHelpAggregate> evaluation)
         => [nameof(CommandHelpAggregate.Call), nameof(CommandHelpAggregate.Type), nameof(CommandHelpAggregate.Summary)];

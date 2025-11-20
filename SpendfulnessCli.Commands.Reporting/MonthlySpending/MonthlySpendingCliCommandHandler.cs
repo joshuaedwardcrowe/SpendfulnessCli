@@ -5,6 +5,7 @@ using Cli.Commands.Abstractions.Outcomes.Final;
 using Cli.Commands.Abstractions.Outcomes.Reusable;
 using Spendfulness.Database;
 using SpendfulnessCli.Aggregation.Aggregates;
+using SpendfulnessCli.Aggregation.Aggregator;
 using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
 using Ynab.Extensions;
@@ -35,13 +36,13 @@ public class MonthlySpendingCliCommandHandler: CliCommandHandler, ICliCommandHan
         ];
     }
 
-    private async Task<ListYnabAggregator<TransactionMonthTotalAggregate>> PrepareAggregator(MonthlySpendingCliCommand cliCommand)
+    private async Task<YnabListAggregator<TransactionMonthTotalAggregate>> PrepareAggregator(MonthlySpendingCliCommand cliCommand)
     {
         var budget = await _spendfulnessBudgetClient.GetDefaultBudget();
 
         var transactions = await budget.GetTransactions();
 
-        var aggregator = new TransactionMonthTotalYnabAggregator(transactions);
+        var aggregator = new TransactionMonthTotalYnabListAggregator(transactions);
 
         if (cliCommand.CategoryId.HasValue)
         {

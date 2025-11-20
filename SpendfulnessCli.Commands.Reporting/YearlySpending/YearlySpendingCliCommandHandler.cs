@@ -17,7 +17,7 @@ public class YearlySpendingCliCommandHandler(SpendfulnessBudgetClient budgetClie
         
         var transactions = await budget.GetTransactions();
 
-        var aggregator = new CategoryYearAverageYnabAggregator(transactions)
+        var aggregator = new CategoryYearAverageYnabListAggregator(transactions)
             .BeforeAggregation(t => t.FilterOutTransfers())
             .BeforeAggregation(t => t.FilterOutAutomations());
 

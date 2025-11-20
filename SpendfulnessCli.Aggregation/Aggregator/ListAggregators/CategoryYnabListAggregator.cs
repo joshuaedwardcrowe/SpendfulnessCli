@@ -3,10 +3,10 @@ using Ynab;
 
 namespace SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 
-public class CategoryYnabAggregator(IEnumerable<CategoryGroup> categoryGroups) 
-    : ListYnabAggregator<CategoryAggregate>(categoryGroups)
+public class CategoryYnabListAggregator(IEnumerable<CategoryGroup> categoryGroups) 
+    : YnabListAggregator<CategoryAggregate>(categoryGroups)
 {
-    protected override IEnumerable<CategoryAggregate> ListAggregate()
+    protected override IEnumerable<CategoryAggregate> GenerateAggregate()
         => CategoryGroups
             .SelectMany(categoryGroup => categoryGroup.Categories)
             .Select(category => new CategoryAggregate(category.Id, category.Name));

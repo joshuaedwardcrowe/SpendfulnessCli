@@ -4,7 +4,7 @@ using SpendfulnessCli.CliTables.ViewModels;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
-public class TransactionMonthChangeCliTableBuilder : CliTableBuilder<IEnumerable<TransactionMonthTotalAggregate>>
+public class TransactionMonthChangeCliTableBuilder : CliTableBuilder<TransactionMonthTotalAggregate>
 {
     protected override List<string> BuildColumnNames(IEnumerable<TransactionMonthTotalAggregate> evaluation)
         => TransactionMonthChangeTable.GetColumnNames();

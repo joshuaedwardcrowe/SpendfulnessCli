@@ -17,7 +17,7 @@ public class TransactionListCliCliCommandHandler(SpendfulnessBudgetClient spendf
 
         var transactions = await budget.GetTransactions();
 
-        var aggregator = new TransactionYnabAggregator(transactions);
+        var aggregator = new TransactionYnabListAggregator(transactions);
 
         if (cliCommand.PayeeName is not null)
         {

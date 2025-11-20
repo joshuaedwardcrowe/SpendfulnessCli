@@ -4,8 +4,7 @@ using SpendfulnessCli.CliTables.ViewModels;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
-public class TransactionMonthFlaggedCliTableBuilder 
-    : CliTableBuilder<IEnumerable<TransactionMonthFlaggedAggregate>>
+public class TransactionMonthFlaggedCliTableBuilder : CliTableBuilder<TransactionMonthFlaggedAggregate>
 {
     private List<string> _flagNames = [];
     

@@ -5,10 +5,10 @@ using Ynab.Extensions;
 
 namespace SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 
-public class TransactionMonthTotalYnabAggregator(IEnumerable<Transaction> transactions)
-    : ListYnabAggregator<TransactionMonthTotalAggregate>(transactions)
+public class TransactionMonthTotalYnabListAggregator(IEnumerable<Transaction> transactions)
+    : YnabListAggregator<TransactionMonthTotalAggregate>(transactions)
 {
-    protected override IEnumerable<TransactionMonthTotalAggregate> ListAggregate()
+    protected override IEnumerable<TransactionMonthTotalAggregate> GenerateAggregate()
     {
         var transactionsGroupedByMonth = Transactions
             .GroupByMonth()

@@ -5,8 +5,7 @@ using Ynab.Sanitisers;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
-public class TransactionPayeeMemoOccurrenceCliTableBuilder : 
-    CliTableBuilder<IEnumerable<TransactionPayeeMemoOccurrenceAggregate>>
+public class TransactionPayeeMemoOccurrenceCliTableBuilder : CliTableBuilder<TransactionPayeeMemoOccurrenceAggregate>
 {
     protected override List<string> BuildColumnNames(IEnumerable<TransactionPayeeMemoOccurrenceAggregate> evaluation)
         => TransactionMemoOccurrenceTable.GetColumnNames();

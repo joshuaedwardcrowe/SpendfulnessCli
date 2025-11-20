@@ -19,7 +19,7 @@ public class CommitmentsCliCommandHandler(SpendfulnessDbContext dbContext, UserR
         
         var user = await userRepository.FindActiveUser();
 
-        var aggregator = new CommitmentsYnabAggregator(user.Commitments);
+        var aggregator = new CommitmentsYnabListAggregator(user.Commitments);
         
         var viewModel = new CommitmentsCliTableBuilder()
             .WithAggregator(aggregator)

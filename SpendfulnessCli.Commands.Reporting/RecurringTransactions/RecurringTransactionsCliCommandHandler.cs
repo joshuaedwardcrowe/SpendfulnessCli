@@ -1,8 +1,10 @@
+using Cli.Abstractions;
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
 using Spendfulness.Database;
 using SpendfulnessCli.Aggregation.Aggregates;
+using SpendfulnessCli.Aggregation.Aggregator;
 using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 using SpendfulnessCli.Aggregation.Extensions;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
@@ -27,12 +29,12 @@ namespace SpendfulnessCli.Commands.Reporting.RecurringTransactions
             return OutcomeAs(viewModel);
         }
 
-        private async Task<ListYnabAggregator<TransactionPayeeMemoOccurrenceAggregate>> PrepareAggregator(RecurringTransactionsCliCommand cliCommand)
+        private async Task<CliListAggregator<TransactionPayeeMemoOccurrenceAggregate>> PrepareAggregator(RecurringTransactionsCliCommand cliCommand)
         {
             var budget =  await budgetClient.GetDefaultBudget();
             var transactions = await budget.GetTransactions();
         
-            var aggregator = new TransactionPayeeMemoOccurrenceYnabAggregator(transactions);
+            var aggregator = new TransactionPayeeMemoOccurrenceYnabListAggregator(transactions);
             
             aggregator.BeforeAggregation(ts => ts.FilterOutCategories([YnabConstants.SplitCategoryId]));
 

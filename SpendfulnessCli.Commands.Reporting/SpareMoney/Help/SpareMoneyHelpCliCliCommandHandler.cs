@@ -10,7 +10,7 @@ public class SpareMoneyHelpCliCliCommandHandler(CommandHelpCliTableBuilder cliTa
 {
     public Task<CliCommandOutcome[]> Handle(SpareMoneyHelpCliCommand request, CancellationToken cancellationToken)
     {
-        var aggregator = new SpareMoneyCommandHelpYnabAggregator();
+        var aggregator = new SpareMoneyCommandHelpYnabListAggregator();
         
         var table = cliTableBuilder
             .WithAggregator(aggregator)

@@ -7,8 +7,8 @@ namespace SpendfulnessCli.Aggregation.Aggregator;
 
 // TODO: This should be a list aggregator.
 
-public class CategoryYearAverageYnabAggregator(IEnumerable<Transaction> transactions)
-    : YnabAggregator<IEnumerable<CategoryYearAverageAggregate>>(transactions)
+public class CategoryYearAverageYnabListAggregator(IEnumerable<Transaction> transactions)
+    : YnabListAggregator<CategoryYearAverageAggregate>(transactions)
 {
     protected override IEnumerable<CategoryYearAverageAggregate> GenerateAggregate()
          => Transactions

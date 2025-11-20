@@ -1,27 +1,28 @@
+using System.Collections;
 using Cli.Abstractions;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
-public abstract class CliTableBuilder<TAggregation> : ICliTableBuilder<TAggregation>
-    where TAggregation : notnull
+public abstract class CliTableBuilder<TAggregate> : ICliTableBuilder<TAggregate>
+    where TAggregate : notnull
 {
     protected CliTableSortOrder CliTableSortOrder = CliTableSortOrder.Ascending;
-    private CliAggregator<TAggregation>? _aggregator;
+    private CliListAggregator<TAggregate>? _aggregator;
     private bool _showRowCount = true;
 
-    public ICliTableBuilder<TAggregation> WithAggregator(CliAggregator<TAggregation> ynabAggregator)
+    public ICliTableBuilder<TAggregate> WithAggregator(CliListAggregator<TAggregate> listAggregator)
     {
-        _aggregator = ynabAggregator;
+        _aggregator = listAggregator;
         return GetCurrentBuilder();
     }
 
-    public ICliTableBuilder<TAggregation> WithSortOrder(CliTableSortOrder cliTableSortOrder)
+    public ICliTableBuilder<TAggregate> WithSortOrder(CliTableSortOrder cliTableSortOrder)
     {
         CliTableSortOrder = cliTableSortOrder;
         return GetCurrentBuilder();
     }
 
-    public ICliTableBuilder<TAggregation> WithRowCount(bool showRowCount)
+    public ICliTableBuilder<TAggregate> WithRowCount(bool showRowCount)
     {
         _showRowCount = showRowCount;
         return GetCurrentBuilder();
@@ -35,7 +36,9 @@ public abstract class CliTableBuilder<TAggregation> : ICliTableBuilder<TAggregat
             throw new InvalidOperationException("You must provide at least one aggregator");
         }
 
-        var evaluation = _aggregator.Aggregate();
+        var evaluation = _aggregator
+            .Aggregate()
+            .ToList();
 
         var columns = BuildColumnNames(evaluation);
         var rows = BuildRows(evaluation);
@@ -43,9 +46,9 @@ public abstract class CliTableBuilder<TAggregation> : ICliTableBuilder<TAggregat
         return BuildViewModel(columns, rows);
     }
     
-    protected virtual List<string> BuildColumnNames(TAggregation evaluation) => [];
+    protected virtual List<string> BuildColumnNames(IEnumerable<TAggregate> aggregates) => [];
     
-    protected abstract List<List<object>> BuildRows(TAggregation aggregates);
+    protected abstract List<List<object>> BuildRows(IEnumerable<TAggregate> aggregates);
 
     private CliTable BuildViewModel(List<string> columnNames, List<List<object>> rows)
     {
@@ -57,9 +60,9 @@ public abstract class CliTableBuilder<TAggregation> : ICliTableBuilder<TAggregat
         };
     }
 
-    private ICliTableBuilder<TAggregation> GetCurrentBuilder()
+    private ICliTableBuilder<TAggregate> GetCurrentBuilder()
     {
-        if (this is not ICliTableBuilder<TAggregation> current)
+        if (this is not ICliTableBuilder<TAggregate> current)
         {
             throw new Exception("Attempted to return a non-IViewModelBuilder superclass of ViewModelBuilder");
         }
