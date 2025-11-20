@@ -1,6 +1,8 @@
+using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Exceptions;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Commands.Abstractions.Outcomes.Final;
+using Cli.Instructions.Abstractions;
 using Cli.Instructions.Abstractions.Validators;
 using Cli.Instructions.Parsers;
 using Cli.Instructions.Validators;
@@ -59,7 +61,7 @@ public class CliWorkflowRun
 
         try
         {
-            var command = _workflowCommandProvider.GetCommand(instruction);
+            var command = GetCommandFromInstruction(instruction);
 
             var outcomes = await _mediator.Send(command);
             
@@ -79,11 +81,18 @@ public class CliWorkflowRun
         }
         finally
         {
-            if (!State.WasChangedTo(ClIWorkflowRunStateStatus.ReachedReusableOutcome))
-            {
-                State.ChangeTo(ClIWorkflowRunStateStatus.Finished);
-            }
+            UpdateStateWhenFinished();
         }
+    }
+    
+    private CliCommand GetCommandFromInstruction(CliInstruction instruction)
+    {
+        var priorOutcomes = State
+            .AllOutcomeStateChanges()
+            .SelectMany(outcomeChange => outcomeChange.Outcomes)
+            .ToList();
+        
+        return _workflowCommandProvider.GetCommand(instruction, priorOutcomes);
     }
 
     private void UpdateStateAfterOutcome(CliCommandOutcome[] outcomes)
@@ -95,5 +104,13 @@ public class CliWorkflowRun
             : ClIWorkflowRunStateStatus.ReachedFinalOutcome;
 
         State.ChangeTo(nextState, outcomes);
+    }
+
+    private void UpdateStateWhenFinished()
+    {
+        if (!State.WasChangedTo(ClIWorkflowRunStateStatus.ReachedReusableOutcome))
+        {
+            State.ChangeTo(ClIWorkflowRunStateStatus.Finished);
+        }
     }
 }

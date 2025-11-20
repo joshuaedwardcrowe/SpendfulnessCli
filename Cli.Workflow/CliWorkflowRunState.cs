@@ -15,6 +15,14 @@ public class CliWorkflowRunState
         return Changes.Any(change => change.To == status);
     }
     
+    public List<OutcomeCliWorkflowRunStateChange> AllOutcomeStateChanges()
+    {
+        return Changes
+            .Where(change => change.To == ClIWorkflowRunStateStatus.ReachedReusableOutcome)
+            .OfType<OutcomeCliWorkflowRunStateChange>()
+            .ToList();
+    }
+    
     public void ChangeTo(ClIWorkflowRunStateStatus statusToChangeTo)
     {
         var priorState = CanChangeTo(statusToChangeTo);

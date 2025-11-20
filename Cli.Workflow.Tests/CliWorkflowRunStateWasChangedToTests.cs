@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace Cli.Workflow.Tests;
 
+[TestFixture]
 public class CliWorkflowRunStateWasChangedToTests : CliWorkflowRunStateTests
 {
     [Test]

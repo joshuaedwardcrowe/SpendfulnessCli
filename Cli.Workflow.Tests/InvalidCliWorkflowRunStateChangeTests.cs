@@ -47,6 +47,7 @@ public class InvalidCliWorkflowRunStateChangeTests : CliWorkflowRunStateTests
             {
                 ClIWorkflowRunStateStatus.Running,
                 ClIWorkflowRunStateStatus.ReachedReusableOutcome,
+                ClIWorkflowRunStateStatus.Running,
                 ClIWorkflowRunStateStatus.ReachedFinalOutcome,
                 ClIWorkflowRunStateStatus.Finished
             },

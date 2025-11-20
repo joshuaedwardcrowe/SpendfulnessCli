@@ -1,5 +1,6 @@
 using System.Reflection;
 using Cli.Commands.Abstractions.Generators;
+using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,14 +16,15 @@ public static class ServiceCollectionExtensions
         }
 
         return serviceCollection
+            .AddCommandProperties()
             .AddCommandGenerators(assembly)
             .AddMediatRCommandsAndHandlers(assembly);
     }
 
-    public static IServiceCollection AddMediatRCommandsAndHandlers(this IServiceCollection serviceCollection, Assembly assembly)
+    private static IServiceCollection AddMediatRCommandsAndHandlers(this IServiceCollection serviceCollection, Assembly assembly)
         => serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
 
-    public static IServiceCollection AddCommandGenerators(this IServiceCollection serviceCollection, Assembly assembly)
+    private static IServiceCollection AddCommandGenerators(this IServiceCollection serviceCollection, Assembly assembly)
     {
         var implementationTypes = assembly.WhereClassTypesImplementType(typeof(IUnidentifiedCliCommandGenerator));
         
@@ -49,5 +51,11 @@ public static class ServiceCollectionExtensions
         }
         
         return serviceCollection;
+    }
+
+    private static IServiceCollection AddCommandProperties(this IServiceCollection serviceCollection)
+    {
+        return serviceCollection
+            .AddSingleton<ICliCommandPropertyFactory, MessageCliCommandPropertyFactory>();
     }
 }

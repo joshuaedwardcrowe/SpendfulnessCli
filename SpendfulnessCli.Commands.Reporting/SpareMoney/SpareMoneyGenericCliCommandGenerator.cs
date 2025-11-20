@@ -1,5 +1,6 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Generators;
+using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 using SpendfulnessCli.Commands.Reporting.SpareMoney.Help;
@@ -8,8 +9,8 @@ namespace SpendfulnessCli.Commands.Reporting.SpareMoney;
 
 public class SpareMoneyGenericCliCommandGenerator : ICliCommandGenerator<SpareMoneyCliCommand>
 {
-    public CliCommand Generate(CliInstruction instruction) =>
-        instruction.SubInstructionName switch
+    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+        => instruction.SubInstructionName switch
         {
             SpareMoneyCliCommand.SubCommandNames.Help => new SpareMoneyHelpCliCommand(),
             _ => GenerateDefaultCommand(instruction.Arguments)

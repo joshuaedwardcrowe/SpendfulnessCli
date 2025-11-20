@@ -1,5 +1,6 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Generators;
+using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 using SpendfulnessCli.Commands.Personalisation.Accounts.Identify;
@@ -8,7 +9,7 @@ namespace SpendfulnessCli.Commands.Personalisation.Accounts;
 
 public class AccountsCliCommandGenerator : ICliCommandGenerator<AccountsCliCommand>
 {
-    public CliCommand Generate(CliInstruction instruction)
+    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
         => instruction.SubInstructionName switch
         {
             AccountsCliCommand.SubCommandNames.Identify => GenerateIdentifyCommand(instruction.Arguments),

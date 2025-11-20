@@ -1,6 +1,8 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
+using Cli.Commands.Abstractions.Outcomes.Final;
+using Cli.Commands.Abstractions.Outcomes.Reusable;
 using Spendfulness.Database;
 using SpendfulnessCli.Aggregation.Aggregator;
 using SpendfulnessCli.Aggregation.Aggregator.AmountAggregators;
@@ -29,10 +31,14 @@ public class SpareMoneyCliCliCommandHandler(SpendfulnessBudgetClient spendfulnes
             viewModelBuilder.WithSubtraction(cliCommand.Minus.Value);
         }
 
-        var viewModel = viewModelBuilder.Build();
-        viewModel.Columns = ["Spare Money"];
+        var table = viewModelBuilder.Build();
+        table.Columns = ["Spare Money"];
 
-        return OutcomeAs(viewModel);
+        return
+        [
+            new CliCommandTableOutcome(table),
+            new CliCommandMessageOutcome("Ran the Spare Money command")
+        ];
     }
 
     private async Task<YnabAggregator<decimal>> PrepareAggregator(SpareMoneyCliCommand cliCommand)

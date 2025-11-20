@@ -118,7 +118,7 @@ public class CliWorkflowRunTests
             .Returns(true);
         
         _cliWorkflowCommandProvider
-            .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>()))
+            .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>(), It.IsAny<List<CliCommandOutcome>>()))
             .Throws<NoCommandGeneratorException>();
         
         // Act
@@ -157,7 +157,7 @@ public class CliWorkflowRunTests
             .Returns(true);
         
         _cliWorkflowCommandProvider
-            .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>()))
+            .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>(), It.IsAny<List<CliCommandOutcome>>()))
             .Returns(new CliCommand());
 
         _mediator
@@ -201,7 +201,7 @@ public class CliWorkflowRunTests
             .Returns(true);
         
         _cliWorkflowCommandProvider
-            .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>()))
+            .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>(), It.IsAny<List<CliCommandOutcome>>()))
             .Returns(new CliCommand());
 
         _mediator
@@ -250,7 +250,7 @@ public class CliWorkflowRunTests
             .Returns(true);
         
         _cliWorkflowCommandProvider
-            .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>()))
+            .Setup(provider => provider.GetCommand(It.IsAny<CliInstruction>(), It.IsAny<List<CliCommandOutcome>>()))
             .Returns(new CliCommand());
 
         _mediator

@@ -1,5 +1,6 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Generators;
+using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 
@@ -7,7 +8,7 @@ namespace SpendfulnessCli.Commands.Reporting.FlagChanges;
 
 public class FlagChangesCliCommandGenerator : ICliCommandGenerator<FlagChangesCliCommand>
 {
-    public CliCommand Generate(CliInstruction instruction)
+    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
     {
         // TODO: I dont like that this isnt more generic!
         var from = instruction
