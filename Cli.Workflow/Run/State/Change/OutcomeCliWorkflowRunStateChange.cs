@@ -1,7 +1,7 @@
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Workflow.Abstractions;
 
-namespace Cli.Workflow;
+namespace Cli.Workflow.Run.State.Change;
 
 public class OutcomeCliWorkflowRunStateChange(
     TimeSpan at,

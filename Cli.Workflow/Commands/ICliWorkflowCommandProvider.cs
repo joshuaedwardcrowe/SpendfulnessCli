@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Instructions.Abstractions;
 
-namespace Cli.Workflow;
+namespace Cli.Workflow.Commands;
 
 public interface ICliWorkflowCommandProvider
 {

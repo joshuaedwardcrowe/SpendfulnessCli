@@ -21,4 +21,8 @@
       <ProjectReference Include="..\Cli.Workflow\Cli.Workflow.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands\" />
+    </ItemGroup>
+
 </Project>

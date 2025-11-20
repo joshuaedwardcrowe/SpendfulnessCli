@@ -6,7 +6,7 @@ using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cli.Workflow;
+namespace Cli.Workflow.Commands;
 
 public class CliWorkflowCommandProvider(IServiceProvider serviceProvider) : ICliWorkflowCommandProvider
 {

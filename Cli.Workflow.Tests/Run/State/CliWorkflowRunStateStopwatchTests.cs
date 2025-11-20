@@ -1,7 +1,7 @@
 using Cli.Workflow.Abstractions;
 using NUnit.Framework;
 
-namespace Cli.Workflow.Tests;
+namespace Cli.Workflow.Tests.Run.State;
 
 [TestFixture]
 public class CliWorkflowRunStateStopwatchTests : CliWorkflowRunStateTests

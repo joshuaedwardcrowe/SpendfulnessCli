@@ -1,7 +1,8 @@
 using Cli.Commands.Abstractions.Outcomes.Reusable;
 using Cli.Workflow.Abstractions;
+using Cli.Workflow.Run.State;
 
-namespace Cli.Workflow.Tests;
+namespace Cli.Workflow.Tests.Run.State;
 
 public abstract class CliWorkflowRunStateTests
 {

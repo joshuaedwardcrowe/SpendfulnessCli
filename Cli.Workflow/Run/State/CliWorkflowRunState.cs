@@ -2,8 +2,9 @@ using System.Diagnostics;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Instructions.Abstractions;
 using Cli.Workflow.Abstractions;
+using Cli.Workflow.Run.State.Change;
 
-namespace Cli.Workflow;
+namespace Cli.Workflow.Run.State;
 
 public class CliWorkflowRunState
 {

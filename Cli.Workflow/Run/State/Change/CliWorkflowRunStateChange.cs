@@ -1,6 +1,6 @@
 using Cli.Workflow.Abstractions;
 
-namespace Cli.Workflow;
+namespace Cli.Workflow.Run.State.Change;
 
 public class CliWorkflowRunStateChange
 {

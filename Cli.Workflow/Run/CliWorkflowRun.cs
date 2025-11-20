@@ -5,11 +5,12 @@ using Cli.Commands.Abstractions.Outcomes.Final;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Abstractions.Validators;
 using Cli.Instructions.Parsers;
-using Cli.Instructions.Validators;
 using Cli.Workflow.Abstractions;
+using Cli.Workflow.Commands;
+using Cli.Workflow.Run.State;
 using MediatR;
 
-namespace Cli.Workflow;
+namespace Cli.Workflow.Run;
 
 // TODO: Cli: I wonder if always attaching this to the command is a great way to add properties?
 // And then let implementers of the CLI pass around properties between commands and hooks.

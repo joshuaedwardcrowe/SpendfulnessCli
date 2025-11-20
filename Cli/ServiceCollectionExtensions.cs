@@ -5,6 +5,7 @@ using Cli.Commands.Abstractions.Outcomes;
 using Cli.Instructions.Extensions;
 using Cli.Workflow;
 using Cli.Workflow.Commands;
+using Cli.Workflow.Commands.Exit;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cli;

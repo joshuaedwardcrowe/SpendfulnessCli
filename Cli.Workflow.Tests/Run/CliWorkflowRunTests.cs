@@ -7,13 +7,15 @@ using Cli.Commands.Abstractions.Outcomes.Reusable;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Abstractions.Validators;
 using Cli.Instructions.Parsers;
-using Cli.Instructions.Validators;
 using Cli.Workflow.Abstractions;
+using Cli.Workflow.Commands;
+using Cli.Workflow.Run;
+using Cli.Workflow.Run.State;
 using MediatR;
 using Moq;
 using NUnit.Framework;
 
-namespace Cli.Workflow.Tests;
+namespace Cli.Workflow.Tests.Run;
 
 [TestFixture]
 public class CliWorkflowRunTests

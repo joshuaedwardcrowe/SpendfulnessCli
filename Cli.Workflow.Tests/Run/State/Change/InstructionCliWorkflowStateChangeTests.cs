@@ -1,8 +1,9 @@
 using Cli.Instructions.Abstractions;
 using Cli.Workflow.Abstractions;
+using Cli.Workflow.Run.State.Change;
 using NUnit.Framework;
 
-namespace Cli.Workflow.Tests;
+namespace Cli.Workflow.Tests.Run.State.Change;
 
 [TestFixture]
 public class InstructionCliWorkflowStateChangeTests : CliWorkflowRunStateTests
