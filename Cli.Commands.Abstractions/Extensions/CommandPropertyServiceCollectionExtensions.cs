@@ -17,7 +17,7 @@ public static class CommandPropertyServiceCollectionExtensions
     {
         if (assembly == null)
         {
-            throw new NullReferenceException("No Assembly Containing ICommand Implementation");
+            throw new ArgumentNullException(nameof(assembly), "No Assembly Containing ICommand Implementation");
         }
         
         var possibleAggregatorTypes = assembly
