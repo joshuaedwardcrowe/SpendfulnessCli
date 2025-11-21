@@ -7,23 +7,11 @@ namespace Cli.Commands.Abstractions.Handlers;
 public abstract class CliCommandHandler
 {
     protected static CliCommandOutcome[] OutcomeAs(CliTable cliTable)
-    {
-        var outcome = new CliCommandTableOutcome(cliTable);
-
-        return [outcome];
-    }
+        => [new CliCommandTableOutcome(cliTable)];
 
     protected static CliCommandOutcome[] OutcomeAs(string message)
-    {
-        var outcome = new CliCommandOutputOutcome(message);
-
-        return [outcome];
-    }
+        => [new CliCommandOutputOutcome(message)];
 
     protected static Task<CliCommandOutcome[]> AsyncOutcomeAs(string message)
-    {
-        var outcome = OutcomeAs(message);
-        
-        return Task.FromResult(outcome);
-    }
+        => Task.FromResult(OutcomeAs(message));
 }
