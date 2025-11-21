@@ -5,9 +5,8 @@ namespace Cli.Commands.Abstractions.Tests;
 [TestFixture]
 public class CliCommandTests
 {
-    public record TestCliCommand : CliCommand
-    {
-    }
+    private record TestCliCommand : CliCommand;
+    private record AnotherCommand : CliCommand;
     
     [Test]
     public void GivenTestCliCommand_WhenGetCommandNameIsCalled_ThenCorrectNameIsReturned()
@@ -22,10 +21,6 @@ public class CliCommandTests
         var expectedCommandName = nameof(TestCliCommand).Replace(nameof(CliCommand), string.Empty);
         Assert.That(commandName, Is.EqualTo(expectedCommandName));
     }
-
-    public record AnotherCommand : CliCommand
-    {
-    }
     
     [Test]
     public void GivenAnotherCliCommand_WhenGetCommandNameIsCalled_ThenCorrectNameIsReturned()
@@ -38,5 +33,19 @@ public class CliCommandTests
 
         // Assert
         Assert.That(commandName, Is.EqualTo("AnotherCommand"));
+    }
+    
+    [Test]
+    public void GivenFullCommandName_WhenStripSpecificCommandNameIsCalled_ThenCorrectNameIsReturned()
+    {
+        // Arrange
+        var fullCommandName = "SampleCliCommand";
+        
+        // Act
+        var strippedName = CliCommand.StripSpecificCommandName(fullCommandName);
+
+        // Assert
+        var expectedStrippedName = fullCommandName.Replace(nameof(CliCommand), string.Empty);
+        Assert.That(strippedName, Is.EqualTo(expectedStrippedName));
     }
 }

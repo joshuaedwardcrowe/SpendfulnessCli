@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cli.Commands.Abstractions.Extensions;
 
-public static class ServiceCollectionExtensions
+public static class CommandServiceCollectionExtensions
 {
     public static IServiceCollection AddCommandsFromAssembly(this IServiceCollection serviceCollection, Assembly? assembly) 
     {
