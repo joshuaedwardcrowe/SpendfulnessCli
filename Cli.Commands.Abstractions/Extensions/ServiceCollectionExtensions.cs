@@ -1,4 +1,5 @@
 using System.Reflection;
+using Cli.Commands.Abstractions.Attributes;
 using Cli.Commands.Abstractions.Generators;
 using Cli.Instructions.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,11 +30,18 @@ public static class ServiceCollectionExtensions
         
         foreach (var implementationType in implementationTypes)
         {
+            var implementationAttributes = implementationType.GetCustomAttributes(typeof(CliCommandGeneratorFor));
+            var generatesCliCommandAttribute = implementationAttributes.OfType<CliCommandGeneratorFor>().FirstOrDefault();
+            
             var genericInterfaceType = implementationType.GetRequiredFirstGenericInterface();
             
             var typeForReferencedCommand = genericInterfaceType.GenericTypeArguments.First();
+
+            var rawName = generatesCliCommandAttribute != null
+                ? generatesCliCommandAttribute.CliCommandType.Name
+                : typeForReferencedCommand.Name;
             
-            var name = typeForReferencedCommand.Name.Replace(nameof(CliCommand), string.Empty);
+            var name = rawName.Replace(nameof(CliCommand), string.Empty);
             
             var commandName = name.ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
             var shorthandCommandName = name.ToLowerTitleCharacters();
