@@ -1,5 +1,5 @@
 using Cli.Commands.Abstractions;
-using Cli.Commands.Abstractions.Generators;
+using Cli.Commands.Abstractions.Factories;
 using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
@@ -8,7 +8,7 @@ using SpendfulnessCli.Commands.Personalisation.Settings.View;
 
 namespace SpendfulnessCli.Commands.Personalisation.Settings;
 
-public class SettingsGenericCliCommandGenerator : ICliCommandGenerator<SettingsCliCommand>
+public class SettingsGenericCliCommandFactory : ICliCommandFactory<SettingsCliCommand>
 {
     public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
         => instruction.SubInstructionName switch

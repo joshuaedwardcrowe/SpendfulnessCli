@@ -1,9 +1,9 @@
 using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 
-namespace Cli.Commands.Abstractions.Generators;
+namespace Cli.Commands.Abstractions.Factories;
 
-public interface IUnidentifiedCliCommandGenerator
+public interface IUnidentifiedCliCommandFactory
 {
     bool CanGenerate(CliInstruction instruction, List<CliCommandProperty> properties) => true;
     

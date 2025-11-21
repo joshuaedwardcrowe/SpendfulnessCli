@@ -1,6 +1,6 @@
 using System.Reflection;
+using Cli.Commands.Abstractions.Factories;
 using Cli.Commands.Abstractions.Attributes;
-using Cli.Commands.Abstractions.Generators;
 using Cli.Instructions.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,7 +26,7 @@ public static class CommandServiceCollectionExtensions
 
     private static IServiceCollection AddCommandGenerators(this IServiceCollection serviceCollection, Assembly assembly)
     {
-        var implementationTypes = assembly.WhereClassTypesImplementType(typeof(IUnidentifiedCliCommandGenerator));
+        var implementationTypes = assembly.WhereClassTypesImplementType(typeof(IUnidentifiedCliCommandFactory));
         
         foreach (var implementationType in implementationTypes)
         {
@@ -44,11 +44,11 @@ public static class CommandServiceCollectionExtensions
 
             serviceCollection
                 .AddKeyedSingleton(
-                    typeof(IUnidentifiedCliCommandGenerator),
+                    typeof(IUnidentifiedCliCommandFactory),
                     commandName,
                     implementationType)
                 .AddKeyedSingleton(
-                    typeof(IUnidentifiedCliCommandGenerator),
+                    typeof(IUnidentifiedCliCommandFactory),
                     shorthandCommandName,
                     implementationType);
         }

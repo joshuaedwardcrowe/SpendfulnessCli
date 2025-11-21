@@ -1,5 +1,5 @@
 using System.Reflection;
-using Cli.Commands.Abstractions.Generators;
+using Cli.Commands.Abstractions.Factories;
 
 namespace Cli.Commands.Abstractions.Extensions;
 
@@ -20,7 +20,7 @@ public static class TypeExtensions
         if (genericInterfaceType is null)
         {
             var implementationTypeName = implementationType.Name;
-            var typeName = typeof(ICliCommandGenerator<>).Name;
+            var typeName = typeof(ICliCommandFactory<>).Name;
                 
             throw new ArgumentException($"Type '{implementationTypeName}' does not implement {typeName} interface");
         }

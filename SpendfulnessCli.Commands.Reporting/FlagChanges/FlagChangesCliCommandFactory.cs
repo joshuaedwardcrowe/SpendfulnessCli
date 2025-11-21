@@ -1,12 +1,12 @@
 using Cli.Commands.Abstractions;
-using Cli.Commands.Abstractions.Generators;
+using Cli.Commands.Abstractions.Factories;
 using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 
 namespace SpendfulnessCli.Commands.Reporting.FlagChanges;
 
-public class FlagChangesCliCommandGenerator : ICliCommandGenerator<FlagChangesCliCommand>
+public class FlagChangesCliCommandFactory : ICliCommandFactory<FlagChangesCliCommand>
 {
     public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
     {

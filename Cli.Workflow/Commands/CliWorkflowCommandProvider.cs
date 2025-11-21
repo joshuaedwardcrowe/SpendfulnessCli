@@ -1,6 +1,6 @@
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Exceptions;
-using Cli.Commands.Abstractions.Generators;
+using Cli.Commands.Abstractions.Factories;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
@@ -13,7 +13,7 @@ public class CliWorkflowCommandProvider(IServiceProvider serviceProvider) : ICli
     public CliCommand GetCommand(CliInstruction instruction, List<CliCommandOutcome> outcomes)
     {
         var generators = serviceProvider
-            .GetKeyedServices<IUnidentifiedCliCommandGenerator>(instruction.Name)
+            .GetKeyedServices<IUnidentifiedCliCommandFactory>(instruction.Name)
             .ToList();
         
         if (generators.Count == 0)
