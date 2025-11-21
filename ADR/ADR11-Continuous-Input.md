@@ -236,7 +236,12 @@ Five virtual methods allow derived classes to customize behavior:
   ```csharp
   protected override void OnRunComplete(CliWorkflowRun run, CliCommandOutcome[] outcomes)
   {
+      var states = run.State.Changes.Select(change => change.To.ToString()).ToList();
+      var timeline = string.Join(", ", states);
       Io.Say($"Timeline: {timeline} in {run.State.Stopwatch.Elapsed.Seconds}s");
+      
+      var changes = _dbContext.ChangeTracker.Entries()
+          .Where(x => x.State != EntityState.Unchanged);
       _dbContext.SaveChanges();
       Io.Say($"Saved {changes.Count()} changes.");
   }
@@ -250,6 +255,10 @@ Five virtual methods allow derived classes to customize behavior:
   protected override void OnSessionEnd(List<CliWorkflowRun> runs)
   {
       Io.Say($"CLI runs executed: {runs.Count}");
+      
+      var totalTime = runs
+          .Select(run => run.State.Stopwatch.Elapsed)
+          .Aggregate(TimeSpan.Zero, (current, elapsed) => current + elapsed);
       Io.Say($"Total time: {totalTime.Seconds}s");
   }
   ```
