@@ -2,393 +2,402 @@
 
 ## Premise
 
-A command-line interface needs to maintain an interactive session where users can enter multiple commands sequentially without restarting the application. The CLI should continuously accept input, process commands, display results, and wait for the next input until the user explicitly exits the session.
+In a CLI workflow, commands often produce intermediate results that subsequent commands need to build upon. For example, a user might run a command to filter data, then run another command to sort that filtered data, then a third command to format and display it. Rather than requiring users to re-enter context with each command or forcing commands to persist state externally, the system needs a way to maintain command execution context across multiple sequential inputs.
 
 The system needs to:
-- Maintain a persistent session throughout multiple command executions
-- Accept user input repeatedly without application restarts
-- Execute each command independently while sharing session state
-- Allow the user to exit gracefully when desired
-- Support lifecycle hooks for customizing behavior at key interaction points
+- Preserve command execution context (workflow runs) across multiple user inputs
+- Allow commands to produce reusable outcomes that persist for subsequent commands
+- Enable commands to access outcomes from prior commands in the session
+- Automatically clean up context when commands produce final (non-reusable) outcomes
+- Support command chaining without explicit state management by command authors
 
 ## Problem
 
-Building a continuous input loop for CLI applications presents several challenges:
+Managing stateful command sequences in a CLI presents several challenges:
 
-1. **Session Persistence** - The application needs to remain running between command executions while managing state appropriately. Each command execution should be independent, but the session context should persist.
+1. **Context Continuity** - Users expect to build upon previous command results without re-entering parameters or re-running queries. The system needs to preserve command context between inputs while allowing commands to remain stateless.
 
-2. **Input/Output Coordination** - The system must coordinate the timing of prompts, command execution, and result display to provide a smooth user experience without race conditions or awkward pauses.
+2. **Automatic Cleanup** - The system must know when to create a new context versus reusing an existing one. Reusable outcomes should persist, while final outcomes should trigger cleanup.
 
-3. **Lifecycle Extensibility** - Different CLI implementations may need to perform custom actions at various points in the session lifecycle (startup, before/after commands, shutdown) without modifying core loop logic.
+3. **Property Propagation** - Subsequent commands need type-safe access to outcomes from previous commands. This requires converting outcomes to properties and passing them through the workflow.
 
-4. **Clean Exit Strategy** - The loop needs a reliable mechanism to terminate gracefully without abrupt interruption or leaving resources in an inconsistent state.
+4. **State Machine Complexity** - The workflow run state machine needs additional states to track reusable outcomes, requiring careful state transition management to avoid invalid states.
 
-5. **State Management** - The continuous loop must work with the workflow state machine (see ADR09) to coordinate command execution while maintaining clear boundaries between session-level and command-level concerns.
+5. **Run Lifecycle** - Traditional command execution follows a create → run → finish → destroy lifecycle. Reusable commands need a create → run → pause → resume → run → finish lifecycle.
 
-6. **Asynchronous Command Handling** - Commands may perform I/O or long-running operations. The loop must handle asynchronous execution without blocking the user interface or creating confusing states.
+6. **Backward Compatibility** - Commands that don't produce reusable outcomes should continue working unchanged. The reusability mechanism must be opt-in.
 
 ## Solution
 
-The Continuous Input concept is implemented in the `CliApp` abstract base class, which provides a template for building interactive CLI applications with a persistent input loop.
+The Continuous Input concept extends the workflow run lifecycle to support command context persistence. When a command produces a reusable outcome, its workflow run remains active and is returned by subsequent `NextRun()` calls, allowing the next command to build upon the previous context.
 
 ### Architecture Overview
 
 ```
-CliApp (Session Loop)
-    ├── Uses → ICliWorkflow (manages command execution state)
-    ├── Uses → ICliCommandOutcomeIo (handles user interaction)
-    └── Provides → Lifecycle Hooks (extensibility points)
-        ├── OnSessionStart()
-        ├── OnRunCreated()
-        ├── OnRunStarted()
-        ├── OnRunComplete()
-        └── OnSessionEnd()
+User Input #1 → CliWorkflow.NextRun() → New CliWorkflowRun
+                                            ↓
+                                    Execute Command A
+                                            ↓
+                                    Produces Reusable Outcome
+                                            ↓
+                                    State: ReachedReusableOutcome
+                                            ↓
+User Input #2 → CliWorkflow.NextRun() → Same CliWorkflowRun (reused!)
+                                            ↓
+                                    Execute Command B (with Command A's outcomes)
+                                            ↓
+                                    Produces Final Outcome
+                                            ↓
+                                    State: Finished
+                                            ↓
+User Input #3 → CliWorkflow.NextRun() → New CliWorkflowRun
 ```
 
-### 1. The CliApp Base Class
+### 1. Reusable vs Final Outcomes
 
-`CliApp` implements the continuous input loop as a template method pattern:
+Command outcomes are classified into two categories based on their `CliCommandOutcomeKind`:
+
+**Reusable Outcomes** (`CliCommandOutcomeKind.Reusable`)
+- Represent intermediate results meant to be consumed by subsequent commands
+- Examples:
+  - `CliCommandAggregatorOutcome<T>` - Contains filtered/aggregated data
+  - `CliCommandListAggregatorOutcome<T>` - Contains collections of data
+  - `CliCommandMessageOutcome` - Contains messages that can be appended to
+- When returned, the workflow run transitions to `ReachedReusableOutcome` state
+- The run remains active and is returned by the next `NextRun()` call
+
+**Final Outcomes** (`CliCommandOutcomeKind.Final`)
+- Represent completed operations with no further processing needed
+- Examples:
+  - `CliCommandTableOutcome` - Formatted table for display
+  - `CliCommandNothingOutcome` - No output (invalid input, help text)
+  - `CliCommandExceptionOutcome` - Error occurred
+- When returned, the workflow run transitions to `ReachedFinalOutcome` then `Finished`
+- The run is complete and a new run is created for the next input
+
+### 2. Extended State Machine
+
+The workflow run state machine includes additional states for reusability:
 
 ```csharp
-public abstract class CliApp
+public enum ClIWorkflowRunStateStatus
 {
-    private readonly ICliWorkflow _workflow;
-    protected readonly ICliCommandOutcomeIo Io;
-
-    protected CliApp(ICliWorkflow workflow, ICliCommandOutcomeIo io)
-    {
-        _workflow = workflow;
-        Io = io;
-    }
-    
-    public async Task Run()
-    { 
-        OnSessionStart();
-        
-        while (_workflow.Status != CliWorkflowStatus.Stopped)
-        {
-            var run = _workflow.NextRun();
-            
-            OnRunCreated(run);
-            
-            var ask = Io.Ask();
-            
-            var runTask = run.RespondToAsk(ask);
-            
-            OnRunStarted(run, ask);
-
-            var outcomes = await runTask;
-            
-            Io.Say(outcomes);
-            
-            OnRunComplete(run, outcomes);
-        }
-        
-        OnSessionEnd(_workflow.Runs);
-    }
-
-    protected virtual void OnSessionStart() { }
-    protected virtual void OnRunCreated(CliWorkflowRun run) { }
-    protected virtual void OnRunStarted(CliWorkflowRun run, string? ask) { }
-    protected virtual void OnRunComplete(CliWorkflowRun run, CliCommandOutcome[] outcomes) { }
-    protected virtual void OnSessionEnd(List<CliWorkflowRun> runs) { }
+    NotInitialized,
+    Running,
+    InvalidAsk,
+    ReachedReusableOutcome,  // NEW: Command produced reusable output
+    ReachedFinalOutcome,     // NEW: Command produced final output
+    Exceptional,
+    Finished
 }
 ```
 
-**Key Design Decision**: The base class provides the complete loop implementation with empty virtual hooks. This ensures consistency across all CLI implementations while allowing each to customize behavior at specific points without duplicating the core loop logic.
+**Valid State Transitions**:
+```
+NotInitialized
+    ↓
+Running → ReachedReusableOutcome → Running → ReachedFinalOutcome → Finished
+       ↓                        ↓
+       ↓→ ReachedFinalOutcome → Finished
+       ↓
+       ↓→ InvalidAsk → Finished
+       ↓
+       ↓→ Exceptional → Finished
+```
 
-### 2. The Continuous Loop Pattern
+**Key Design Decision**: `ReachedReusableOutcome` can transition back to `Running`, creating a loop. This is the only state that doesn't immediately progress to `Finished`, enabling run reuse.
 
-The `Run()` method implements a Read-Execute-Display Loop (REDL) that continues until explicitly stopped:
+### 3. CliWorkflow.NextRun() - Run Reuse Logic
 
-**Execution Flow**:
+The workflow's `NextRun()` method implements run reuse:
 
-1. **Session Initialization** (`OnSessionStart`)
-   - Called once before entering the loop
-   - Initialize session resources, display welcome message
-   
-2. **Enter Loop** (condition: `_workflow.Status != CliWorkflowStatus.Stopped`)
-   - Loop continues indefinitely until workflow is explicitly stopped
-   
-3. **Prepare Run** (`_workflow.NextRun()`)
-   - Create or reuse a workflow run for command execution
-   - Run is either newly created or reused if previous run achieved reusable outcome
-   
-4. **Run Creation Hook** (`OnRunCreated`)
-   - Notify that run is ready
-   - Display prompt or prepare UI for input
-   
-5. **Get Input** (`Io.Ask()`)
-   - Blocks waiting for user to enter command text
-   - Returns `string?` which may be null or empty
-   
-6. **Start Execution** (`run.RespondToAsk(ask)`)
-   - Begin command processing asynchronously
-   - Returns Task that will complete when command finishes
-   
-7. **Execution Started Hook** (`OnRunStarted`)
-   - Called immediately after starting command processing
-   - Command runs concurrently while this hook executes
-   - Use for progress indicators, logging, or concurrent operations
-   
-8. **Await Result** (`await runTask`)
-   - Wait for command processing to complete
-   - Receives array of command outcomes
-   
-9. **Display Results** (`Io.Say(outcomes)`)
-   - Show command results to user
-   - Formats outcomes appropriately for display
-   
-10. **Completion Hook** (`OnRunComplete`)
-    - Called after command finishes and results are displayed
-    - Perform cleanup, save state, display statistics
+```csharp
+public CliWorkflowRun NextRun()
+{
+    var lastRunToAchieveReusableOutcome = Runs.LastOrDefault(run =>
+        run.State.WasChangedTo(ClIWorkflowRunStateStatus.ReachedReusableOutcome));
+
+    return lastRunToAchieveReusableOutcome ?? CreateNewRun();
+}
+```
+
+**Execution Logic**:
+1. Search backwards through all runs for one in `ReachedReusableOutcome` state
+2. If found, return that run (it will be reused)
+3. If not found, create and return a new run
+
+**Key Design Decision**: Only the *last* run that achieved reusable outcome is reused. Earlier runs are abandoned. This prevents memory leaks and ensures users are always building on their most recent context.
+
+### 4. CliWorkflowRun - Outcome Processing
+
+The workflow run determines whether an outcome is reusable:
+
+```csharp
+private void UpdateStateAfterOutcome(CliCommandOutcome[] outcomes)
+{
+    var reusableOutcome = outcomes.LastOrDefault(x => x.IsReusable);
     
-11. **Repeat** - Return to step 2 unless workflow status is `Stopped`
+    var nextState = reusableOutcome != null
+        ? ClIWorkflowRunStateStatus.ReachedReusableOutcome
+        : ClIWorkflowRunStateStatus.ReachedFinalOutcome;
 
-12. **Session Termination** (`OnSessionEnd`)
-    - Called once after exiting the loop
-    - Display summary, cleanup resources, persist final state
+    State.ChangeTo(nextState, outcomes);
+}
 
-**Key Design Decision**: Command execution (`RespondToAsk`) is started before the `OnRunStarted` hook is called. This allows the hook to execute concurrently with command processing, enabling responsive UI updates like progress indicators without blocking command execution.
+private void UpdateStateWhenFinished()
+{
+    if (!State.WasChangedTo(ClIWorkflowRunStateStatus.ReachedReusableOutcome))
+    {
+        State.ChangeTo(ClIWorkflowRunStateStatus.Finished);
+    }
+}
+```
 
-### 3. Integration with Workflow State Machine
+**Key Design Decision**: If *any* outcome in the array is reusable, the run is kept alive. This allows commands to return multiple outcomes where some are reusable and some are informational.
 
-The continuous input loop delegates command lifecycle management to the `ICliWorkflow` (see ADR09):
+**Lifecycle Flow**:
+1. Command executes and returns outcome array
+2. `UpdateStateAfterOutcome()` checks for reusable outcomes
+3. If reusable: State → `ReachedReusableOutcome`, run remains active
+4. If final: State → `ReachedFinalOutcome` → `Finished`, run completes
+5. `UpdateStateWhenFinished()` ensures final state is set unless outcome was reusable
 
-- **`NextRun()`** - Returns a `CliWorkflowRun` for executing the next command
-  - May create a new run or reuse an existing one that achieved reusable outcome
-  - Each run manages its own state machine (NotInitialized → Created → Running → Finished)
-  
-- **`Status`** - Tracks workflow status (Started/Stopped)
-  - Loop continues while status is `Started`
-  - Calling `workflow.Stop()` sets status to `Stopped`, terminating the loop
-  
-- **`Runs`** - Collection of all executed workflow runs
-  - Provides command history for session summary
-  - Enables tracking statistics like execution count and total time
+### 5. Prior Outcome Propagation
 
-**Separation of Concerns**:
-- `CliApp` manages the continuous input loop and user interaction
-- `CliWorkflow` manages command execution state and routing
-- `CliWorkflowRun` manages individual command lifecycle
+Reused runs provide prior outcomes to subsequent commands:
 
-### 4. I/O Abstraction
+```csharp
+private CliCommand GetCommandFromInstruction(CliInstruction instruction)
+{
+    var priorOutcomes = State
+        .AllOutcomeStateChanges()
+        .SelectMany(outcomeChange => outcomeChange.Outcomes)
+        .ToList();
+    
+    return _workflowCommandProvider.GetCommand(instruction, priorOutcomes);
+}
+```
 
-The loop uses `ICliCommandOutcomeIo` for all user interaction:
+**Key Design Decision**: All outcomes from all state changes in the run's history are passed to the command provider. This allows commands to access not just the immediate prior outcome, but the entire chain of outcomes in the current run.
 
-- **`Ask()`** - Retrieve input from user
-  - Blocks until input is received
-  - Returns `string?` (may be null/empty)
-  - Abstraction enables testing, mocking, alternative input sources
-  
-- **`Say(outcomes)`** - Display results to user
-  - Takes array of `CliCommandOutcome` objects
-  - Implementation determines formatting (console, file, network)
-  - Abstraction enables alternative output destinations
+The command provider converts these outcomes to typed properties (see ADR10 - Command Properties) that command generators can access:
 
-**Key Design Decision**: Using abstractions instead of direct `Console.ReadLine()` and `Console.WriteLine()` enables unit testing, alternative I/O implementations, and separation of presentation concerns from business logic.
+```csharp
+// Example: TableCommand generator accessing prior aggregator
+public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+{
+    var aggregatorProperty = properties
+        .OfType<AggregatorCliCommandProperty<MyAggregate>>()
+        .FirstOrDefault();
+    
+    if (aggregatorProperty != null)
+    {
+        // Use the aggregator from the previous command
+        return new TableCommand(aggregatorProperty.Value);
+    }
+    
+    // No prior aggregator, create default command
+    return new TableCommand();
+}
+```
 
-### 5. Lifecycle Hooks
+### 6. Example: Multi-Step Data Pipeline
 
-Five virtual methods allow derived classes to customize behavior:
+Consider a user building a report through multiple commands:
 
-**OnSessionStart()**
-- Execute once before loop begins
-- Use case: Welcome message, resource initialization, configuration display
-- Example:
-  ```csharp
-  protected override void OnSessionStart()
-  {
-      Io.Say($"Welcome to Spendfulness CLI!");
-      Io.Pause();
-  }
-  ```
+**Step 1: Filter Data**
+```
+User: /transactions --category Food
+Command: Executes query, returns CliCommandAggregatorOutcome<Transaction>
+State: ReachedReusableOutcome
+Run: Remains active with transactions in memory
+```
 
-**OnRunCreated(CliWorkflowRun run)**
-- Execute before each command, after run creation
-- Use case: Display prompt, reset state, prepare UI
-- Example:
-  ```csharp
-  protected override void OnRunCreated(CliWorkflowRun workflowRun)
-  {
-      Io.Say($"Please enter a command:");
-      Io.Pause();
-  }
-  ```
+**Step 2: Sort Results**
+```
+User: /sort --by Date
+Command: Receives transactions from prior outcome, sorts them
+         Returns new CliCommandAggregatorOutcome<Transaction>
+State: ReachedReusableOutcome → Running → ReachedReusableOutcome
+Run: Same run, now contains both filter and sort outcomes
+```
 
-**OnRunStarted(CliWorkflowRun run, string? ask)**
-- Execute after command processing begins
-- Runs concurrently with command execution
-- Use case: Progress indicators, logging, tracking
-- Example:
-  ```csharp
-  protected override void OnRunStarted(CliWorkflowRun workflowRun, string? ask)
-  {
-      Io.Say($"Executing command: {ask}");
-      Io.Pause();
-  }
-  ```
+**Step 3: Display Table**
+```
+User: /table
+Command: Receives sorted transactions, formats as table
+         Returns CliCommandTableOutcome (final)
+State: Running → ReachedFinalOutcome → Finished
+Run: Completes, table displayed
+```
 
-**OnRunComplete(CliWorkflowRun run, CliCommandOutcome[] outcomes)**
-- Execute after command finishes and results are displayed
-- Use case: Statistics display, state persistence, cleanup
-- Example:
-  ```csharp
-  protected override void OnRunComplete(CliWorkflowRun run, CliCommandOutcome[] outcomes)
-  {
-      var states = run.State.Changes.Select(change => change.To.ToString()).ToList();
-      var timeline = string.Join(", ", states);
-      Io.Say($"Timeline: {timeline} in {run.State.Stopwatch.Elapsed.Seconds}s");
-      
-      var changes = _dbContext.ChangeTracker.Entries()
-          .Where(x => x.State != EntityState.Unchanged);
-      var changeCount = changes.Count();
-      _dbContext.SaveChanges();
-      Io.Say($"Saved {changeCount} changes.");
-  }
-  ```
+**Step 4: New Query**
+```
+User: /transactions --category Rent
+Command: No reusable run available, creates new run
+State: Fresh execution context
+Run: New run created, previous context abandoned
+```
 
-**OnSessionEnd(List<CliWorkflowRun> runs)**
-- Execute once after loop exits
-- Use case: Summary statistics, final cleanup, goodbye message
-- Example:
-  ```csharp
-  protected override void OnSessionEnd(List<CliWorkflowRun> runs)
-  {
-      Io.Say($"CLI runs executed: {runs.Count}");
-      
-      var totalTime = runs
-          .Select(run => run.State.Stopwatch.Elapsed)
-          .Aggregate(TimeSpan.Zero, (current, elapsed) => current + elapsed);
-      Io.Say($"Total time: {totalTime.Seconds}s");
-  }
-  ```
+### 7. Reusable Outcome Types
 
-**Key Design Decision**: All hooks are optional with empty default implementations. This follows the principle of least surprise—derived classes only override hooks they need, without being forced to implement irrelevant methods.
+The system provides several reusable outcome types:
 
-### 6. Exit Strategy
+**CliCommandAggregatorOutcome<TAggregate>**
+```csharp
+public class CliCommandAggregatorOutcome<TAggregate>(CliAggregator<TAggregate> aggregator)
+    : CliCommandOutcome(CliCommandOutcomeKind.Reusable)
+{
+    public CliAggregator<TAggregate> Aggregator { get; } = aggregator;
+}
+```
+- Carries typed aggregators (filtered data collections)
+- Converted to `AggregatorCliCommandProperty<T>` for consumption
+- Used for data transformation pipelines
 
-The loop terminates when `_workflow.Status` becomes `CliWorkflowStatus.Stopped`. This requires:
+**CliCommandListAggregatorOutcome<TAggregate>**
+- Carries lists of aggregators
+- Useful for operations producing multiple data sets
+- Enables commands that work with aggregator collections
 
-1. A command that calls `_workflow.Stop()` (typically `/exit` or `/quit`)
-2. The command completes its current execution
-3. The loop checks status and exits instead of repeating
-4. `OnSessionEnd` hook is called for final cleanup
-
-**Key Design Decision**: Exit is cooperative rather than immediate. The current command completes before the loop exits. This ensures data integrity and allows proper cleanup. However, it means long-running commands cannot be interrupted through this mechanism.
+**CliCommandMessageOutcome**
+```csharp
+public class CliCommandMessageOutcome(string message)
+    : CliCommandOutcome(CliCommandOutcomeKind.Reusable)
+{
+    public string Message { get; } = message;
+}
+```
+- Carries string messages
+- Converted to `MessageCliCommandProperty` for consumption
+- Can be appended to or modified by subsequent commands
 
 ## Constraints
 
-### Single-Threaded Command Execution
+### Single Active Reusable Run
 
-Commands execute sequentially, one at a time. While individual commands may be asynchronous, the loop waits for each to complete before accepting new input. Concurrent command execution would require a fundamentally different architecture with command queues and coordination mechanisms.
+Only one reusable run is kept active at a time (the most recent). Earlier reusable runs are not garbage collected but are also not returned by `NextRun()`. This prevents:
+- Memory leaks from accumulating runs
+- Confusion about which context is active
+- Complex run selection logic
 
-### Blocking Input
+However, it also means:
+- Users cannot return to earlier contexts without re-running commands
+- No "undo" or "branch" operations on run context
+- Run history is linear, not tree-structured
 
-The `Io.Ask()` call blocks the loop until input is received. The CLI cannot perform background work or respond to events while waiting for input. Alternative input mechanisms (async, event-driven) would require changing the I/O abstraction.
+### Reusable State Cannot Be Cancelled
 
-### No Built-in Cancellation
+Once a run reaches `ReachedReusableOutcome`, it can only be exited by:
+1. Producing a final outcome (completes run)
+2. Producing another reusable outcome (continues in reusable state)
+3. Exception or invalid input (completes run)
 
-Once a command starts executing, it cannot be cancelled through the continuous input loop. The loop must wait for completion or exception. Adding cancellation would require:
-- Threading cancellation tokens through the entire pipeline
-- Cancellation commands or keyboard shortcuts
-- Graceful command termination logic
+There's no way to explicitly "cancel" or "clear" a reusable run. Users must complete the operation or start a new session.
 
-### Workflow Coupling
+### Outcomes Are Immutable After Creation
 
-The loop is tightly coupled to `ICliWorkflow`. The loop structure assumes:
-- Workflow provides runs on demand
-- Workflow status controls loop termination
-- Workflow manages command routing and execution
+Outcomes stored in the run state cannot be modified. Subsequent commands receive copies of outcome data, not references. This ensures:
+- Commands cannot corrupt prior context
+- State transitions remain traceable
+- Debugging is simpler
 
-Changing workflow semantics would impact the loop implementation.
+However, it also means:
+- Large datasets are copied, consuming memory
+- Commands cannot "update" prior outcomes, only replace them
+- No in-place data transformations
 
-### Fixed Hook Points
+### No Run Persistence
 
-The five lifecycle hooks execute at predetermined points in the loop. Implementations cannot:
-- Add additional hooks without modifying the base class
-- Change hook execution order
-- Skip or conditionally execute hooks
+Reusable runs exist only in memory for the current session. When the CLI exits:
+- All run context is lost
+- Reusable outcomes are not saved
+- Users cannot resume sessions
 
-If different extension points are needed, consider:
-- Using existing hooks creatively
-- Wrapping the I/O abstraction
-- Extending the workflow instead
+Adding persistence would require:
+- Serialization of outcome types
+- Session management infrastructure
+- Coordination between process restarts
 
-### Memory Retention
+### Command Coupling via Property Types
 
-The workflow keeps all runs in memory for the session duration. For long sessions with many commands, this could consume significant memory. The `Runs` collection grows unbounded and is only used for statistics in `OnSessionEnd`.
+Commands become coupled through shared property types. If Command A produces `AggregatorCliCommandProperty<Transaction>` and Command B consumes it, they're coupled through the `Transaction` type. Changes to `Transaction` impact both commands.
 
-### No Command History Navigation
+This is intentional for type safety but creates dependencies that must be managed carefully.
 
-The loop doesn't provide built-in command history (up/down arrow to recall previous commands). This is typically a terminal feature, but CLIs built on this pattern don't implement it at the application level.
+### State Transition Validation Overhead
 
-### Synchronous Hooks
+Every state change is validated against the legal transition matrix. This adds overhead to command execution. For high-frequency commands, this validation cost is multiplied by the number of state changes per command.
 
-All lifecycle hooks are synchronous (`void` methods). Implementations needing async operations in hooks must:
-- Block synchronously (not ideal)
-- Fire and forget async operations (risky)
-- Perform async work in command handlers instead (recommended)
+The benefit (catching invalid state transitions) outweighs the cost in typical CLI scenarios, but high-performance applications might need optimization.
 
 ## Questions & Answers
 
-### Why is this called "Continuous Input" instead of REPL or REDL?
+### Why is this called "Continuous Input" instead of "Command Chaining" or "Pipeline"?
 
-"Continuous Input" emphasizes the persistent session aspect—the application continuously accepts commands without restarting. While similar to REPL (Read-Eval-Print-Loop), this pattern is more specific to command-line applications with workflow state machines and lifecycle hooks.
+"Continuous Input" emphasizes that the *user* continues providing input and the *workflow run* continues across those inputs. Unlike traditional command chaining (e.g., Unix pipes), this is interactive—users see results after each step and decide the next command dynamically.
 
-### What happens if the user provides no input or invalid input?
+### What happens if a command returns both reusable and final outcomes?
 
-The `Io.Ask()` method may return null or empty string. The workflow's `RespondToAsk()` method validates input and returns `CliCommandNothingOutcome` for invalid input, which is displayed to the user. The loop continues normally.
+The last reusable outcome in the array determines run reusability. If any outcome is reusable, the run is kept alive. This allows commands to return status messages (final) alongside reusable data.
 
-### Can the loop be paused and resumed?
+### Can a reused run access outcomes from before it was reused?
 
-Not with the current design. The workflow status is either `Started` or `Stopped`. Adding pause/resume functionality would require:
-- Additional workflow states
-- State transition validation
-- Decision on whether to pause mid-command or between commands
+Yes. `AllOutcomeStateChanges()` returns all state changes with outcomes for the run's entire history, including outcomes from before the first reuse. This enables commands to access the full context chain.
 
-### Why pass outcomes array instead of single outcome?
+### How do commands know if they're being called in a reused run?
 
-Commands may produce multiple outcomes (e.g., a table and a message). The array allows commands to return multiple results that are displayed together. The I/O layer handles formatting multiple outcomes appropriately.
+Commands inspect the properties passed to their generator. If properties exist, the command is being called with prior context. The generator can check for specific property types to determine available context.
 
-### How do you stop an infinite loop if workflow.Stop() is never called?
+### What prevents infinite reusable loops?
 
-This is by design. The application developer is responsible for implementing an exit command (e.g., `/exit`, `/quit`) that calls `workflow.Stop()`. Without such a command, users must forcibly terminate the process (Ctrl+C). This is consistent with other REPL applications.
+Nothing in the architecture prevents it—if every command returns reusable outcomes, the run never finishes. This is intentional. Users must eventually run a command that produces final output (like displaying a table) to complete the run.
 
-### What if a command throws an unhandled exception?
+### Can multiple runs be reusable simultaneously?
 
-The workflow's `RespondToAsk()` method has exception handling (see ADR09) that converts exceptions to `CliCommandExceptionOutcome` objects. These are displayed to the user, and the loop continues. The continuous input loop itself doesn't have explicit exception handling, relying on the workflow layer.
+No. `NextRun()` returns only the most recent reusable run. Earlier runs in `ReachedReusableOutcome` state are abandoned. This keeps the mental model simple: you're always building on your most recent work.
 
-### Can multiple commands be chained or piped?
+### Why not automatically create new runs when users switch topics?
 
-No. Each loop iteration processes one command from start to finish. Command chaining or pipes would require:
-- Enhanced instruction parser to detect chains
-- Workflow support for command pipelines
-- Mechanism to pass output from one command as input to another
+The workflow cannot automatically detect "topic switches" without semantic understanding of commands. Forcing users to explicitly complete runs (via final outcomes) gives them control over when context resets.
 
-### Why is OnRunStarted called before awaiting the command task?
+### How does this interact with the CLI lifecycle hooks in CliApp?
 
-This allows the hook to execute concurrently with command processing. Implementations can display progress indicators, show loading animations, or perform other tasks while the command runs. The alternative (calling after await) would make the hook pointless since the command would already be finished.
+`OnRunCreated` is called when `NextRun()` is called, even if returning a reused run. This is intentional—the hook signals "this run will handle the next input," not "a new run was created." Implementations can check run state to detect reuse.
 
-### Can I implement my own main loop instead of using CliApp?
+### Can reusable outcomes be modified by subsequent commands?
 
-Yes, `CliApp` is just a convenient base class. You can implement your own loop using `ICliWorkflow` and `ICliCommandOutcomeIo` directly. However, you'd lose the lifecycle hooks and would need to implement similar extensibility mechanisms yourself.
+Outcomes themselves are immutable, but commands can return new reusable outcomes based on prior ones. For example, a sort command receives an aggregator, creates a new sorted aggregator, and returns it as a new reusable outcome.
 
-### How do I add custom behavior between runs?
+### What's the performance impact of accumulating outcomes in a long-running reusable run?
 
-Use the `OnRunComplete` and `OnRunCreated` hooks. These execute at the boundary between command executions, providing a natural point to reset state, save data, or display prompts.
+Each additional state change adds outcomes to the run's history. Commands that iterate through all prior outcomes will slow down as the history grows. For long pipelines, consider periodically producing final outcomes to reset context.
 
-### What is the purpose of NextRun() returning a reusable run?
+### How do I force a new run if I want to abandon reusable context?
 
-Some commands produce reusable outcomes that should apply to subsequent commands (see ADR10). `NextRun()` returns the last run that achieved reusable outcome, allowing the next command to build upon it. This enables command composition patterns.
+Run a command that produces a final outcome (e.g., `/table`, `/help`, `/exit`). The run will complete and `NextRun()` will create a new run for the next input.
 
-### Why is the workflow passed to the constructor instead of being created internally?
+### Can I have different types of reusable outcomes in the same run?
 
-Dependency injection. The workflow is created by the DI container with all its dependencies. This enables:
-- Testing with mock workflows
-- Different workflow implementations
-- Flexible configuration without modifying CliApp
+Yes. A run can accumulate multiple reusable outcome types. For example, filtering might produce an aggregator, then a note command might add a message. Both are available to subsequent commands.
 
-### Can I nest CLI applications or run one inside another?
+### Why doesn't the state machine support branches or parallel contexts?
 
-Not practically. Each `CliApp` maintains its own workflow and runs its own loop. Nesting would require complex coordination of I/O and state. For sub-commands or nested interactions, implement them as commands within the workflow rather than separate CLI applications.
+Simplicity. A linear state machine is easier to reason about, test, and debug. Branching would require:
+- Context selection UI
+- Run garbage collection heuristics
+- Complex state visualization
+
+For a CLI, linear context is sufficient. Power users can open multiple terminals for parallel workflows.
+
+### How does this relate to ADR10 - Command Properties?
+
+ADR10 describes how outcomes are converted to properties. This ADR describes when runs are reused and how outcomes are accumulated. They work together: reusable outcomes (this ADR) are converted to properties (ADR10) for command consumption.
+
+### What happens if a reused run encounters an exception?
+
+The run transitions to `Exceptional` then `Finished`, ending its reusability. The next `NextRun()` creates a new run. The exception doesn't preserve context—reusability is lost.
+
+### Can I inspect which run is currently active?
+
+Yes, through workflow hooks. `CliWorkflow.Runs` contains all runs, and checking for `ReachedReusableOutcome` state identifies the active reusable run. However, this is primarily for debugging and testing.
