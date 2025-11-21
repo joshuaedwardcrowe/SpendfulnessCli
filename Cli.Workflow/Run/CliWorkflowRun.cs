@@ -65,10 +65,14 @@ public class CliWorkflowRun
             var command = GetCommandFromInstruction(instruction);
 
             var outcomes = await _mediator.Send(command);
+
+            var ranOutcome = new CliCommandRanOutcome(command);
             
-            UpdateStateAfterOutcome(outcomes);
+            CliCommandOutcome[] allOutcomes = [ranOutcome, ..outcomes];
             
-            return outcomes;
+            UpdateStateAfterOutcome(allOutcomes);
+            
+            return allOutcomes;
         }
         catch (NoCommandGeneratorException)
         {

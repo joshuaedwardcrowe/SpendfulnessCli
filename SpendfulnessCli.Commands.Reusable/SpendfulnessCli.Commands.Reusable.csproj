@@ -10,6 +10,7 @@
       <ProjectReference Include="..\Cli.Abstractions\Cli.Abstractions.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Aggregation\SpendfulnessCli.Aggregation.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.CliTables\SpendfulnessCli.CliTables.csproj" />
+      <ProjectReference Include="..\SpendfulnessCli.Commands.Reporting\SpendfulnessCli.Commands.Reporting.csproj" />
     </ItemGroup>
 
 </Project>
