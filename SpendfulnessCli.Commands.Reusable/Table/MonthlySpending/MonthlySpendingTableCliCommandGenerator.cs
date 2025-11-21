@@ -7,7 +7,7 @@ using SpendfulnessCli.Aggregation.Aggregates;
 
 namespace SpendfulnessCli.Commands.Reusable.Table.MonthlySpending;
 
-[CliCommandGeneratorFor(typeof(TableCliCommand))]
+[FactoryFor(typeof(TableCliCommand))]
 public class MonthlySpendingTableCliCommandGenerator : ICliCommandFactory<MonthlySpendingTableCliCommand>
 {
     public bool CanGenerate(CliInstruction instruction, List<CliCommandProperty> properties)

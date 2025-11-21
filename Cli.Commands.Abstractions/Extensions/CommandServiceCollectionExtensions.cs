@@ -31,7 +31,7 @@ public static class CommandServiceCollectionExtensions
         foreach (var implementationType in implementationTypes)
         {
             var generatorCommandType = implementationType.FirstOrDefaultGenericTypeArgument();
-            var generatorAttribute = implementationType.FirstOrDefaultAttributeOfType<CliCommandGeneratorFor>();
+            var generatorAttribute = implementationType.FirstOrDefaultAttributeOfType<FactoryFor>();
 
             var fullCommandName = generatorAttribute != null
                 ? generatorAttribute.CommandType.Name
