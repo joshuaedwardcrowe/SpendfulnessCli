@@ -23,7 +23,7 @@ public class CliWorkflowCommandProvider(IServiceProvider serviceProvider) : ICli
         
         var properties = ConvertOutcomesToProperties(outcomes);
 
-        var generator = generators.FirstOrDefault(g => g.CanGenerate(instruction, properties));
+        var generator = generators.FirstOrDefault(g => g.CanGenerateWhen(instruction, properties));
         if (generator == null)
         {
             throw new NoCommandGeneratorException("Did not find generator for " + instruction.Name);
@@ -38,11 +38,11 @@ public class CliWorkflowCommandProvider(IServiceProvider serviceProvider) : ICli
         
         var convertableOutcomes = priorOutcomes
             .Where(priorOutcome => propertyFactories
-                .Any(propertyFactory => propertyFactory.CanCreateProperty(priorOutcome)));
+                .Any(propertyFactory => propertyFactory.CanCreatePropertyWhen(priorOutcome)));
         
         return convertableOutcomes
             .Select(priorOutcome => propertyFactories
-                .First(propertyFactory => propertyFactory.CanCreateProperty(priorOutcome))
+                .First(propertyFactory => propertyFactory.CanCreatePropertyWhen(priorOutcome))
                 .CreateProperty(priorOutcome))
             .ToList();
     }

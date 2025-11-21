@@ -4,7 +4,7 @@ namespace Cli.Commands.Abstractions.Properties;
 
 public interface ICliCommandPropertyFactory
 {
-    bool CanCreateProperty(CliCommandOutcome outcome);
+    bool CanCreatePropertyWhen(CliCommandOutcome outcome);
     
     CliCommandProperty CreateProperty(CliCommandOutcome outcome);
 }

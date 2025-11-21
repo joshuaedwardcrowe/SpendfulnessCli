@@ -5,7 +5,7 @@ namespace Cli.Commands.Abstractions.Properties.CommandRan;
 
 public class CliCommandRanPropertyFactory : ICliCommandPropertyFactory
 {
-    public bool CanCreateProperty(CliCommandOutcome outcome)
+    public bool CanCreatePropertyWhen(CliCommandOutcome outcome)
         => outcome is CliCommandRanOutcome;
 
     public CliCommandProperty CreateProperty(CliCommandOutcome outcome)

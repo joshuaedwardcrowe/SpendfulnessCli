@@ -17,7 +17,7 @@ public class CliWorkflowCommandProviderNoApplicableGeneratorTests
     
     private class TestCliCommandGeneratorA : ICliCommandFactory<TestCliCommand>
     {
-        public bool CanGenerate(CliInstruction instruction, List<CliCommandProperty> properties)
+        public bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
             => instruction.SubInstructionName == "not applicable";
 
         public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
@@ -26,7 +26,7 @@ public class CliWorkflowCommandProviderNoApplicableGeneratorTests
     
     private class TestCliCommandGeneratorB : ICliCommandFactory<TestCliCommand>
     {
-        public bool CanGenerate(CliInstruction instruction, List<CliCommandProperty> properties)
+        public bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
             => instruction.SubInstructionName == "not applicable";
         
         public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)

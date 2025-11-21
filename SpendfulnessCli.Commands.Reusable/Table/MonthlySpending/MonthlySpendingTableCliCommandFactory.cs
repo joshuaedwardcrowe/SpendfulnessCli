@@ -13,7 +13,7 @@ namespace SpendfulnessCli.Commands.Reusable.Table.MonthlySpending;
 [FactoryFor(typeof(TableCliCommand))]
 public class MonthlySpendingTableCliCommandFactory : ICliCommandFactory<MonthlySpendingTableCliCommand>
 {
-    public bool CanGenerate(CliInstruction instruction, List<CliCommandProperty> properties)
+    public bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
         => properties.LastCommandRanWas<MonthlySpendingCliCommand>();
     
     public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)

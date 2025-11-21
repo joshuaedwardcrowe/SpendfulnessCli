@@ -20,7 +20,7 @@ public class CliWorkflowCommandProviderCommandPropertyTests
     
     private class TestCliCommandPropertyFactory : ICliCommandPropertyFactory
     {
-        public bool CanCreateProperty(CliCommandOutcome outcome)
+        public bool CanCreatePropertyWhen(CliCommandOutcome outcome)
             => outcome is TestCliCommandOutcome;
 
         public CliCommandProperty CreateProperty(CliCommandOutcome outcome)
@@ -29,7 +29,7 @@ public class CliWorkflowCommandProviderCommandPropertyTests
 
     private class TestCliCommandFactory : ICliCommandFactory<TestCliCommand>
     {
-        public bool CanGenerate(CliInstruction instruction, List<CliCommandProperty> properties)
+        public bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
             => properties.OfType<TestCliCommandProperty>().Any();
 
         public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)

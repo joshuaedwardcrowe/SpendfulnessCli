@@ -16,7 +16,7 @@ public class CliWorkflowCommandProviderMultipleGeneratorTests
     
     private class TestCliCommandGeneratorA : ICliCommandFactory<TestCliCommand>
     {
-        public bool CanGenerate(CliInstruction instruction, List<CliCommandProperty> properties)
+        public bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
             => instruction.SubInstructionName == "1";
 
         public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
@@ -25,7 +25,7 @@ public class CliWorkflowCommandProviderMultipleGeneratorTests
     
     private class TestCliCommandGeneratorB : ICliCommandFactory<TestCliCommand>
     {
-        public bool CanGenerate(CliInstruction instruction, List<CliCommandProperty> properties)
+        public bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
             => instruction.SubInstructionName == "2";
         
         public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)

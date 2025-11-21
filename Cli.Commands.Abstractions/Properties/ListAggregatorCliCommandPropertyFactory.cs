@@ -5,7 +5,7 @@ namespace Cli.Commands.Abstractions.Properties;
 
 public class ListAggregatorCliCommandPropertyFactory<TAggregate> : ICliCommandPropertyFactory
 {
-    public bool CanCreateProperty(CliCommandOutcome outcome)
+    public bool CanCreatePropertyWhen(CliCommandOutcome outcome)
     {
         return outcome is CliCommandListAggregatorOutcome<TAggregate>;
     }
