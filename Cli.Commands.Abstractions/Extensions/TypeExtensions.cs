@@ -13,7 +13,7 @@ public static class TypeExtensions
             .GetInterfaces()
             .FirstOrDefault(interfaceType => interfaceType.GenericTypeArguments.Length != 0);
     
-    public static Type GetRequiredFirstGenericInterface(this Type implementationType)
+    public static Type FirstOrDefaultGenericTypeArgument(this Type implementationType)
     {
         var genericInterfaceType = implementationType.FirstOrDefaultGenericInterface();
 
@@ -25,7 +25,7 @@ public static class TypeExtensions
             throw new ArgumentException($"Type '{implementationTypeName}' does not implement {typeName} interface");
         }
         
-        return genericInterfaceType;
+        return genericInterfaceType.GenericTypeArguments.First();
     }
     
     public static FieldInfo GetRequiredField(this Type typeForAssignedCommand, string fieldTypeName)
@@ -52,5 +52,11 @@ public static class TypeExtensions
         }
 
         return null;
+    }
+    
+    public static TAttribute? FirstOrDefaultAttributeOfType<TAttribute>(this Type type) where TAttribute : Attribute
+    {
+        var attributes = type.GetCustomAttributes(typeof(TAttribute));
+        return attributes.OfType<TAttribute>().FirstOrDefault();
     }
 }

@@ -16,7 +16,7 @@ public class CliCommandTests
         var command = new TestCliCommand();
         
         // Act
-        var commandName = command.GetCommandName();
+        var commandName = command.GetSpecificCommandName();
 
         // Assert
         var expectedCommandName = nameof(TestCliCommand).Replace(nameof(CliCommand), string.Empty);
@@ -34,7 +34,7 @@ public class CliCommandTests
         var command = new AnotherCommand();
         
         // Act
-        var commandName = command.GetCommandName();
+        var commandName = command.GetSpecificCommandName();
 
         // Assert
         Assert.That(commandName, Is.EqualTo("AnotherCommand"));

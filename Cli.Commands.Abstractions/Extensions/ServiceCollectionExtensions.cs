@@ -30,21 +30,17 @@ public static class ServiceCollectionExtensions
         
         foreach (var implementationType in implementationTypes)
         {
-            var implementationAttributes = implementationType.GetCustomAttributes(typeof(CliCommandGeneratorFor));
-            var generatesCliCommandAttribute = implementationAttributes.OfType<CliCommandGeneratorFor>().FirstOrDefault();
-            
-            var genericInterfaceType = implementationType.GetRequiredFirstGenericInterface();
-            
-            var typeForReferencedCommand = genericInterfaceType.GenericTypeArguments.First();
+            var generatorCommandType = implementationType.FirstOrDefaultGenericTypeArgument();
+            var generatorAttribute = implementationType.FirstOrDefaultAttributeOfType<CliCommandGeneratorFor>();
 
-            var rawName = generatesCliCommandAttribute != null
-                ? generatesCliCommandAttribute.CliCommandType.Name
-                : typeForReferencedCommand.Name;
+            var fullCommandName = generatorAttribute != null
+                ? generatorAttribute.CommandType.Name
+                : generatorCommandType.Name;
             
-            var name = rawName.Replace(nameof(CliCommand), string.Empty);
+            var specificCommandName = CliCommand.StripSpecificCommandName(fullCommandName);
             
-            var commandName = name.ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
-            var shorthandCommandName = name.ToLowerTitleCharacters();
+            var commandName = specificCommandName.ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
+            var shorthandCommandName = specificCommandName.ToLowerTitleCharacters();
 
             serviceCollection
                 .AddKeyedSingleton(

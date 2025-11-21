@@ -9,9 +9,11 @@ namespace Cli.Commands.Abstractions;
 /// </summary>
 public record CliCommand : IRequest<CliCommandOutcome[]>
 {
-    public string GetCommandName()
-    {
-        var commandSuffix = nameof(CliCommand);
-        return GetType().Name.Replace(commandSuffix, string.Empty);
-    }
+    private const string CommandSuffix = nameof(CliCommand);
+    
+    public string GetSpecificCommandName()
+        => GetType().Name.Replace(CommandSuffix, string.Empty);
+
+    public static string StripSpecificCommandName(string commandName)
+        => commandName.Replace(CommandSuffix, string.Empty);
 }

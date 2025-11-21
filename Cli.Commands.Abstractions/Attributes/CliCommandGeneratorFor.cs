@@ -1,6 +1,6 @@
 namespace Cli.Commands.Abstractions.Attributes;
 
-public class CliCommandGeneratorFor(Type cliCommandType) : Attribute
+public class CliCommandGeneratorFor(Type commandType) : Attribute
 {
-    public Type CliCommandType { get; } = cliCommandType;
+    public Type CommandType { get; } = commandType;
 }
