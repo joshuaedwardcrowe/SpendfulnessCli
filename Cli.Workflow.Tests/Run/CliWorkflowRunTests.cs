@@ -192,7 +192,7 @@ public class CliWorkflowRunTests
         
         var instruction = new CliInstruction("/", "some-valid-ask", null, []);
 
-        var outcome = new CliCommandNothingOutcome();
+        var nothingOutcome = new CliCommandNothingOutcome();
         
         _cliInstructionParser
             .Setup(parser => parser.Parse(It.IsAny<string>()))
@@ -208,7 +208,7 @@ public class CliWorkflowRunTests
 
         _mediator
             .Setup(mediator => mediator.Send(It.IsAny<CliCommand>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([outcome]);
+            .ReturnsAsync([nothingOutcome]);
         
         // Act
         var resultingOutcomes = await _classUnderTest.RespondToAsk(ask);
@@ -226,10 +226,10 @@ public class CliWorkflowRunTests
             .Select(x => x.To);
 
         Assert.That(expectedStateChangeTypes, Is.EqualTo(stateChangeTypes).AsCollection);
-        Assert.That(resultingOutcomes.Length, Is.EqualTo(1));
+        Assert.That(resultingOutcomes.Length, Is.EqualTo(2));
         
-        var resultingOutcome = resultingOutcomes[0];
-        Assert.That(resultingOutcome, Is.EqualTo(outcome));
+        var resultingOutcome = resultingOutcomes[1];
+        Assert.That(resultingOutcome, Is.EqualTo(nothingOutcome));
     }
     
     [Test]
@@ -274,9 +274,9 @@ public class CliWorkflowRunTests
             .Select(x => x.To);
 
         Assert.That(expectedStateChangeTypes, Is.EqualTo(stateChangeTypes).AsCollection);
-        Assert.That(resultingOutcomes.Length, Is.EqualTo(1));
+        Assert.That(resultingOutcomes.Length, Is.EqualTo(2));
         
-        var resultingOutcome = resultingOutcomes[0];
+        var resultingOutcome = resultingOutcomes[1];
         Assert.That(resultingOutcome, Is.EqualTo(outcome));
     }
 

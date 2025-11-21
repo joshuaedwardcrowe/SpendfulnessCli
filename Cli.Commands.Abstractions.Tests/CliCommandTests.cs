@@ -36,12 +36,12 @@ public class CliCommandTests
     }
     
     [Test]
-    [TestCase("SampleCliCommand", "sample")]
-    [TestCase("SampleTwoCliCommand", "sample-two")]
-    public void GivenFullCommandName_WhenStripInstructionName_InstructionNameIsReturned(string commandName, string expectedStrippedName)
+    [TestCase("SampleCliCommand", "Sample")]
+    [TestCase("SampleTwoCliCommand", "SampleTwo")]
+    public void GivenFullCommandName_WhenStripCommandName_InstructionNameIsReturned(string commandName, string expectedStrippedName)
     {
         // Act
-        var strippedName = CliCommand.StripInstructionName(commandName);
+        var strippedName = CliCommand.StripCommandName(commandName);
 
         // Assert
         Assert.That(strippedName, Is.EqualTo(expectedStrippedName));

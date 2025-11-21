@@ -1,6 +1,7 @@
 using System.Reflection;
 using Cli.Abstractions;
 using Cli.Commands.Abstractions.Properties;
+using Cli.Commands.Abstractions.Properties.CommandRan;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cli.Commands.Abstractions.Extensions;
@@ -10,7 +11,7 @@ public static class CommandPropertyServiceCollectionExtensions
     public static IServiceCollection AddCommandProperties(this IServiceCollection serviceCollection)
     {
         return serviceCollection
-            .AddSingleton<ICliCommandPropertyFactory, MessageCliCommandPropertyFactory>();
+            .AddSingleton<ICliCommandPropertyFactory, CliCommandRanPropertyFactory>();
     }
     
     public static IServiceCollection AddAggregatorCommandPropertiesFromAssembly(this IServiceCollection serviceCollection, Assembly? assembly)
