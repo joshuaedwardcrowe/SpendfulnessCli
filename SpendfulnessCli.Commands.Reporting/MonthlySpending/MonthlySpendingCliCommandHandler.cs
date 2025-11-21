@@ -31,7 +31,7 @@ public class MonthlySpendingCliCommandHandler: CliCommandHandler, ICliCommandHan
         
         return [
             new CliCommandTableOutcome(table),
-            new CliCommandAggregatorOutcome<IEnumerable<TransactionMonthTotalAggregate>>(aggregator)
+            new CliCommandListAggregatorOutcome<TransactionMonthTotalAggregate>(aggregator)
         ];
     }
 

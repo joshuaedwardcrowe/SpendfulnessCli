@@ -1,25 +1,15 @@
 using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Attributes;
 using Cli.Commands.Abstractions.Generators;
 using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
-using SpendfulnessCli.Aggregation.Aggregates;
-using SpendfulnessCli.Commands.Reusable.Table.MonthlySpending;
 
 namespace SpendfulnessCli.Commands.Reusable.Table;
 
+[CliCommandGeneratorFor(typeof(TableCliCommand))]
 public class TableCliCommandGenerator : ICliCommandGenerator<TableCliCommand>
 {
-    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
-    {
-        var monthlySpendingAggregatorProperty = properties
-            .OfType<ListAggregatorCliCommandProperty<TransactionMonthTotalAggregate>>()
-            .FirstOrDefault();
+    public bool CanGenerate(CliInstruction instruction, List<CliCommandProperty> properties) => properties.Count == 0;
 
-        if (monthlySpendingAggregatorProperty != null)
-        {
-            return new MonthlySpendingTableCliCommand(monthlySpendingAggregatorProperty.Value);
-        }
-        
-        return new TableCliCommand();
-    }
+    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties) => new TableCliCommand();
 }

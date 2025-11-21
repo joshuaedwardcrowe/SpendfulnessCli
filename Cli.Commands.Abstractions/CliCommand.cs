@@ -1,4 +1,6 @@
+using Cli.Commands.Abstractions.Extensions;
 using Cli.Commands.Abstractions.Outcomes;
+using Cli.Instructions.Abstractions;
 using MediatR;
 
 namespace Cli.Commands.Abstractions;
@@ -9,9 +11,15 @@ namespace Cli.Commands.Abstractions;
 /// </summary>
 public record CliCommand : IRequest<CliCommandOutcome[]>
 {
-    public string GetCommandName()
-    {
-        var commandSuffix = nameof(CliCommand);
-        return GetType().Name.Replace(commandSuffix, string.Empty);
-    }
+    public string GetSpecificCommandName()
+        => GetType().Name.ReplaceCommandSuffix();
+
+    public string GetInstructionName()
+        => GetType().Name.ReplaceCommandSuffix()
+            .ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
+
+    public static string StripInstructionName(string commandName)
+        => commandName
+            .ReplaceCommandSuffix()
+            .ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
 }

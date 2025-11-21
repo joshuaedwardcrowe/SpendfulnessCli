@@ -12,18 +12,22 @@ public class CliWorkflowCommandProvider(IServiceProvider serviceProvider) : ICli
 {
     public CliCommand GetCommand(CliInstruction instruction, List<CliCommandOutcome> outcomes)
     {
-        if (string.IsNullOrEmpty(instruction.Name))
-        {
-            throw new NoInstructionException("No instruction entered.");
-        }
+        var generators = serviceProvider
+            .GetKeyedServices<IUnidentifiedCliCommandGenerator>(instruction.Name)
+            .ToList();
         
-        var generator = serviceProvider.GetKeyedService<IUnidentifiedCliCommandGenerator>(instruction.Name);
-        if (generator == null)
+        if (generators.Count == 0)
         {
             throw new NoCommandGeneratorException("Did not find generator for " + instruction.Name);
         }
         
         var properties = ConvertOutcomesToProperties(outcomes);
+
+        var generator = generators.FirstOrDefault(g => g.CanGenerate(instruction, properties));
+        if (generator == null)
+        {
+            throw new NoCommandGeneratorException("Did not find generator for " + instruction.Name);
+        }
 
         return generator.Generate(instruction, properties);
     }

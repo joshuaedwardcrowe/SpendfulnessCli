@@ -1,11 +1,12 @@
 using System.Reflection;
+using Cli.Commands.Abstractions.Attributes;
 using Cli.Commands.Abstractions.Generators;
 using Cli.Instructions.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cli.Commands.Abstractions.Extensions;
 
-public static class ServiceCollectionExtensions
+public static class CommandServiceCollectionExtensions
 {
     public static IServiceCollection AddCommandsFromAssembly(this IServiceCollection serviceCollection, Assembly? assembly) 
     {
@@ -29,14 +30,17 @@ public static class ServiceCollectionExtensions
         
         foreach (var implementationType in implementationTypes)
         {
-            var genericInterfaceType = implementationType.GetRequiredFirstGenericInterface();
+            var generatorCommandType = implementationType.FirstOrDefaultGenericTypeArgument();
+            var generatorAttribute = implementationType.FirstOrDefaultAttributeOfType<CliCommandGeneratorFor>();
+
+            var fullCommandName = generatorAttribute != null
+                ? generatorAttribute.CommandType.Name
+                : generatorCommandType.Name;
             
-            var typeForReferencedCommand = genericInterfaceType.GenericTypeArguments.First();
+            var specificCommandName = CliCommand.StripInstructionName(fullCommandName);
             
-            var name = typeForReferencedCommand.Name.Replace(nameof(CliCommand), string.Empty);
-            
-            var commandName = name.ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
-            var shorthandCommandName = name.ToLowerTitleCharacters();
+            var commandName = specificCommandName.ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
+            var shorthandCommandName = specificCommandName.ToLowerTitleCharacters();
 
             serviceCollection
                 .AddKeyedSingleton(
