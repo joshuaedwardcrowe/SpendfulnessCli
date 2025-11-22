@@ -5,10 +5,7 @@ namespace Cli.Commands.Abstractions.Artefacts.Aggregator;
 
 public class AggregatorCliCommandArtefactFactory<TAggregate> : ICliCommandArtefactFactory
 {
-    public bool For(CliCommandOutcome outcome)
-    {
-        return outcome is CliCommandAggregatorOutcome<TAggregate>;
-    }
+    public bool For(CliCommandOutcome outcome) => outcome is CliCommandAggregatorOutcome<TAggregate>;
 
     public CliCommandArtefact Create(CliCommandOutcome outcome)
     {
