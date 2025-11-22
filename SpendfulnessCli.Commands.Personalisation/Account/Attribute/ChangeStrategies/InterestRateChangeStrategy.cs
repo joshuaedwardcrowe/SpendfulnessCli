@@ -5,11 +5,20 @@ namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute.ChangeStrat
 public class InterestRateChangeStrategy : IAccountAttributeChangeStrategy
 {
     public bool AttributeHasChangedSince(AccountAttributeCliCommand command, CustomAccountAttributes accountAttributes)
-        => command.InterestRate.HasValue && command.InterestRate != accountAttributes.InterestRate;
+        => command.InterestRate.HasValue &&
+           command.InterestRate != accountAttributes.InterestRate;
 
     public Task<AccountAttributeChange> ChangeAttribute(AccountAttributeCliCommand command, CustomAccountAttributes attributes)
     {
-        // TODO: Do something with this.
-        throw new NotImplementedException();
+        var to = command.InterestRate.ToString();
+
+        attributes.InterestRate = command.InterestRate!.Value;
+
+        var change = new AccountAttributeChange(
+            nameof(CustomAccountAttributes.InterestRate),
+            string.Empty,
+            to!);
+
+        return Task.FromResult(change);
     }
 }
