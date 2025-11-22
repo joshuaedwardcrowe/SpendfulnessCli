@@ -7,28 +7,26 @@ namespace Cli.Commands.Abstractions.Artefacts;
 
 public static class CliCommandArtefactExtensions
 {
-    public static bool LastCommandRanWas<TCliCommand>(this List<CliCommandArtefact> properties)
+    public static bool LastCommandRanWas<TCliCommand>(this List<CliCommandArtefact> artefacts)
         where TCliCommand : CliCommand
     {
-        var lastCommandRanProperty = properties.OfType<CliCommandRanArtefact>().LastOrDefault();
-        if (lastCommandRanProperty == null)
-        { 
-            return false;
-        }
-        
-        return lastCommandRanProperty.RanCommand is TCliCommand;
+        var lastCommandRanProperty = artefacts
+            .OfType<CliCommandRanArtefact>()
+            .LastOrDefault();
+
+        return lastCommandRanProperty?.RanCommand is TCliCommand;
     }
 
     private static List<ListAggregatorCliCommandArtefact<TAggregate>> OfListAggregatorType<TAggregate>(
-        this List<CliCommandArtefact> properties)
-            => properties
+        this List<CliCommandArtefact> artefacts)
+            => artefacts
                 .OfType<ListAggregatorCliCommandArtefact<TAggregate>>()
                 .ToList();
 
     public static CliListAggregator<TAggregate>? GetListAggregator<TAggregate>(
-        this List<CliCommandArtefact> properties)
-            => properties
-            .OfListAggregatorType<TAggregate>()
-            .FirstOrDefault()
-            ?.Value;
+        this List<CliCommandArtefact> artefacts)
+            => artefacts
+                .OfListAggregatorType<TAggregate>()
+                .FirstOrDefault()
+                ?.Value;
 }

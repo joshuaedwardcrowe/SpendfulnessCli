@@ -36,7 +36,7 @@ public class AccountAttributeCliCommandFactory : ICliCommandFactory<AccountCliCo
             interestRateArgument?.ArgumentValue);
     }
     
-    private string? GetYnabAccountNameArgument(CliInstruction instruction, List<CliCommandArtefact> properties)
+    private string? GetYnabAccountNameArgument(CliInstruction instruction, List<CliCommandArtefact> artefacts)
     {
         var ynabAccountNameArgument = instruction
             .Arguments
@@ -47,10 +47,10 @@ public class AccountAttributeCliCommandFactory : ICliCommandFactory<AccountCliCo
             return ynabAccountNameArgument.ArgumentValue;
         }
         
-        var accountProperty = properties
+        var accountArtefact = artefacts
             .OfType<AccountCliCommandArtefact>()
             .LastOrDefault();
 
-        return accountProperty?.Value.Name;
+        return accountArtefact?.Value.Name;
     }
 }

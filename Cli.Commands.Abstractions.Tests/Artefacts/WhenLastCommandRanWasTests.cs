@@ -13,13 +13,13 @@ public class WhenLastCommandRanWasTests
     public void GivenRanCommandArtefact_WhenLastCommandRanWas_ThenShouldReturnTrue()
     {
         // Arrange
-        var properties = new List<CliCommandArtefact>
+        var artefacts = new List<CliCommandArtefact>
         {
             new CliCommandRanArtefact(new TestCliCommand())
         };
         
         // Act
-        var result = properties.LastCommandRanWas<TestCliCommand>();
+        var result = artefacts.LastCommandRanWas<TestCliCommand>();
         
         // Assert
         Assert.That(result, Is.True);
@@ -29,10 +29,10 @@ public class WhenLastCommandRanWasTests
     public void GivenNoRanCommandArtefact_WhenLastCommandRanWas_ThenShouldReturnFalse()
     {
         // Arrange
-        var properties = new List<CliCommandArtefact>();
+        var artefacts = new List<CliCommandArtefact>();
         
         // Act
-        var result = properties.LastCommandRanWas<TestCliCommand>();
+        var result = artefacts.LastCommandRanWas<TestCliCommand>();
         
         // Assert
         Assert.That(result, Is.False);
