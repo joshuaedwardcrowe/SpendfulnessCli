@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace Ynab.Http;
 
@@ -23,11 +24,28 @@ public class YnabHttpClientBuilder
     {
         var httpClient = _httpClientFactory.CreateClient();
 
-        httpClient.BaseAddress = new Uri($"{BaseUrl}/{parentPath}/{nextPath}");
+        var uriPath = BuilUriPath(parentPath, nextPath);
+
+        httpClient.BaseAddress = new Uri(uriPath);
 
         httpClient.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", _bearerToken);
         
         return httpClient;
+    }
+    
+    private string BuilUriPath(string? parentPath, string? nextPath)
+    {
+        var uriPathBuilder = new StringBuilder();
+        
+        uriPathBuilder
+            .Append(BaseUrl)
+            .Append('/')
+            .Append(parentPath)
+            .Append('/')
+            .Append(nextPath)
+            .Append('/');
+
+        return uriPathBuilder.ToString();
     }
 }

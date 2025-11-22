@@ -4,18 +4,19 @@ using Cli.Commands.Abstractions.Outcomes;
 using Spendfulness.Database;
 using Spendfulness.Database.Accounts;
 using Spendfulness.Database.Users;
+using SpendfulnessCli.Commands.Personalisation.Accounts.Attribute;
 using SpendfulnessCli.Commands.Personalisation.Accounts.Identify.ChangeStrategies;
 
-namespace SpendfulnessCli.Commands.Personalisation.Accounts.Identify;
+namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute;
 
-public class AccountsIdentifyCliCommandHandler : CliCommandHandler, ICliCommandHandler<AccountsIdentifyCliCommand>
+public class AccountAttributeCliCommandHandler : CliCommandHandler, ICliCommandHandler<AccountAttributeCliCommand>
 {
     private readonly SpendfulnessBudgetClient _budgetClient;
     private readonly IEnumerable<IAccountAttributeChangeStrategy> _changeStrategies;
     private readonly CustomAccountAttributeRepository _customAccountAttributeRepository;
     private readonly UserRepository _userRepository;
 
-    public AccountsIdentifyCliCommandHandler(
+    public AccountAttributeCliCommandHandler(
         SpendfulnessBudgetClient budgetClient,
         IEnumerable<IAccountAttributeChangeStrategy> changeStrategies,
         CustomAccountAttributeRepository customAccountAttributeRepository,
@@ -27,7 +28,7 @@ public class AccountsIdentifyCliCommandHandler : CliCommandHandler, ICliCommandH
         _userRepository = userRepository;
     }
 
-    public async Task<CliCommandOutcome[]> Handle(AccountsIdentifyCliCommand command, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(AccountAttributeCliCommand command, CancellationToken cancellationToken)
     {
         var attribute = await _customAccountAttributeRepository.Get(command.YnabAccountName, cancellationToken);
         
@@ -46,7 +47,7 @@ public class AccountsIdentifyCliCommandHandler : CliCommandHandler, ICliCommandH
         return OutcomeAs($"Made {accountAttributeChanges.Length} Changes");
     }
 
-    private async Task<CustomAccountAttributes> CreateCustomAccountAttribute(AccountsIdentifyCliCommand command, CancellationToken cancellationToken)
+    private async Task<CustomAccountAttributes> CreateCustomAccountAttribute(AccountAttributeCliCommand command, CancellationToken cancellationToken)
     {
         // Get the account
         var budget = await _budgetClient.GetDefaultBudget();

@@ -50,7 +50,7 @@ public class AccountClient : YnabApiClient
     }
     
     protected override HttpClient GetHttpClient() => _httpClientBuilder.Build(
-        // e.g. budgets/{budgetId}/
+        // e.g. budgets/{budgetId}
         _ynabBudgetApiPath,
         YnabApiPath.Accounts);
 }

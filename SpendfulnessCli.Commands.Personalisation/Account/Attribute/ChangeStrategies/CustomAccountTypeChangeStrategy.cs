@@ -1,4 +1,5 @@
 using Spendfulness.Database.Accounts;
+using SpendfulnessCli.Commands.Personalisation.Accounts.Attribute;
 
 namespace SpendfulnessCli.Commands.Personalisation.Accounts.Identify.ChangeStrategies;
 
@@ -11,7 +12,7 @@ public class CustomAccountTypeChangeStrategy : IAccountAttributeChangeStrategy
         _customAccountTypeRepository = customAccountTypeRepository;
     }
 
-    public bool AttributeHasChangedSince(AccountsIdentifyCliCommand command, CustomAccountAttributes accountAttributes)
+    public bool AttributeHasChangedSince(AccountAttributeCliCommand command, CustomAccountAttributes accountAttributes)
     {
         var typeNamePresent = !string.IsNullOrEmpty(command.CustomAccountTypeName);
         var typeNameDifferent = command.CustomAccountTypeName != accountAttributes.CustomAccountType?.Name;
@@ -20,7 +21,7 @@ public class CustomAccountTypeChangeStrategy : IAccountAttributeChangeStrategy
     }
 
     // TODO: Handle the cancelation token.
-    public async Task<AccountAttributeChange> ChangeAttribute(AccountsIdentifyCliCommand command, CustomAccountAttributes attributes)
+    public async Task<AccountAttributeChange> ChangeAttribute(AccountAttributeCliCommand command, CustomAccountAttributes attributes)
     {
         var customAccountType = await _customAccountTypeRepository.Find(command.CustomAccountTypeName!, CancellationToken.None);
 
