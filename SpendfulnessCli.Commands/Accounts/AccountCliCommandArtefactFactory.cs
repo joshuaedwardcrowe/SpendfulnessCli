@@ -1,7 +1,7 @@
 using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Outcomes;
 
-namespace SpendfulnessCli.Commands;
+namespace SpendfulnessCli.Commands.Accounts;
 
 public class AccountCliCommandArtefactFactory : ICliCommandArtefactFactory
 {

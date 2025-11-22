@@ -1,13 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Cli;
-using SpendfulnessCli.Commands.Extensions;
 using SpendfulnessCli.Commands.Organisation;
 using SpendfulnessCli.Commands.Personalisation;
 using Spendfulness.Database;
 using SpendfulnessCli;
 using SpendfulnessCli.Abstractions.Taxis;
 using SpendfulnessCli.Aggregation.Extensions;
+using SpendfulnessCli.Commands;
 using SpendfulnessCli.Commands.Reporting;
 using SpendfulnessCli.Commands.Reusable;
 using Ynab.Extensions;

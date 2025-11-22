@@ -1,8 +1,9 @@
 using Cli.Commands.Abstractions.Artefacts;
-using Spendfulness.Database;
 using Microsoft.Extensions.DependencyInjection;
+using Spendfulness.Database;
+using SpendfulnessCli.Commands.Accounts;
 
-namespace SpendfulnessCli.Commands.Extensions;
+namespace SpendfulnessCli.Commands;
 
 public static class ServiceCollectionExtensions
 {
