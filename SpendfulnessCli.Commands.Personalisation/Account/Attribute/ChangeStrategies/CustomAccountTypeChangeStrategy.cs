@@ -1,7 +1,6 @@
 using Spendfulness.Database.Accounts;
-using SpendfulnessCli.Commands.Personalisation.Accounts.Attribute;
 
-namespace SpendfulnessCli.Commands.Personalisation.Accounts.Identify.ChangeStrategies;
+namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute.ChangeStrategies;
 
 public class CustomAccountTypeChangeStrategy : IAccountAttributeChangeStrategy
 {

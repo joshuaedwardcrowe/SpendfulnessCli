@@ -1,7 +1,6 @@
 using Spendfulness.Database.Accounts;
-using SpendfulnessCli.Commands.Personalisation.Accounts.Attribute;
 
-namespace SpendfulnessCli.Commands.Personalisation.Accounts.Identify.ChangeStrategies;
+namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute.ChangeStrategies;
 
 public class InterestRateChangeStrategy : IAccountAttributeChangeStrategy
 {
@@ -10,6 +9,7 @@ public class InterestRateChangeStrategy : IAccountAttributeChangeStrategy
 
     public Task<AccountAttributeChange> ChangeAttribute(AccountAttributeCliCommand command, CustomAccountAttributes attributes)
     {
+        // TODO: Do something with this.
         throw new NotImplementedException();
     }
 }

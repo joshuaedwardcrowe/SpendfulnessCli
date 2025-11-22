@@ -4,8 +4,7 @@ using Cli.Commands.Abstractions.Outcomes;
 using Spendfulness.Database;
 using Spendfulness.Database.Accounts;
 using Spendfulness.Database.Users;
-using SpendfulnessCli.Commands.Personalisation.Accounts.Attribute;
-using SpendfulnessCli.Commands.Personalisation.Accounts.Identify.ChangeStrategies;
+using SpendfulnessCli.Commands.Personalisation.Account.Attribute.ChangeStrategies;
 
 namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute;
 

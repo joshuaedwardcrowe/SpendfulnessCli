@@ -5,7 +5,6 @@ using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 using Cli.Workflow.Commands.MissingOutcomes;
-using SpendfulnessCli.Commands.Personalisation.Accounts.Attribute;
 
 namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute;
 
