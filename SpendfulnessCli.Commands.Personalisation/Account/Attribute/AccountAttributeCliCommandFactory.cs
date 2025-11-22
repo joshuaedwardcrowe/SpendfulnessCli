@@ -1,7 +1,7 @@
 using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Attributes;
 using Cli.Commands.Abstractions.Factories;
-using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 using Cli.Workflow.Commands.MissingOutcomes;
@@ -11,10 +11,10 @@ namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute;
 [FactoryFor(typeof(AccountCliCommand))]
 public class AccountAttributeCliCommandFactory : ICliCommandFactory<AccountAttributeCliCommand>
 {
-    public bool CanCreateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
+    public bool CanCreateWhen(CliInstruction instruction, List<CliCommandArtefact> properties)
         => instruction.SubInstructionName == AccountCliCommand.SubCommandNames.Attribute;
     
-    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
+    public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> properties)
     {
         var ynabAccountName = GetYnabAccountNameArgument(instruction, properties);
         if (ynabAccountName == null)
@@ -37,8 +37,7 @@ public class AccountAttributeCliCommandFactory : ICliCommandFactory<AccountAttri
             interestRateArgument?.ArgumentValue);
     }
     
-    
-    private string? GetYnabAccountNameArgument(CliInstruction instruction, List<CliCommandProperty> properties)
+    private string? GetYnabAccountNameArgument(CliInstruction instruction, List<CliCommandArtefact> properties)
     {
         var ynabAccountNameArgument = instruction
             .Arguments
@@ -50,7 +49,7 @@ public class AccountAttributeCliCommandFactory : ICliCommandFactory<AccountAttri
         }
         
         var accountProperty = properties
-            .OfType<AccountCliCommandProperty>()
+            .OfType<AccountCliCommandArtefact>()
             .LastOrDefault();
 
         return accountProperty?.Value.Name;

@@ -1,7 +1,7 @@
 using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Factories;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Workflow.Commands;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +16,7 @@ public class CliWorkflowCommandProviderSingleGeneratorTests
     
     private class TestCliCommandGenerator : ICliCommandFactory<TestCliCommand>
     {
-        public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
+        public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> properties)
             => new TestCliCommand();
     }
     

@@ -1,6 +1,6 @@
 using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Factories;
-using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 
@@ -8,7 +8,7 @@ namespace SpendfulnessCli.Commands.Reporting.RecurringTransactions;
 
 public class RecurringTransactionsGenericCliCommandFactory : ICliCommandFactory<RecurringTransactionsCliCommand>
 {
-    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
+    public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> properties)
     {
         var fromArgument = instruction
             .Arguments

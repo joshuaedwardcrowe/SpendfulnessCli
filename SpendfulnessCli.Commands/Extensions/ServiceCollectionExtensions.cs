@@ -1,4 +1,4 @@
-using Cli.Commands.Abstractions.Properties;
+using Cli.Commands.Abstractions.Artefacts;
 using Spendfulness.Database;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +10,6 @@ public static class ServiceCollectionExtensions
     {
         return serviceCollection
             .AddSingleton<SpendfulnessBudgetClient>()
-            .AddSingleton<ICliCommandPropertyFactory, AccountCliCommandPropertyFactory>();
+            .AddSingleton<ICliCommandArtefactFactory, AccountCliCommandArtefactFactory>();
     }
 }

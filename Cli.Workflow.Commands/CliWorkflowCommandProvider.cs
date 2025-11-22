@@ -1,8 +1,8 @@
 using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Exceptions;
 using Cli.Commands.Abstractions.Factories;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,29 +21,29 @@ public class CliWorkflowCommandProvider(IServiceProvider serviceProvider) : ICli
             throw new NoCommandGeneratorException("Did not find generator for " + instruction.Name);
         }
         
-        var properties = ConvertOutcomesToProperties(outcomes);
+        var artefacts = ConvertOutcomesToArtefacts(outcomes);
 
-        var generator = generators.FirstOrDefault(g => g.CanCreateWhen(instruction, properties));
+        var generator = generators.FirstOrDefault(g => g.CanCreateWhen(instruction, artefacts));
         if (generator == null)
         {
             throw new NoCommandGeneratorException("Did not find generator for " + instruction.Name);
         }
 
-        return generator.Create(instruction, properties);
+        return generator.Create(instruction, artefacts);
     }
 
-    private List<CliCommandProperty> ConvertOutcomesToProperties(List<CliCommandOutcome> priorOutcomes)
+    private List<CliCommandArtefact> ConvertOutcomesToArtefacts(List<CliCommandOutcome> priorOutcomes)
     {
-        var propertyFactories = serviceProvider.GetServices<ICliCommandPropertyFactory>();
+        var artefactFactories = serviceProvider.GetServices<ICliCommandArtefactFactory>();
         
         var convertableOutcomes = priorOutcomes
-            .Where(priorOutcome => propertyFactories
-                .Any(propertyFactory => propertyFactory.CanCreatePropertyWhen(priorOutcome)));
+            .Where(priorOutcome => artefactFactories
+                .Any(artefactFactory => artefactFactory.CanCreateWhen(priorOutcome)));
         
         return convertableOutcomes
-            .Select(priorOutcome => propertyFactories
-                .First(propertyFactory => propertyFactory.CanCreatePropertyWhen(priorOutcome))
-                .CreateProperty(priorOutcome))
+            .Select(priorOutcome => artefactFactories
+                .First(artefactFactory => artefactFactory.CanCreateWhen(priorOutcome))
+                .Create(priorOutcome))
             .ToList();
     }
 }

@@ -1,7 +1,7 @@
 using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Factories;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Workflow.Commands;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,23 +16,23 @@ public class CliWorkflowCommandProviderCommandPropertyTests
 
     private class TestCliCommandOutcome() : CliCommandOutcome(CliCommandOutcomeKind.Reusable);
     
-    private class TestCliCommandProperty : CliCommandProperty;
+    private class TestCliCommandArtefact : CliCommandArtefact;
     
-    private class TestCliCommandPropertyFactory : ICliCommandPropertyFactory
+    private class TestCliCommandArtefactFactory : ICliCommandArtefactFactory
     {
-        public bool CanCreatePropertyWhen(CliCommandOutcome outcome)
+        public bool CanCreateWhen(CliCommandOutcome outcome)
             => outcome is TestCliCommandOutcome;
 
-        public CliCommandProperty CreateProperty(CliCommandOutcome outcome)
-            => new TestCliCommandProperty();
+        public CliCommandArtefact Create(CliCommandOutcome outcome)
+            => new TestCliCommandArtefact();
     }
 
     private class TestCliCommandFactory : ICliCommandFactory<TestCliCommand>
     {
-        public bool CanCreateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
-            => properties.OfType<TestCliCommandProperty>().Any();
+        public bool CanCreateWhen(CliInstruction instruction, List<CliCommandArtefact> properties)
+            => properties.OfType<TestCliCommandArtefact>().Any();
 
-        public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
+        public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> properties)
             => new TestCliCommand();
     }
     
@@ -48,7 +48,7 @@ public class CliWorkflowCommandProviderCommandPropertyTests
         _serviceCollection = new ServiceCollection();
         _serviceCollection
             .AddKeyedSingleton<IUnidentifiedCliCommandFactory, TestCliCommandFactory>(serviceKey)
-            .AddSingleton<ICliCommandPropertyFactory, TestCliCommandPropertyFactory>();
+            .AddSingleton<ICliCommandArtefactFactory, TestCliCommandArtefactFactory>();
         
         _serviceProvider = _serviceCollection.BuildServiceProvider();
         

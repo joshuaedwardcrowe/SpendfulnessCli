@@ -1,7 +1,8 @@
 using System.Reflection;
 using Cli.Abstractions;
-using Cli.Commands.Abstractions.Properties;
-using Cli.Commands.Abstractions.Properties.CommandRan;
+using Cli.Commands.Abstractions.Artefacts;
+using Cli.Commands.Abstractions.Artefacts.Aggregator;
+using Cli.Commands.Abstractions.Artefacts.CommandRan;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cli.Commands.Abstractions.Extensions;
@@ -11,7 +12,7 @@ public static class CommandPropertyServiceCollectionExtensions
     public static IServiceCollection AddCommandProperties(this IServiceCollection serviceCollection)
     {
         return serviceCollection
-            .AddSingleton<ICliCommandPropertyFactory, CliCommandRanPropertyFactory>();
+            .AddSingleton<ICliCommandArtefactFactory, CliCommandRanArtefactFactory>();
     }
     
     public static IServiceCollection AddAggregatorCommandPropertiesFromAssembly(this IServiceCollection serviceCollection, Assembly? assembly)
@@ -35,10 +36,10 @@ public static class CommandPropertyServiceCollectionExtensions
             
             var typeForReferencedAggregate = aggregatorType.GenericTypeArguments.First();
         
-            var strategyType = typeof(AggregatorCliCommandPropertyFactory<>).MakeGenericType(typeForReferencedAggregate);
+            var strategyType = typeof(AggregatorCliCommandArtefactFactory<>).MakeGenericType(typeForReferencedAggregate);
 
             var instance = Activator.CreateInstance(strategyType);
-            if (instance is not ICliCommandPropertyFactory factoryInstance)
+            if (instance is not ICliCommandArtefactFactory factoryInstance)
             {
                 throw new InvalidOperationException(
                     $"Could not create instance of type {strategyType.Name} as ICliCommandPropertyFactory");
@@ -71,10 +72,10 @@ public static class CommandPropertyServiceCollectionExtensions
             
             var typeForReferencedAggregate = aggregatorType.GenericTypeArguments.First();
         
-            var strategyType = typeof(ListAggregatorCliCommandPropertyFactory<>).MakeGenericType(typeForReferencedAggregate);
+            var strategyType = typeof(ListAggregatorCliCommandArtefactFactory<>).MakeGenericType(typeForReferencedAggregate);
 
             var instance = Activator.CreateInstance(strategyType);
-            if (instance is not ICliCommandPropertyFactory factoryInstance)
+            if (instance is not ICliCommandArtefactFactory factoryInstance)
             {
                 throw new InvalidOperationException(
                     $"Could not create instance of type {strategyType.Name} as ICliCommandPropertyFactory");

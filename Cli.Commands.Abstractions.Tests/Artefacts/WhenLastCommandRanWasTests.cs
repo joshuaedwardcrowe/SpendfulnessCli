@@ -1,8 +1,8 @@
-using Cli.Commands.Abstractions.Properties;
-using Cli.Commands.Abstractions.Properties.CommandRan;
+using Cli.Commands.Abstractions.Artefacts;
+using Cli.Commands.Abstractions.Artefacts.CommandRan;
 using NUnit.Framework;
 
-namespace Cli.Commands.Abstractions.Tests.Properties;
+namespace Cli.Commands.Abstractions.Tests.Artefacts;
 
 [TestFixture]
 public class WhenLastCommandRanWasTests
@@ -10,12 +10,12 @@ public class WhenLastCommandRanWasTests
     private record TestCliCommand : CliCommand;
     
     [Test]
-    public void GivenRanCommandProperty_WhenLastCommandRanWas_ThenShouldReturnTrue()
+    public void GivenRanCommandArtefact_WhenLastCommandRanWas_ThenShouldReturnTrue()
     {
         // Arrange
-        var properties = new List<CliCommandProperty>
+        var properties = new List<CliCommandArtefact>
         {
-            new CliCommandRanProperty(new TestCliCommand())
+            new CliCommandRanArtefact(new TestCliCommand())
         };
         
         // Act
@@ -26,10 +26,10 @@ public class WhenLastCommandRanWasTests
     }
     
     [Test]
-    public void GivenNoRanCommandProperty_WhenLastCommandRanWas_ThenShouldReturnFalse()
+    public void GivenNoRanCommandArtefact_WhenLastCommandRanWas_ThenShouldReturnFalse()
     {
         // Arrange
-        var properties = new List<CliCommandProperty>();
+        var properties = new List<CliCommandArtefact>();
         
         // Act
         var result = properties.LastCommandRanWas<TestCliCommand>();

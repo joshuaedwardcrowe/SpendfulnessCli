@@ -1,7 +1,7 @@
 using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Attributes;
 using Cli.Commands.Abstractions.Factories;
-using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 
@@ -10,7 +10,7 @@ namespace SpendfulnessCli.Commands.Reporting.SpareMoney;
 [FactoryFor(typeof(SpareMoneyCliCommand))]
 public class SpareMoneyCliCommandFactory : ICliCommandFactory<SpareMoneyCliCommand>
 {
-    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
+    public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> properties)
     {
         var addArgument = instruction.Arguments.OfCurrencyType(SpareMoneyCliCommand.ArgumentNames.Add);
         var minusArgument = instruction.Arguments.OfCurrencyType(SpareMoneyCliCommand.ArgumentNames.Minus);

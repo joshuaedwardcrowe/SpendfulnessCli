@@ -1,7 +1,7 @@
 using Cli.Commands.Abstractions;
+using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Factories;
 using Cli.Commands.Abstractions.Outcomes;
-using Cli.Commands.Abstractions.Properties;
 using Cli.Instructions.Abstractions;
 using Cli.Workflow.Commands;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,19 +16,19 @@ public class CliWorkflowCommandProviderMultipleGeneratorTests
     
     private class TestCliCommandGeneratorA : ICliCommandFactory<TestCliCommand>
     {
-        public bool CanCreateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
+        public bool CanCreateWhen(CliInstruction instruction, List<CliCommandArtefact> properties)
             => instruction.SubInstructionName == "1";
 
-        public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
+        public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> properties)
             => new TestCliCommand(1);
     }
     
     private class TestCliCommandGeneratorB : ICliCommandFactory<TestCliCommand>
     {
-        public bool CanCreateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
+        public bool CanCreateWhen(CliInstruction instruction, List<CliCommandArtefact> properties)
             => instruction.SubInstructionName == "2";
         
-        public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
+        public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> properties)
             => new TestCliCommand(2);
     }
     

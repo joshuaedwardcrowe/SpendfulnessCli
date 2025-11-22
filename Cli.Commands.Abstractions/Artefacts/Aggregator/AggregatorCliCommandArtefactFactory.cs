@@ -1,20 +1,20 @@
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Commands.Abstractions.Outcomes.Reusable;
 
-namespace Cli.Commands.Abstractions.Properties;
+namespace Cli.Commands.Abstractions.Artefacts.Aggregator;
 
-public class AggregatorCliCommandPropertyFactory<TAggregate> : ICliCommandPropertyFactory
+public class AggregatorCliCommandArtefactFactory<TAggregate> : ICliCommandArtefactFactory
 {
-    public bool CanCreatePropertyWhen(CliCommandOutcome outcome)
+    public bool CanCreateWhen(CliCommandOutcome outcome)
     {
         return outcome is CliCommandAggregatorOutcome<TAggregate>;
     }
 
-    public CliCommandProperty CreateProperty(CliCommandOutcome outcome)
+    public CliCommandArtefact Create(CliCommandOutcome outcome)
     {
         if (outcome is CliCommandAggregatorOutcome<TAggregate> aggregatorOutcome)
         {
-            return new AggregatorCliCommandProperty<TAggregate>(aggregatorOutcome.Aggregator);
+            return new AggregatorCliCommandArtefact<TAggregate>(aggregatorOutcome.Aggregator);
         }
         
         throw new InvalidOperationException(
