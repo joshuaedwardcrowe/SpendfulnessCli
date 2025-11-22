@@ -7,6 +7,6 @@ namespace SpendfulnessCli.Commands.Reporting.AverageYearlyPay;
 
 public class AverageYearlyPayGenericCliCommandFactory : ICliCommandFactory<AverageYearlyPayCliCommand>
 {
-    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
         => new AverageYearlyPayCliCommand();
 }

@@ -10,10 +10,10 @@ namespace SpendfulnessCli.Commands.Personalisation.Account;
 [FactoryFor(typeof(AccountCliCommand))]
 public class AccountCliCommandFactory : ICliCommandFactory<AccountCliCommand>
 {
-    public bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
+    public bool CanCreateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
         => instruction.SubInstructionName is null;
 
-    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
     {
         var accountIdArgument = instruction.Arguments
             .OfRequiredType<Guid>(AccountCliCommand.ArgumentNames.AccountId);

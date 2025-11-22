@@ -9,7 +9,7 @@ namespace SpendfulnessCli.Commands.Reusable.Table;
 [FactoryFor(typeof(TableCliCommand))]
 public class TableCliCommandGenerator : ICliCommandFactory<TableCliCommand>
 {
-    public bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties) => properties.Count == 0;
+    public bool CanCreateWhen(CliInstruction instruction, List<CliCommandProperty> properties) => properties.Count == 0;
 
-    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties) => new TableCliCommand();
+    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties) => new TableCliCommand();
 }

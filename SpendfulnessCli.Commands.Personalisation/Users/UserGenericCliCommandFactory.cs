@@ -11,7 +11,7 @@ namespace SpendfulnessCli.Commands.Personalisation.Users;
 
 public class UserGenericCliCommandFactory : ICliCommandFactory<UserCliCommand>
 {
-    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
         => instruction.SubInstructionName switch
         {
             UserCliCommand.SubCommandNames.Create => GenerateCreateCommand(instruction.Arguments),

@@ -10,7 +10,7 @@ namespace SpendfulnessCli.Commands.Reporting.SpareMoney;
 [FactoryFor(typeof(SpareMoneyCliCommand))]
 public class SpareMoneyCliCommandFactory : ICliCommandFactory<SpareMoneyCliCommand>
 {
-    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
     {
         var addArgument = instruction.Arguments.OfCurrencyType(SpareMoneyCliCommand.ArgumentNames.Add);
         var minusArgument = instruction.Arguments.OfCurrencyType(SpareMoneyCliCommand.ArgumentNames.Minus);

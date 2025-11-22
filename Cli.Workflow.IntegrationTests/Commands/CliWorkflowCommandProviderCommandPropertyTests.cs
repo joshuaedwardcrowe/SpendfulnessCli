@@ -29,10 +29,10 @@ public class CliWorkflowCommandProviderCommandPropertyTests
 
     private class TestCliCommandFactory : ICliCommandFactory<TestCliCommand>
     {
-        public bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
+        public bool CanCreateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
             => properties.OfType<TestCliCommandProperty>().Any();
 
-        public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+        public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
             => new TestCliCommand();
     }
     

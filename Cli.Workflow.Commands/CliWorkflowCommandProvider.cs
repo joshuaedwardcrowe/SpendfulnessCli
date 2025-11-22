@@ -23,13 +23,13 @@ public class CliWorkflowCommandProvider(IServiceProvider serviceProvider) : ICli
         
         var properties = ConvertOutcomesToProperties(outcomes);
 
-        var generator = generators.FirstOrDefault(g => g.CanGenerateWhen(instruction, properties));
+        var generator = generators.FirstOrDefault(g => g.CanCreateWhen(instruction, properties));
         if (generator == null)
         {
             throw new NoCommandGeneratorException("Did not find generator for " + instruction.Name);
         }
 
-        return generator.Generate(instruction, properties);
+        return generator.Create(instruction, properties);
     }
 
     private List<CliCommandProperty> ConvertOutcomesToProperties(List<CliCommandOutcome> priorOutcomes)

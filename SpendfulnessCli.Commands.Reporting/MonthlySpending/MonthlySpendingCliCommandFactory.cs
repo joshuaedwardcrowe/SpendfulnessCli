@@ -9,7 +9,7 @@ namespace SpendfulnessCli.Commands.Reporting.MonthlySpending;
 // TODO: Write unit tests.
 public class MonthlySpendingCliCommandFactory : ICliCommandFactory<MonthlySpendingCliCommand>
 {
-    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
     {
         var categoryIdArgument = instruction
             .Arguments

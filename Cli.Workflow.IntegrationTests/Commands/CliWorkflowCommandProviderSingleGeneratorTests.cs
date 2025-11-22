@@ -16,7 +16,7 @@ public class CliWorkflowCommandProviderSingleGeneratorTests
     
     private class TestCliCommandGenerator : ICliCommandFactory<TestCliCommand>
     {
-        public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+        public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
             => new TestCliCommand();
     }
     

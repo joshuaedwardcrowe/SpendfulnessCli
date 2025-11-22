@@ -11,10 +11,10 @@ namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute;
 [FactoryFor(typeof(AccountCliCommand))]
 public class AccountAttributeCliCommandFactory : ICliCommandFactory<AccountAttributeCliCommand>
 {
-    public bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
+    public bool CanCreateWhen(CliInstruction instruction, List<CliCommandProperty> properties)
         => instruction.SubInstructionName == AccountCliCommand.SubCommandNames.Attribute;
     
-    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
     {
         var ynabAccountName = GetYnabAccountNameArgument(instruction, properties);
         if (ynabAccountName == null)

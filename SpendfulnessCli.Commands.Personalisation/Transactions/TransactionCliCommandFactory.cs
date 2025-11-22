@@ -9,7 +9,7 @@ namespace SpendfulnessCli.Commands.Personalisation.Transactions;
 
 public class TransactionCliCommandFactory : ICliCommandFactory<TransactionsCliCommand>
 {
-    public CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties)
+    public CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties)
         => instruction.SubInstructionName switch
         {
             TransactionsCliCommand.SubCommandNames.List => CreateListCommand(instruction.Arguments),

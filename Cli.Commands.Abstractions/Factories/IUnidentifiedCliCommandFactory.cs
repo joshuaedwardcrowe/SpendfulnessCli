@@ -5,7 +5,7 @@ namespace Cli.Commands.Abstractions.Factories;
 
 public interface IUnidentifiedCliCommandFactory
 {
-    bool CanGenerateWhen(CliInstruction instruction, List<CliCommandProperty> properties) => true;
+    bool CanCreateWhen(CliInstruction instruction, List<CliCommandProperty> properties) => true;
     
-    CliCommand Generate(CliInstruction instruction, List<CliCommandProperty> properties);
+    CliCommand Create(CliInstruction instruction, List<CliCommandProperty> properties);
 }
