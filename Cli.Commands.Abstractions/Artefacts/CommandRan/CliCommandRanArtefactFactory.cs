@@ -5,7 +5,7 @@ namespace Cli.Commands.Abstractions.Artefacts.CommandRan;
 
 public class CliCommandRanArtefactFactory : ICliCommandArtefactFactory
 {
-    public bool CanCreateWhen(CliCommandOutcome outcome)
+    public bool For(CliCommandOutcome outcome)
         => outcome is CliCommandRanOutcome;
 
     public CliCommandArtefact Create(CliCommandOutcome outcome)

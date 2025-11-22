@@ -20,7 +20,7 @@ public class CliWorkflowCommandProviderCommandPropertyTests
     
     private class TestCliCommandArtefactFactory : ICliCommandArtefactFactory
     {
-        public bool CanCreateWhen(CliCommandOutcome outcome)
+        public bool For(CliCommandOutcome outcome)
             => outcome is TestCliCommandOutcome;
 
         public CliCommandArtefact Create(CliCommandOutcome outcome)

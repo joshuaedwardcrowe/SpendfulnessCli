@@ -4,7 +4,7 @@ namespace Cli.Commands.Abstractions.Artefacts;
 
 public interface ICliCommandArtefactFactory
 {
-    bool CanCreateWhen(CliCommandOutcome outcome);
+    bool For(CliCommandOutcome outcome);
     
     CliCommandArtefact Create(CliCommandOutcome outcome);
 }

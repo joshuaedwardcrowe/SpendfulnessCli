@@ -38,11 +38,11 @@ public class CliWorkflowCommandProvider(IServiceProvider serviceProvider) : ICli
         
         var convertableOutcomes = priorOutcomes
             .Where(priorOutcome => artefactFactories
-                .Any(artefactFactory => artefactFactory.CanCreateWhen(priorOutcome)));
+                .Any(artefactFactory => artefactFactory.For(priorOutcome)));
         
         return convertableOutcomes
             .Select(priorOutcome => artefactFactories
-                .First(artefactFactory => artefactFactory.CanCreateWhen(priorOutcome))
+                .First(artefactFactory => artefactFactory.For(priorOutcome))
                 .Create(priorOutcome))
             .ToList();
     }

@@ -5,7 +5,7 @@ namespace SpendfulnessCli.Commands;
 
 public class AccountCliCommandArtefactFactory : ICliCommandArtefactFactory
 {
-    public bool CanCreateWhen(CliCommandOutcome outcome)
+    public bool For(CliCommandOutcome outcome)
         => outcome is AccountCliCommandOutcome;
 
     public CliCommandArtefact Create(CliCommandOutcome outcome)
