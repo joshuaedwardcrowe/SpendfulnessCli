@@ -3,8 +3,7 @@ using Cli.Instructions.Arguments;
 
 namespace Cli.Instructions.Builders;
 
-// TODO: Write unit tests.
-internal class IntCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, ICliInstructionArgumentBuilder
+internal class IntCliInstructionArgumentBuilder : CliInstructionArgumentBuilder, ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue) => argumentValue != null && int.TryParse(argumentValue, out _);
 

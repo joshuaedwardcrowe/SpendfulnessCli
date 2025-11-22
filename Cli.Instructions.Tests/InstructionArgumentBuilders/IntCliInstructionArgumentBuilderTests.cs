@@ -15,7 +15,6 @@ public class IntCliInstructionArgumentBuilderTests
         _intCliInstructionArgumentBuilder = new IntCliInstructionArgumentBuilder();
     }
     
-    
     [Test]
     public void GivenIntArgumentValue_WhenFor_ShouldReturnTrue()
     {
@@ -41,5 +40,13 @@ public class IntCliInstructionArgumentBuilderTests
         
         Assert.That(typed, Is.Not.Null);
         Assert.That(typed.ArgumentValue, Is.EqualTo(1));
+    }
+    
+    [Test]
+    public void GivenNoArgumentValue_WhenCreate_ShouldThrowArgumentException()
+    {
+        Assert.That((
+            ) => _intCliInstructionArgumentBuilder.Create(string.Empty, null),
+            Throws.ArgumentNullException);
     }
 }

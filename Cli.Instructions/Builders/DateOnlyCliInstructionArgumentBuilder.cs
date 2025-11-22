@@ -3,8 +3,7 @@ using Cli.Instructions.Arguments;
 
 namespace Cli.Instructions.Builders;
 
-// TODO: Write unit tests.
-internal class DateOnlyCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, ICliInstructionArgumentBuilder
+internal class DateOnlyCliInstructionArgumentBuilder : CliInstructionArgumentBuilder, ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue) => DateTime.TryParse(argumentValue, out _);
 

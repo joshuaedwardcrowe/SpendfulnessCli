@@ -3,8 +3,7 @@ using Cli.Instructions.Arguments;
 
 namespace Cli.Instructions.Builders;
 
-// TODO: Write unit tests.
-internal class DecimalCliInstructionArgumentBuilder : NoDefaultInstructionArgumentBuilder, ICliInstructionArgumentBuilder
+internal class DecimalCliInstructionArgumentBuilder : CliInstructionArgumentBuilder, ICliInstructionArgumentBuilder
 {
     public bool For(string? argumentValue) => decimal.TryParse(argumentValue, out _);
 
