@@ -8,7 +8,7 @@ using SpendfulnessCli.Aggregation.Aggregates;
 namespace SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending.TotalAmount.GreaterThan;
 
 public class FilterMonthlySpendingOnTotalAmountGreaterThanCliCommandFactory
-    : ReusableFilterMonthlySpendingOnCliCommandFactory, ICliCommandFactory<FilterCliCommand>
+    : FilterMonthlySpendingOnCliCommandFactory, ICliCommandFactory<FilterCliCommand>
 {
     public override bool CanCreateWhen(CliInstruction instruction, List<CliCommandArtefact> artefacts)
     {

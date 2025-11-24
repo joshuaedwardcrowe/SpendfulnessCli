@@ -10,7 +10,7 @@ using SpendfulnessCli.Commands.Reusable.MonthlySpending;
 namespace SpendfulnessCli.Commands.Reusable.Table.MonthlySpending;
 
 public class MonthlySpendingTableCliCommandFactory
-    : ReusableMonthlySpendingCliCommandFactory, ICliCommandFactory<TableCliCommand>
+    : MonthlySpendingCliCommandFactory, ICliCommandFactory<TableCliCommand>
 {
     public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> artefacts)
     {
