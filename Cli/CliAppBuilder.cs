@@ -1,15 +1,12 @@
-using Cli.Instructions.Abstractions;
-using Cli.Workflow.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace Cli;
 
 public class CliAppBuilder
 {
     private readonly ServiceCollection _services = [];
-    private IConfigurationRoot _configuration;
+    private IConfigurationRoot? _configuration = null;
     
     public CliAppBuilder WithCli<TCliApp>() where TCliApp : CliApp
     {
@@ -35,6 +32,11 @@ public class CliAppBuilder
     
     public CliAppBuilder WithSettings<TSettings>() where TSettings : class
     {
+        if (_configuration== null)
+        {
+            throw new Exception("You must call WithJsonSettings before calling WithSettings.");
+        }
+        
         var configurationName = typeof(TSettings)
             .Name
             .Replace("Settings", string.Empty);

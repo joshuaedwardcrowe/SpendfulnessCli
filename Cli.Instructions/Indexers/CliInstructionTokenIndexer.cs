@@ -41,7 +41,7 @@ public class CliInstructionTokenIndexer(IOptions<InstructionSettings> instructio
 
     private CliInstructionTokenIndex IndexPrefixToken(string terminalInput)
     {
-        // Constraint: Command must be prefixed with some kind mark, e.g. /
+        // Constraint: Command must be prefixed with some kind of mark, e.g. /
         var firstPunctuationMark = terminalInput
             .ToCharArray()
             .FirstOrDefault(character => character == _instructionSettings.Prefix);
