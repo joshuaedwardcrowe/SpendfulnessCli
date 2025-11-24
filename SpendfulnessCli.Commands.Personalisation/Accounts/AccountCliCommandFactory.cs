@@ -4,7 +4,7 @@ using Cli.Commands.Abstractions.Factories;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 
-namespace SpendfulnessCli.Commands.Personalisation.Account;
+namespace SpendfulnessCli.Commands.Personalisation.Accounts;
 
 public class AccountCliCommandFactory : ICliCommandFactory<AccountCliCommand>
 {

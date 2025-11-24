@@ -12,6 +12,6 @@ public class CliCommandRanArtefactFactory : ICliCommandArtefactFactory
         if (outcome is not CliCommandRanOutcome ranOutcome)
             throw new InvalidOperationException("Cannot create CliCommandRanProperty from the given outcome.");
 
-        return new CliCommandRanArtefact(ranOutcome.Command);
+        return new RanCliCommandArtefact(ranOutcome.Command);
     }
 }

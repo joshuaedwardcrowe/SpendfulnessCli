@@ -5,9 +5,7 @@ using Cli.Instructions.Abstractions;
 
 namespace SpendfulnessCli.Commands.Reusable.Table;
 
-public class TableCliCommandGenerator : ICliCommandFactory<TableCliCommand>
+public class TableCliCommandGenerator : RootCliCommandFactory, ICliCommandFactory<TableCliCommand>
 {
-    public bool CanCreateWhen(CliInstruction instruction, List<CliCommandArtefact> artefacts) => artefacts.Count == 0;
-
     public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> artefacts) => new TableCliCommand();
 }

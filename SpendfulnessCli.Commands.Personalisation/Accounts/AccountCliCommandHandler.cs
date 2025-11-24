@@ -2,7 +2,7 @@ using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
 using Spendfulness.Database;
 
-namespace SpendfulnessCli.Commands.Personalisation.Account;
+namespace SpendfulnessCli.Commands.Personalisation.Accounts;
 
 public class AccountCliCommandHandler(SpendfulnessBudgetClient spendfulnessBudgetClient)
     : SpendfulnessCliCommandHandler(spendfulnessBudgetClient), ICliCommandHandler<AccountCliCommand>

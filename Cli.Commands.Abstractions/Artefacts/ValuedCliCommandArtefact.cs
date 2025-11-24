@@ -1,6 +1,6 @@
 namespace Cli.Commands.Abstractions.Artefacts;
 
-public class ValuedCliCommandArtefact<TCommandPropertyValue>(TCommandPropertyValue value) : CliCommandArtefact
+public class ValuedCliCommandArtefact<TCommandPropertyValue>(TCommandPropertyValue artefactValue) : CliCommandArtefact
 {
-    public TCommandPropertyValue Value { get; set; } = value;
+    public TCommandPropertyValue ArtefactValue { get; set; } = artefactValue;
 }

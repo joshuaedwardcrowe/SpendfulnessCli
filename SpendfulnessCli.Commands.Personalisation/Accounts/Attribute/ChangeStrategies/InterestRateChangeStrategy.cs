@@ -1,6 +1,6 @@
 using Spendfulness.Database.Accounts;
 
-namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute.ChangeStrategies;
+namespace SpendfulnessCli.Commands.Personalisation.Accounts.Attribute.ChangeStrategies;
 
 public class InterestRateChangeStrategy : IAccountAttributeChangeStrategy
 {

@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cli.Commands.Abstractions.Extensions;
 
-public static class CommandPropertyServiceCollectionExtensions
+public static class CommandArtefactServiceCollectionExtensions
 {
     public static IServiceCollection AddCommandProperties(this IServiceCollection serviceCollection)
     {

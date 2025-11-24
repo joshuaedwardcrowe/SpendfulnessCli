@@ -28,7 +28,7 @@ namespace SpendfulnessCli.Commands.Reporting.RecurringTransactions
                 .Build();
 
             return [
-                new CliCommandListAggregatorOutcome<TransactionPayeeMemoOccurrenceAggregate>(aggregator),
+                new ListAggregatorCliCommandOutcome<TransactionPayeeMemoOccurrenceAggregate>(aggregator),
                 new CliCommandTableOutcome(table)
             ];
         }

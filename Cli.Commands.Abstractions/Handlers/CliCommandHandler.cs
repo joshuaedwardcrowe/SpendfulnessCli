@@ -6,6 +6,12 @@ namespace Cli.Commands.Abstractions.Handlers;
 
 public abstract class CliCommandHandler
 {
+    protected static CliCommandOutcome[] OutcomeAs()
+        => [new CliCommandNothingOutcome()];
+    
+    protected static Task<CliCommandOutcome[]> AsyncOutcomeAs()
+        => Task.FromResult(OutcomeAs());
+    
     protected static CliCommandOutcome[] OutcomeAs(CliTable cliTable)
         => [new CliCommandTableOutcome(cliTable)];
 

@@ -31,7 +31,7 @@ public class MonthlySpendingCliCommandHandler: CliCommandHandler, ICliCommandHan
         
         return [
             new CliCommandTableOutcome(table),
-            new CliCommandListAggregatorOutcome<TransactionMonthTotalAggregate>(aggregator)
+            new ListAggregatorCliCommandOutcome<TransactionMonthTotalAggregate>(aggregator)
         ];
     }
 
@@ -41,7 +41,7 @@ public class MonthlySpendingCliCommandHandler: CliCommandHandler, ICliCommandHan
 
         var transactions = await budget.GetTransactions();
 
-        var aggregator = new TransactionMonthTotalYnabListAggregator(transactions);
+        var aggregator = new TransactionMonthTotalListAggregator(transactions);
 
         if (cliCommand.CategoryId.HasValue)
         {

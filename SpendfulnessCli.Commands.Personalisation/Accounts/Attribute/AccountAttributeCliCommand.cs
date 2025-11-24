@@ -1,6 +1,6 @@
 using Cli.Commands.Abstractions;
 
-namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute;
+namespace SpendfulnessCli.Commands.Personalisation.Accounts.Attribute;
 
 public record AccountAttributeCliCommand(string YnabAccountName, string? CustomAccountTypeName, decimal? InterestRate) : CliCommand
 {

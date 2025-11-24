@@ -5,8 +5,9 @@ using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 using Cli.Workflow.Commands.MissingOutcomes;
 using SpendfulnessCli.Commands.Accounts;
+using Ynab;
 
-namespace SpendfulnessCli.Commands.Personalisation.Account.Attribute;
+namespace SpendfulnessCli.Commands.Personalisation.Accounts.Attribute;
 
 public class AccountAttributeCliCommandFactory : ICliCommandFactory<AccountCliCommand>
 {
@@ -35,22 +36,20 @@ public class AccountAttributeCliCommandFactory : ICliCommandFactory<AccountCliCo
             typeArgument?.ArgumentValue,
             interestRateArgument?.ArgumentValue);
     }
-    
+
     private string? GetYnabAccountNameArgument(CliInstruction instruction, List<CliCommandArtefact> artefacts)
     {
         var ynabAccountNameArgument = instruction
             .Arguments
             .OfType<string>(AccountAttributeCliCommand.ArgumentNames.YnabAccountName);
-        
+
         if (ynabAccountNameArgument != null)
         {
             return ynabAccountNameArgument.ArgumentValue;
         }
-        
-        var accountArtefact = artefacts
-            .OfType<AccountCliCommandArtefact>()
-            .LastOrDefault();
 
-        return accountArtefact?.Value.Name;
+        var accountArtefact = artefacts.OfType<Account>();
+
+        return accountArtefact?.ArtefactValue.Name;
     }
 }

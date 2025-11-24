@@ -5,7 +5,7 @@ using Ynab.Extensions;
 
 namespace SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 
-public class TransactionMonthTotalYnabListAggregator(IEnumerable<Transaction> transactions)
+public class TransactionMonthTotalListAggregator(IEnumerable<Transaction> transactions)
     : YnabListAggregator<TransactionMonthTotalAggregate>(transactions)
 {
     protected override IEnumerable<TransactionMonthTotalAggregate> GenerateAggregate()

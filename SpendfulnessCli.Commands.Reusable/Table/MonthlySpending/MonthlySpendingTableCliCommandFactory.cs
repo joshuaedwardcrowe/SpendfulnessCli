@@ -16,14 +16,15 @@ public class MonthlySpendingTableCliCommandFactory : ICliCommandFactory<TableCli
     
     public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> artefacts)
     {
-        var monthlySpendingAggregator = artefacts.GetListAggregator<TransactionMonthTotalAggregate>();
-        if (monthlySpendingAggregator == null)
+        var aggregatorArtefact = artefacts.OfListAggregatorType<TransactionMonthTotalAggregate>();
+        
+        if (aggregatorArtefact == null)
         {
             return new MissingOutcomesCliCommand([
-                nameof(CliCommandListAggregatorOutcome<TransactionMonthTotalAggregate>)
+                nameof(ListAggregatorCliCommandOutcome<TransactionMonthTotalAggregate>)
             ]);
         }
-        
-        return new MonthlySpendingTableCliCommand(monthlySpendingAggregator);
+
+        return new MonthlySpendingTableCliCommand(aggregatorArtefact.ArtefactValue);
     }
 }

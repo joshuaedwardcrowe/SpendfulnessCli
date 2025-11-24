@@ -1,6 +1,6 @@
 using Cli.Commands.Abstractions;
 
-namespace SpendfulnessCli.Commands.Personalisation.Account;
+namespace SpendfulnessCli.Commands.Personalisation.Accounts;
 
 public record AccountCliCommand(Guid AccountId) : CliCommand
 {
