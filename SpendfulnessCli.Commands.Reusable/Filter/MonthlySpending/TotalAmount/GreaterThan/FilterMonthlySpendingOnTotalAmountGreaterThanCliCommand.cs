@@ -1,16 +1,16 @@
 using Cli.Abstractions.Aggregators;
 using SpendfulnessCli.Aggregation.Aggregates;
 
-namespace SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending;
+namespace SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending.TotalAmount.GreaterThan;
 
-public record FilterMonthlySpendingOnTotalAmountCliCommand : FilterMonthlySpendingCliCommand
+public record FilterMonthlySpendingOnTotalAmountGreaterThanCliCommand : FilterMonthlySpendingCliCommand
 {
     public new static class ArgumentNames
     {
         public const string GreaterThan = "gt";
     }
     
-    public FilterMonthlySpendingOnTotalAmountCliCommand(
+    public FilterMonthlySpendingOnTotalAmountGreaterThanCliCommand(
         CliListAggregator<TransactionMonthTotalAggregate> aggregator,
         string filterOn,
         decimal? greaterThan)  

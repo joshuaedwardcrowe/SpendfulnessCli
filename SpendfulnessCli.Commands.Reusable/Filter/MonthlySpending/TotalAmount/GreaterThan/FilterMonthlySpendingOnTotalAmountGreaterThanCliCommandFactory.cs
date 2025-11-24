@@ -5,9 +5,9 @@ using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 using SpendfulnessCli.Aggregation.Aggregates;
 
-namespace SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending;
+namespace SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending.TotalAmount.GreaterThan;
 
-public class FilterMonthlySpendingOnTotalAmountCliCommandFactory
+public class FilterMonthlySpendingOnTotalAmountGreaterThanCliCommandFactory
     : ReusableFilterMonthlySpendingOnCliCommandFactory, ICliCommandFactory<FilterCliCommand>
 {
     public override bool CanCreateWhen(CliInstruction instruction, List<CliCommandArtefact> artefacts)
@@ -16,7 +16,7 @@ public class FilterMonthlySpendingOnTotalAmountCliCommandFactory
 
         var greaterThanArgument = instruction
             .Arguments
-            .OfType<decimal>(FilterMonthlySpendingOnTotalAmountCliCommand.ArgumentNames.GreaterThan);
+            .OfType<decimal>(FilterMonthlySpendingOnTotalAmountGreaterThanCliCommand.ArgumentNames.GreaterThan);
 
         return previouslyCalledMonthlySpendingCommandAndFilterArgumentPresent && greaterThanArgument != null;
     }
@@ -32,9 +32,9 @@ public class FilterMonthlySpendingOnTotalAmountCliCommandFactory
 
         var greaterThanArgument = instruction
             .Arguments
-            .OfRequiredType<decimal>(FilterMonthlySpendingOnTotalAmountCliCommand.ArgumentNames.GreaterThan);
+            .OfRequiredType<decimal>(FilterMonthlySpendingOnTotalAmountGreaterThanCliCommand.ArgumentNames.GreaterThan);
 
-        return new FilterMonthlySpendingOnTotalAmountCliCommand(
+        return new FilterMonthlySpendingOnTotalAmountGreaterThanCliCommand(
             aggregatorArtefact!.ArtefactValue,
             filterOnArgument.ArgumentValue,
             greaterThanArgument.ArgumentValue);
