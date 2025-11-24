@@ -1,4 +1,6 @@
+using Cli.Instructions.Abstractions;
 using Cli.Instructions.Indexers;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Cli.Instructions.Tests;
@@ -6,12 +8,14 @@ namespace Cli.Instructions.Tests;
 [TestFixture]
 public class CliInstructionTokenIndexerTests
 {
+    private IOptions<InstructionSettings> _instructionOptions;
     private CliInstructionTokenIndexer _cliInstructionTokenIndexer;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        _cliInstructionTokenIndexer = new CliInstructionTokenIndexer();
+        _instructionOptions = Options.Create(new InstructionSettings());
+        _cliInstructionTokenIndexer = new CliInstructionTokenIndexer(_instructionOptions);
     }
 
     [Test]

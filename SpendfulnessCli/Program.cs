@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Cli;
+using Cli.Instructions.Abstractions;
+using Microsoft.Extensions.Configuration;
 using SpendfulnessCli.Commands.Organisation;
 using SpendfulnessCli.Commands.Personalisation;
 using Spendfulness.Database;
@@ -14,6 +16,11 @@ using Ynab.Extensions;
 
 var cliAppBuilder = new CliAppBuilder()
     .WithCli<SpendfulnessCliApp>();
+
+// Add settings
+cliAppBuilder
+    .WithJsonSettings("appsettings.json")
+    .WithSettings<InstructionSettings>();
     
 // Add YNAB services
 cliAppBuilder

@@ -1,11 +1,12 @@
 using Cli.Instructions.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Cli.Instructions.Indexers;
 
-public class CliInstructionTokenIndexer
+public class CliInstructionTokenIndexer(IOptions<InstructionSettings> instructionOptions)
 {
-    // TODO: Make the default characters below configurable.
-    // (SO this needs to be a DI service)
+    private readonly InstructionSettings _instructionSettings = instructionOptions.Value;
+
     public CliInstructionTokenIndexCollection Index(string terminalInput)
     {
         if (string.IsNullOrEmpty(terminalInput))
@@ -38,12 +39,12 @@ public class CliInstructionTokenIndexer
         };
     }
 
-    private static CliInstructionTokenIndex IndexPrefixToken(string terminalInput)
+    private CliInstructionTokenIndex IndexPrefixToken(string terminalInput)
     {
-        // Constraint: Command must be prefixed with some kind of punctuation mark
-        // Even though the current default is '/'
-        var characters = terminalInput.ToCharArray();
-        var firstPunctuationMark = characters.FirstOrDefault(char.IsPunctuation);
+        // Constraint: Command must be prefixed with some kind mark, e.g. /
+        var firstPunctuationMark = terminalInput
+            .ToCharArray()
+            .FirstOrDefault(character => character == _instructionSettings.Prefix);
         
         // e.g. <here>/spare-money help --argumentOne hello world --argumentTwo 1
         var firstPunctuationMarkIndex = terminalInput.IndexOf(firstPunctuationMark);
@@ -77,11 +78,11 @@ public class CliInstructionTokenIndexer
         };
     }
 
-    private static CliInstructionTokenIndex IndexArgumentsToken(string terminalInput)
+    private CliInstructionTokenIndex IndexArgumentsToken(string terminalInput)
     {
         // e.g. /spare-money help <here>--argumentOne hello world --argumentTwo 1
         var firstArgumentIndex = terminalInput.IndexOf(
-            CliInstructionConstants.DefaultArgumentPrefix,
+            _instructionSettings.ArgumentPrefix,
             StringComparison.Ordinal);
         
         var hasArgumentTokens = firstArgumentIndex != -1;
