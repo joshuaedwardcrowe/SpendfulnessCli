@@ -9,10 +9,16 @@ public record MonthlySpendingFilterCliCommand : FilterCliCommand
     {
         public const string GreaterThan = "gt";
     }
+
+    public static class FilterNames
+    {
+        public const string TotalAmount = "Total Amount";
+    }
     
     public MonthlySpendingFilterCliCommand(
         CliListAggregator<TransactionMonthTotalAggregate> aggregator,
-        decimal? greaterThan)
+        string filterOn,
+        decimal? greaterThan) : base(filterOn)
     {
         Aggregator = aggregator;
         GreaterThan = greaterThan;

@@ -11,7 +11,7 @@ using SpendfulnessCli.Commands.Reusable.MonthlySpending;
 namespace SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending;
 
 public class MonthlySpendingFilterCliCommandFactory
-    : MonthlySpendingReusableCliCommandFactory, ICliCommandFactory<FilterCliCommand>
+    : ReusableMonthlySpendingCliCommandFactory, ICliCommandFactory<FilterCliCommand>
 {
     public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> artefacts)
     {
@@ -25,12 +25,17 @@ public class MonthlySpendingFilterCliCommandFactory
             ]);
         }
         
+        var filterOnArgument = instruction
+            .Arguments
+            .OfRequiredType<string>(FilterCliCommand.ArgumentNames.FilterOn);
+        
         var greaterThanArgument = instruction
             .Arguments
             .OfType<decimal>(MonthlySpendingFilterCliCommand.ArgumentNames.GreaterThan);
 
         return new MonthlySpendingFilterCliCommand(
             aggregatorArtefact.ArtefactValue,
+            filterOnArgument.ArgumentValue,
             greaterThanArgument?.ArgumentValue);
     }
 }

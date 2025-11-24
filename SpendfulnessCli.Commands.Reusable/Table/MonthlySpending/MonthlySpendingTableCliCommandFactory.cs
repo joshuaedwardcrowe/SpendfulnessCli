@@ -5,13 +5,12 @@ using Cli.Commands.Abstractions.Outcomes.Reusable;
 using Cli.Instructions.Abstractions;
 using Cli.Workflow.Commands.MissingOutcomes;
 using SpendfulnessCli.Aggregation.Aggregates;
-using SpendfulnessCli.Commands.Reporting.MonthlySpending;
 using SpendfulnessCli.Commands.Reusable.MonthlySpending;
 
 namespace SpendfulnessCli.Commands.Reusable.Table.MonthlySpending;
 
 public class MonthlySpendingTableCliCommandFactory
-    : MonthlySpendingReusableCliCommandFactory, ICliCommandFactory<TableCliCommand>
+    : ReusableMonthlySpendingCliCommandFactory, ICliCommandFactory<TableCliCommand>
 {
     public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> artefacts)
     {

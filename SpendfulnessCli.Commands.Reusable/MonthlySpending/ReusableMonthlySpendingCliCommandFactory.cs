@@ -5,7 +5,7 @@ using SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending;
 
 namespace SpendfulnessCli.Commands.Reusable.MonthlySpending;
 
-public abstract class MonthlySpendingReusableCliCommandFactory
+public abstract class ReusableMonthlySpendingCliCommandFactory
 {
     public bool CanCreateWhen(CliInstruction instruction, List<CliCommandArtefact> artefacts)
     {

@@ -1,15 +1,11 @@
 using Cli.Commands.Abstractions;
-using Cli.Commands.Abstractions.Artefacts;
-using Cli.Commands.Abstractions.Factories;
-using Cli.Instructions.Abstractions;
 
 namespace SpendfulnessCli.Commands.Reusable.Filter;
 
-public record FilterCliCommand : CliCommand;
-
-
-public class FilterCliCommandFactory : RootCliCommandFactory, ICliCommandFactory<FilterCliCommand>
+public record FilterCliCommand(string FilterOn) : CliCommand
 {
-    public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> artefacts)
-        => new FilterCliCommand();
+    public static class ArgumentNames
+    {
+        public const string FilterOn = "on";
+    }
 }
