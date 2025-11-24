@@ -3,7 +3,7 @@ using SpendfulnessCli.Aggregation.Aggregates;
 
 namespace SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending;
 
-public record MonthlySpendingFilterCliCommand : FilterCliCommand
+public record FilterMonthlySpendingCliCommand : FilterCliCommand
 {
     public static class ArgumentNames
     {
@@ -15,16 +15,13 @@ public record MonthlySpendingFilterCliCommand : FilterCliCommand
         public const string TotalAmount = "Total Amount";
     }
     
-    public MonthlySpendingFilterCliCommand(
+    public FilterMonthlySpendingCliCommand(
         CliListAggregator<TransactionMonthTotalAggregate> aggregator,
-        string filterOn,
-        decimal? greaterThan) : base(filterOn)
+        string filterOn) 
+        : base(filterOn)
     {
         Aggregator = aggregator;
-        GreaterThan = greaterThan;
     }
     
     public CliListAggregator<TransactionMonthTotalAggregate> Aggregator { get; }
-    
-    public decimal? GreaterThan { get; }
 }

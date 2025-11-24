@@ -7,10 +7,10 @@ namespace SpendfulnessCli.Commands.Reusable.MonthlySpending;
 
 public abstract class ReusableMonthlySpendingCliCommandFactory
 {
-    public bool CanCreateWhen(CliInstruction instruction, List<CliCommandArtefact> artefacts)
+    public virtual bool CanCreateWhen(CliInstruction instruction, List<CliCommandArtefact> artefacts)
     {
         var ranAggregatorCommand = artefacts.LastCommandRanWas<MonthlySpendingCliCommand>();
-        var ranFilterCommand = artefacts.LastCommandRanWas<MonthlySpendingFilterCliCommand>();
+        var ranFilterCommand = artefacts.LastCommandRanWas<FilterMonthlySpendingCliCommand>();
 
         return ranAggregatorCommand || ranFilterCommand;
     }
