@@ -15,9 +15,10 @@ public record CliCommand : IRequest<CliCommandOutcome[]>
         => GetType().Name.ReplaceCommandSuffix();
 
     public string GetInstructionName()
-        => GetType().Name.ReplaceCommandSuffix()            .ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
-
-
+        => GetType().Name
+            .ReplaceCommandSuffix()            
+            .ToLowerSplitString(CliInstructionConstants.DefaultCommandNameSeparator);
+    
     public static string StripCommandName(string commandName)
         => commandName.ReplaceCommandSuffix();
 }

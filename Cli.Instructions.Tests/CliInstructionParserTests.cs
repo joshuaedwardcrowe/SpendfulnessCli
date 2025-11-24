@@ -1,8 +1,10 @@
+using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 using Cli.Instructions.Builders;
 using Cli.Instructions.Extraction;
 using Cli.Instructions.Indexers;
 using Cli.Instructions.Parsers;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Cli.Instructions.Tests;
@@ -10,6 +12,7 @@ namespace Cli.Instructions.Tests;
 [TestFixture]
 public class CliInstructionParserTests
 {
+    private IOptions<InstructionSettings> _instructionOptions;
     private CliInstructionTokenIndexer _cliInstructionTokenIndexer;
     private CliInstructionTokenExtractor _cliInstructionTokenExtractor;
     private IEnumerable<ICliInstructionArgumentBuilder> _instructionArgumentBuilders;
@@ -18,7 +21,9 @@ public class CliInstructionParserTests
     [SetUp]
     public void SetUp()
     {
-        _cliInstructionTokenIndexer = new CliInstructionTokenIndexer();
+        _instructionOptions = Options.Create(new InstructionSettings());
+        
+        _cliInstructionTokenIndexer = new CliInstructionTokenIndexer(_instructionOptions);
         
         _cliInstructionTokenExtractor = new CliInstructionTokenExtractor();
         
