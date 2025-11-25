@@ -3,6 +3,7 @@ using Cli.Abstractions;
 using Cli.Abstractions.Aggregators;
 using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Artefacts.Aggregator;
+using Cli.Commands.Abstractions.Artefacts.Aggregator.Filters;
 using Cli.Commands.Abstractions.Artefacts.CommandRan;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,7 +14,8 @@ public static class CommandArtefactServiceCollectionExtensions
     public static IServiceCollection AddCommandProperties(this IServiceCollection serviceCollection)
     {
         return serviceCollection
-            .AddSingleton<ICliCommandArtefactFactory, CliCommandRanArtefactFactory>();
+            .AddSingleton<ICliCommandArtefactFactory, RanCliCommandArtefactFactory>()
+            .AddSingleton<ICliCommandArtefactFactory, CliListAggregatorFilterCliCommandArtefactFactory>();
     }
     
     public static IServiceCollection AddAggregatorCommandPropertiesFromAssembly(this IServiceCollection serviceCollection, Assembly? assembly)

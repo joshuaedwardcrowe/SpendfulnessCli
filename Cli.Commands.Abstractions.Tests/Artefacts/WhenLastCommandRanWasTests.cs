@@ -15,7 +15,7 @@ public class WhenLastCommandRanWasTests
         // Arrange
         var artefacts = new List<CliCommandArtefact>
         {
-            new CliCommandRanArtefact(new TestCliCommand())
+            new RanCliCommandArtefact(new TestCliCommand())
         };
         
         // Act

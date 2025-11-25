@@ -1,4 +1,6 @@
 using Cli.Abstractions;
+using Cli.Abstractions.Tables;
+
 using SpendfulnessCli.CliTables.Extensions;
 
 namespace Spendfulness.Cli.CliTables.Tests.Extensions;

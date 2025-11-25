@@ -1,4 +1,4 @@
-namespace Cli.Abstractions;
+namespace Cli.Abstractions.Tables;
 
 public enum CliTableSortOrder
 {

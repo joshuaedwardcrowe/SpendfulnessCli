@@ -1,4 +1,4 @@
-using Cli.Abstractions;
+using Cli.Abstractions.Tables;
 
 namespace Cli.Commands.Abstractions.Outcomes.Final;
 

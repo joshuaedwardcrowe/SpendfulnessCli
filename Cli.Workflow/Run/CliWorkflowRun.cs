@@ -65,7 +65,7 @@ public class CliWorkflowRun : ICliWorkflowRun
 
             var outcomes = await _mediator.Send(command);
 
-            var ranOutcome = new CliCommandRanOutcome(command);
+            var ranOutcome = new RanCliCommandOutcome(command);
             
             CliCommandOutcome[] allOutcomes = [ranOutcome, ..outcomes];
             
