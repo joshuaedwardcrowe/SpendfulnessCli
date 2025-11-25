@@ -1,11 +1,11 @@
-namespace Cli.Commands.Abstractions.Filters;
+namespace Cli.Abstractions.Aggregators.Filters;
 
-public class AppliedFilter
+public class CliListAggregatorFilter
 {
     public string FilterFieldName { get; }
     public string FilterName { get; }
     
-    public AppliedFilter(
+    public CliListAggregatorFilter(
         string filterFieldName,
         string filterName)
     {

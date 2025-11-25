@@ -1,5 +1,6 @@
 using Cli.Abstractions;
-using Cli.Commands.Abstractions.Filters;
+using Cli.Abstractions.Aggregators.Filters;
+using Cli.Abstractions.Tables;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Commands.Abstractions.Outcomes.Final;
 
@@ -22,9 +23,9 @@ public abstract class CliCommandHandler
     protected static Task<CliCommandOutcome[]> AsyncOutcomeAs(string message)
         => Task.FromResult(OutcomeAs(message));
     
-    protected static CliCommandOutcome[] OutcomeAs(List<AppliedFilter> appliedFilters)
-        => [new FilteredCliCommandOutcome(appliedFilters)];
+    protected static CliCommandOutcome[] OutcomeAs(CliListAggregatorFilter cliListAggregatorFilter)
+        => [new FilterCliCommandOutcome(cliListAggregatorFilter)];
     
-    protected static Task<CliCommandOutcome[]> AsyncOutcomeAs(List<AppliedFilter> appliedFilters)
-        => Task.FromResult(OutcomeAs(appliedFilters));
+    protected static Task<CliCommandOutcome[]> AsyncOutcomeAs(CliListAggregatorFilter cliListAggregatorFilter)
+        => Task.FromResult(OutcomeAs(cliListAggregatorFilter));
 }

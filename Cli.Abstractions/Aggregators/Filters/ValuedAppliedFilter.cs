@@ -1,11 +1,11 @@
-namespace Cli.Commands.Abstractions.Filters;
+namespace Cli.Abstractions.Aggregators.Filters;
 
-public class ValuedAppliedFilter<TFilterValue> : AppliedFilter
+public class ValuedCliListAggregatorFilter<TFilterValue> : CliListAggregatorFilter
     where TFilterValue : notnull
 {
     public TFilterValue FilterValue { get; }
     
-    public ValuedAppliedFilter(
+    public ValuedCliListAggregatorFilter(
         string filterFieldName,
         string filterName,
         TFilterValue filterValue)

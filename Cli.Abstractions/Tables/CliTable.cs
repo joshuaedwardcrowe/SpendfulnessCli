@@ -1,6 +1,6 @@
 using ConsoleTables;
 
-namespace Cli.Abstractions;
+namespace Cli.Abstractions.Tables;
 
 public class CliTable
 {

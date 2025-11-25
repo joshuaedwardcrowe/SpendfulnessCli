@@ -1,4 +1,5 @@
 using Cli.Abstractions;
+using Cli.Abstractions.Tables;
 using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,6 @@
 using Cli.Abstractions;
 using Cli.Abstractions.Aggregators;
+using Cli.Abstractions.Tables;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
