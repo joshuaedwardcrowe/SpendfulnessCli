@@ -7,6 +7,7 @@ using SpendfulnessCli.Commands.Organisation;
 using SpendfulnessCli.Commands.Personalisation;
 using Spendfulness.Database;
 using SpendfulnessCli;
+using SpendfulnessCli.Abstractions.Splittables;
 using SpendfulnessCli.Abstractions.Taxis;
 using SpendfulnessCli.Aggregation.Extensions;
 using SpendfulnessCli.Commands;
@@ -27,7 +28,8 @@ cliAppBuilder
     .WithCustomServices(services => 
         services
             .AddYnab() // Speak to the YNAB API
-            .AddYnabTransactionFactory<TaxiTransactionFactory>());
+            .AddYnabTransactionFactory<TaxiTransactionFactory>()
+            .AddYnabTransactionFactory<SplittableTransactionFactory>());
 
 
 // Spendfulness specific set up.
