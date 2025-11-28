@@ -2,6 +2,7 @@ using SpendfulnessCli.Aggregation.Aggregates;
 using SpendfulnessCli.CliTables.Formatters;
 using SpendfulnessCli.CliTables.ViewModels;
 
+// TODO: Change namespace to CliTableBuilders, or DDD based.
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
 public class TransactionMonthChangeCliTableBuilder : CliTableBuilder<TransactionMonthTotalAggregate>
