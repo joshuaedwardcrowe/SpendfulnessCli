@@ -18,25 +18,19 @@ public class CliCommandOutcomeIo : CliIo, ICliCommandOutcomeIo
         switch (outcome)
         {
             case CliCommandTableOutcome tableOutcome:
-                Say(tableOutcome);
+                Say(tableOutcome.Table.ToString());
                 break;
             case CliCommandOutputOutcome outputOutcome:
-                Say(outputOutcome);
+                Say(outputOutcome.Output);
                 break;
-            case CliCommandNotFoundOutcome nothingOutcome:
-                Say(nothingOutcome);
+            case CliCommandNotFoundOutcome:
+                Say("Command not found.");
                 break;
             case CliCommandExceptionOutcome exceptionOutcome:
-                Say(exceptionOutcome);
+                Say($"Exception occured: {exceptionOutcome.Exception.StackTrace}");
+                while (exceptionOutcome.Exception.InnerException != null)
+                    Say($"Exception occured: {exceptionOutcome.Exception.InnerException.StackTrace}");
                 break;
         }
     }
-    public void Say(CliCommandTableOutcome tableOutcome)
-        => Say(tableOutcome.Table.ToString());
-    
-    public void Say(CliCommandOutputOutcome outputOutcome)
-        => Say(outputOutcome.Output);
-    
-    public void Say(CliCommandNothingOutcome cliCommandNothingOutcome)
-        => Say("Command not found.");
 }

@@ -11,7 +11,7 @@ public class SpendfulnessCliApp : CliApp
 {
     private readonly SpendfulnessDbContext _spendfulnessDbContext;
     
-    public SpendfulnessCliApp(ICliWorkflow workflow, CliCommandOutcomeIo io, SpendfulnessDbContext spendfulnessDbContext)
+    public SpendfulnessCliApp(ICliWorkflow workflow, ICliCommandOutcomeIo io, SpendfulnessDbContext spendfulnessDbContext)
         : base(workflow, io)
     {
         _spendfulnessDbContext = spendfulnessDbContext;
