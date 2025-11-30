@@ -4,7 +4,7 @@ using Cli.Commands.Abstractions.Factories;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
 
-namespace SpendfulnessCli.Commands.Personalisation.Transactions.List;
+namespace SpendfulnessCli.Commands.Reporting.Transactions.List;
 
 public class ListTransactionCliCommandFactory : ICliCommandFactory<TransactionsCliCommand>
 {

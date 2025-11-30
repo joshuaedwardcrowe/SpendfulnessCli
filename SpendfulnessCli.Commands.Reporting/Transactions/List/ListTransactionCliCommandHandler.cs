@@ -5,7 +5,7 @@ using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
 using Ynab.Extensions;
 
-namespace SpendfulnessCli.Commands.Personalisation.Transactions.List;
+namespace SpendfulnessCli.Commands.Reporting.Transactions.List;
 
 public class ListTransactionCliCommandHandler(SpendfulnessBudgetClient spendfulnessBudgetClient)
     : CliCommandHandler, ICliCommandHandler<ListTransactionCliCommand>
@@ -18,12 +18,14 @@ public class ListTransactionCliCommandHandler(SpendfulnessBudgetClient spendfuln
 
         var aggregator = new TransactionYnabListAggregator(transactions);
 
+        // TODO: Move to filter command.
         if (transactionCliCommand.PayeeName is not null)
         {
             aggregator.BeforeAggregation(transaction
                 => transaction.FilterToPayeeNames([transactionCliCommand.PayeeName]));
         }
         
+        // TODO: Move to filter command.
         aggregator.AfterAggregation(aggregates
             => aggregates.OrderByDescending(x => x.Occured));
         

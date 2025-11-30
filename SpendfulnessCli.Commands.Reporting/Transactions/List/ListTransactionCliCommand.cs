@@ -1,6 +1,6 @@
 using Cli.Commands.Abstractions;
 
-namespace SpendfulnessCli.Commands.Personalisation.Transactions.List;
+namespace SpendfulnessCli.Commands.Reporting.Transactions.List;
 
 public record ListTransactionCliCommand : CliCommand
 {
