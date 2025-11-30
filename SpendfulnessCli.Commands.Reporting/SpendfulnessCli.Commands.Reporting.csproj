@@ -28,8 +28,4 @@
       <Compile Remove="AverageYearlySpending\AverageYearlySpendingCliCliCommandHandler 2.cs" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Table\" />
-    </ItemGroup>
-
 </Project>
