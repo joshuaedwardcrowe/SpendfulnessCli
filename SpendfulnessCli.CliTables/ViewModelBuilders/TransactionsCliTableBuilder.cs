@@ -1,3 +1,4 @@
+using SpendfulnessCli.CliTables.Formatters;
 using SpendfulnessCli.CliTables.ViewModels;
 using Ynab;
 
@@ -16,10 +17,9 @@ public class TransactionsCliTableBuilder : CliTableBuilder<Transaction>
     
     private IEnumerable<object> BuildIndividualRow(Transaction transaction) 
         => [
-            transaction.Id,
-            transaction.Occured,
+            transaction.Occured.ToShortDateString(),
             transaction.PayeeName,
             transaction.CategoryName,
-            transaction.Amount
+            CurrencyDisplayFormatter.Format(transaction.Amount)
         ];
 }
