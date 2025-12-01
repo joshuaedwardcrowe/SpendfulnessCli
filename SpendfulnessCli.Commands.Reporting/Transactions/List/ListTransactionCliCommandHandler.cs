@@ -1,5 +1,7 @@
 using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
+using Cli.Commands.Abstractions.Outcomes.Final;
+using Cli.Commands.Abstractions.Outcomes.Reusable.Page;
 using Spendfulness.Database;
 using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
@@ -34,8 +36,14 @@ public class ListTransactionCliCommandHandler(SpendfulnessBudgetClient spendfuln
         
         var viewModel = new TransactionsCliTableBuilder()
             .WithAggregator(aggregator)
+            .WithRowCount(false)
             .Build();
 
-        return OutcomeAs(viewModel);
+        return
+        [
+            new CliCommandTableOutcome(viewModel),
+            new PageSizeCliCommandOutcome(command.PageSize),
+            new PageNumberCliCommandOutcome(command.PageNumber)
+        ];
     }
 }

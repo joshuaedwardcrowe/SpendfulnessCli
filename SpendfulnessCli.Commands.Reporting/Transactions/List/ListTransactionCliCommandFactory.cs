@@ -1,3 +1,4 @@
+using Cli.Commands;
 using Cli.Commands.Abstractions;
 using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Factories;
@@ -14,15 +15,14 @@ public class ListTransactionCliCommandFactory : ListCliCommandFactory, ICliComma
 
     public CliCommand Create(CliInstruction instruction, List<CliCommandArtefact> artefacts)
     {
-        var (pageNumberArgument, pageSizeArgument) = GetPagingArguments(instruction);
+        var (pageSize, pageNumber) = GetPaging(instruction, artefacts);
         
+        // TODO: Move to filter command.
         var payeeNameArgument = instruction
             .Arguments
             .OfType<string>(ListTransactionCliCommand.ArgumentNames.PayeeName);
-        
-        return new ListTransactionCliCommand(
-            pageNumberArgument?.ArgumentValue,
-            pageSizeArgument?.ArgumentValue)
+
+        return new ListTransactionCliCommand(pageNumber, pageSize)
         {
             PayeeName = payeeNameArgument?.ArgumentValue
         };

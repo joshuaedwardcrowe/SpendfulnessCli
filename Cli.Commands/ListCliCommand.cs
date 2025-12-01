@@ -12,6 +12,12 @@ public abstract record ListCliCommand : CliCommand
         public const string PageNumber = "pageNumber";
         public const string PageSize = "pageSize";
     }
+    
+    public static class ArtefactNames
+    {
+        public const string PageNumber = "pageNumber";
+        public const string PageSize = "pageSize";
+    }
 
     protected ListCliCommand(int? pageNumber = null, int? pageSize = null)
     {
