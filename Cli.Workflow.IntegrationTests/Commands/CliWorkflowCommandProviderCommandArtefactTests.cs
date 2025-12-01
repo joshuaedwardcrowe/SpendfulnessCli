@@ -16,15 +16,13 @@ public class CliWorkflowCommandProviderCommandArtefactTests
 
     private class TestCliCommandOutcome() : CliCommandOutcome(CliCommandOutcomeKind.Reusable);
     
-    private class TestCliCommandArtefact : CliCommandArtefact;
+    private class TestCliCommandArtefact() : CliCommandArtefact("Test");
     
     private class TestCliCommandArtefactFactory : ICliCommandArtefactFactory
     {
-        public bool For(CliCommandOutcome outcome)
-            => outcome is TestCliCommandOutcome;
+        public bool For(CliCommandOutcome outcome) => outcome is TestCliCommandOutcome;
 
-        public CliCommandArtefact Create(CliCommandOutcome outcome)
-            => new TestCliCommandArtefact();
+        public CliCommandArtefact Create(CliCommandOutcome outcome) => new TestCliCommandArtefact();
     }
 
     private class TestCliCommandFactory : ICliCommandFactory<TestCliCommand>

@@ -8,9 +8,16 @@ namespace Cli.Commands.Abstractions.Artefacts;
 public static class CliCommandArtefactExtensions
 {
     public static ValuedCliCommandArtefact<TArtefactType>? OfType<TArtefactType>(
+        this IEnumerable<CliCommandArtefact> artefacts, string artefactName)
+        where TArtefactType : notnull
+            => artefacts
+                .Where(a => a.ArtefactName == artefactName)
+                .OfType<TArtefactType>();
+
+    public static ValuedCliCommandArtefact<TArtefactType>? OfType<TArtefactType>(
         this IEnumerable<CliCommandArtefact> artefacts)
         where TArtefactType : notnull
-            =>  LinqEnumerable
+            => LinqEnumerable
                 .OfType<ValuedCliCommandArtefact<TArtefactType>>(artefacts)
                 .FirstOrDefault();
 

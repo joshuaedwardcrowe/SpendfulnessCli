@@ -1,5 +1,6 @@
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Commands.Abstractions.Outcomes.Final;
+using Cli.Commands.Abstractions.Outcomes.Reusable.Page;
 
 namespace Cli.Commands.Abstractions.Io.Outcomes;
 
@@ -22,6 +23,12 @@ public class CliCommandOutcomeIo : CliIo, ICliCommandOutcomeIo
                 break;
             case CliCommandOutputOutcome outputOutcome:
                 Say(outputOutcome.Output);
+                break;
+            case PageSizeCliCommandOutcome pageSizeOutcome:
+                Say($"Page Size: {pageSizeOutcome.PageSize}");
+                break;
+            case PageNumberCliCommandOutcome pageNumberOutcome:
+                Say($"Page Number: {pageNumberOutcome.PageNumber}");
                 break;
             case CliCommandNotFoundOutcome:
                 Say("Command not found.");

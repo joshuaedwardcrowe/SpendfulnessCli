@@ -2,7 +2,13 @@ using Cli.Abstractions.Aggregators.Filters;
 
 namespace Cli.Commands.Abstractions.Artefacts.Aggregator.Filters;
 
-public class CliListAggregatorFilterCliCommandArtefact(CliListAggregatorFilter cliListAggregatorFilter) : CliCommandArtefact
+public class CliListAggregatorFilterCliCommandArtefact : CliCommandArtefact
 {
-    public CliListAggregatorFilter CliListAggregatorFilter { get; } = cliListAggregatorFilter;
+    public CliListAggregatorFilter CliListAggregatorFilter { get; }
+
+    public CliListAggregatorFilterCliCommandArtefact(CliListAggregatorFilter cliListAggregatorFilter) 
+        : base($"{cliListAggregatorFilter.FilterName}-{cliListAggregatorFilter.FilterFieldName}")
+    {
+        CliListAggregatorFilter = cliListAggregatorFilter;
+    }
 }

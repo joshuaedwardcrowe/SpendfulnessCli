@@ -5,6 +5,7 @@ using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Artefacts.Aggregator;
 using Cli.Commands.Abstractions.Artefacts.Aggregator.Filters;
 using Cli.Commands.Abstractions.Artefacts.CommandRan;
+using Cli.Commands.Abstractions.Artefacts.Page;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cli.Commands.Abstractions.Extensions;
@@ -15,6 +16,8 @@ public static class CommandArtefactServiceCollectionExtensions
     {
         return serviceCollection
             .AddSingleton<ICliCommandArtefactFactory, RanCliCommandArtefactFactory>()
+            .AddSingleton<ICliCommandArtefactFactory, PageSizeCliCommandArtefactFactory>()
+            .AddSingleton<ICliCommandArtefactFactory, PageNumberCliCommandArtefactFactory>()
             .AddSingleton<ICliCommandArtefactFactory, CliListAggregatorFilterCliCommandArtefactFactory>();
     }
     
