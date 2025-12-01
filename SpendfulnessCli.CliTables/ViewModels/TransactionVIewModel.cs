@@ -5,7 +5,6 @@ namespace SpendfulnessCli.CliTables.ViewModels;
 
 public abstract class TransactionVIewModel : CliTable
 {
-    private const string TransactionIdColumnName = "Transaction ID";
     private const string OccurredColumnName = "Occurred";
     private const string PayeeNameColumn = "Payee";
     private const string CategoryNameColumn = "Category";
@@ -13,7 +12,6 @@ public abstract class TransactionVIewModel : CliTable
     
     public static List<string> GetColumnNames() 
         => [
-            TransactionIdColumnName,
             OccurredColumnName,
             PayeeNameColumn,
             CategoryNameColumn,

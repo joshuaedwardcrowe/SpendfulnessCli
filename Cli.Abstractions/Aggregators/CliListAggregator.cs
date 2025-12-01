@@ -1,26 +1,38 @@
 namespace Cli.Abstractions.Aggregators;
 
-public abstract class CliListAggregator<TAggregation> : CliAggregator<IEnumerable<TAggregation>>
+public abstract class CliListAggregator<TAggregate> : CliAggregator<IEnumerable<TAggregate>>
 {
-    private readonly List<Func<IEnumerable<TAggregation>, IEnumerable<TAggregation>>> _aggregationOperationFunctions = [];
+    private readonly int _pageSize;
+    private readonly int _pageNumber;
+    
+    private readonly List<Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>>> _aggregateFunctions = [];
 
-    public override IEnumerable<TAggregation> Aggregate()
+    protected CliListAggregator(int? pageSize = null, int? pageNumber = null)
     {
-        var specificAggregation = ListAggregate();
-        
-        foreach (var aggregationOperationFunction in _aggregationOperationFunctions)
-        {
-            specificAggregation = aggregationOperationFunction(specificAggregation);
-        }
-        
-        return specificAggregation;
+        _pageSize = pageSize ?? 20;
+        _pageNumber = pageNumber ?? 1;
     }
     
-    public CliListAggregator<TAggregation> AfterAggregation(Func<IEnumerable<TAggregation>, IEnumerable<TAggregation>> operationFunction)
+    public override IEnumerable<TAggregate> Aggregate()
     {
-        _aggregationOperationFunctions.Add(operationFunction);
+        var aggregates = ListAggregate();
+
+        var skipNumber = _pageSize * (_pageNumber - 1);
+        
+        aggregates = aggregates.Skip(skipNumber);
+        
+        aggregates = aggregates.Take(_pageSize);
+
+        return _aggregateFunctions.Aggregate(aggregates, ApplyAggregateFunction);
+    }
+    public CliListAggregator<TAggregate> AfterAggregation(Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>> operationFunction)
+    {
+        _aggregateFunctions.Add(operationFunction);
         return this;
     }
 
-    protected abstract IEnumerable<TAggregation> ListAggregate();
+    protected abstract IEnumerable<TAggregate> ListAggregate();
+    
+    private IEnumerable<TAggregate> ApplyAggregateFunction(IEnumerable<TAggregate> current, Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>> operationFunction) => operationFunction(current);
+
 }

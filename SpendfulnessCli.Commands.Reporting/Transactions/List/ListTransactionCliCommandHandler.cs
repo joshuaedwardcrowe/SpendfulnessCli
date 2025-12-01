@@ -10,19 +10,22 @@ namespace SpendfulnessCli.Commands.Reporting.Transactions.List;
 public class ListTransactionCliCommandHandler(SpendfulnessBudgetClient spendfulnessBudgetClient)
     : CliCommandHandler, ICliCommandHandler<ListTransactionCliCommand>
 {
-    public async Task<CliCommandOutcome[]> Handle(ListTransactionCliCommand transactionCliCommand, CancellationToken cancellationToken)
+    public async Task<CliCommandOutcome[]> Handle(ListTransactionCliCommand command, CancellationToken cancellationToken)
     {
         var budget = await spendfulnessBudgetClient.GetDefaultBudget();
 
         var transactions = await budget.GetTransactions();
-
-        var aggregator = new TransactionYnabListAggregator(transactions);
+        
+        var aggregator = new TransactionPagedListAggregator(
+            transactions,
+            command.PageNumber,
+            command.PageSize);
 
         // TODO: Move to filter command.
-        if (transactionCliCommand.PayeeName is not null)
+        if (command.PayeeName is not null)
         {
             aggregator.BeforeAggregation(transaction
-                => transaction.FilterToPayeeNames([transactionCliCommand.PayeeName]));
+                => transaction.FilterToPayeeNames([command.PayeeName]));
         }
         
         // TODO: Move to filter command.

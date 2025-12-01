@@ -2,7 +2,12 @@ using Ynab;
 
 namespace SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 
-public class TransactionYnabListAggregator(IEnumerable<Transaction> transactions) : YnabListAggregator<Transaction>(transactions)
+public class TransactionPagedListAggregator : YnabListAggregator<Transaction>
 {
+    public TransactionPagedListAggregator(IEnumerable<Transaction> transactions, int pageNumber, int pageSize)
+        : base(transactions, pageSize, pageNumber)
+    {
+    }
+
     protected override IEnumerable<Transaction> GenerateAggregate() => Transactions;
 }

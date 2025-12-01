@@ -5,6 +5,7 @@ using Ynab;
 
 namespace SpendfulnessCli.Aggregation.Aggregator;
 
+// TODO: Renamed to YnabPagedListAggregator
 public abstract class YnabListAggregator<TAggregation> : CliListAggregator<TAggregation>
 {
     protected IEnumerable<Account> Accounts { get; set; } 
@@ -49,6 +50,14 @@ public abstract class YnabListAggregator<TAggregation> : CliListAggregator<TAggr
     }
 
     protected YnabListAggregator(IEnumerable<Transaction> transactions)
+    {
+        Accounts = new List<Account>();
+        CategoryGroups = new List<CategoryGroup>();
+        Transactions = transactions;
+        Commitments = new List<Commitment>();
+    }
+
+    protected YnabListAggregator(IEnumerable<Transaction> transactions, int pageSize, int pageNumber) : base(pageSize, pageNumber)
     {
         Accounts = new List<Account>();
         CategoryGroups = new List<CategoryGroup>();
