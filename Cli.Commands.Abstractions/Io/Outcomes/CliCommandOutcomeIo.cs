@@ -20,6 +20,7 @@ public class CliCommandOutcomeIo : CliIo, ICliCommandOutcomeIo
         {
             case CliCommandTableOutcome tableOutcome:
                 Say(tableOutcome.Table.ToString());
+                Say($"Results: {tableOutcome.Table.Rows.Count} rows");
                 break;
             case CliCommandOutputOutcome outputOutcome:
                 Say(outputOutcome.Output);

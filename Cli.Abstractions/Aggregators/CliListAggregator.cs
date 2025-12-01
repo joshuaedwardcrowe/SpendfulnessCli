@@ -2,28 +2,29 @@ namespace Cli.Abstractions.Aggregators;
 
 public abstract class CliListAggregator<TAggregate> : CliAggregator<IEnumerable<TAggregate>>
 {
-    private readonly int _pageSize;
-    private readonly int _pageNumber;
+    // TODO: If the filter commands can be linked to Pagination, this being public isn't needed.
+    public readonly int PageSize;
+    public readonly int PageNumber;
     
     private readonly List<Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>>> _aggregateFunctions = [];
 
     protected CliListAggregator(int? pageSize = null, int? pageNumber = null)
     {
-        _pageSize = pageSize ?? 20;
-        _pageNumber = pageNumber ?? 1;
+        PageSize = pageSize ?? 20;
+        PageNumber = pageNumber ?? 1;
     }
     
     public override IEnumerable<TAggregate> Aggregate()
     {
         var aggregates = ListAggregate();
+        
+        aggregates = _aggregateFunctions.Aggregate(aggregates, ApplyAggregateFunction);
 
-        var skipNumber = _pageSize * (_pageNumber - 1);
+        var skipNumber = PageSize * (PageNumber - 1);
         
         aggregates = aggregates.Skip(skipNumber);
-        
-        aggregates = aggregates.Take(_pageSize);
 
-        return _aggregateFunctions.Aggregate(aggregates, ApplyAggregateFunction);
+        return aggregates.Take(PageSize);
     }
     public CliListAggregator<TAggregate> AfterAggregation(Func<IEnumerable<TAggregate>, IEnumerable<TAggregate>> operationFunction)
     {
