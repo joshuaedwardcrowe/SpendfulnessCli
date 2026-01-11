@@ -6,9 +6,13 @@ namespace Spendfulness.Cli.CliTables.Tests.Calculators;
 public class PercentageCalculatorTests
 {
     [TestCase(50, 100, 100)]
+    [TestCase(50, 150, 200)]
+    [TestCase(100, 500, 400)]
     [TestCase(60, 40, -33)]
     [TestCase(40, 60, 50)]
     [TestCase(2340.20, 1043.20, -55)]
+    [TestCase(-479.07, -1421.15, 196)]
+    [TestCase(-71.12, -232.67, 227)]
     public void GivenBigAndLowValue_WhenCalculateChange_Calculates(decimal oldValue, decimal newValue, int change)
     {
         var result = PercentageCalculator.CalculateChange(oldValue, newValue);

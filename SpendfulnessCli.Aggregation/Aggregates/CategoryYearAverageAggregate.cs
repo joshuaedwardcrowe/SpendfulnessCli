@@ -1,5 +1,5 @@
 namespace SpendfulnessCli.Aggregation.Aggregates;
 
-// TODO: I hate that this aggregate has a dictionary in it.
+// TODO: Refactor - This aggregate represents more than a single data point. 
 
-public record CategoryYearAverageAggregate(string CategoryName, Dictionary<string, decimal> AverageAmountByYears);
+public record CategoryYearAverageAggregate(string CategoryName, Dictionary<int, decimal> AverageAmountByYears);

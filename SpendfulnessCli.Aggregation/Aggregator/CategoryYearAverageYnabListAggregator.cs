@@ -13,5 +13,5 @@ public class CategoryYearAverageYnabListAggregator(IEnumerable<Transaction> tran
          => Transactions
                 .GroupByCategory()
                 .GroupByYear()
-                .AggregateYearAverages();
+                .LegacyAggregateYearAverages();
 }

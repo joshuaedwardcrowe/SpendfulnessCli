@@ -10,6 +10,9 @@ public class SplitTransactionResponse
     [JsonPropertyName("memo")]
     public string? Memo { get; set; }
     
+    [JsonPropertyName("date")]
+    public DateTime Occured { get; set; }
+    
     [JsonPropertyName("amount")]
     public int Amount { get; set; }
     

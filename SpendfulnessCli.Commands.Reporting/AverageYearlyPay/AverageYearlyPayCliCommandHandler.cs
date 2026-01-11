@@ -35,7 +35,7 @@ public class AverageYearlyPayCliCommandHandler(SpendfulnessBudgetClient budgetCl
         aggregator
             .BeforeAggregation(t => t.FilterToInflow())
             .BeforeAggregation(t => t.FilterToPayeeNames("BrightHR"))
-            .BeforeAggregation(t => t.OrderByYear()); 
+            .BeforeAggregation(t => t.OrderByYearAscending()); 
 
         return aggregator;
     }

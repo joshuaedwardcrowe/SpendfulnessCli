@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Spendfulness.Database;
+using SpendfulnessCli.Sync.Exports;
 using SpendfulnessCli.Sync.Synchronisers;
 using Ynab.Extensions;
 
@@ -16,7 +17,7 @@ public static class SyncSetup
         
         // Sync-related
         serviceCollection
-            .AddHostedService<DatabaseSynchroniser>();  // Ensure db is created with testing settings..
+            .AddHostedService<PersonalInflationRateExport>(); 
         // .AddHostedService<CommitmentSynchroniser>()
         // .AddHostedService<DerivableSpendingSampleSynchroniser>();
         // .AddHostedService<PossibleSpendingSampleSynchroniser>();

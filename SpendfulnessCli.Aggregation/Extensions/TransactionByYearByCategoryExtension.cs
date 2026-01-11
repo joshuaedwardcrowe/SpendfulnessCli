@@ -5,7 +5,7 @@ namespace SpendfulnessCli.Aggregation.Extensions;
 
 public static class TransactionByYearByCategoryExtension
 {
-    public static IEnumerable<CategoryYearAverageAggregate> AggregateYearAverages(
+    public static IEnumerable<CategoryYearAverageAggregate> LegacyAggregateYearAverages(
         this IEnumerable<TransactionsByYearByCategory> transactionGroups)
     {
         foreach (var transactionGroup in transactionGroups)

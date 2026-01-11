@@ -4,9 +4,6 @@ namespace Ynab.Responses.Transactions;
 
 public class TransactionResponse : SplitTransactionResponse
 {
-    [JsonPropertyName("date")]
-    public DateTime Occured { get; set; }
-    
     [JsonPropertyName("flag_color")]
     public FlagColor? FlagColor { get; set; }
     
