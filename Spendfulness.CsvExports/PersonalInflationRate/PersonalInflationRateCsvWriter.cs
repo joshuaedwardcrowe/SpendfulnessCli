@@ -1,18 +1,18 @@
 using System.Globalization;
 using CsvHelper;
 using Spendfulness.Database;
+using Spendfulness.Formatters;
 using SpendfulnessCli.Aggregation.Aggregates;
 using SpendfulnessCli.Aggregation.Aggregator;
 using SpendfulnessCli.Aggregation.Calculators;
-using SpendfulnessCli.CliTables.Formatters;
 using Ynab;
 
-namespace SpendfulnessCli.Sync.Exports;
+namespace Spendfulness.CsvExports.PersonalInflationRate;
 
 public class PersonalInflationRateCsvWriter(SpendfulnessBudgetClient spendfulnessBudgetClient) 
-    : ICsvWriter<SomeAggregateCollection>
+    : ICsvWriter<TransactionByYearsByCategoryGroupAggregate>
 {
-    public async Task Write(YnabListAggregator<SomeAggregateCollection> aggregator)
+    public async Task Write(YnabListAggregator<TransactionByYearsByCategoryGroupAggregate> aggregator)
     {
         var profileDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         var ynabCalibrationPath = $"{profileDirectoryPath}//personal_inflation_rate.csv";
@@ -54,7 +54,7 @@ public class PersonalInflationRateCsvWriter(SpendfulnessBudgetClient spendfulnes
         csv.WriteField("Average % Change");
     }
 
-    private async Task WriteBody(CsvWriter csv, BudgetYears years, IEnumerable<SomeAggregateCollection> aggregates)
+    private async Task WriteBody(CsvWriter csv, BudgetYears years, IEnumerable<TransactionByYearsByCategoryGroupAggregate> aggregates)
     {
         foreach (var aggregate in aggregates)
         {

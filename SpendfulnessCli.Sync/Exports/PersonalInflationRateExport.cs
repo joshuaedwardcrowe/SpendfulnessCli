@@ -1,8 +1,6 @@
 using Microsoft.Extensions.Hosting;
 using Spendfulness.Database;
-using SpendfulnessCli.Aggregation.Aggregates;
 using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
-using Ynab;
 
 namespace SpendfulnessCli.Sync.Exports;
 
@@ -17,7 +15,7 @@ public class PersonalInflationRateExport(SpendfulnessBudgetClient spendfulnessBu
         
         var years = defaultBudget.GetYears();
 
-        var aggregates = new SomethingAggregator(years, transactions, categoryGroups)
+        var aggregates = new TransactionByYearsByCategoryGroupAggregator(years, transactions, categoryGroups)
             .Aggregate();
 
         // await WriteCsv(years, aggregates);

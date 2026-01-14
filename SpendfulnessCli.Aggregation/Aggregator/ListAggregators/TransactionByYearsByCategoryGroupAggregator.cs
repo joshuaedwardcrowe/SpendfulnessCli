@@ -5,13 +5,13 @@ using Ynab.Extensions;
 
 namespace SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 
-public class SomethingAggregator(
+public class TransactionByYearsByCategoryGroupAggregator(
     BudgetYears budgetYears,
     IEnumerable<Transaction> transactions,
     IEnumerable<CategoryGroup> categoryGroups)
-    : YnabListAggregator<SomeAggregateCollection>(transactions, categoryGroups)
+    : YnabListAggregator<TransactionByYearsByCategoryGroupAggregate>(transactions, categoryGroups)
 {
-    protected override IEnumerable<SomeAggregateCollection> GenerateAggregate()
+    protected override IEnumerable<TransactionByYearsByCategoryGroupAggregate> GenerateAggregate()
     {
         var splitTransactions = Transactions
             .Where(transaction => transaction.SplitTransactions.Any())
@@ -30,12 +30,12 @@ public class SomethingAggregator(
             .FilterToSpendingCategories();
         
         // --- Below is an aggregation process.---
-        var someAggregateCollections = new List<SomeAggregateCollection>();
+        var someAggregateCollections = new List<TransactionByYearsByCategoryGroupAggregate>();
 
         // Every group should show.
         foreach (var categoryGroup in spendingCategoryGroups)
         {
-            var someAggregates = new List<SomeAggregate>();
+            var someAggregates = new List<TransactionByYearsByCategoryAggregate>();
 
             foreach (var category in categoryGroup.Categories)
             {
@@ -53,7 +53,7 @@ public class SomethingAggregator(
                     byYears.Add(transactionsInYear);
                 }
                 
-                var agg = new SomeAggregate
+                var agg = new TransactionByYearsByCategoryAggregate
                 {
                     CategoryName = category.Name,
                     TransactionsByYears = byYears
@@ -62,7 +62,7 @@ public class SomethingAggregator(
                 someAggregates.Add(agg);
             }
             
-            var collection = new SomeAggregateCollection
+            var collection = new TransactionByYearsByCategoryGroupAggregate
             {
                 CategoryGroupName = categoryGroup.Name,
                 Aggregates = someAggregates

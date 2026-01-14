@@ -1,4 +1,4 @@
-namespace SpendfulnessCli.CliTables.Formatters;
+namespace Spendfulness.Formatters;
 
 public static class AmountPercentageChangeDisplayFormatter
 {

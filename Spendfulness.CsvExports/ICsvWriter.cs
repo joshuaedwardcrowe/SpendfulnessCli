@@ -1,6 +1,6 @@
 using SpendfulnessCli.Aggregation.Aggregator;
 
-namespace SpendfulnessCli.Sync.Exports;
+namespace Spendfulness.CsvExports;
 
 public interface ICsvWriter<TCsvRow> where TCsvRow : class, new()
 {

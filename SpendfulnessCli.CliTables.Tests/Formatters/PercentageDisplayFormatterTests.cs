@@ -1,4 +1,4 @@
-using SpendfulnessCli.CliTables.Formatters;
+using Spendfulness.Formatters;
 
 namespace Spendfulness.Cli.CliTables.Tests.Formatters;
 

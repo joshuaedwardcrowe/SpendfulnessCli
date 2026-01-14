@@ -1,7 +1,7 @@
 using Spendfulness.Database.Commitments;
+using Spendfulness.Formatters;
 using SpendfulnessCli.Aggregation.Calculators;
 using SpendfulnessCli.CliTables.Extensions;
-using SpendfulnessCli.CliTables.Formatters;
 using Ynab.Sanitisers;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;

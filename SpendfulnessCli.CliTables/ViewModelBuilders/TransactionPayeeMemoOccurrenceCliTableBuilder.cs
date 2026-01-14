@@ -1,5 +1,5 @@
+using Spendfulness.Formatters;
 using SpendfulnessCli.Aggregation.Aggregates;
-using SpendfulnessCli.CliTables.Formatters;
 using SpendfulnessCli.CliTables.ViewModels;
 using Ynab.Sanitisers;
 
