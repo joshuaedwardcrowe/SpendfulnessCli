@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Hosting;
+using Spendfulness.Aggregation.Aggregator.ListAggregators;
 using Spendfulness.Database;
 using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 

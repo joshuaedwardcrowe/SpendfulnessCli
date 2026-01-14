@@ -1,4 +1,4 @@
-namespace SpendfulnessCli.Aggregation.Aggregates;
+namespace Spendfulness.Aggregation.Aggregates;
 
 public record TransactionMonthFlaggedAggregate(
     string Month,

@@ -1,4 +1,4 @@
-using Spendfulness.Formatters;
+using Spendfulness.Tools;
 using SpendfulnessCli.CliTables.ViewModels;
 using Ynab;
 

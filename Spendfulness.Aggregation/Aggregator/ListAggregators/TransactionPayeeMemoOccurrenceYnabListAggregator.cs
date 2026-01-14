@@ -1,9 +1,10 @@
+using Spendfulness.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Extensions;
+using SpendfulnessCli.Aggregation.Aggregator;
 using Ynab;
 using Ynab.Extensions;
-using SpendfulnessCli.Aggregation.Extensions;
-using SpendfulnessCli.Aggregation.Aggregates;
 
-namespace SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
+namespace Spendfulness.Aggregation.Aggregator.ListAggregators;
 
 public class TransactionPayeeMemoOccurrenceYnabListAggregator(IEnumerable<Transaction> transactions)
     : YnabListAggregator<TransactionPayeeMemoOccurrenceAggregate>(transactions)

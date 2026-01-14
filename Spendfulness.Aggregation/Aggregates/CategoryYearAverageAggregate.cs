@@ -1,4 +1,4 @@
-namespace SpendfulnessCli.Aggregation.Aggregates;
+namespace Spendfulness.Aggregation.Aggregates;
 
 // TODO: Refactor - This aggregate represents more than a single data point. 
 

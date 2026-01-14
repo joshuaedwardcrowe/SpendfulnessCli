@@ -1,10 +1,11 @@
-using SpendfulnessCli.Aggregation.Calculators;
-using SpendfulnessCli.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregates;
+using Spendfulness.Tools.Percentages;
+using SpendfulnessCli.Aggregation.Aggregator;
 using Ynab;
 using Ynab.Collections;
 using Ynab.Extensions;
 
-namespace SpendfulnessCli.Aggregation.Aggregator;
+namespace Spendfulness.Aggregation.Aggregator;
 
 public class TransactionMonthFlaggedYnabListAggregator(IEnumerable<CategoryGroup> categoryGroups, IEnumerable<Transaction> transactions)
     : YnabListAggregator<TransactionMonthFlaggedAggregate>(categoryGroups, transactions)

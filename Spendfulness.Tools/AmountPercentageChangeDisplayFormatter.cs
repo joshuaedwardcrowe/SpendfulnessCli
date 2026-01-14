@@ -1,4 +1,6 @@
-namespace Spendfulness.Formatters;
+using Spendfulness.Tools.Percentages;
+
+namespace Spendfulness.Tools;
 
 public static class AmountPercentageChangeDisplayFormatter
 {

@@ -1,4 +1,4 @@
-using Spendfulness.Formatters;
+using Spendfulness.Tools.Percentages;
 
 namespace Spendfulness.Cli.CliTables.Tests.Formatters;
 

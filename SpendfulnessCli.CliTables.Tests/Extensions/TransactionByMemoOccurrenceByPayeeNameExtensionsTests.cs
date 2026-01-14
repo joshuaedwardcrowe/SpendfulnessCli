@@ -1,3 +1,4 @@
+using Spendfulness.Aggregation.Extensions;
 using SpendfulnessCli.Aggregation.Extensions;
 using Ynab;
 using Ynab.Collections;

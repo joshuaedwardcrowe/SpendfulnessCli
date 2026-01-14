@@ -1,4 +1,4 @@
-using SpendfulnessCli.Aggregation.Calculators;
+using Spendfulness.Tools.Percentages;
 
 namespace Spendfulness.Cli.CliTables.Tests.Calculators;
 

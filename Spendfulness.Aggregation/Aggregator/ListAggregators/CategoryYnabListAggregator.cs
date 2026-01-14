@@ -1,7 +1,8 @@
-using SpendfulnessCli.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregates;
+using SpendfulnessCli.Aggregation.Aggregator;
 using Ynab;
 
-namespace SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
+namespace Spendfulness.Aggregation.Aggregator.ListAggregators;
 
 public class CategoryYnabListAggregator(IEnumerable<CategoryGroup> categoryGroups) 
     : YnabListAggregator<CategoryAggregate>(categoryGroups)

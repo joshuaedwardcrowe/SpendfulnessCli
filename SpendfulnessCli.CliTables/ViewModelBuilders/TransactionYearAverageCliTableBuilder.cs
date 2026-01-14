@@ -1,5 +1,6 @@
-using Spendfulness.Formatters;
-using SpendfulnessCli.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregates;
+using Spendfulness.Tools;
+using Spendfulness.Tools.Percentages;
 using SpendfulnessCli.CliTables.ViewModels;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;

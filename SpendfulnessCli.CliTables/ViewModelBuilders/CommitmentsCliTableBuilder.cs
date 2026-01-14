@@ -1,6 +1,6 @@
 using Spendfulness.Database.Commitments;
-using Spendfulness.Formatters;
-using SpendfulnessCli.Aggregation.Calculators;
+using Spendfulness.Tools;
+using Spendfulness.Tools.Percentages;
 using SpendfulnessCli.CliTables.Extensions;
 using Ynab.Sanitisers;
 

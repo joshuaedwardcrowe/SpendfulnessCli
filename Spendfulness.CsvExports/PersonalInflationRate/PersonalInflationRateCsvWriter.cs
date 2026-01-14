@@ -1,10 +1,10 @@
 using System.Globalization;
 using CsvHelper;
+using Spendfulness.Aggregation.Aggregates;
 using Spendfulness.Database;
-using Spendfulness.Formatters;
-using SpendfulnessCli.Aggregation.Aggregates;
+using Spendfulness.Tools;
+using Spendfulness.Tools.Percentages;
 using SpendfulnessCli.Aggregation.Aggregator;
-using SpendfulnessCli.Aggregation.Calculators;
 using Ynab;
 
 namespace Spendfulness.CsvExports.PersonalInflationRate;

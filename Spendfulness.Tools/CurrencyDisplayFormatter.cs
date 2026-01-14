@@ -1,4 +1,4 @@
-namespace Spendfulness.Formatters;
+namespace Spendfulness.Tools;
 
 public static class CurrencyDisplayFormatter
 {

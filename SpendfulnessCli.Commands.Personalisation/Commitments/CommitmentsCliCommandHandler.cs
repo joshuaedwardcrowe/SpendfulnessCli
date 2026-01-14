@@ -1,5 +1,6 @@
 using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
+using Spendfulness.Aggregation.Aggregator;
 using Spendfulness.Database;
 using Spendfulness.Database.Commitments;
 using Spendfulness.Database.Users;

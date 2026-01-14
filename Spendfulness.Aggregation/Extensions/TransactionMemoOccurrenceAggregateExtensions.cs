@@ -1,6 +1,6 @@
-using SpendfulnessCli.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregates;
 
-namespace SpendfulnessCli.Aggregation.Extensions;
+namespace Spendfulness.Aggregation.Extensions;
 
 public static class TransactionMemoOccurrenceAggregateExtensions
 {

@@ -1,6 +1,6 @@
 using Ynab.Collections;
 
-namespace SpendfulnessCli.Aggregation.Aggregates;
+namespace Spendfulness.Aggregation.Aggregates;
 
 public class TransactionByYearsByCategoryAggregate
 {

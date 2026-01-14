@@ -1,13 +1,12 @@
-using Cli.Abstractions;
 using Cli.Abstractions.Aggregators;
 using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Commands.Abstractions.Outcomes.Final;
 using Cli.Commands.Abstractions.Outcomes.Reusable;
+using Spendfulness.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregator.ListAggregators;
+using Spendfulness.Aggregation.Extensions;
 using Spendfulness.Database;
-using SpendfulnessCli.Aggregation.Aggregates;
-using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
-using SpendfulnessCli.Aggregation.Extensions;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
 using Ynab;
 using Ynab.Extensions;

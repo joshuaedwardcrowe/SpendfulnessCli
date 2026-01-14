@@ -1,5 +1,5 @@
-using Spendfulness.Formatters;
-using SpendfulnessCli.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregates;
+using Spendfulness.Tools;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 

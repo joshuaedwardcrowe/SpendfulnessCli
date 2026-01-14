@@ -111,7 +111,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendfulnessCli.Commands.Cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.CsvExports", "Spendfulness.CsvExports\Spendfulness.CsvExports.csproj", "{D9A6F089-72AF-4155-84F2-D0384F40AC4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Formatters", "Spendfulness.Formatters\Spendfulness.Formatters.csproj", "{B8DE9B7B-3B54-412F-B97E-FA8796DD7BDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Tools", "Spendfulness.Tools\Spendfulness.Tools.csproj", "{B8DE9B7B-3B54-412F-B97E-FA8796DD7BDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Aggregation", "Spendfulness.Aggregation\Spendfulness.Aggregation.csproj", "{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -259,6 +261,10 @@ Global
 		{B8DE9B7B-3B54-412F-B97E-FA8796DD7BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8DE9B7B-3B54-412F-B97E-FA8796DD7BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8DE9B7B-3B54-412F-B97E-FA8796DD7BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1C607C1F-B2A8-4405-B5F9-224D8434FDA4} = {68F25F73-18EB-4E65-80EB-1EDCAF174DFA}
@@ -296,5 +302,6 @@ Global
 		{814F0D2F-96AF-44C7-9932-F7676212637C} = {288969D4-0605-4444-B37F-7B01D4AD5165}
 		{D9A6F089-72AF-4155-84F2-D0384F40AC4C} = {52E90345-79FA-4FD3-8A3A-1D69887FA38E}
 		{B8DE9B7B-3B54-412F-B97E-FA8796DD7BDC} = {52E90345-79FA-4FD3-8A3A-1D69887FA38E}
+		{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60} = {52E90345-79FA-4FD3-8A3A-1D69887FA38E}
 	EndGlobalSection
 EndGlobal

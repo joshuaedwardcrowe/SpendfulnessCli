@@ -1,6 +1,5 @@
-using Cli.Abstractions;
 using Cli.Abstractions.Aggregators;
-using SpendfulnessCli.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregates;
 
 namespace SpendfulnessCli.Commands.Reusable.Table.MonthlySpending;
 

@@ -1,7 +1,7 @@
-using SpendfulnessCli.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregates;
 using Ynab.Collections;
 
-namespace SpendfulnessCli.Aggregation.Extensions;
+namespace Spendfulness.Aggregation.Extensions;
 
 public static class TransactionByMemoOccurrenceByPayeeNameExtensions
 {

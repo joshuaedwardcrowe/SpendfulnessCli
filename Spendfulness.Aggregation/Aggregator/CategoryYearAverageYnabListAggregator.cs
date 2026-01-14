@@ -1,9 +1,10 @@
+using Spendfulness.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Extensions;
+using SpendfulnessCli.Aggregation.Aggregator;
 using Ynab;
 using Ynab.Extensions;
-using SpendfulnessCli.Aggregation.Extensions;
-using SpendfulnessCli.Aggregation.Aggregates;
 
-namespace SpendfulnessCli.Aggregation.Aggregator;
+namespace Spendfulness.Aggregation.Aggregator;
 
 // TODO: FIx this name.
 public class CategoryYearAverageYnabListAggregator(IEnumerable<Transaction> transactions)

@@ -4,7 +4,7 @@ using Cli.Commands.Abstractions.Factories;
 using Cli.Commands.Abstractions.Outcomes.Reusable;
 using Cli.Instructions.Abstractions;
 using Cli.Workflow.Commands.MissingOutcomes;
-using SpendfulnessCli.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregates;
 using SpendfulnessCli.Commands.Reusable.MonthlySpending;
 
 namespace SpendfulnessCli.Commands.Reusable.Table.MonthlySpending;
