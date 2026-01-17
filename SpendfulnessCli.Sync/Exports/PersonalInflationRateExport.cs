@@ -10,6 +10,11 @@ public class PersonalInflationRateExport : BackgroundService
 {
     private readonly SpendfulnessBudgetClient spendfulnessBudgetClient;
 
+    public PersonalInflationRateExport(SpendfulnessBudgetClient spendfulnessBudgetClient)
+    {
+        this.spendfulnessBudgetClient = spendfulnessBudgetClient;
+    }
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var defaultBudget = await spendfulnessBudgetClient.GetDefaultBudget();
