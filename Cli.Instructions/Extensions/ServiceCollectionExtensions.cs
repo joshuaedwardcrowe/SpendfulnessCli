@@ -19,6 +19,7 @@ public static class ServiceCollectionExtensions
     
     private static IServiceCollection AddCliInstructionArgumentBuilders(this IServiceCollection serviceCollection)
         => serviceCollection
+            .AddSingleton<ICliInstructionArgumentBuilder, DirectoryInfoCliInstructionArgumentBuilder>()
             .AddSingleton<ICliInstructionArgumentBuilder, GuidCliInstructionArgumentBuilder>()
             .AddSingleton<ICliInstructionArgumentBuilder, StringCliInstructionArgumentBuilder>()
             .AddSingleton<ICliInstructionArgumentBuilder, IntCliInstructionArgumentBuilder>()
