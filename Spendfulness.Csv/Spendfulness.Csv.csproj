@@ -4,6 +4,8 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AssemblyName>Spendfulness.Csv</AssemblyName>
+        <RootNamespace>Spendfulness.Csv</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

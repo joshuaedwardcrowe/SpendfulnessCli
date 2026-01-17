@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Spendfulness.Csv;
 using Spendfulness.Database;
 using SpendfulnessCli.Sync.Exports;
 using SpendfulnessCli.Sync.Synchronisers;

@@ -109,7 +109,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Commands", "Cli.Command
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendfulnessCli.Commands.CsvExports", "SpendfulnessCli.Commands.CsvExports\SpendfulnessCli.Commands.CsvExports.csproj", "{814F0D2F-96AF-44C7-9932-F7676212637C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.CsvExports", "Spendfulness.CsvExports\Spendfulness.CsvExports.csproj", "{D9A6F089-72AF-4155-84F2-D0384F40AC4C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Csv", "Spendfulness.Csv\Spendfulness.Csv.csproj", "{D9A6F089-72AF-4155-84F2-D0384F40AC4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Tools", "Spendfulness.Tools\Spendfulness.Tools.csproj", "{B8DE9B7B-3B54-412F-B97E-FA8796DD7BDC}"
 EndProject
