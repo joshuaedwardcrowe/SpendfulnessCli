@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Ynab.Responses.Transactions;
 
-public class TransactionResponse : SplitTransactionResponse
+public record TransactionResponse : SplitTransactionResponse
 {
     [JsonPropertyName("flag_color")]
     public FlagColor? FlagColor { get; set; }

@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Ynab.Responses.Transactions;
 
-public class SplitTransactionResponse
+public record SplitTransactionResponse
 {
     [JsonPropertyName("id")]
     public required string Id { get; set; }

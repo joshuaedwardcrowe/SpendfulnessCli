@@ -83,21 +83,9 @@ public class PersonalInflationRateCsvBuilder : ICsvBuilder<TransactionByYearsByC
         foreach (var measurableYear in years.Measurable)
         {
             var priorYear = measurableYear - 1;
-
-            // Sum current year spend for all categories in the group
-            var currentYearSpend = aggregate.CategoryAggregates
-                .Select(cat => cat.TransactionsByYears
-                    .First(tby => tby.Year == measurableYear)
-                    .SplitTransactions.Sum(transaction => transaction.Amount))
-                .Sum();
-
-            // Sum prior year spend for all categories in the group
-            var priorYearSpend = aggregate.CategoryAggregates
-                .Select(cat => cat.TransactionsByYears
-                    .First(tby => tby.Year == priorYear)
-                    .SplitTransactions
-                    .Sum(transaction => transaction.Amount))
-                .Sum();
+            
+            var currentYearSpend = aggregate.TotalAmountForYear(measurableYear);
+            var priorYearSpend = aggregate.TotalAmountForYear(priorYear);
 
             var totalSpendText = CurrencyDisplayFormatter.Format(currentYearSpend);
             csvColumns.Add(totalSpendText);
@@ -112,19 +100,8 @@ public class PersonalInflationRateCsvBuilder : ICsvBuilder<TransactionByYearsByC
             {
                 var priorYear = measurableYear - 1;
 
-                var currentYearSpend = aggregate.CategoryAggregates
-                    .Select(cat => cat.TransactionsByYears
-                        .First(tby => tby.Year == measurableYear)
-                        .SplitTransactions
-                        .Sum(transaction => transaction.Amount))
-                    .Sum();
-
-                var priorYearSpend = aggregate.CategoryAggregates
-                    .Select(cat => cat.TransactionsByYears
-                        .First(tby => tby.Year == priorYear)
-                        .SplitTransactions
-                        .Sum(transaction => transaction.Amount))
-                    .Sum();
+                var currentYearSpend = aggregate.TotalAmountForYear(measurableYear);
+                var priorYearSpend = aggregate.TotalAmountForYear(priorYear);
 
                 return PercentageCalculator.CalculateChangeDecimal(priorYearSpend, currentYearSpend);
             })
@@ -145,15 +122,8 @@ public class PersonalInflationRateCsvBuilder : ICsvBuilder<TransactionByYearsByC
         {
             var priorYear = measurableYear - 1;
 
-            var currentYearSpend = aggregate.TransactionsByYears
-                .First(tby => tby.Year == measurableYear)
-                .SplitTransactions
-                .Sum(transaction => transaction.Amount);
-
-            var priorYearSpend = aggregate.TransactionsByYears
-                .First(tby => tby.Year == priorYear)
-                .SplitTransactions
-                .Sum(transaction => transaction.Amount);
+            var currentYearSpend = aggregate.TotalAmountForYear(measurableYear);
+            var priorYearSpend = aggregate.TotalAmountForYear(priorYear);
 
             var totalSpendText = CurrencyDisplayFormatter.Format(currentYearSpend);
             csvColumns.Add(totalSpendText);
@@ -163,26 +133,21 @@ public class PersonalInflationRateCsvBuilder : ICsvBuilder<TransactionByYearsByC
             csvColumns.Add(percentageChangeText);
         }
         
-        var op = aggregate
+        var averagePercentageChange = aggregate
             .TransactionsByYears
             .Where(tby => years.Measurable.Contains(tby.Year))
             .Average(tby =>
             {
-                var currentYearSpend = aggregate
-                    .TransactionsByYears
-                    .First(tby2 => tby2.Year == tby.Year)
-                    .SplitTransactions
-                    .Sum(transaction => transaction.Amount);
-
-                var priorYearSpend = aggregate.TransactionsByYears
-                    .First(tby2 => tby2.Year == tby.Year - 1)
-                    .SplitTransactions
-                    .Sum(transaction => transaction.Amount);
+                var measurableYear = tby.Year;
+                var priorYear = measurableYear - 1;
+                
+                var currentYearSpend = aggregate.TotalAmountForYear(measurableYear);
+                var priorYearSpend = aggregate.TotalAmountForYear(priorYear);
 
                 return PercentageCalculator.CalculateChangeDecimal(priorYearSpend, currentYearSpend);
             });
         
-        var averagePercentageChangeText = PercentageDisplayFormatter.Format(op);
+        var averagePercentageChangeText = PercentageDisplayFormatter.Format(averagePercentageChange);
         csvColumns.Add(averagePercentageChangeText);
 
         return new CsvRow(csvColumns);

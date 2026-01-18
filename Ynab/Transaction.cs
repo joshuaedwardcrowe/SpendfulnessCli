@@ -9,5 +9,9 @@ public class Transaction(TransactionResponse transactionResponse) : SplitTransac
     public IEnumerable<SplitTransactions> SplitTransactions 
         => transactionResponse
             .SplitTransactions
-            .Select(transaction => new SplitTransactions(transaction));
+            .Select(splitTransactionResponse => new SplitTransactions(splitTransactionResponse with
+            {
+                // Splits do not have occured set.
+                Occured = transactionResponse.Occured
+            }));
 }
