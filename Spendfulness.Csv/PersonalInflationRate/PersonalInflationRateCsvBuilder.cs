@@ -41,7 +41,7 @@ public class PersonalInflationRateCsvBuilder : ICsvBuilder<TransactionByYearsByC
             var categoryGroupCsvRow = BuildCategoryGroupCsvRow(aggregate, years);
             csvRows.Add(categoryGroupCsvRow);
             
-            foreach (var categoryAggregate in aggregate.Aggregates)
+            foreach (var categoryAggregate in aggregate.CategoryAggregates)
             {
                 var categoryCsvRow = BuildCategoryCsvRow(categoryAggregate, years);
                 csvRows.Add(categoryCsvRow);
@@ -85,14 +85,14 @@ public class PersonalInflationRateCsvBuilder : ICsvBuilder<TransactionByYearsByC
             var priorYear = measurableYear - 1;
 
             // Sum current year spend for all categories in the group
-            var currentYearSpend = aggregate.Aggregates
+            var currentYearSpend = aggregate.CategoryAggregates
                 .Select(cat => cat.TransactionsByYears
                     .First(tby => tby.Year == measurableYear)
                     .SplitTransactions.Sum(transaction => transaction.Amount))
                 .Sum();
 
             // Sum prior year spend for all categories in the group
-            var priorYearSpend = aggregate.Aggregates
+            var priorYearSpend = aggregate.CategoryAggregates
                 .Select(cat => cat.TransactionsByYears
                     .First(tby => tby.Year == priorYear)
                     .SplitTransactions
@@ -112,14 +112,14 @@ public class PersonalInflationRateCsvBuilder : ICsvBuilder<TransactionByYearsByC
             {
                 var priorYear = measurableYear - 1;
 
-                var currentYearSpend = aggregate.Aggregates
+                var currentYearSpend = aggregate.CategoryAggregates
                     .Select(cat => cat.TransactionsByYears
                         .First(tby => tby.Year == measurableYear)
                         .SplitTransactions
                         .Sum(transaction => transaction.Amount))
                     .Sum();
 
-                var priorYearSpend = aggregate.Aggregates
+                var priorYearSpend = aggregate.CategoryAggregates
                     .Select(cat => cat.TransactionsByYears
                         .First(tby => tby.Year == priorYear)
                         .SplitTransactions

@@ -30,13 +30,11 @@ public class TransactionByYearsByCategoryGroupAggregator(
         var spendingCategoryGroups = CategoryGroups
             .FilterToSpendingCategories();
         
-        // --- Below is an aggregation process.---
-        var someAggregateCollections = new List<TransactionByYearsByCategoryGroupAggregate>();
-
-        // Every group should show.
+        var categoryGroupAggregates = new List<TransactionByYearsByCategoryGroupAggregate>();
+        
         foreach (var categoryGroup in spendingCategoryGroups)
         {
-            var someAggregates = new List<TransactionByYearsByCategoryAggregate>();
+            var categoryAggregates = new List<TransactionByYearsByCategoryAggregate>();
 
             foreach (var category in categoryGroup.Categories)
             {
@@ -47,31 +45,33 @@ public class TransactionByYearsByCategoryGroupAggregator(
                 
                 foreach (var year in budgetYears.All)
                 {
-                    var transactionByYear = categoryTransactions?.TransactionsByYear.FirstOrDefault(tby => tby.Year == year);
+                    var transactionByYear = categoryTransactions
+                        ?.TransactionsByYear
+                        .FirstOrDefault(tby => tby.Year == year);
                     
                     var transactionsInYear = transactionByYear ?? new SplitTransactionsByYear(year, new List<SplitTransactions>());
                     
                     byYears.Add(transactionsInYear);
                 }
                 
-                var agg = new TransactionByYearsByCategoryAggregate
+                var categoryAggregate = new TransactionByYearsByCategoryAggregate
                 {
                     CategoryName = category.Name,
                     TransactionsByYears = byYears
                 };
                 
-                someAggregates.Add(agg);
+                categoryAggregates.Add(categoryAggregate);
             }
             
-            var collection = new TransactionByYearsByCategoryGroupAggregate
+            var categoryGroupAggregate = new TransactionByYearsByCategoryGroupAggregate
             {
                 CategoryGroupName = categoryGroup.Name,
-                Aggregates = someAggregates
+                CategoryAggregates = categoryAggregates
             };
             
-            someAggregateCollections.Add(collection);
+            categoryGroupAggregates.Add(categoryGroupAggregate);
         }
 
-        return someAggregateCollections;
+        return categoryGroupAggregates;
     }
 }
