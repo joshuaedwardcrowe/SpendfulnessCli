@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Spendfulness.Csv\Spendfulness.Csv.csproj" />
       <ProjectReference Include="..\Spendfulness.Database\Spendfulness.Database.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Aggregation\SpendfulnessCli.Aggregation.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.CliTables\SpendfulnessCli.CliTables.csproj" />

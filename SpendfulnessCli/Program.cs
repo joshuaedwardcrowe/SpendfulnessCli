@@ -10,6 +10,7 @@ using SpendfulnessCli;
 using SpendfulnessCli.Abstractions.Taxis;
 using SpendfulnessCli.Aggregation.Extensions;
 using SpendfulnessCli.Commands;
+using SpendfulnessCli.Commands.Export.Csv;
 using SpendfulnessCli.Commands.Reporting;
 using SpendfulnessCli.Commands.Reusable;
 using Ynab.Extensions;
@@ -40,6 +41,7 @@ cliAppBuilder
             .AddSpendfulnessReportingCommands() 
             .AddSpendfulnessOrganisationCommands() 
             .AddSpendfulnessPersonalisationCommands() 
-            .AddSpendfulnessReusableCommands()); 
+            .AddSpendfulnessReusableCommands()
+            .AddSpendfulnessExportCsvCommands()); 
 
 await cliAppBuilder.Run();

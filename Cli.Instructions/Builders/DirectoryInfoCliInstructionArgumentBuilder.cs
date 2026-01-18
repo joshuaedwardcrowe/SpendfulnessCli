@@ -12,10 +12,7 @@ internal class DirectoryInfoCliInstructionArgumentBuilder : ICliInstructionArgum
             return false;
         }
 
-        var hasNoInvalidChars = HasInvalidCharacters(argumentValue);
-        var isFilePath = IsFilePath(argumentValue);
-
-        return hasNoInvalidChars && isFilePath;
+        return IsFilePath(argumentValue);
     }
 
     public CliInstructionArgument Create(string argumentName, string? argumentValue)
@@ -23,13 +20,6 @@ internal class DirectoryInfoCliInstructionArgumentBuilder : ICliInstructionArgum
         var directoryInfo = new DirectoryInfo(argumentValue ?? string.Empty);
         
         return new ValuedCliInstructionArgument<DirectoryInfo>(argumentName, directoryInfo);
-    }
-    
-    private static bool HasInvalidCharacters(string path)
-    {
-        var invalidPathChars = Path.GetInvalidPathChars();
-        var indexOfInvalidChar = path.IndexOfAny(invalidPathChars);
-        return indexOfInvalidChar >= 0;
     }
     
     private static bool IsFilePath(string argumentValue)

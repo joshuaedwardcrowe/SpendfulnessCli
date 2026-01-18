@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Cli.Commands.Abstractions\Cli.Commands.Abstractions.csproj" />
+      <ProjectReference Include="..\Cli.Instructions\Cli.Instructions.csproj" />
+      <ProjectReference Include="..\Spendfulness.Aggregation\Spendfulness.Aggregation.csproj" />
+      <ProjectReference Include="..\Spendfulness.Csv\Spendfulness.Csv.csproj" />
+      <ProjectReference Include="..\Spendfulness.Database.Abstractions\Spendfulness.Database.Abstractions.csproj" />
+      <ProjectReference Include="..\Spendfulness.Database\Spendfulness.Database.csproj" />
+    </ItemGroup>
+
+</Project>
