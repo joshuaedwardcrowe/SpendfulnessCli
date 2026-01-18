@@ -2,10 +2,10 @@ using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
 using Cli.Commands.Abstractions.Outcomes.Final;
 using Cli.Commands.Abstractions.Outcomes.Reusable;
+using Spendfulness.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregator.ListAggregators;
 using Spendfulness.Database;
-using SpendfulnessCli.Aggregation.Aggregates;
 using SpendfulnessCli.Aggregation.Aggregator;
-using SpendfulnessCli.Aggregation.Aggregator.ListAggregators;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
 using Ynab.Extensions;
 

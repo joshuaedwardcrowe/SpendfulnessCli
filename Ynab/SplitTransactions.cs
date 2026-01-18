@@ -7,6 +7,7 @@ namespace Ynab;
 public class SplitTransactions(SplitTransactionResponse splitTransactionResponse)
 {
     public string Id => splitTransactionResponse.Id;
+    public DateTime Occured => splitTransactionResponse.Occured;
     public string? Memo => splitTransactionResponse.Memo;
     public decimal Amount => MilliunitConverter.Calculate(splitTransactionResponse.Amount);
     public Guid? PayeeId => splitTransactionResponse.PayeeId;

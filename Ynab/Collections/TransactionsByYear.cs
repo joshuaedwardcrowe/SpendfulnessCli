@@ -1,3 +1,3 @@
 namespace Ynab.Collections;
 
-public record TransactionsByYear(string Year, IEnumerable<Transaction> Transactions);
+public record TransactionsByYear(int Year, IEnumerable<Transaction> Transactions);

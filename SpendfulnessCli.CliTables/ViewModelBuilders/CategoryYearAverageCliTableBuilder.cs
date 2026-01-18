@@ -1,5 +1,5 @@
-using SpendfulnessCli.Aggregation.Aggregates;
-using SpendfulnessCli.CliTables.Formatters;
+using Spendfulness.Aggregation.Aggregates;
+using Spendfulness.Tools;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 
@@ -13,8 +13,13 @@ public class CategoryYearAverageCliTableBuilder : CliTableBuilder<CategoryYearAv
         var highestYearsAggregate = aggregatesIndexed
             .First(y => y.AverageAmountByYears.Count == highestYearsCount);
 
+        var categoryNames = highestYearsAggregate
+            .AverageAmountByYears
+            .Keys
+            .Select(k => k.ToString());
+
         return new List<string> { "Category Name" }
-            .Concat(highestYearsAggregate.AverageAmountByYears.Keys)
+            .Concat(categoryNames)
             .ToList();
     }
 
@@ -42,8 +47,10 @@ public class CategoryYearAverageCliTableBuilder : CliTableBuilder<CategoryYearAv
         for (var i = 1; i < columnNames.Count; i++)
         {
             var columnName = columnNames[i];
+            
+            var year = int.Parse(columnName);
 
-            if (!aggregate.AverageAmountByYears.TryGetValue(columnName, out var amount))
+            if (!aggregate.AverageAmountByYears.TryGetValue(year, out var amount))
             {
                 yield return string.Empty;
                 continue;

@@ -19,6 +19,11 @@ public abstract class CliCommandHandler
 
     protected static CliCommandOutcome[] OutcomeAs(string message)
         => [new CliCommandOutputOutcome(message)];
+    
+    protected static CliCommandOutcome[] OutcomeAs(params string[] messages)
+        => messages
+            .Select(message => new CliCommandOutputOutcome(message))
+            .ToArray<CliCommandOutcome>();
 
     protected static Task<CliCommandOutcome[]> AsyncOutcomeAs(string message)
         => Task.FromResult(OutcomeAs(message));

@@ -10,6 +10,7 @@
     <ItemGroup>
       <ProjectReference Include="..\SpendfulnessCli.Abstractions\SpendfulnessCli.Abstractions.csproj" />
       <ProjectReference Include="..\Cli\Cli.csproj" />
+      <ProjectReference Include="..\SpendfulnessCli.Commands.Export.Csv\SpendfulnessCli.Commands.Export.Csv.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Commands.Organisation\SpendfulnessCli.Commands.Organisation.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Commands.Personalisation\SpendfulnessCli.Commands.Personalisation.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Commands.Reporting\SpendfulnessCli.Commands.Reporting.csproj" />

@@ -1,5 +1,6 @@
 using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
+using Spendfulness.Aggregation.Aggregator;
 using Spendfulness.Database;
 using SpendfulnessCli.Aggregation.Aggregator;
 using SpendfulnessCli.CliTables.ViewModelBuilders;

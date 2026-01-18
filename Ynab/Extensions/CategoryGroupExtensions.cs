@@ -12,7 +12,11 @@ public static class CategoryGroupExtensions
     
     public static IEnumerable<CategoryGroup> FilterToSpendingCategories(
         this IEnumerable<CategoryGroup> categoryGroups)
-            => categoryGroups.Where(cg => !cg.Name.Contains("Farm"));
+            => categoryGroups.Where(cg => !cg.Name.Contains("Farm") &&
+                                          !cg.Name.Contains("Goals") &&
+                                          cg.Name != "Hidden Categories" &&
+                                          cg.Name != "Internal Master Category" &&
+                                          cg.Name != "Credit Card Payments");
     
     public static IEnumerable<CategoryGroup> FilterToFarmCategories(
         this IEnumerable<CategoryGroup> categoryGroups)

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Spendfulness.Database\Spendfulness.Database.csproj" />
+      <ProjectReference Include="..\Spendfulness.Tools\Spendfulness.Tools.csproj" />
+      <ProjectReference Include="..\Ynab\Ynab.csproj" />
+    </ItemGroup>
+
+</Project>

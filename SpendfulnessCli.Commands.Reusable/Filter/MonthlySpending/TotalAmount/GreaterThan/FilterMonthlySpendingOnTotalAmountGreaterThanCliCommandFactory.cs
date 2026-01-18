@@ -3,7 +3,7 @@ using Cli.Commands.Abstractions.Artefacts;
 using Cli.Commands.Abstractions.Factories;
 using Cli.Instructions.Abstractions;
 using Cli.Instructions.Arguments;
-using SpendfulnessCli.Aggregation.Aggregates;
+using Spendfulness.Aggregation.Aggregates;
 
 namespace SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending.TotalAmount.GreaterThan;
 

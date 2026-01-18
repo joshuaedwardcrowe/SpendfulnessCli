@@ -15,8 +15,8 @@ public static class IdentifierSanitiser
         var monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(dateOnly.Month);
         return $"{monthName} {dateOnly.Year}";
     }
-    
-    public static string SanitiseForYear(DateTime date) => date.Year.ToString();
+
+    public static int SanitiseForYear(DateTime date) => date.Year;
     
     public static string SanitiseForFlag(string? flagName, FlagColor? flagColour) => $"{flagName} ({flagColour})";
 }
