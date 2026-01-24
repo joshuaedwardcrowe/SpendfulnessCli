@@ -5,10 +5,12 @@ using Cli.Instructions.Abstractions;
 using SpendfulnessCli.Commands.Organisation;
 using SpendfulnessCli.Commands.Personalisation;
 using Spendfulness.Database;
+using Spendfulness.OpenAI;
 using SpendfulnessCli;
 using SpendfulnessCli.Abstractions.Taxis;
 using SpendfulnessCli.Aggregation.Extensions;
 using SpendfulnessCli.Commands;
+using SpendfulnessCli.Commands.Chat;
 using SpendfulnessCli.Commands.Export.Csv;
 using SpendfulnessCli.Commands.Reporting;
 using SpendfulnessCli.Commands.Reusable;
@@ -21,7 +23,8 @@ var cliAppBuilder = new CliAppBuilder()
 cliAppBuilder
     .WithUserSecretSettings<SpendfulnessCliApp>()
     .WithJsonSettings("appsettings.json")
-    .WithSettings<InstructionSettings>();
+    .WithSettings<InstructionSettings>()
+    .WithSettings<OpenAiSettings>();
     
 // Add YNAB services
 cliAppBuilder
@@ -42,6 +45,7 @@ cliAppBuilder
             .AddSpendfulnessOrganisationCommands() 
             .AddSpendfulnessPersonalisationCommands() 
             .AddSpendfulnessReusableCommands()
-            .AddSpendfulnessExportCsvCommands()); 
+            .AddSpendfulnessExportCsvCommands()
+            .AddSpendfulnessChatCommands()); 
 
 await cliAppBuilder.Run();

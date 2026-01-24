@@ -9,8 +9,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Spendfulness.OpenAI\Spendfulness.OpenAI.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Abstractions\SpendfulnessCli.Abstractions.csproj" />
       <ProjectReference Include="..\Cli\Cli.csproj" />
+      <ProjectReference Include="..\SpendfulnessCli.Commands.Chat\SpendfulnessCli.Commands.Chat.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Commands.Export.Csv\SpendfulnessCli.Commands.Export.Csv.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Commands.Organisation\SpendfulnessCli.Commands.Organisation.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Commands.Personalisation\SpendfulnessCli.Commands.Personalisation.csproj" />
