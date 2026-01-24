@@ -81,7 +81,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spendfulness.Cli- CliTables
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spendfulness.Cli - Commands", "Spendfulness.Cli - Commands", "{288969D4-0605-4444-B37F-7B01D4AD5165}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spendfulness.Cli", "Spendfulness.Cli", "{B1518250-88D1-4368-8895-8C357359B4F9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpendfulnessCli", "SpendfulnessCli", "{B1518250-88D1-4368-8895-8C357359B4F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.Commands.Abstractions.Tests", "Cli.Commands.Abstractions.Tests\Cli.Commands.Abstractions.Tests.csproj", "{A1567276-A0D4-40B8-AAAC-91C9954D07D6}"
 EndProject
@@ -114,6 +114,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Tools", "Spendfulness.Tools\Spendfulness.Tools.csproj", "{B8DE9B7B-3B54-412F-B97E-FA8796DD7BDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Aggregation", "Spendfulness.Aggregation\Spendfulness.Aggregation.csproj", "{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendfulnessChat", "SpendfulnessChat\SpendfulnessChat.csproj", "{0BBA1495-2C8C-43F2-B74E-B70B540C2D60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpendfulnessChat", "SpendfulnessChat", "{C11A478E-F10A-494B-8C1C-76626C3D0BE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -265,6 +269,10 @@ Global
 		{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBA1495-2C8C-43F2-B74E-B70B540C2D60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBA1495-2C8C-43F2-B74E-B70B540C2D60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBA1495-2C8C-43F2-B74E-B70B540C2D60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBA1495-2C8C-43F2-B74E-B70B540C2D60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1C607C1F-B2A8-4405-B5F9-224D8434FDA4} = {68F25F73-18EB-4E65-80EB-1EDCAF174DFA}
@@ -303,5 +311,6 @@ Global
 		{D9A6F089-72AF-4155-84F2-D0384F40AC4C} = {52E90345-79FA-4FD3-8A3A-1D69887FA38E}
 		{B8DE9B7B-3B54-412F-B97E-FA8796DD7BDC} = {52E90345-79FA-4FD3-8A3A-1D69887FA38E}
 		{7AAF0E59-4B5E-49E5-BDEB-D467DFD11F60} = {52E90345-79FA-4FD3-8A3A-1D69887FA38E}
+		{0BBA1495-2C8C-43F2-B74E-B70B540C2D60} = {C11A478E-F10A-494B-8C1C-76626C3D0BE8}
 	EndGlobalSection
 EndGlobal
