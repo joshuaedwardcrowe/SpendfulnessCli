@@ -10,9 +10,4 @@
       <ProjectReference Include="..\Ynab\Ynab.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Remove="Taxis\TaxiTransactionFactory 2.cs" />
-      <Compile Remove="Taxis\TaxiTransaction 2.cs" />
-    </ItemGroup>
-
 </Project>
