@@ -6,6 +6,7 @@ namespace Cli;
 public class CliAppBuilder
 {
     private readonly ServiceCollection _services = [];
+    private ConfigurationBuilder? _configurationBuilder;
     private IConfigurationRoot? _configuration;
     
     public CliAppBuilder WithCli<TCliApp>() where TCliApp : CliApp
@@ -15,26 +16,50 @@ public class CliAppBuilder
         return this;
     }
 
+    private void SetUpConfigurationBuilder()
+    {
+        if (_configurationBuilder == null)
+        {
+            _services.AddOptions();
+            
+            _configurationBuilder = new ConfigurationBuilder();
+        }
+    }
+
+    // TODO: Verify i need the generic. Can I pass in calling assembly instead?
+    public CliAppBuilder WithUserSecretSettings<TCliApp>() where TCliApp : CliApp
+    {
+        SetUpConfigurationBuilder();
+
+        _configurationBuilder!
+            .AddUserSecrets<TCliApp>(optional: true, reloadOnChange: true);
+
+        return this;
+    }
+
     public CliAppBuilder WithJsonSettings(string fileName)
     {
-        _services.AddOptions();
+        SetUpConfigurationBuilder();
         
         var currentDirectory = Directory.GetCurrentDirectory();
-        
-        var configurationBuilder = new ConfigurationBuilder()
+            
+        _configurationBuilder!
             .SetBasePath(currentDirectory)
             .AddJsonFile(fileName, optional: true, reloadOnChange: true);
-        
-        _configuration = configurationBuilder.Build();
 
         return this;
     }
     
     public CliAppBuilder WithSettings<TSettings>() where TSettings : class
     {
-        if (_configuration== null)
+        if (_configurationBuilder == null)
         {
-            throw new Exception("You must call WithJsonSettings before calling WithSettings.");
+            throw new Exception("You must call With[..]Settings before calling WithSettings.");
+        }
+        
+        if (_configuration == null)
+        {
+            _configuration = _configurationBuilder.Build();
         }
         
         var configurationName = typeof(TSettings)

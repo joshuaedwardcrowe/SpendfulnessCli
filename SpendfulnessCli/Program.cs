@@ -19,6 +19,7 @@ var cliAppBuilder = new CliAppBuilder()
 
 // Add settings
 cliAppBuilder
+    .WithUserSecretSettings<SpendfulnessCliApp>()
     .WithJsonSettings("appsettings.json")
     .WithSettings<InstructionSettings>();
     
