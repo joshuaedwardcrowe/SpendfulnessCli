@@ -1,4 +1,4 @@
-using Spendfulness.Database.Accounts;
+using Spendfulness.Database.Sqlite.Accounts;
 
 namespace SpendfulnessCli.Commands.Personalisation.Accounts.Attribute.ChangeStrategies;
 

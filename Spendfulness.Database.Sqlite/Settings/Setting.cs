@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Spendfulness.Database.Users;
+using Spendfulness.Database.Sqlite.Users;
 
-namespace Spendfulness.Database.Settings;
+namespace Spendfulness.Database.Sqlite.Settings;
 
 public class Setting
 {

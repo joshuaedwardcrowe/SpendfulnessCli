@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Spendfulness.Database.Users;
+using Spendfulness.Database.Sqlite.Users;
 
-namespace Spendfulness.Database.Commitments;
+namespace Spendfulness.Database.Sqlite.Commitments;
 
 public class Commitment
 {

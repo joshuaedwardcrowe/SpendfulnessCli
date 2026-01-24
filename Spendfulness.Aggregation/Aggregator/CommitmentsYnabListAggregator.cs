@@ -1,4 +1,4 @@
-using Spendfulness.Database.Commitments;
+using Spendfulness.Database.Sqlite.Commitments;
 
 namespace Spendfulness.Aggregation.Aggregator;
 

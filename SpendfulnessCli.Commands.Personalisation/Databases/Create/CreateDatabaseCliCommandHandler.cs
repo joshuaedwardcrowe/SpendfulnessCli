@@ -1,6 +1,7 @@
 using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
 using Spendfulness.Database;
+using Spendfulness.Database.Sqlite;
 
 namespace SpendfulnessCli.Commands.Personalisation.Databases.Create;
 

@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Spendfulness.Database.Commitments;
-using Spendfulness.Database.Settings;
+using Spendfulness.Database.Sqlite.Commitments;
+using Spendfulness.Database.Sqlite.Settings;
 
-namespace Spendfulness.Database.Users;
+namespace Spendfulness.Database.Sqlite.Users;
 
 public class User
 {

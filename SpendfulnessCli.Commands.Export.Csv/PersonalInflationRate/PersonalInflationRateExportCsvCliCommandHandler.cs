@@ -3,6 +3,7 @@ using Cli.Commands.Abstractions.Outcomes;
 using Spendfulness.Aggregation.Aggregator.ListAggregators;
 using Spendfulness.Csv.PersonalInflationRate;
 using Spendfulness.Database;
+using Spendfulness.Database.Sqlite;
 using Spendfulness.Tools;
 
 namespace SpendfulnessCli.Commands.Export.Csv.PersonalInflationRate;

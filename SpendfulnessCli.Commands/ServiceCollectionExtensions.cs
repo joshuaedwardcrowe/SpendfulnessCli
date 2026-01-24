@@ -1,6 +1,7 @@
 using Cli.Commands.Abstractions.Artefacts;
 using Microsoft.Extensions.DependencyInjection;
 using Spendfulness.Database;
+using Spendfulness.Database.Sqlite;
 using SpendfulnessCli.Commands.Accounts;
 
 namespace SpendfulnessCli.Commands;

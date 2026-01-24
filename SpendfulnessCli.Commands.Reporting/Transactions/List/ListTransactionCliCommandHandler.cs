@@ -5,6 +5,7 @@ using Cli.Commands.Abstractions.Outcomes.Reusable;
 using Cli.Commands.Abstractions.Outcomes.Reusable.Page;
 using Spendfulness.Aggregation.Aggregator.ListAggregators;
 using Spendfulness.Database;
+using Spendfulness.Database.Sqlite;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
 using Ynab;
 

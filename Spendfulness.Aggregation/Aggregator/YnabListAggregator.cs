@@ -1,5 +1,5 @@
 using Cli.Abstractions.Aggregators;
-using Spendfulness.Database.Commitments;
+using Spendfulness.Database.Sqlite.Commitments;
 using Ynab;
 
 namespace Spendfulness.Aggregation.Aggregator;

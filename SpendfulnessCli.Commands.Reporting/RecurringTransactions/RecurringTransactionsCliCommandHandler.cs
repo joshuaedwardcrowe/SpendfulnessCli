@@ -7,6 +7,7 @@ using Spendfulness.Aggregation.Aggregates;
 using Spendfulness.Aggregation.Aggregator.ListAggregators;
 using Spendfulness.Aggregation.Extensions;
 using Spendfulness.Database;
+using Spendfulness.Database.Sqlite;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
 using Ynab;
 using Ynab.Extensions;

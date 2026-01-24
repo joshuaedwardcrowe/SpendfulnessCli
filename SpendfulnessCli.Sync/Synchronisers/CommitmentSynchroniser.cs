@@ -1,7 +1,8 @@
 using Cli.Abstractions.Exceptions;
 using Spendfulness.Database;
-using Spendfulness.Database.Commitments;
-using Spendfulness.Database.Users;
+using Spendfulness.Database.Sqlite;
+using Spendfulness.Database.Sqlite.Commitments;
+using Spendfulness.Database.Sqlite.Users;
 using Ynab;
 using Ynab.Extensions;
 

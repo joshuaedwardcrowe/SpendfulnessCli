@@ -2,6 +2,7 @@ using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
 using Microsoft.EntityFrameworkCore;
 using Spendfulness.Database;
+using Spendfulness.Database.Sqlite;
 
 namespace SpendfulnessCli.Commands.Personalisation.Users.Active;
 

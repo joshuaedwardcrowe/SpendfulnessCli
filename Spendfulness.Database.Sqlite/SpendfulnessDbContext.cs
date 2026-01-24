@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Spendfulness.Database.Accounts;
-using Spendfulness.Database.Commitments;
-using Spendfulness.Database.Milestones;
-using Spendfulness.Database.Settings;
-using Spendfulness.Database.Users;
+using Spendfulness.Database.Sqlite.Accounts;
+using Spendfulness.Database.Sqlite.Commitments;
+using Spendfulness.Database.Sqlite.Milestones;
+using Spendfulness.Database.Sqlite.Settings;
+using Spendfulness.Database.Sqlite.Users;
 
-namespace Spendfulness.Database;
+namespace Spendfulness.Database.Sqlite;
 
 // TODO: Try to make this internal. Entity framework is a DEPENDENCY.
 public class SpendfulnessDbContext : DbContext

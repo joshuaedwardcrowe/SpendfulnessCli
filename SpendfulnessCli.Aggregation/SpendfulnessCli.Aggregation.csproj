@@ -9,7 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Cli.Commands.Abstractions\Cli.Commands.Abstractions.csproj" />
       <ProjectReference Include="..\Spendfulness.Aggregation\Spendfulness.Aggregation.csproj" />
-      <ProjectReference Include="..\Spendfulness.Database\Spendfulness.Database.csproj" />
+      <ProjectReference Include="..\Spendfulness.Database.Sqlite\Spendfulness.Database.Sqlite.csproj" />
       <ProjectReference Include="..\Ynab\Ynab.csproj" />
     </ItemGroup>
 

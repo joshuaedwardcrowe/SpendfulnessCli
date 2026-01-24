@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using Spendfulness.Database.Accounts;
-using Spendfulness.Database.Users;
+using Spendfulness.Database.Sqlite.Accounts;
+using Spendfulness.Database.Sqlite.Users;
 
-namespace Spendfulness.Database;
+namespace Spendfulness.Database.Sqlite;
 
 public static class ServiceCollectionExtensions
 {

@@ -1,11 +1,11 @@
 using Spendfulness.Database.Abstractions;
-using Spendfulness.Database.Users;
+using Spendfulness.Database.Sqlite.Users;
 using Ynab.Clients;
 using Ynab.Connected;
 using Ynab.Factories;
 using Ynab.Http;
 
-namespace Spendfulness.Database;
+namespace Spendfulness.Database.Sqlite;
 
 // TODO: Write unit tests.
 public class SpendfulnessBudgetClient

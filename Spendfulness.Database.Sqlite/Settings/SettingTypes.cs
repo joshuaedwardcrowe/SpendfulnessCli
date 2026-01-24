@@ -1,4 +1,4 @@
-namespace Spendfulness.Database.Settings;
+namespace Spendfulness.Database.Sqlite.Settings;
 
 public static class SettingTypeNames
 {

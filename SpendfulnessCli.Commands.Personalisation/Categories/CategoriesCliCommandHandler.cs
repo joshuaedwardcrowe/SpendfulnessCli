@@ -2,6 +2,7 @@ using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
 using Spendfulness.Aggregation.Aggregator.ListAggregators;
 using Spendfulness.Database;
+using Spendfulness.Database.Sqlite;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
 
 namespace SpendfulnessCli.Commands.Personalisation.Categories;

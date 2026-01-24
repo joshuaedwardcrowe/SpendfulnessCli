@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Spendfulness.Database.Accounts;
+namespace Spendfulness.Database.Sqlite.Accounts;
 
 public class CustomAccountType
 {

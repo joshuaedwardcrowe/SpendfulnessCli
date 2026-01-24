@@ -4,6 +4,7 @@ using Cli.Commands.Abstractions.Outcomes;
 using Cli.Workflow.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Spendfulness.Database;
+using Spendfulness.Database.Sqlite;
 
 namespace SpendfulnessCli;
 

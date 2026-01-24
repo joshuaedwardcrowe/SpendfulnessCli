@@ -5,6 +5,7 @@ using Cli.Instructions.Abstractions;
 using SpendfulnessCli.Commands.Organisation;
 using SpendfulnessCli.Commands.Personalisation;
 using Spendfulness.Database;
+using Spendfulness.Database.Sqlite;
 using Spendfulness.OpenAI;
 using SpendfulnessCli;
 using SpendfulnessCli.Abstractions.Taxis;

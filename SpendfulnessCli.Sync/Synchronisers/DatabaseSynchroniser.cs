@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Spendfulness.Database;
-using Spendfulness.Database.Settings;
-using Spendfulness.Database.Users;
+using Spendfulness.Database.Sqlite;
+using Spendfulness.Database.Sqlite.Settings;
+using Spendfulness.Database.Sqlite.Users;
 
 namespace SpendfulnessCli.Sync.Synchronisers;
 

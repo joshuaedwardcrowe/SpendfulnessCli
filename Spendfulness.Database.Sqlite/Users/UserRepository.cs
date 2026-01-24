@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Spendfulness.Database.Users;
+namespace Spendfulness.Database.Sqlite.Users;
 
 public class UserRepository
 {

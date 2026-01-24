@@ -1,4 +1,4 @@
-using Spendfulness.Database.Commitments;
+using Spendfulness.Database.Sqlite.Commitments;
 using Spendfulness.Tools;
 using Spendfulness.Tools.Percentages;
 using SpendfulnessCli.CliTables.Extensions;

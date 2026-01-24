@@ -2,8 +2,9 @@ using Cli.Abstractions;
 using Cli.Commands.Abstractions.Handlers;
 using Cli.Commands.Abstractions.Outcomes;
 using Spendfulness.Database;
-using Spendfulness.Database.Accounts;
-using Spendfulness.Database.Users;
+using Spendfulness.Database.Sqlite;
+using Spendfulness.Database.Sqlite.Accounts;
+using Spendfulness.Database.Sqlite.Users;
 using SpendfulnessCli.Commands.Personalisation.Accounts.Attribute.ChangeStrategies;
 
 namespace SpendfulnessCli.Commands.Personalisation.Accounts.Attribute;

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace Spendfulness.Database;
+namespace Spendfulness.Database.Sqlite;
 
 public static class DbContextExtensions
 {

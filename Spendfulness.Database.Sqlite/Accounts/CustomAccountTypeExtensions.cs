@@ -1,4 +1,4 @@
-namespace Spendfulness.Database.Accounts;
+namespace Spendfulness.Database.Sqlite.Accounts;
 
 public static class CustomAccountTypeExtensions
 {

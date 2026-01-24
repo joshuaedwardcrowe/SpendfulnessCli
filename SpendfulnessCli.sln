@@ -41,7 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADR", "ADR", "{B5381D3F-A87
 		ADR\ADR04-Itemisation-Intelligence.md = ADR\ADR04-Itemisation-Intelligence.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Database", "Spendfulness.Database\Spendfulness.Database.csproj", "{80B41408-9A47-4AC6-8847-A37EF2EC327C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Database.Sqlite", "Spendfulness.Database.Sqlite\Spendfulness.Database.Sqlite.csproj", "{80B41408-9A47-4AC6-8847-A37EF2EC327C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendfulnessCli.Commands.Personalisation", "SpendfulnessCli.Commands.Personalisation\SpendfulnessCli.Commands.Personalisation.csproj", "{9EDF82AA-7E61-485B-8B95-815EA0407C93}"
 EndProject

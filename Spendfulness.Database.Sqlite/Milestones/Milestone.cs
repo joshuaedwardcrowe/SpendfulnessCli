@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Spendfulness.Database.Users;
+using Spendfulness.Database.Sqlite.Users;
 
-namespace Spendfulness.Database.Milestones;
+namespace Spendfulness.Database.Sqlite.Milestones;
 
 public class Milestone
 {

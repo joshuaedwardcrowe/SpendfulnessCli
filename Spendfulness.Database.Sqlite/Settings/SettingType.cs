@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Spendfulness.Database.Settings;
+namespace Spendfulness.Database.Sqlite.Settings;
 
 public class SettingType
 {
