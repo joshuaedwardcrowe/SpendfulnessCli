@@ -19,6 +19,34 @@
 ## 1. What Does This Thing Actually Do?
 **Duration: 8 minutes**
 
+### Why CLIs Still Matter in 2026 🖥️
+
+**Let's be honest:** CLIs might seem old-school in a world of fancy UIs and web apps.
+
+**But here's the thing:** CLIs are **developer superpowers** for:
+
+**⚡ Speed & Automation**
+- Type `/spare-money` vs clicking through 5 screens
+- Chain commands together: no manual data copying
+- Script repetitive tasks: run weekly reports automatically
+
+**🔧 Developer Tooling**
+- Git, npm, docker — the best tools are CLIs
+- Integrates into your existing workflow
+- Perfect for CI/CD pipelines and automation
+
+**🎯 Custom Analysis**
+- GUI apps are limited to what someone built
+- CLIs let YOU decide what questions to ask
+- Build exactly the tool you need
+
+**💪 Power User Paradise**
+- Keyboard > mouse for power users
+- Composable: combine simple commands into complex workflows
+- Scriptable: automate everything
+
+**Real Talk:** If you're a developer, you probably spend half your day in a terminal anyway. Why not make your tools work the way YOU work?
+
 ### TL;DR
 
 SpendfulnessCli is a **terminal-based financial management tool** that makes YNAB (You Need A Budget) data actually useful through:
