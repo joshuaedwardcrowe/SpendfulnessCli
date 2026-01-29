@@ -1,4 +1,4 @@
-# SpendfulnessCli: Building a Fun Financial CLI with Great Architecture 🚀
+# Building Extensible CLI Applications: A Framework Approach 🚀
 
 **Duration:** 45 minutes  
 **Presenter:** [Your Name]  
@@ -7,16 +7,16 @@
 ---
 
 ## Table of Contents
-1. [What Does This Thing Actually Do?](#1-what-does-this-thing-actually-do) (8 minutes)
-2. [Cool Features Demo](#2-cool-features-demo) (10 minutes)
-3. [The Secret Sauce: Smart Architecture](#3-the-secret-sauce-smart-architecture) (12 minutes)
+1. [What Is This Framework?](#1-what-is-this-framework) (8 minutes)
+2. [Framework Features Demo](#2-framework-features-demo) (10 minutes)
+3. [The Architecture That Makes It Work](#3-the-architecture-that-makes-it-work) (12 minutes)
 4. [Why It Doesn't Suck: SOLID, DRY, YAGNI](#4-why-it-doesnt-suck-solid-dry-yagni) (10 minutes)
-5. [Live Coding: Add Your Own Command](#5-live-coding-add-your-own-command) (3 minutes)
+5. [Live Coding: Build Your CLI](#5-live-coding-build-your-cli) (3 minutes)
 6. [Q&A](#6-qa) (2 minutes)
 
 ---
 
-## 1. What Does This Thing Actually Do?
+## 1. What Is This Framework?
 **Duration: 8 minutes**
 
 ### Why CLIs Still Matter in 2026 🖥️
@@ -26,7 +26,7 @@
 **But here's the thing:** CLIs are **developer superpowers** for:
 
 **⚡ Speed & Automation**
-- Type `/spare-money` vs clicking through 5 screens
+- Type commands vs clicking through 5 screens
 - Chain commands together: no manual data copying
 - Script repetitive tasks: run weekly reports automatically
 
@@ -49,223 +49,480 @@
 
 ### TL;DR
 
-SpendfulnessCli is a **terminal-based financial management tool** that makes YNAB (You Need A Budget) data actually useful through:
-- 💰 Smart financial analysis
-- 🤖 AI-powered insights with ChatGPT
-- 📊 Beautiful CLI tables
-- 🔄 Reusable data aggregations
-- 🎯 Composable command pipelines
+This is a **reusable CLI framework** (the `Cli.*` projects) that gives you:
+- 🏗️ Production-ready CLI infrastructure
+- 🔌 Plugin architecture - add commands in minutes
+- 🔍 Type-safe command parsing (no more string manipulation!)
+- 🔄 Command pipelines (compose simple commands into complex workflows)
+- 📦 Reusable patterns for any CLI application
+- ✅ Proven architecture used in real production app (SpendfulnessCli)
 
-### Not Your Average CRUD App
+### The Framework vs The Application
 
-```bash
-# Find out how much money you actually have to spend
-/spare-money --minus-savings true
+**The Framework (`Cli.*` projects):** Reusable infrastructure for building ANY CLI
+- `Cli` - Core application loop and lifecycle
+- `Cli.Abstractions` - Base abstractions (I/O, tables, aggregators)
+- `Cli.Commands.Abstractions` - Command pattern infrastructure
+- `Cli.Instructions` - Instruction parsing pipeline
+- `Cli.Workflow` - Workflow and state management
 
-# See your average yearly spending with inflation tracking
-/average-yearly-spending
+**The Application (`SpendfulnessCli.*`):** One example built on the framework
+- Domain-specific commands (financial analysis)
+- Custom aggregations
+- YNAB integration
+- Proves the framework works in production!
 
-# Ask ChatGPT about your finances (yes, really!)
-/chat --prompt "What categories should I cut back on?"
-
-# Export personal inflation rate to CSV
-/personal-inflation-rate export-csv
-
-# Find all recurring transactions automatically
-/recurring-transactions
-```
-
-### Why Build This?
-
-**The Problem:** YNAB is great, but sometimes you need custom analysis, automation, and insights that don't exist in the app.
-
-**The Solution:** Build an extensible CLI that:
-- ✅ Talks to YNAB API
-- ✅ Stores custom data locally (SQLite)
-- ✅ Composes data in powerful ways
-- ✅ Integrates with AI for insights
-- ✅ Exports to formats you can use
-
-**The Bonus:** Learn to build actually maintainable software while solving a real problem!
+**You can build:** Developer tools, data processors, automation scripts, monitoring CLIs, deployment tools, testing frameworks, etc.
 
 ---
 
-## 2. Cool Features Demo
+## 2. Framework Features Demo
 **Duration: 10 minutes**
 
-### Feature 1: Spare Money Calculator 💰
+### Feature 1: Type-Safe Command Parsing 🔍
 
-**The Problem:** "How much money can I actually spend right now?"
+**The Problem:** Most CLIs do ugly string parsing everywhere.
 
-```bash
-/spare-money
-# → Shows available funds across all accounts
+**Before (typical CLI code):**
+```csharp
+// Ugh, brittle string manipulation
+var parts = input.Split(' ');
+var command = parts[0];
+var arg1 = parts[1]; // Hope this exists!
+var value = int.Parse(parts[2]); // Hope this is a number!
+```
 
-/spare-money --minus-savings true
-# → Excludes savings accounts (money you shouldn't touch!)
-
-/spare-money --add 500 --minus 200
-# → Hypothetical calculations: "What if I get paid $500 but owe $200?"
+**With This Framework:**
+```csharp
+// Type-safe from input to handler!
+var instruction = parser.Parse("/deploy --environment production --replicas 3");
+// instruction.Name = "deploy"
+// instruction.Arguments = [
+//   TypedArgument<string>("environment", "production"),
+//   TypedArgument<int>("replicas", 3)
+// ]
 ```
 
 **Why It's Cool:**
-- Real-time calculation across multiple accounts
-- Flexible filtering (exclude savings, credit cards, etc.)
-- Instant "what-if" scenarios
+- ✅ **Three-stage pipeline:** Find tokens → Extract values → Convert to types
+- ✅ **Plugin-based type system:** Add support for new types (Guid, DateOnly, custom types)
+- ✅ **Compiler-checked:** No runtime type errors
+- ✅ **IntelliSense works:** Refactoring is safe
 
-### Feature 2: AI-Powered Financial Insights 🤖
-
-**The Problem:** Staring at numbers doesn't give you insights.
-
+**Real Example from Production:**
 ```bash
-/chat --prompt "What categories am I overspending in?"
-/chat --prompt "Suggest where I can cut $200 per month"
-/chat --prompt "Am I spending more on dining out this year?"
+/filter-transactions --payee-name "Amazon" --amount-greater-than 50
+# Framework automatically converts:
+# "Amazon" → string
+# 50 → decimal
+# Your handler receives typed arguments!
+```
+
+### Feature 2: Plugin Architecture (Add Commands in 2 Minutes!) ⚡
+
+**The Problem:** Adding features to CLIs is usually painful.
+
+**With This Framework:**
+
+**Step 1:** Define command (30 seconds)
+```csharp
+public record DeployCommand(string Environment, int Replicas) : CliCommand;
+```
+
+**Step 2:** Write handler (60 seconds)
+```csharp
+public class DeployCommandHandler 
+    : IRequestHandler<DeployCommand, CliCommandOutcome[]>
+{
+    public async Task<CliCommandOutcome[]> Handle(DeployCommand cmd)
+    {
+        // Your logic here
+        await DeployService.Deploy(cmd.Environment, cmd.Replicas);
+        return OutcomeAs($"Deployed to {cmd.Environment} with {cmd.Replicas} replicas");
+    }
+}
+```
+
+**Step 3:** Register (30 seconds)
+```csharp
+services.AddKeyedTransient<ICliCommandGenerator>(
+    "deploy",
+    (sp, key) => new DeployCommandGenerator()
+);
+```
+
+**That's it!** Framework handles:
+- ✅ Parsing `/deploy --environment production --replicas 3`
+- ✅ Converting arguments to correct types
+- ✅ Routing to your handler
+- ✅ Error handling
+- ✅ Displaying output
+
+**No changes to core code. Ever.**
+
+### Feature 3: Command Pipelines (Unix Pipes, But Type-Safe!) 🔗
+
+**The Problem:** Most CLIs make you run commands separately and manually copy data.
+
+**Framework Solution:**
+```bash
+# Unix pipes (strings only)
+cat file.txt | grep "error" | wc -l
+
+# This framework (typed data!)
+/load-logs | /filter --level error | /count
 ```
 
 **How It Works:**
-1. Preload your transaction data into a vector database
-2. ChatGPT analyzes your spending patterns
-3. Get natural language insights about YOUR money
+- Commands return **typed outcomes** (not just strings!)
+- Next command receives **typed data** as properties
+- Type-safe composition with compiler verification
+- Build complex workflows from simple commands
 
-**Why It's Cool:**
-- Turns data into actionable advice
-- Ask questions in plain English
-- Uses your actual transaction history
+**Example Flow:**
+```
+/load-logs → LogsOutcome (List<LogEntry>)
+       ↓
+/filter --level error → FilteredLogsOutcome (List<LogEntry>)
+       ↓
+/count → MessageOutcome ("Found 42 errors")
+```
 
-### Feature 3: Recurring Transaction Detection 🔄
+**Why This Is Powerful:**
+- ✅ No writing one-off "mega commands"
+- ✅ Users compose features themselves
+- ✅ Type safety prevents errors
+- ✅ Infinite combinations from finite commands
 
-**The Problem:** Which charges are subscriptions? Which are one-offs?
+### Feature 4: Reusable Aggregation Pattern 📦
 
-```bash
-/recurring-transactions
+**The Problem:** Same data manipulation logic everywhere.
+
+**Framework Solution: Aggregators**
+
+```csharp
+// Define once
+public class MonthlyTotalAggregator : CliListAggregator<MonthTotal>
+{
+    protected override List<MonthTotal> OnAggregate()
+    {
+        return Data
+            .GroupBy(item => new { item.Year, item.Month })
+            .Select(g => new MonthTotal(g.Key.Year, g.Key.Month, g.Sum(x => x.Amount)))
+            .ToList();
+    }
+}
+
+// Use everywhere with composition
+var aggregator = new MonthlyTotalAggregator(data)
+    .BeforeAggregation(a => a.FilterByDateRange(start, end))
+    .BeforeAggregation(a => a.FilterByCategory("groceries"))
+    .AfterAggregation(a => a.OrderByMonth());
+
+var results = aggregator.Aggregate();
+```
+
+**Benefits:**
+- ✅ Write logic once, use in multiple commands
+- ✅ Test once
+- ✅ Fix bugs once
+- ✅ Fluent composition (chain operations)
+
+### Feature 5: Built-in CLI Table Formatting 📊
+
+**The Problem:** Making pretty tables in CLIs is tedious.
+
+**Framework Solution:**
+```csharp
+var table = new CliTable();
+table.AddColumn("Name");
+table.AddColumn("Status");
+table.AddColumn("Count");
+
+table.AddRow("Service-A", "Running", "3");
+table.AddRow("Service-B", "Stopped", "0");
+
+return OutcomeAs(table);
 ```
 
 **Output:**
 ```
-┌────────────────────┬───────────┬──────────────┐
-│ Payee              │ Amount    │ Frequency    │
-├────────────────────┼───────────┼──────────────┤
-│ Netflix            │ $15.99    │ Monthly      │
-│ Gym Membership     │ $45.00    │ Monthly      │
-│ Annual Insurance   │ $1,200    │ Yearly       │
-└────────────────────┴───────────┴──────────────┘
+┌───────────┬─────────┬───────┐
+│ Name      │ Status  │ Count │
+├───────────┼─────────┼───────┤
+│ Service-A │ Running │ 3     │
+│ Service-B │ Stopped │ 0     │
+└───────────┴─────────┴───────┘
 ```
 
-**Why It's Cool:**
-- Automatically detects patterns in your transactions
-- No manual tagging required
-- Spot subscriptions you forgot about!
+**Features:**
+- ✅ Automatic column sizing
+- ✅ Sorting support
+- ✅ Pagination
+- ✅ Unicode box drawing
+- ✅ Consistent formatting
 
-### Feature 4: Personal Inflation Rate 📈
+### Feature 6: Interactive Session Management 🔄
 
-**The Problem:** How is inflation affecting YOUR spending?
+**The Framework Handles:**
+- ✅ **REPL Loop:** Read-Eval-Print-Loop for interactive sessions
+- ✅ **Session State:** Track command history
+- ✅ **Lifecycle Hooks:** `OnSessionStart`, `OnRunCreated`, `OnRunComplete`, `OnSessionEnd`
+- ✅ **Error Recovery:** Graceful error handling, session continues
+- ✅ **State Transitions:** Validated state machine (prevents bugs)
 
-```bash
-/personal-inflation-rate export-csv
+**Example:**
+```csharp
+public class MyCliApp : CliApp
+{
+    protected override void OnSessionStart()
+    {
+        Io.Say("Welcome to My CLI!");
+    }
+    
+    protected override void OnRunComplete(ICliWorkflowRun run, CliCommandOutcome[] outcomes)
+    {
+        // Log every command executed
+        Logger.LogCommand(run.Instruction);
+    }
+}
 ```
 
-**What It Calculates:**
-- Your personal inflation rate based on actual spending
-- Category-by-category price increases
-- Compare to CPI (national inflation)
-
-**Why It's Cool:**
-- National inflation numbers don't reflect YOUR situation
-- See which categories hit you hardest
-- Export to spreadsheet for analysis
-
-### Feature 5: Composable Command Pipelines 🔧
-
-**The Problem:** Most CLIs make you run commands separately.
-
-```bash
-# Filter transactions, THEN display as table, THEN export
-/filter-transactions --payee-name "Amazon" | 
-/table | 
-/export-csv
-```
-
-**How It Works:**
-- Commands pass data to the next command
-- Like Unix pipes, but type-safe!
-- Build complex workflows from simple commands
-
-**Why It's Cool:**
-- No need to write custom reports
-- Compose features you already have
-- Infinite possibilities from finite commands
-
-### Feature 6: Average Yearly Spending Trends 📊
-
-```bash
-/average-yearly-spending
-
-┌──────┬─────────────┬──────────────┐
-│ Year │ Average     │ % Change     │
-├──────┼─────────────┼──────────────┤
-│ 2022 │ $4,250/mo   │ -            │
-│ 2023 │ $4,680/mo   │ +10.1%       │
-│ 2024 │ $5,120/mo   │ +9.4%        │
-└──────┴─────────────┴──────────────┘
-```
-
-**Why It's Cool:**
-- Tracks spending trends over time
-- Adjusts for inflation automatically
-- Visualizes year-over-year changes
+**You Focus On:** Your command logic  
+**Framework Handles:** Everything else
 
 ---
 
-## 3. The Secret Sauce: Smart Architecture
-
+## 3. The Architecture That Makes It Work
 **Duration: 12 minutes**
 
-### How Do All These Features Work Without Becoming Spaghetti Code?
+### How Do You Build a Framework That Doesn't Suck?
 
-**The Challenge:** Add 50+ commands without creating a mess.
+**The Challenge:** Support unlimited commands without becoming spaghetti code.
 
-**The Solution:** Smart architecture patterns that make it EASY to add features.
+**The Solution:** Smart architecture patterns that make it EASY to extend.
 
-### Pattern 1: The Three-Layer Cake 🎂
+### Pattern 1: The Three-Layer Separation 🎂
 
 ```
 ┌─────────────────────────────────────┐
-│     You Type: "/spare-money"        │  ← User Layer
+│     You Type: "/deploy"             │  ← User Layer (CliApp)
 └─────────────┬───────────────────────┘
               │
      ┌────────▼─────────┐
-     │  Parse & Route   │  ← Workflow Layer
+     │  Parse & Route   │  ← Workflow Layer (CliWorkflow)
      └────────┬─────────┘
               │
      ┌────────▼─────────┐
-     │  Execute Logic   │  ← Command Layer
+     │  Execute Logic   │  ← Command Layer (Handlers)
      └──────────────────┘
 ```
 
-**Layer 1: User Interaction**
-- Shows prompts
-- Gets your input
-- Displays results
-- That's it! No business logic here.
+**Layer 1: CliApp (User Interaction)**
+```csharp
+public abstract class CliApp
+{
+    public async Task Run()
+    {
+        OnSessionStart();
+        while (_workflow.Status != CliWorkflowStatus.Stopped)
+        {
+            var ask = Io.Ask();              // Get input
+            var outcomes = await run.RespondToAsk(ask);
+            Io.Say(outcomes);                // Display output
+        }
+    }
+}
+```
+- Shows prompts, gets input, displays results
+- **No business logic here**
+- Override lifecycle hooks for customization
 
-**Layer 2: Traffic Cop**
-- Parses `/spare-money` into a command object
+**Layer 2: CliWorkflow (Traffic Cop)**
+```csharp
+public class CliWorkflowRun
+{
+    public async Task<CliCommandOutcome[]> RespondToAsk(string? ask)
+    {
+        var instruction = _parser.Parse(ask);        // Parse
+        var command = _provider.GetCommand(instruction); // Route
+        return await _mediator.Send(command);         // Execute
+    }
+}
+```
+- Parses `/deploy --environment prod` into typed command
 - Routes to the right handler
-- Manages the session (start/stop)
+- Manages session state
 
-**Layer 3: The Actual Work**
-- Calculates spare money
-- Queries the database
-- Formats output
-- Returns results
+**Layer 3: Command Handlers (The Actual Work)**
+```csharp
+public class DeployCommandHandler : IRequestHandler<DeployCommand, CliCommandOutcome[]>
+{
+    public async Task<CliCommandOutcome[]> Handle(DeployCommand cmd)
+    {
+        // Your logic here
+        await _deployService.Deploy(cmd.Environment);
+        return OutcomeAs($"Deployed to {cmd.Environment}!");
+    }
+}
+```
+- Implements your business logic
+- Independent, testable, focused
 
 **Why This Matters:**
-- ✅ Each layer does ONE thing
-- ✅ Easy to test each piece
+- ✅ Each layer has ONE responsibility (SRP)
+- ✅ Easy to test each piece in isolation
 - ✅ Change one layer without breaking others
+- ✅ New developers understand quickly
 
-### Pattern 2: Type-Safe Command Parsing 🔍
+### Pattern 2: Parser Three-Stage Pipeline 🔍
+
+**Problem:** Converting `"/deploy --env prod"` into typed objects.
+
+**Solution:** Three specialized stages:
+
+**Stage 1: Token Indexer**
+```
+Input:  "/deploy --environment production"
+Output: PrefixIndex=0, NameIndex=1-6, ArgIndex=8...
+```
+- **One job:** Find where tokens are located
+- Fast string scanning
+- No parsing logic
+
+**Stage 2: Token Extractor**
+```
+Output: {
+    Prefix: "/",
+    Name: "deploy",
+    Arguments: { "environment": "production" }
+}
+```
+- **One job:** Extract string values
+- Uses indexes from Stage 1
+- Dictionary of arg name → value
+
+**Stage 3: Argument Builders**
+```csharp
+public interface IConsoleInstructionArgumentBuilder
+{
+    bool For(string? value);  // Can I handle this?
+    ConsoleInstructionArgument Create(string name, string? value);
+}
+```
+- **One job per builder:** Convert one type
+- `IntBuilder`, `DateBuilder`, `GuidBuilder`, `BoolBuilder` (fallback)
+- Plugin system: register new builders for custom types
+
+**Result:**
+```csharp
+public record ConsoleInstruction(
+    string Name,
+    IEnumerable<TypedConsoleInstructionArgument> Arguments
+);
+```
+
+**Why Three Stages?**
+- ✅ Single Responsibility per stage
+- ✅ Easy to test each stage
+- ✅ Easy to extend (add new type builders)
+- ✅ Clear error messages per stage
+
+### Pattern 3: MediatR for Command Dispatch 📬
+
+**Instead of:** Big switch statement or if/else chains
+
+**Use:** MediatR pattern (CQRS)
+
+```csharp
+// Command = Data (no logic)
+public record DeployCommand(string Environment) : CliCommand;
+
+// Handler = Logic (no routing)
+public class DeployCommandHandler 
+    : IRequestHandler<DeployCommand, CliCommandOutcome[]>
+{
+    public async Task<CliCommandOutcome[]> Handle(DeployCommand cmd)
+    {
+        // Business logic here
+    }
+}
+
+// Routing = Automatic
+var outcome = await _mediator.Send(command);
+```
+
+**Benefits:**
+- ✅ Commands are simple data carriers
+- ✅ Handlers are focused on business logic
+- ✅ No routing code in your app
+- ✅ Can add pipeline behaviors (logging, validation, caching)
+- ✅ Handlers can be in different assemblies
+
+### Pattern 4: Outcome Pattern (No Exceptions for Control Flow) ✅
+
+**Problem:** Using exceptions for normal control flow is expensive and unclear.
+
+**Solution:** Typed outcomes
+
+```csharp
+// Base outcome
+public abstract class CliCommandOutcome { }
+
+// Specific outcomes
+public class CliCommandTableOutcome(CliTable table) : CliCommandOutcome;
+public class CliCommandOutputOutcome(string message) : CliCommandOutcome;
+public class CliCommandNothingOutcome : CliCommandOutcome;
+public class CliCommandExceptionOutcome(Exception ex) : CliCommandOutcome;
+public class FilterCliCommandOutcome(CliListAggregatorFilter filter) : CliCommandOutcome;
+```
+
+**Usage:**
+```csharp
+// Return success
+return OutcomeAs("Deployment successful!");
+
+// Return table
+return OutcomeAs(table);
+
+// Return filter (for pipelines!)
+return OutcomeAs(filter);
+```
+
+**Why This Pattern:**
+- ✅ Explicit success/failure handling
+- ✅ Type-safe result passing
+- ✅ Enables command pipelines
+- ✅ I/O layer decides how to display
+- ✅ No hidden control flow
+
+### Pattern 5: Dependency Injection Throughout 💉
+
+**Framework Philosophy:** Everything is injected, nothing is `new`'d
+
+```csharp
+// Register framework
+services.AddSingleton<ICliInstructionParser, ConsoleInstructionParser>();
+services.AddSingleton<ICliWorkflow, CliWorkflow>();
+services.AddSingleton<ICliCommandOutcomeIo, ConsoleCliCommandOutcomeIo>();
+
+// Register commands
+services.AddKeyedTransient<ICliCommandGenerator>("deploy", ...);
+
+// Register type builders
+services.AddSingleton<IConsoleInstructionArgumentBuilder, IntBuilder>();
+services.AddSingleton<IConsoleInstructionArgumentBuilder, DateBuilder>();
+```
+
+**Benefits:**
+- ✅ Easy to test (inject mocks)
+- ✅ Swap implementations (ConsoleIo → FileIo → TestIo)
+- ✅ Plugin architecture (register new commands/types)
+- ✅ Open/Closed Principle in action
+
+---
+
+## 4. Why It Doesn't Suck: SOLID, DRY, YAGNI
 
 **Most CLIs:**
 ```csharp
@@ -597,51 +854,70 @@ public enum CliWorkflowStatus
 
 ---
 
-## 5. Live Coding: Add Your Own Command
+## 5. Live Coding: Build Your CLI
 **Duration: 3 minutes**
 
-**Let's build a "Hello World" command in real-time!**
+**Let's build a deployment CLI command in real-time!**
 
 ### Step 1: Define the Command (30 seconds)
 ```csharp
-public record HelloCliCommand(string Name) : CliCommand;
+public record DeployCommand(string Environment, int Replicas) : CliCommand;
 ```
 
 ### Step 2: Write the Handler (60 seconds)
 ```csharp
-public class HelloCliCommandHandler 
-    : IRequestHandler<HelloCliCommand, CliCommandOutcome[]>
+public class DeployCommandHandler 
+    : IRequestHandler<DeployCommand, CliCommandOutcome[]>
 {
+    private readonly IDeploymentService _deployService;
+    
     public async Task<CliCommandOutcome[]> Handle(
-        HelloCliCommand command, 
+        DeployCommand command, 
         CancellationToken ct)
     {
-        var greeting = $"Hello, {command.Name}! Welcome to SpendfulnessCli!";
-        return OutcomeAs(greeting);
+        await _deployService.Deploy(command.Environment, command.Replicas);
+        var message = $"✅ Deployed to {command.Environment} with {command.Replicas} replicas";
+        return OutcomeAs(message);
     }
 }
 ```
 
-### Step 3: Register It (30 seconds)
+### Step 3: Create the Generator (30 seconds)
+```csharp
+public class DeployCommandGenerator : ICliCommandGenerator
+{
+    public CliCommand Generate(CliInstruction instruction)
+    {
+        var env = instruction.GetArgument<string>("environment");
+        var replicas = instruction.GetArgument<int>("replicas");
+        return new DeployCommand(env, replicas);
+    }
+}
+```
+
+### Step 4: Register It (30 seconds)
 ```csharp
 services.AddKeyedTransient<ICliCommandGenerator>(
-    "hello",
-    (sp, key) => new HelloCliCommandGenerator()
+    "deploy",
+    (sp, key) => new DeployCommandGenerator()
 );
 ```
 
-### Step 4: Run It! (30 seconds)
+### Step 5: Run It! (30 seconds)
 ```bash
-$ /hello --name "Joshua"
-> Hello, Joshua! Welcome to SpendfulnessCli!
+$ /deploy --environment production --replicas 5
+> ✅ Deployed to production with 5 replicas
 ```
 
 **That's it!** Command added in 2.5 minutes. The framework handles:
-- ✅ Parsing `/hello --name "Joshua"`
-- ✅ Converting `"Joshua"` to a typed string argument
+- ✅ Parsing `/deploy --environment production --replicas 5`
+- ✅ Converting `"production"` to string and `5` to int
 - ✅ Routing to your handler
+- ✅ Injecting dependencies (`IDeploymentService`)
 - ✅ Displaying the output
 - ✅ Error handling
+
+**Build ANY CLI:** Deployment tools, log analyzers, data processors, test runners, automation scripts...
 
 ---
 
@@ -650,63 +926,98 @@ $ /hello --name "Joshua"
 
 ### Common Questions
 
-**Q: Can I really integrate ChatGPT with my finances?**
-- **A:** Yes! The `/chat` command uses OpenAI API with your transaction data preloaded into a vector database. It's like having an AI financial advisor that knows YOUR spending habits.
+**Q: Can I use this framework for my own CLI app?**
+- **A:** Absolutely! The core `Cli.*` projects are completely reusable. Just reference them and build your domain-specific commands. The framework is generic - it doesn't know or care about finance, deployment, or any specific domain.
 
 **Q: Is this production-ready?**
-- **A:** It's a real tool being used for real financial management! The architecture is solid, tested, and documented with ADRs.
+- **A:** Yes! It's being used in production for SpendfulnessCli (financial management). The framework has comprehensive tests, ADRs documenting decisions, and handles edge cases.
 
 **Q: How hard is it to add a command?**
-- **A:** You just saw it — about 2 minutes if you know what you want to build. The framework does the heavy lifting.
+- **A:** You just saw it — about 2-3 minutes. The framework handles parsing, routing, error handling, and display. You just write the business logic.
 
-**Q: What's the catch?**
-- **A:** It's a CLI, so no fancy UI. But if you love terminals (and who doesn't?), you'll love this.
+**Q: What about testing?**
+- **A:** Easy! Commands are just records (data). Handlers are just classes with dependencies. Mock the dependencies, test the handler. The framework provides `ICliCommandOutcomeIo` abstraction for integration tests.
 
-**Q: Can I use this framework for my own CLI app?**
-- **A:** Absolutely! The core `Cli.*` projects are reusable. The `SpendfulnessCli.*` projects are domain-specific, but the framework is generic.
+**Q: Can I add custom argument types?**
+- **A:** Yes! Implement `IConsoleInstructionArgumentBuilder` for your type and register it. The framework will automatically use it during parsing.
+
+**Q: What if I need async commands?**
+- **A:** Already supported! Handlers return `Task<CliCommandOutcome[]>`. The framework handles the async execution.
+
+**Q: Can commands call other commands?**
+- **A:** Yes! Through command pipelines. Commands return outcomes that can be consumed by other commands. Type-safe composition.
+
+**Q: What's included in the framework?**
+- **A:** 
+  - Core CLI loop and lifecycle management
+  - Type-safe instruction parsing (3-stage pipeline)
+  - Command registration and routing (via MediatR)
+  - Workflow and state management
+  - Command pipeline support
+  - Table formatting
+  - Aggregation patterns
+  - All abstracted and testable!
 
 ---
 
 ## Summary: The Big Ideas
 
-### What Makes SpendfulnessCli Cool?
+### What Makes This Framework Awesome?
 
-1. **Useful Features** 🎯
-   - Spare money calculator
-   - AI-powered insights
-   - Recurring transaction detection
-   - Personal inflation tracking
-   - Composable command pipelines
+1. **Reusable Infrastructure** 🏗️
+   - Production-ready CLI application loop
+   - Type-safe command parsing (no string manipulation!)
+   - Plugin architecture (add commands in 2 minutes)
+   - Command pipelines (compose simple → complex)
+   - Built-in table formatting
+   - Aggregation patterns
 
-2. **Smart Architecture** 🏗️
-   - Three-layer separation
-   - Type-safe parsing
-   - Plugin-based extensibility
-   - Reusable aggregations
-   - Command pipelines
+2. **Smart Architecture** 🎯
+   - Three-layer separation (User, Workflow, Commands)
+   - MediatR for command dispatch (CQRS pattern)
+   - Three-stage parser pipeline (Index → Extract → Build)
+   - Outcome pattern (no exceptions for control flow)
+   - Dependency injection throughout
 
-3. **Maintainable Code** 💎
-   - SOLID principles throughout
-   - DRY via aggregators and base classes
-   - YAGNI keeps it simple
-   - Easy to add features (2-minute commands!)
-   - Well-documented with ADRs
+3. **Developer Experience** 💎
+   - Easy to extend (2-minute commands)
+   - Easy to test (all abstractions mockable)
+   - Easy to understand (clear layer separation)
+   - Well-documented (13 ADRs explaining decisions)
+   - Proven in production (SpendfulnessCli uses it)
 
 ### Key Takeaways
 
-- ✅ **Good architecture enables cool features** — it's not just theory
-- ✅ **SOLID, DRY, YAGNI are practical tools** — not just buzzwords
-- ✅ **Build what you need today** — not what you might need tomorrow
-- ✅ **Make it easy to add features** — 2-minute commands prove it works
-- ✅ **Document your decisions** — ADRs explain the "why"
+- ✅ **Build ANY CLI with this framework** — not just financial tools
+- ✅ **SOLID, DRY, YAGNI are practical** — they enable the 2-minute commands
+- ✅ **Type safety prevents bugs** — compiler catches errors, not users
+- ✅ **Composition over configuration** — pipelines, aggregators, outcomes
+- ✅ **Framework vs Application** — `Cli.*` is reusable, `SpendfulnessCli.*` is one example
 
 ### Want to Explore More?
 
 **Check out the repo:**
 - `/ADR` - Architecture Decision Records explaining design choices
-- `CONCEPTS.md` - High-level concepts and patterns
+- `CONCEPTS.md` - High-level patterns and concepts
+- `Cli.*` projects - The reusable framework
+- `SpendfulnessCli.*` projects - Example application built on the framework
 - Test projects - Examples of testing approach
-- Try adding your own command!
+
+**Build Your Own CLI:**
+1. Reference the `Cli.*` projects
+2. Create your domain-specific commands
+3. Register them in DI
+4. Run!
+
+**Examples You Could Build:**
+- Deployment automation tools
+- Log analysis CLIs
+- Data processing pipelines
+- Test framework runners
+- Monitoring and alerting tools
+- CI/CD helpers
+- Database migration tools
+- API testing tools
 
 ---
 
@@ -714,32 +1025,34 @@ $ /hello --name "Joshua"
 
 **Questions? Let's discuss!**
 
-*"Great architecture is invisible—you only notice it when it's missing."*
+*"Great frameworks are invisible—you only notice them when they're missing."*
 
 **Repository:** https://github.com/KitCli/SpendfulnessCli
-**Fun fact:** This entire presentation covers real code from a real project. Every example is authentic!
+**Fun fact:** The framework (`Cli.*`) is completely domain-agnostic. SpendfulnessCli is just one application built on it!
 
 ---
 
 ## Resources
 
 ### In the Repository
-- **ADRs** - Read the architecture decisions that shaped this project
-- **CONCEPTS.md** - High-level overview of patterns used
-- **Tests** - See how everything is tested
-- **Commands** - Explore the 50+ commands
+- **`Cli.*` Projects** - The reusable framework (this is what you want!)
+- **`SpendfulnessCli.*` Projects** - Example application using the framework
+- **ADRs** - Architecture decisions that shaped the framework
+- **CONCEPTS.md** - High-level overview of patterns
+- **Tests** - Comprehensive test coverage
 
 ### External Learning
 - **Clean Architecture** by Robert C. Martin
 - **Domain-Driven Design** by Eric Evans
 - **Refactoring** by Martin Fowler
 - **MediatR** - https://github.com/jbogard/MediatR
+- **CQRS Pattern** - Command Query Responsibility Segregation
 
-### Try It Yourself!
+### Get Started!
 1. Clone the repository
-2. Run `/database create`
-3. Add your YNAB API key
-4. Explore the commands
-5. Add your own command!
+2. Explore the `Cli.*` projects (the framework)
+3. Look at `SpendfulnessCli.*` for examples
+4. Build your own CLI command
+5. Reference the framework in your own projects!
 
-**Good luck building maintainable software! 🚀**
+**Good luck building maintainable CLIs! 🚀**
