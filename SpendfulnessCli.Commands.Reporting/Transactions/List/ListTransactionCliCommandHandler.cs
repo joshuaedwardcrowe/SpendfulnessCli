@@ -7,7 +7,7 @@ using Spendfulness.Aggregation.Aggregator.ListAggregators;
 using Spendfulness.Database;
 using Spendfulness.Database.Sqlite;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
-using Ynab;
+using YnabSharp;
 
 namespace SpendfulnessCli.Commands.Reporting.Transactions.List;
 

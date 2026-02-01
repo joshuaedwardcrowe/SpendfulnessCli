@@ -16,7 +16,7 @@ using SpendfulnessCli.Commands.Chat;
 using SpendfulnessCli.Commands.Export.Csv;
 using SpendfulnessCli.Commands.Reporting;
 using SpendfulnessCli.Commands.Reusable;
-using Ynab.Extensions;
+using YnabSharp.Extensions;
 
 var cliAppBuilder = new CliAppBuilder()
     .WithCli<SpendfulnessCliApp>();

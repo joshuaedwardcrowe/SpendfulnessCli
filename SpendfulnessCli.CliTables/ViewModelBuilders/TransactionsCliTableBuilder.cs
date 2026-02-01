@@ -1,6 +1,6 @@
 using Spendfulness.Tools;
 using SpendfulnessCli.CliTables.ViewModels;
-using Ynab;
+using YnabSharp;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 

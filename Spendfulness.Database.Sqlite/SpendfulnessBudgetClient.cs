@@ -1,9 +1,9 @@
 using Spendfulness.Database.Abstractions;
 using Spendfulness.Database.Sqlite.Users;
-using Ynab.Clients;
-using Ynab.Connected;
-using Ynab.Factories;
-using Ynab.Http;
+using YnabSharp.Clients;
+using YnabSharp.Connected;
+using YnabSharp.Factories;
+using YnabSharp.Http;
 
 namespace Spendfulness.Database.Sqlite;
 

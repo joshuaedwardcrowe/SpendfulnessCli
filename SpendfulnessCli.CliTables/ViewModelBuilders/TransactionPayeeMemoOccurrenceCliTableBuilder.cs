@@ -1,7 +1,7 @@
 using Spendfulness.Aggregation.Aggregates;
 using Spendfulness.Tools;
 using SpendfulnessCli.CliTables.ViewModels;
-using Ynab.Sanitisers;
+using YnabSharp.Sanitisers;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 

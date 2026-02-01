@@ -3,8 +3,8 @@ using Spendfulness.Database;
 using Spendfulness.Database.Sqlite;
 using Spendfulness.Database.Sqlite.Commitments;
 using Spendfulness.Database.Sqlite.Users;
-using Ynab;
-using Ynab.Extensions;
+using YnabSharp;
+using YnabSharp.Extensions;
 
 namespace SpendfulnessCli.Sync.Synchronisers;
 

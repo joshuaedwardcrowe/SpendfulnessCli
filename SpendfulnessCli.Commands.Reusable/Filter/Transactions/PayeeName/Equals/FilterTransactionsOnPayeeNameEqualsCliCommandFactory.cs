@@ -3,7 +3,7 @@ using KitCli.Commands.Abstractions.Artefacts;
 using KitCli.Commands.Abstractions.Factories;
 using KitCli.Instructions.Abstractions;
 using KitCli.Instructions.Arguments;
-using Ynab;
+using YnabSharp;
 
 namespace SpendfulnessCli.Commands.Reusable.Filter.Transactions.PayeeName.Equals;
 

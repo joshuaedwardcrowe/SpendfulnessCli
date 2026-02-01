@@ -12,6 +12,7 @@
       <PackageReference Include="KitCli" Version="1.0.1" />
       <PackageReference Include="KitCli.Commands" Version="1.0.0" />
       <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-preview.260121.1" />
+      <PackageReference Include="YnabSharp" Version="1.0.0" />
     </ItemGroup>
 
 </Project>

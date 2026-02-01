@@ -7,10 +7,10 @@ using Spendfulness.Aggregation.Aggregator.AmountAggregators;
 using Spendfulness.Database;
 using Spendfulness.Database.Sqlite;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
-using Ynab;
-using Ynab.Extensions;
-using Ynab.Responses.Accounts;
-using Ynab.Sanitisers;
+using YnabSharp;
+using YnabSharp.Extensions;
+using YnabSharp.Responses.Accounts;
+using YnabSharp.Sanitisers;
 
 namespace SpendfulnessCli.Commands.Reporting.SpareMoney;
 

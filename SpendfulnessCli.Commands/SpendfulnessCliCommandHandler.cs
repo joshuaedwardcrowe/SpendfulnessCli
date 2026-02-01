@@ -3,7 +3,7 @@ using KitCli.Commands.Abstractions.Outcomes;
 using Spendfulness.Database;
 using Spendfulness.Database.Sqlite;
 using SpendfulnessCli.Commands.Accounts;
-using Ynab;
+using YnabSharp;
 
 namespace SpendfulnessCli.Commands;
 

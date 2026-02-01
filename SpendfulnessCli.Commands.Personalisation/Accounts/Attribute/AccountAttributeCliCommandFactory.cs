@@ -5,7 +5,7 @@ using KitCli.Instructions.Abstractions;
 using KitCli.Instructions.Arguments;
 using KitCli.Workflow.Commands.MissingOutcomes;
 using SpendfulnessCli.Commands.Accounts;
-using Ynab;
+using YnabSharp;
 
 namespace SpendfulnessCli.Commands.Personalisation.Accounts.Attribute;
 

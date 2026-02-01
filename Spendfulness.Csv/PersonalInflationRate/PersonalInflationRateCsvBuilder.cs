@@ -2,7 +2,7 @@ using Spendfulness.Aggregation.Aggregates;
 using Spendfulness.Aggregation.Aggregator;
 using Spendfulness.Tools;
 using Spendfulness.Tools.Percentages;
-using Ynab;
+using YnabSharp;
 
 namespace Spendfulness.Csv.PersonalInflationRate;
 

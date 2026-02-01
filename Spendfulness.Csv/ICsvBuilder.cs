@@ -1,5 +1,5 @@
 using Spendfulness.Aggregation.Aggregator;
-using Ynab;
+using YnabSharp;
 
 namespace Spendfulness.Csv;
 

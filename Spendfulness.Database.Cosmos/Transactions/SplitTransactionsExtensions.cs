@@ -1,5 +1,5 @@
 using Microsoft.Azure.Cosmos;
-using Ynab;
+using YnabSharp;
 
 namespace Spendfulness.Database.Cosmos.Transactions;
 

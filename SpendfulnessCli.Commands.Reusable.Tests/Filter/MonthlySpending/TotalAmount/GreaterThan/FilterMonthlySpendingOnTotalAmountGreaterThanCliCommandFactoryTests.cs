@@ -10,7 +10,7 @@ using SpendfulnessCli.Commands.Reporting.MonthlySpending;
 using SpendfulnessCli.Commands.Reusable.Filter;
 using SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending;
 using SpendfulnessCli.Commands.Reusable.Filter.MonthlySpending.TotalAmount.GreaterThan;
-using Ynab;
+using YnabSharp;
 
 namespace SpendfulnessCli.Commands.Reusable.Tests.Filter.MonthlySpending.TotalAmount.GreaterThan;
 

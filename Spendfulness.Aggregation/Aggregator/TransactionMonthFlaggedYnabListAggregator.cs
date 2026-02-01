@@ -1,8 +1,8 @@
 using Spendfulness.Aggregation.Aggregates;
 using Spendfulness.Tools.Percentages;
-using Ynab;
-using Ynab.Collections;
-using Ynab.Extensions;
+using YnabSharp;
+using YnabSharp.Collections;
+using YnabSharp.Extensions;
 
 namespace Spendfulness.Aggregation.Aggregator;
 

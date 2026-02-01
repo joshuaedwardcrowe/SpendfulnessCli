@@ -1,7 +1,7 @@
 using Spendfulness.Aggregation.Aggregates;
 using Spendfulness.Aggregation.Extensions;
-using Ynab;
-using Ynab.Extensions;
+using YnabSharp;
+using YnabSharp.Extensions;
 
 namespace Spendfulness.Aggregation.Aggregator;
 

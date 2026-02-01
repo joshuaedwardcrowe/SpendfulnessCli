@@ -1,6 +1,6 @@
 using KitCli.Abstractions.Aggregators;
 using Spendfulness.Database.Sqlite.Commitments;
-using Ynab;
+using YnabSharp;
 
 namespace Spendfulness.Aggregation.Aggregator;
 

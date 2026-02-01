@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
-using Ynab;
-using Ynab.Factories;
-using Ynab.Responses.Transactions;
+using YnabSharp;
+using YnabSharp.Factories;
+using YnabSharp.Responses.Transactions;
 
 namespace SpendfulnessCli.Abstractions.Taxis;
 

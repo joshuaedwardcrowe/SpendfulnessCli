@@ -2,7 +2,7 @@ using Spendfulness.Database.Sqlite.Commitments;
 using Spendfulness.Tools;
 using Spendfulness.Tools.Percentages;
 using SpendfulnessCli.CliTables.Extensions;
-using Ynab.Sanitisers;
+using YnabSharp.Sanitisers;
 
 namespace SpendfulnessCli.CliTables.ViewModelBuilders;
 

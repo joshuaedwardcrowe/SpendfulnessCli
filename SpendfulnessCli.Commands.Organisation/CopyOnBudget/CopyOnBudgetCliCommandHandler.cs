@@ -2,8 +2,8 @@ using KitCli.Commands.Abstractions.Handlers;
 using KitCli.Commands.Abstractions.Outcomes;
 using Spendfulness.Database;
 using Spendfulness.Database.Sqlite;
-using Ynab;
-using Ynab.Exceptions;
+using YnabSharp;
+using YnabSharp.Exceptions;
 
 namespace SpendfulnessCli.Commands.Organisation.CopyOnBudget;
 

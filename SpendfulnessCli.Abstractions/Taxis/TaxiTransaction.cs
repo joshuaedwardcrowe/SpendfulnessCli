@@ -1,5 +1,5 @@
-using Ynab;
-using Ynab.Responses.Transactions;
+using YnabSharp;
+using YnabSharp.Responses.Transactions;
 
 namespace SpendfulnessCli.Abstractions.Taxis;
 

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using Spendfulness.Database.Cosmos;
 using Spendfulness.Database.Cosmos.Transactions;
 using Spendfulness.Database.Sqlite;
-using Ynab;
+using YnabSharp;
 
 namespace SpendfulnessCli.Commands.Chat.Chat.PreloadDatabase;
 

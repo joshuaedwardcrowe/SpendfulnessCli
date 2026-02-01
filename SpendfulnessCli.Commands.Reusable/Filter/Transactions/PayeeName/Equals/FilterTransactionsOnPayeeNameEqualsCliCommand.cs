@@ -1,5 +1,5 @@
 using KitCli.Abstractions.Aggregators;
-using Ynab;
+using YnabSharp;
 
 namespace SpendfulnessCli.Commands.Reusable.Filter.Transactions.PayeeName.Equals;
 

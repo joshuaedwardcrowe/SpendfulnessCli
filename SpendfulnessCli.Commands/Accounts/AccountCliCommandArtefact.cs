@@ -1,5 +1,5 @@
 using KitCli.Commands.Abstractions.Artefacts;
-using Ynab;
+using YnabSharp;
 
 namespace SpendfulnessCli.Commands.Accounts;
 

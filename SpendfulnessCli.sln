@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ynab", "Ynab\Ynab.csproj", "{4D763B49-7DD5-488A-BE5A-083BFE9108FA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta", "Meta", "{528597EC-71D9-431E-A46E-B1F060A82A2A}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
@@ -14,8 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendfulnessCli.Commands", "SpendfulnessCli.Commands\SpendfulnessCli.Commands.csproj", "{A856A1D8-73AB-47EA-8D8C-F53880052A16}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendfulnessCli.Commands.Tests", "SpendfulnessCli.Commands.Tests\SpendfulnessCli.Commands.Tests.csproj", "{7EAF17CD-C47E-4573-A658-2D8F1C7AA1FC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ynab.Tests", "Ynab.Tests\Ynab.Tests.csproj", "{603D8C36-71AF-423D-B27D-F78C3B09EA0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendfulnessCli.CliTables.Tests", "SpendfulnessCli.CliTables.Tests\SpendfulnessCli.CliTables.Tests.csproj", "{E72E9E9F-C093-4924-AFF2-67E1E46F1039}"
 EndProject
@@ -50,8 +46,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendfulnessCli.Commands.Organisation", "SpendfulnessCli.Commands.Organisation\SpendfulnessCli.Commands.Organisation.csproj", "{6A7CA104-3649-4C11-9F2E-FE77130475E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendfulnessCli", "SpendfulnessCli\SpendfulnessCli.csproj", "{3CA3D4A0-5C8C-41A1-A22B-61B9EBA19590}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ynab", "Ynab", "{8AA80F62-00BE-444B-8E6C-2F74B6F7F596}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendfulness.Database.Abstractions", "Spendfulness.Database.Abstractions\Spendfulness.Database.Abstractions.csproj", "{DE64B865-301F-4302-B6F4-C7117809E9C3}"
 EndProject
@@ -89,10 +83,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D763B49-7DD5-488A-BE5A-083BFE9108FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D6DDBC52-9946-434B-814E-536E8E4D49CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6DDBC52-9946-434B-814E-536E8E4D49CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6DDBC52-9946-434B-814E-536E8E4D49CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -105,10 +95,6 @@ Global
 		{7EAF17CD-C47E-4573-A658-2D8F1C7AA1FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EAF17CD-C47E-4573-A658-2D8F1C7AA1FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EAF17CD-C47E-4573-A658-2D8F1C7AA1FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{603D8C36-71AF-423D-B27D-F78C3B09EA0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{603D8C36-71AF-423D-B27D-F78C3B09EA0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{603D8C36-71AF-423D-B27D-F78C3B09EA0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{603D8C36-71AF-423D-B27D-F78C3B09EA0B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E72E9E9F-C093-4924-AFF2-67E1E46F1039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E72E9E9F-C093-4924-AFF2-67E1E46F1039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E72E9E9F-C093-4924-AFF2-67E1E46F1039}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -187,8 +173,6 @@ Global
 		{A249C74A-35D4-4B2C-A50B-C603A1C78B2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4D763B49-7DD5-488A-BE5A-083BFE9108FA} = {8AA80F62-00BE-444B-8E6C-2F74B6F7F596}
-		{603D8C36-71AF-423D-B27D-F78C3B09EA0B} = {8AA80F62-00BE-444B-8E6C-2F74B6F7F596}
 		{80B41408-9A47-4AC6-8847-A37EF2EC327C} = {52E90345-79FA-4FD3-8A3A-1D69887FA38E}
 		{DE64B865-301F-4302-B6F4-C7117809E9C3} = {52E90345-79FA-4FD3-8A3A-1D69887FA38E}
 		{D6DDBC52-9946-434B-814E-536E8E4D49CB} = {51378C3A-F9B8-4313-95E5-FE234358C161}

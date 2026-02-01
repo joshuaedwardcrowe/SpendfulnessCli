@@ -1,4 +1,4 @@
-using Ynab;
+using YnabSharp;
 
 namespace Spendfulness.Aggregation.Aggregator.AmountAggregators;
 

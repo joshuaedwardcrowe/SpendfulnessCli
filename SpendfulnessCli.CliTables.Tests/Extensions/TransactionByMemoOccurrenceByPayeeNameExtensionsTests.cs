@@ -1,8 +1,8 @@
 using Spendfulness.Aggregation.Extensions;
-using Ynab;
-using Ynab.Collections;
-using Ynab.Responses.Transactions;
-using Ynab.Sanitisers;
+using YnabSharp;
+using YnabSharp.Collections;
+using YnabSharp.Responses.Transactions;
+using YnabSharp.Sanitisers;
 
 namespace Spendfulness.Cli.CliTables.Tests.Extensions;
 

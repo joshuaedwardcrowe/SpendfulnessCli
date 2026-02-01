@@ -4,7 +4,7 @@ using KitCli.Commands.Abstractions.Outcomes;
 using KitCli.Commands.Abstractions.Outcomes.Final;
 using KitCli.Commands.Abstractions.Outcomes.Reusable.Page;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
-using Ynab.Extensions;
+using YnabSharp.Extensions;
 
 namespace SpendfulnessCli.Commands.Reusable.Filter.Transactions.PayeeName.Equals;
 

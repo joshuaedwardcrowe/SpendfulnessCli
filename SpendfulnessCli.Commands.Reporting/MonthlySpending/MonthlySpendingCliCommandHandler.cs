@@ -8,7 +8,7 @@ using Spendfulness.Aggregation.Aggregator.ListAggregators;
 using Spendfulness.Database;
 using Spendfulness.Database.Sqlite;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
-using Ynab.Extensions;
+using YnabSharp.Extensions;
 
 namespace SpendfulnessCli.Commands.Reporting.MonthlySpending;
 

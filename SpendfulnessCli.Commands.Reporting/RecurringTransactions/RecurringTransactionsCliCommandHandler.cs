@@ -9,8 +9,8 @@ using Spendfulness.Aggregation.Extensions;
 using Spendfulness.Database;
 using Spendfulness.Database.Sqlite;
 using SpendfulnessCli.CliTables.ViewModelBuilders;
-using Ynab;
-using Ynab.Extensions;
+using YnabSharp;
+using YnabSharp.Extensions;
 
 namespace SpendfulnessCli.Commands.Reporting.RecurringTransactions
 {

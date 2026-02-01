@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Spendfulness.Database;
 using Spendfulness.Database.Sqlite;
 using SpendfulnessCli.Sync.Synchronisers;
-using Ynab.Extensions;
+using YnabSharp.Extensions;
 
 namespace SpendfulnessCli.Sync;
 
