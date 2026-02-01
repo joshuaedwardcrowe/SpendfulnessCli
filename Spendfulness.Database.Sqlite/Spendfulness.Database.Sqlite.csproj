@@ -15,7 +15,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Spendfulness.Database.Abstractions\Spendfulness.Database.Abstractions.csproj" />
-      <ProjectReference Include="..\Ynab\Ynab.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -18,7 +18,6 @@
       <ProjectReference Include="..\Spendfulness.Database.Sqlite\Spendfulness.Database.Sqlite.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.Aggregation\SpendfulnessCli.Aggregation.csproj" />
       <ProjectReference Include="..\SpendfulnessCli.CliTables\SpendfulnessCli.CliTables.csproj" />
-      <ProjectReference Include="..\Ynab\Ynab.csproj" />
     </ItemGroup>
 
     <ItemGroup>

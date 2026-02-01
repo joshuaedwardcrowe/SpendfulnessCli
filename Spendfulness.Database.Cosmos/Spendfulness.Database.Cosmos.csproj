@@ -16,8 +16,4 @@
       <PackageReference Include="YnabSharp" Version="1.0.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Ynab\Ynab.csproj" />
-    </ItemGroup>
-
 </Project>
