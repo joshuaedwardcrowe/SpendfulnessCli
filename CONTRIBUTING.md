@@ -20,6 +20,13 @@ instead of relying on memory.
   `163-splittable-transactions-personalisation`). No long-running
   branches.
 - One logical change per PR.
+- **PR titles use [Conventional Commits](https://www.conventionalcommits.org/):**
+  `<type>(scope): <description>` — `type` is one of `feat` `fix` `docs`
+  `chore` `refactor` `test` `ci`; `scope` (optional) matches a command
+  area (`chat`, `export`, `organisation`, `personalisation`,
+  `reporting`, `reusable`). `description` is lowercase, imperative, no
+  trailing period. For a breaking change, add `!` right before the
+  colon. Example: `feat(reporting): add loan-to-value command`.
 - There's no enforced CI or required review on this repo (single
   maintainer, no branch protection) — build and test locally before
   merging anyway.
@@ -58,6 +65,18 @@ format — don't force issues into "As a user, I want..." shape. Larger
 planning spike has established delivery order (see
 [Projects](#projects) below) — not upfront.
 
+**Issue titles** follow a two-stage convention:
+
+- **Idea-stage** (unvalidated, pre-WAG) — plain-language problem
+  statements, e.g. "No way to identify X" / "No command to do Y". This
+  is deliberate: an idea is a pitch for an unmet need, not yet a scoped
+  unit of work.
+- **Delivery-stage sub-issues** (carved out by a planning spike, ready
+  to build) — Conventional Commits style, matching PR titles:
+  `type(scope): description`, e.g. `feat(reporting): add loan-to-value
+  command`. By this point the work is scoped, so the title should read
+  like the commit that will close it.
+
 ## Projects
 
 Work bigger than a single issue is tracked on a GitHub Projects (v2)
@@ -67,6 +86,7 @@ across what a milestone alone can't. Current boards:
 
 - [YNAB Analysis & Automation](https://github.com/users/joshuaedwardcrowe/projects/8) — analyse and CRUD commands
 - [Spendfulness](https://github.com/users/joshuaedwardcrowe/projects/9) — the spendfulness-measurement theme
+- [Ideas](https://github.com/users/joshuaedwardcrowe/projects/10) — pre-project ideas, with `WAG`/`SWAG`/`Validated Estimate` fields for calibration; an idea graduates to its own project once SWAG'd
 - Creating a Proof of Concept, Adding Settings, Tech Debt Monitoring — narrower/unexplored scopes
 
 **Starting a new project:** open it with a planning spike first, not a
