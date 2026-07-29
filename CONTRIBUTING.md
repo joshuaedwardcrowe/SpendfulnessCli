@@ -20,6 +20,9 @@ instead of relying on memory.
   `163-splittable-transactions-personalisation`). No long-running
   branches.
 - One logical change per PR.
+- **Keep PRs small: max 20 files, 10-15 preferred.** If a change is going
+  to blow past that, plan the split into multiple PRs upfront, not after
+  the fact.
 - **PR titles use [Conventional Commits](https://www.conventionalcommits.org/):**
   `<type>(scope): <description>` — `type` is one of `feat` `fix` `docs`
   `chore` `refactor` `test` `ci`; `scope` (optional) matches a command
@@ -32,6 +35,17 @@ instead of relying on memory.
   merging anyway.
 - Docs-only changes (like this file) can be committed straight to
   `main`.
+
+## Testing
+
+- **Build test doubles reusably from the start, not as a private nested
+  class you promote later.** Put the double in the relevant test
+  project's `TestHelpers/` (or equivalent) folder the first time, not
+  the second.
+- **Serialize real DTOs instead of hand-writing JSON/CSV string
+  literals** for canned response bodies — construct the actual type and
+  serialize it, so the fixture can't drift from the real shape.
+- **Name test doubles `Test*`**, not `Stub*`/`Fake*`/`Mock*`.
 
 ## ADRs
 
@@ -129,6 +143,12 @@ not commitments to defend:
    an iteration get the `Estimate` field (Fibonacci story points, not
    time) on the project board — the parent story tracks the outcome,
    not the effort to reach it.
+
+This repo follows [SoloCAIRN](https://github.com/joshuaedwardcrowe/SoloCAIRN)
+for a ticket's Build-stage lifecycle. Per its Breakdown stage, **the
+GitHub Issue itself is the story artifact** — no separate markdown file
+or dedicated location. It's already written down, reviewable via
+comments, and tracked through GitHub's own history.
 
 Current project boards:
 
