@@ -62,7 +62,7 @@ Preferential` · `Bug` · `Enhancement` · `Documentation` · `Integration`
 `User Value` is a value classification, not an Agile user-story
 format — don't force issues into "As a user, I want..." shape. Larger
 `User Value` issues get broken into sub-issues, but only once a
-planning spike has established delivery order (see
+milestone spike has established delivery order (see
 [Projects](#projects) below) — not upfront.
 
 **Issue titles** follow a two-stage convention:
@@ -79,33 +79,52 @@ planning spike has established delivery order (see
 
 ## Projects
 
-Work bigger than a single issue is tracked on a GitHub Projects (v2)
-board rather than just a milestone — a board can carry an `Estimate`
-field (story points, not time) and group issues by theme or work-type
-across what a milestone alone can't. Current boards:
+Work bigger than a single issue goes through a staged pipeline before
+it's ever decomposed into tickets:
+
+1. **WAG** — a fast, rough gut-feel estimate (in months), logged on the
+   [Ideas board](https://github.com/users/joshuaedwardcrowe/projects/10)'s
+   `WAG (months)` field, purely to judge whether an idea is worth
+   pursuing at all.
+2. **SWAG** — the same estimate, re-checked against everything else
+   competing for the slot, logged in the same board's `SWAG (months)`
+   field. "Prioritizing" means sorting/grouping that board by
+   `Priority` (`High`/`Medium`/`Low`) or `SWAG` — there's no separate
+   roadmap artifact to keep in sync.
+3. **New GitHub Project** — once an idea is greenlit, it graduates off
+   the Ideas board into its own project (e.g.
+   [Spendfulness](https://github.com/users/joshuaedwardcrowe/projects/9),
+   [YNAB Analysis & Automation](https://github.com/users/joshuaedwardcrowe/projects/8)).
+4. **Inception spike** — validates the WAG/SWAG estimate for real and
+   defines milestones spanning that period, logged on the Ideas board's
+   `Validated Estimate (months)` field. This spike's output is
+   milestones, not tickets.
+5. **Pick up a milestone**, then run a **milestone spike** — this is
+   the one that plans the actual chronological delivery order and
+   produces the ordered ticket breakdown for that specific milestone.
+   Don't skip straight from the inception spike to tickets: decomposing
+   before delivery order is agreed produces a breakdown that looks
+   plausible but can't be proven correct — e.g. proposing a report
+   command before the data it depends on is parsed.
+6. **Tickets with Estimates** — the milestone spike's tickets get the
+   `Estimate` field (Fibonacci story points, not time) on the project
+   board, on the leaf/actionable tickets — the parent story tracks the
+   outcome, not the effort to reach it.
+
+Current project boards:
 
 - [YNAB Analysis & Automation](https://github.com/users/joshuaedwardcrowe/projects/8) — analyse and CRUD commands
 - [Spendfulness](https://github.com/users/joshuaedwardcrowe/projects/9) — the spendfulness-measurement theme
-- [Ideas](https://github.com/users/joshuaedwardcrowe/projects/10) — pre-project ideas, with `WAG`/`SWAG`/`Validated Estimate` fields for calibration; an idea graduates to its own project once SWAG'd
+- [Ideas](https://github.com/users/joshuaedwardcrowe/projects/10) — the WAG/SWAG staging board described above
 - Creating a Proof of Concept, Adding Settings, Tech Debt Monitoring — narrower/unexplored scopes
-
-**Starting a new project:** open it with a planning spike first, not a
-pre-built backlog. Decomposing a story-shaped issue into sub-issues
-before the delivery order is actually agreed produces a breakdown that
-looks plausible but can't be proven correct — e.g. proposing a report
-command before the data it depends on is parsed. The spike's job is to
-establish that order collaboratively; only create sub-issues once it
-concludes, and in the order it settles on.
-
-**Estimates** go on the leaf/actionable sub-issues, not the parent
-story issue — the parent tracks the outcome, not the effort to reach
-it.
 
 ## Milestones
 
 Milestones group issues by feature area within this repo (e.g.
 `Measuring Spendfulness`, `Modifying YNAB Data`) — narrower and
-repo-scoped, unlike a Project board which can span themes or work-types.
+repo-scoped, unlike a Project board which can span themes or
+work-types. A milestone's definition comes out of a project's
+**inception spike** (step 4 above), not chosen upfront.
 
 ## Questions
 
