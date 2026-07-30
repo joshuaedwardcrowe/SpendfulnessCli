@@ -30,6 +30,10 @@ instead of relying on memory.
   `reporting`, `reusable`). `description` is lowercase, imperative, no
   trailing period. For a breaking change, add `!` right before the
   colon. Example: `feat(reporting): add loan-to-value command`.
+- **If a linked issue exists, mirror its labels and milestone onto the
+  PR.** GitHub doesn't do this automatically. Keeping both in sync means
+  milestone/label filtering and progress tracking work across the PR
+  list too, not just issues.
 - There's no enforced CI or required review on this repo (single
   maintainer, no branch protection) — build and test locally before
   merging anyway.
@@ -147,6 +151,23 @@ not commitments to defend:
    scope change; see [SoloCAIRN's Sizing
    note](https://github.com/joshuaedwardcrowe/SoloCAIRN/blob/main/docs/03-lifecycle.md)
    for the full reasoning.
+
+### Status gates
+
+Once a ticket has an Estimate (step 7 above), the delivery boards'
+(YNAB Analysis & Automation, Spendfulness) `Status` field tracks it
+through these Agile/Scrum-style gates. Move the card at each transition
+— don't let it sit stale while the real work moves past it:
+
+| Status | Move here when |
+|---|---|
+| `Backlog` | Triaged (has all three labels) but not yet pulled into an iteration. |
+| `To Do` | Pulled into the current iteration and given an `Estimate`. |
+| `In Development` | Implementation starts — first commit/branch pushed. |
+| `In Review` | PR opened, labels/milestone mirrored from the issue. |
+| `In QA` | All review feedback addressed and the change has been run locally — this repo has no enforced CI, so manual verification is the gate, not a green check. |
+| `Ready for Release` | Merged, but deliberately held back from `Done` — e.g. waiting on a batch of related work. Optional: most tickets skip straight to `Done` on merge. |
+| `Done` | Merged and the issue is closed. This is the default landing spot from `In QA` — don't hold a ticket at `Ready for Release` without a specific reason to. |
 
 This repo follows [SoloCAIRN](https://github.com/joshuaedwardcrowe/SoloCAIRN)
 for a ticket's Build-stage lifecycle, with one extension specific to
