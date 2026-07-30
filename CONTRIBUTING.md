@@ -171,6 +171,14 @@ work-types. Only the immediate milestone is planned in real detail (via
 the **inception spike**, step 4 above); later milestones stay a rough
 forecast, refined properly when picked up.
 
+**Naming.** When a milestone is tied to catching up to (or tracking) an
+external spec or API version, name it after that version (e.g. `YNAB
+API v1.86.0`), not a goal-style description (e.g. `Full YNAB API
+Coverage`) — a version-anchored name pins the milestone to a concrete,
+checkable target and supports a version history over time. Feature-area
+milestones (like the ones above) don't need this — it only applies when
+there's an actual external version to anchor to.
+
 ## Questions
 
 Open an issue if something in this document is unclear or actively
