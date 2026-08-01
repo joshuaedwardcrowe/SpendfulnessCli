@@ -15,7 +15,7 @@ a half:
 | # | Step | Possible? |
 |---|---|---|
 | 1 | Create the target category / group | ✅ `createCategory`, `createCategoryGroup` |
-| 2 | Re-point transactions from source to target | ⚠️ bulk update works, **but split transactions cannot be re-categorised at all** |
+| 2 | Re-point transactions from source to target | ⚠️ bulk update works, **but a split transaction's category cannot be changed in place** — see below |
 | 3 | Move money already assigned to the source | ❌ `money_movements` is read-only |
 | 4 | Retire the emptied source category | ❌ no `DELETE`; `hidden` is not writable |
 
@@ -40,13 +40,41 @@ Build it as two things, sequenced:
    (create), [#100](https://github.com/joshuaedwardcrowe/YnabSharp/issues/100)
    and [#101](https://github.com/joshuaedwardcrowe/YnabSharp/issues/101)
    (group create/update). None are built yet — this is blocked on them.
+
+   The mapping is the command's input, and looks roughly like this — old
+   category on the left, target group and category on the right, many-to-one
+   by design:
+
+   ```csv
+   old_category_group,old_category,new_category_group,new_category
+   🏡 Home,Mortgage,Sanctuary (Am I Physically Safe),The Macro Fortress
+   🏡 Home,Council Tax,Sanctuary (Am I Physically Safe),The Macro Fortress
+   🧺 Cupboard,Homeware,Sanctuary (Am I Physically Safe),The Micro Perimeter
+   💼 Working - BrightHR,Lunch Out,Side Quest (Professional Journey),Workday Nutrition
+   ```
+
+   Four rows collapsing to three targets is the merge ratio in miniature,
+   and it is why steps 3 and 4 below cannot be skipped.
+
 2. **A retirement checklist output.** For everything the API can't do:
    each source category that still holds assigned money, and each one
    that now needs hiding by hand. Generated, not written by the user.
 
-Split transactions need a third decision before either lands — see open
-questions. Do not slice this into sub-issues until that's answered; it
-changes whether step 1 is complete or partial.
+   **No such output type exists in the CLI today.** Every command currently
+   returns a table view model (see
+   [concepts/compilation.md](../concepts/compilation.md)); a checklist is a
+   different shape of outcome, and building one is a capability in its own
+   right rather than a detail of this migration. Tracked separately on the
+   Ideas board — this recommendation depends on it, and shouldn't silently
+   assume it.
+
+Splits and transfers both need deciding before either lands — see open
+questions. The blocker is narrower than it first looked: it is whether a
+**reconciled** transaction can be deleted at all. If it can, splits are
+recoverable by delete-and-recreate; if it can't, most of the register is
+untouchable and recommendation 1 covers materially less than it appears to.
+That is one API call to find out, and worth doing before slicing anything
+into sub-issues.
 
 ## What was established
 
@@ -55,10 +83,25 @@ changes whether step 1 is complete or partial.
 it holds regardless of which target taxonomy is finally chosen — the shape
 follows from the merge ratio, not from any particular set of names.
 
-**Split transactions cannot be re-categorised.** The spec is explicit:
-"If an existing transaction is a split, the `category_id` cannot be
-changed." This matters more here than it would elsewhere, because this repo
+**Split transactions cannot be re-categorised *in place*.** The spec is
+explicit: "If an existing transaction is a split, the `category_id` cannot
+be changed." This matters more here than elsewhere, because this repo
 already treats splittable transactions as a first-class concern (#165, #164).
+
+**Delete-and-recreate is a legitimate workaround for splits, and a bad one
+for transfers.** More survives the round-trip than the restriction
+suggests: `cleared` accepts `reconciled`, and `import_id` is settable, so
+reconciliation state and bank-import de-duplication both carry over, as do
+amount, date, account, payee, memo, approved and flag. What does not carry
+over is the transaction `id` (and every subtransaction id), so anything
+holding a reference breaks.
+
+Transfers are the exception, and the reason this needs deciding rather than
+just doing. `transfer_transaction_id` is read-only — it is absent from
+`SaveTransaction` — and a transfer's opposite leg is created implicitly via
+a transfer payee. Deleting one leg and recreating it is therefore not a
+faithful round-trip; it is a different operation that happens to leave a
+similar-looking row.
 
 **Three permanent API ceilings.** No `DELETE` for categories or groups (the
 only two `delete` operations in the whole spec are on Transactions and
@@ -77,6 +120,19 @@ belongs under `Sanctuary (Am I Physically Safe)` rather than
 by hand and fed to the tool as input.
 [my-financial-map](https://github.com/joshuaedwardcrowe/my-financial-map)
 is the prose draft of it.
+
+**The taxonomy is total.** Every old category maps to a value; there is no
+legitimate unclassified residue. The point of a re-organisation is that the
+new structure is *all* that remains, so an unmapped category is an error —
+the tool should fail, list what it couldn't place, and refuse to proceed
+rather than quietly leaving a category behind.
+
+What looked at first like residue — Banking, `Get a Car`, CroweCaptured,
+Home Maintenance, most of Celebrating — is mostly the merge itself: several
+old categories collapsing into one new one, which reads as "disappearing"
+only if you expect a one-to-one mapping. Those five still need placing, but
+that is a gap in the map rather than evidence against totality
+([my-financial-map#1](https://github.com/joshuaedwardcrowe/my-financial-map/issues/1)).
 
 **Previewing is possible, but the scratch plan is made by hand.** YNAB
 allows more than one plan, and the CLI can target any of them by id. But
@@ -114,15 +170,19 @@ and the missing create endpoint raised as
 
 ## Open questions
 
-- **What happens to split transactions?** Leave them, report them, or
-  delete-and-recreate them (which is possible — `deleteTransaction` and
-  `createTransaction` both exist — but changes transaction ids and any
-  import linkage)? This is the one that blocks breakdown.
-- **Is the target taxonomy total or partial?** Banking, `Get a Car`,
-  CroweCaptured, Home Maintenance and most of Celebrating currently have no
-  value assigned in my-financial-map. If a residue is legitimate, the tool
-  needs an explicit "unmapped" outcome rather than treating it as an error.
-  Raised separately.
+- **Do we delete-and-recreate splits, or leave and report them?** The
+  round-trip is faithful apart from the `id` (above), so this is a judgement
+  about whether losing transaction identity is acceptable, not a technical
+  blocker. Recreating is the only way to get splits onto the new axis at all.
+- **Can a reconciled transaction be deleted?** `cleared` accepts
+  `reconciled` on create, but the spec doesn't say whether the API refuses
+  to *delete* one, and YNAB locks reconciled transactions in the UI. In a
+  budget this old most transactions are reconciled, so if the answer is no,
+  delete-and-recreate is off the table for nearly everything. **Untested,
+  and it decides the question above.**
+- **What happens to transfers?** Delete-and-recreate is unsafe for them
+  (above), so they need either an in-place path, an explicit skip, or a
+  manual step. Unlike splits, there is no workaround to choose between.
 - **How much assigned money actually needs moving?** Step 3 is manual, so
   its cost is proportional to how many source categories hold a non-zero
   balance at migration time. Migrating just after a month rolls over may
