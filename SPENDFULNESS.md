@@ -33,17 +33,7 @@ Spendfulness acts as an active filtering mechanism. It forces you to cross-exami
 
 ### Rolling with Behavioral Flexibility (Axis 2)
 * **The Concept:** Sudden routine shifts or life events require immediate capital, which traditional budgets punish with guilt.
-* **YNAB Application:** Ask the fifth key question — *"What changes do I need to make, if any?"* Dynamically shift funds from lower-priority categories to cover unexpected high-value needs intentionally.
-
-> **On the Four Rules.** This section previously cited Rule Three, *Roll with the Punches*. YNAB restructured the method around [five key questions](https://www.ynab.com/guide/foundations-the-ynab-method) in May 2025, and the rules are no longer the framing its own material uses. The five, in order:
->
-> 1. What does this money need to do before I'm paid again?
-> 2. What larger, less frequent expenses do I need to prepare for?
-> 3. What can I set aside for next month's spending?
-> 4. What goals, large or small, do I want to prioritize?
-> 5. What changes do I need to make, if any?
->
-> The behaviour Rule Three described is intact — it's question five now.
+* **YNAB Application:** Ask [YNAB's fifth key question](https://www.ynab.com/guide/foundations-the-ynab-method) — *"What changes do I need to make, if any?"* Dynamically shift funds from lower-priority categories to cover unexpected high-value needs intentionally.
 
 ---
 
