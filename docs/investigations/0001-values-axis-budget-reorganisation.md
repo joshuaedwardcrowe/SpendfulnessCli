@@ -62,19 +62,19 @@ Build it as two things, sequenced:
 
    **No such output type exists in the CLI today.** Every command currently
    returns a table view model (see
-   [concepts/compilation.md](../concepts/compilation.md)); a checklist is a
+   [concepts/console-pipeline.md](../concepts/console-pipeline.md)); a checklist is a
    different shape of outcome, and building one is a capability in its own
    right rather than a detail of this migration. Tracked separately on the
    Ideas board — this recommendation depends on it, and shouldn't silently
    assume it.
 
 Splits and transfers both need deciding before either lands — see open
-questions. The blocker is narrower than it first looked: it is whether a
-**reconciled** transaction can be deleted at all. If it can, splits are
-recoverable by delete-and-recreate; if it can't, most of the register is
-untouchable and recommendation 1 covers materially less than it appears to.
-That is one API call to find out, and worth doing before slicing anything
-into sub-issues.
+questions. Neither is a hard block: the web app will delete a reconciled
+transaction if you insist, so the only unknown is whether the API is as
+permissive. One `DELETE` against a scratch plan answers it, and it's worth
+doing before slicing anything into sub-issues — if the API refuses, most of
+the register is untouchable and recommendation 1 covers materially less
+than it appears to.
 
 ## What was established
 
@@ -174,12 +174,13 @@ and the missing create endpoint raised as
   round-trip is faithful apart from the `id` (above), so this is a judgement
   about whether losing transaction identity is acceptable, not a technical
   blocker. Recreating is the only way to get splits onto the new axis at all.
-- **Can a reconciled transaction be deleted?** `cleared` accepts
-  `reconciled` on create, but the spec doesn't say whether the API refuses
-  to *delete* one, and YNAB locks reconciled transactions in the UI. In a
-  budget this old most transactions are reconciled, so if the answer is no,
-  delete-and-recreate is off the table for nearly everything. **Untested,
-  and it decides the question above.**
+- **Does the *API* refuse to delete a reconciled transaction?** The YNAB web
+  app allows it, with a prominent warning — so the data model permits it and
+  this is not a hard block. What is unknown is whether the API mirrors the
+  UI's permissiveness or refuses outright, since the spec says nothing
+  either way. One `DELETE` against a scratch plan settles it. Worth doing
+  before breakdown, because it decides the question above for most of the
+  register.
 - **What happens to transfers?** Delete-and-recreate is unsafe for them
   (above), so they need either an in-place path, an explicit skip, or a
   manual step. Unlike splits, there is no workaround to choose between.
