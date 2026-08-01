@@ -87,7 +87,7 @@ The `ConsoleInstructionTokenExtractor` uses the indexes from stage 1 to extract 
   - Key = argument name (e.g., `"minus-savings"`)
   - Value = argument value or `null` if no value provided
 
-**Key Design Decision**: Argument values can be `null` to support optional values (especially for boolean flags). This is documented in ADR01.
+**Key Design Decision**: Argument values can be `null` to support optional values (especially for boolean flags). This is documented in ADR 0001.
 
 **Example**:
 ```
@@ -127,7 +127,7 @@ public interface IConsoleInstructionArgumentBuilder
 - `DateOnlyConsoleInstructionArgumentBuilder`: Handles date values
 - `GuidConsoleInstructionArgumentBuilder`: Handles GUID values
 
-**Key Design Decision**: The `BoolConsoleInstructionArgumentBuilder` always returns `true` for its `For()` method, making it a fallback/default builder. It must be registered last in the dependency injection container to ensure other builders are tried first. This is documented as a constraint in ADR01.
+**Key Design Decision**: The `BoolConsoleInstructionArgumentBuilder` always returns `true` for its `For()` method, making it a fallback/default builder. It must be registered last in the dependency injection container to ensure other builders are tried first. This is documented as a constraint in ADR 0001.
 
 ### 4. Result Model
 
@@ -162,7 +162,7 @@ These constants make the parser's behavior explicit and provide a single place t
 ## Constraints
 
 ### Builder Order Dependency
-The `BoolConsoleInstructionArgumentBuilder` must be registered last in the DI container because it acts as a fallback (its `For()` method always returns true). This dependency on injection order is brittle and should be addressed in the future (see ADR01).
+The `BoolConsoleInstructionArgumentBuilder` must be registered last in the DI container because it acts as a fallback (its `For()` method always returns true). This dependency on injection order is brittle and should be addressed in the future (see ADR 0001).
 
 ### Argument Value Nullability
 Argument values can be `null` to support optional values. All `IConsoleInstructionArgumentBuilder` implementations must handle `null` appropriately:
@@ -170,7 +170,7 @@ Argument values can be `null` to support optional values. All `IConsoleInstructi
 - Throw an exception from `Create()` if called with `null` when they require a value
 - Or provide a sensible default (like `BoolConsoleInstructionArgumentBuilder` defaulting to `true`)
 
-This is fully documented in ADR01.
+This is fully documented in ADR 0001.
 
 ### Single Argument Value Support
 The current implementation assumes each argument name appears once in a command. Multiple values for the same argument name would need special handling (e.g., `--file doc1.txt --file doc2.txt`).

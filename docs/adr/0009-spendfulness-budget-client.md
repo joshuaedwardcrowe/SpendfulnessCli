@@ -83,7 +83,7 @@ When any command handler requires access to budget data, it receives `Spendfulne
    - The budget matching the user's `DefaultBudgetId` setting, or
    - The first budget if no default is configured
 
-The returned `ConnectedBudget` is a [Connected API](./ADR05-Connected-API-Concept.md) object that provides convenient methods for accessing accounts, categories, transactions, and scheduled transactions without requiring additional client management.
+The returned `ConnectedBudget` is a [Connected API](./0005-connected-api-concept.md) object that provides convenient methods for accessing accounts, categories, transactions, and scheduled transactions without requiring additional client management.
 
 ### Integration with Dependency Injection
 The `SpendfulnessBudgetClient` is registered as a singleton in the service container:

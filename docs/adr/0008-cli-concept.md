@@ -114,7 +114,7 @@ The `CliCommandOutcomeIo` abstraction provides two methods:
 
 ### 4. Workflow Integration
 
-The CLI delegates all command execution logic to a `CliWorkflow` instance (see ADR09). This separation ensures:
+The CLI delegates all command execution logic to a `CliWorkflow` instance (see ADR 0010). This separation ensures:
 - The CLI focuses on user interaction loop
 - The workflow focuses on command parsing and execution
 - Each component has a single, well-defined responsibility
@@ -198,7 +198,7 @@ The current hooks are synchronous. Adding async support would complicate the loo
 
 ### How is this different from a command-line parser library?
 
-This is not a parser—parsing is delegated to the `CliWorkflow` (which uses the Instruction Parser from ADR07). This is the outer shell that manages the interactive session and user interaction loop.
+This is not a parser—parsing is delegated to the `CliWorkflow` (which uses the Instruction Parser from ADR 0007). This is the outer shell that manages the interactive session and user interaction loop.
 
 ### Why have both a Run creation and Started hook?
 
