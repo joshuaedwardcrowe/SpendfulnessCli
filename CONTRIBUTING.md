@@ -53,11 +53,13 @@ instead of relying on memory.
 
 ## ADRs
 
-An ADR ([`ADR/`](ADR/)) captures a decision — its premise, the problem,
-and the solution — not how something works today (that's
-[`CONCEPTS.md`](CONCEPTS.md)). Number sequentially
-(`ADRxx-Title.md`). [`FUTURE-ADR.md`](FUTURE-ADR.md) tracks decisions
-that are known to need one but haven't been written yet.
+An ADR ([`docs/adr/`](docs/adr/)) captures a decision — its premise, the
+problem, and the solution — not how something works today (that's
+[`docs/concepts/`](docs/concepts/)). Number sequentially
+(`000x-title-in-kebab-case.md`), starting from the seed template at
+[`docs/adr/0000-template.md`](docs/adr/0000-template.md).
+[`docs/adr/future-adr.md`](docs/adr/future-adr.md) tracks decisions that
+are known to need one but haven't been written yet.
 
 **Write one when you're** introducing a new cross-cutting pattern,
 changing a project boundary, or making a breaking change to a command's

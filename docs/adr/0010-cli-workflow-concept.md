@@ -353,7 +353,7 @@ Register an `IGenericCommandGenerator` in the DI container with a key matching t
 
 ### What happens if a command takes a long time?
 
-The run awaits the command's completion. The outer CLI loop can show progress via the `OnRunStarted` hook (see ADR08). For very long operations, consider implementing cancellation or progress reporting in the command itself.
+The run awaits the command's completion. The outer CLI loop can show progress via the `OnRunStarted` hook (see ADR 0008). For very long operations, consider implementing cancellation or progress reporting in the command itself.
 
 ### Can multiple workflows run simultaneously?
 
