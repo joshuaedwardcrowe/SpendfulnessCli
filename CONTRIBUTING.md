@@ -67,10 +67,12 @@ shape. **Skip it for** bug fixes and internal refactors.
 
 ## Concepts
 
-[`CONCEPTS.md`](CONCEPTS.md) explains how the system's pieces fit
-together today — Http/Clients/Wrappers, Commands, Compilation,
-Aggregates, etc. Keep it current: if a change makes it inaccurate,
-update it in the same PR.
+[`docs/concepts/`](docs/concepts/) explains how the system's pieces fit
+together today — one topic-named file per concept
+([`console-pipeline.md`](docs/concepts/console-pipeline.md),
+[`ynab-client-layers.md`](docs/concepts/ynab-client-layers.md)), seeded from
+[`0000-template.md`](docs/concepts/0000-template.md). Keep them current:
+if a change makes one inaccurate, update it in the same PR.
 
 ## Issues
 
