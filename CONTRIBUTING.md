@@ -138,10 +138,13 @@ not commitments to defend:
    pursuing at all. Non-binding — expected to be wrong.
 2. **SWAG** — the same estimate, re-checked against everything else
    competing for the slot, logged in the same board's `SWAG (months)`
-   field. "Prioritizing" means sorting/grouping that board by
-   `Priority` (`High`/`Medium`/`Low`) or `SWAG` — there's no separate
-   roadmap artifact to keep in sync. Still non-binding: a relative
-   sizing input, not a plan.
+   field. **Setting `Priority` (`High`/`Medium`/`Low`) is mandatory at
+   this point** — Status can't move to `SWAG'd / Prioritized` until
+   it's set, forcing an explicit call on how the idea stacks up against
+   what's already prioritized. "Prioritizing" then means
+   sorting/grouping the board by `Priority` or `SWAG` — there's no
+   separate roadmap artifact to keep in sync. Still non-binding: a
+   relative sizing input, not a plan.
 3. **New GitHub Project** — once an idea is greenlit, it graduates off
    the Ideas board into its own project (e.g.
    [Spendfulness](https://github.com/users/joshuaedwardcrowe/projects/9),
