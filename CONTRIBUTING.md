@@ -132,8 +132,8 @@ Work bigger than a single issue goes through a pipeline biased toward
 re-planning over predicting — estimates are inputs to prioritization,
 not commitments to defend:
 
-1. **WAG** — a fast, rough gut-feel estimate (in months), logged on the
-   [Ideas board](https://github.com/users/joshuaedwardcrowe/projects/10)'s
+1. **WAG** — a fast, rough gut-feel estimate (in months), logged on
+   [SpendfulnessCli's own Ideas board](https://github.com/users/joshuaedwardcrowe/projects/13)'s
    `WAG (months)` field, purely to judge whether an idea is worth
    pursuing at all. Non-binding — expected to be wrong.
 2. **SWAG** — the same estimate, re-checked against everything else
@@ -214,7 +214,7 @@ Current project boards:
 
 - [YNAB Analysis & Automation](https://github.com/users/joshuaedwardcrowe/projects/8) — analyse and CRUD commands
 - [Spendfulness](https://github.com/users/joshuaedwardcrowe/projects/9) — the spendfulness-measurement theme
-- [Ideas](https://github.com/users/joshuaedwardcrowe/projects/10) — the WAG/SWAG staging board described above
+- [Ideas](https://github.com/users/joshuaedwardcrowe/projects/13) — this repo's own WAG/SWAG staging board described above. Ideas that don't pertain to any one repo (e.g. cross-cutting or not-yet-homed ideas) go on the [shared personal-account Ideas board](https://github.com/users/joshuaedwardcrowe/projects/10) instead.
 - Creating a Proof of Concept, Adding Settings, Tech Debt Monitoring — narrower/unexplored scopes
 
 ## Milestones
