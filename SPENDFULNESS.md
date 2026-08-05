@@ -78,6 +78,36 @@ Neither is more correct. They trade against each other:
 
 The `#aligned` / `#misaligned` tag stays useful under either. It records a judgement about a *specific* transaction, which no amount of structure can infer: putting a purchase in the right value group says what it was *for*, not whether it was worth it.
 
+### Naming Categories: Value, Not Mechanism
+
+A category name is only doing its job if it answers *what am I valuing here*, not *what kind of object or bill is this*. This is a subtler trap than picking the wrong axis, because a mechanism-named category can sit in exactly the right value group for years without anyone noticing it's hollow.
+
+**The test:** would a values-based decision about this transaction be hidden by its current name? A bill named `Council Tax` says nothing about why it matters when you're deciding whether to move house or fight a valuation. Named for what it actually protects — the legal right to remain in your home without court action — the stakes are visible every time you look at the budget.
+
+Three shapes this mistake takes:
+
+* **Bills named after the bill.** `Mortgage`, `Home Insurance`, `Council Tax` name the instrument, not the value it buys. The fix asks what actually happens because of the payment: a mortgage buys equity in the home, not "a loan"; home insurance buys a replacement structure if disaster strikes, not "a policy."
+* **Categories named after a device or product type.** A hair trimmer isn't "Portable Technology" — it's grooming. The device is the vehicle; the value is the styling choice it enables. Naming by device type hides that a razor and a laptop share nothing as *values*, even though both are "tech."
+* **Categories named after a product shelf, not a need.** A generic toiletries category looks like one value because it's one aisle in a shop. It isn't. Toothpaste serves dental health. Body wash serves general hygiene. A styling product serves self-expression, because there's a choice being made that plain hygiene doesn't have. Splitting a shelf category across several value categories isn't inconsistency — it's the fix.
+
+**A sharper test for hardware specifically:** before naming a piece of technology after the axis its *content* lives in, check whether that content already has its own category. A smart speaker used mainly for music doesn't automatically belong under an entertainment value just because music is one — if the streaming subscription is *already* a separate line item, the speaker itself is only buying "the home is equipped for it," which is a shelter-shaped value, not a second helping of the entertainment value the subscription already accounts for. Naming the same value twice under two categories is as much a failure as naming it under the wrong one.
+
+This author's own re-pass through the Sanctuary axis, worked category by category:
+
+| Old (mechanism) | New (value) | Why |
+| :--- | :--- | :--- |
+| Council Tax | Standing | The legal right to remain in the home, not the tax itself |
+| Mortgage | Ownership | Buys equity in the sanctuary, not "a loan" |
+| Water | Drinking | The base survival need, not "a utility" |
+| Home Insurance | Replacement | What actually happens if the structure is lost |
+| Electric | Power | Deliberately left broad — no single downstream use (fridge, lighting, charging, heating ignition) is *the* reason, so naming one would narrow dishonestly |
+| Security | Security | Already names the concrete thing — there was no mechanism to strip away |
+| Home Automation | *dissolved* | Was hiding two purchases: a smart speaker (music hardware, feeding a value the streaming subscription already owns) and smart bulbs (a lighting fixture). Neither is "automation" as a value. |
+| Fixtures (absorbing the above hardware) | Setup | The word that actually stretches across furniture, lighting, and built-in audio — "Furnishings" failed (excludes bulbs), "Equipment" failed (excludes furniture) |
+| Toiletries | *dissolved into Healthy's sub-categories* | Each product serves a distinct, specific health value — there was never one "toiletries" value to name |
+
+Life Insurance is still open at time of writing: "Payout" names the mechanism (money moves) without the reason (the family keeps the home if the earner dies). Candidates on the table are "Continuity" and "Provision." Not settled — a reminder that this exercise doesn't always resolve in one pass.
+
 ### Raw Memo Field Format
 Because your Category and Category Group handle the Situation and Behavior automatically, your memo field stays incredibly clean and easy to type:
 ```text
